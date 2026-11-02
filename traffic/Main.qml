@@ -240,8 +240,14 @@ Item {
             if (name === "confirm" && pressed === true) root.confirmAction()
         }
         function onPointer(x, y) { /* 本模式不需要指针 */ }
-        function onPaused() { root.isPaused = true }
-        function onResumed() { root.isPaused = false }
+        function onPaused() {
+            root.isPaused = true
+            if (walkAnim.running) walkAnim.pause()
+        }
+        function onResumed() {
+            root.isPaused = false
+            if (walkAnim.paused) walkAnim.resume()
+        }
         function onStopping() { root.isPaused = true }
     }
 
