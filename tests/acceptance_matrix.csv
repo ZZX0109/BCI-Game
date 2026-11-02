@@ -1,0 +1,8 @@
+game,case_id,description,operation,expected_observation,status,notes
+traffic,T-01,红灯不按键满2.4秒,第一轮红灯无操作,correct_withhold；进入第二轮；行人未动,NOT_TESTED,需真实宿主运行
+traffic,T-02,红灯按一次确认,第一轮红灯按确认,false_start=1；错误反馈；后续试次继续,NOT_TESTED,需真实宿主运行
+traffic,T-03,绿灯第0.6秒按确认,绿灯0.6秒按确认,只触发一次；约0.6s反应时；播放行走动画；correct_start,NOT_TESTED,需真实宿主运行
+traffic,T-04,绿灯不操作,绿灯无操作,missed_go；不声称神经解码失败,NOT_TESTED,需真实宿主运行
+traffic,T-05,游戏暂停超过10秒后恢复,暂停10秒后恢复,当前试次剩余时间不因暂停清零或超时,NOT_TESTED,需真实宿主运行
+traffic,T-06,八轮执行完毕,完成8试次,仅一条attempt_finished和一次game.finish()；无确认重玩提示,NOT_TESTED,需真实宿主运行
+traffic,T-07,不同窗口比例,调整窗口大小,行人、斑马线、信号灯、面板无重叠/变形/裁切,NOT_TESTED,需真实宿主运行

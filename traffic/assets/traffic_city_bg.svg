@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="699" height="450" viewBox="0 0 699 450">
+  <defs>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#87CEEB"/>
+      <stop offset="0.6" stop-color="#BDE0EA"/>
+      <stop offset="1" stop-color="#E8F4F8"/>
+    </linearGradient>
+    <linearGradient id="roadGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A5568"/>
+      <stop offset="1" stop-color="#2D3748"/>
+    </linearGradient>
+  </defs>
+
+  <!-- sky -->
+  <rect width="699" height="450" fill="url(#skyGrad)"/>
+
+  <!-- distant city silhouette -->
+  <g fill="#6B7B8C" opacity="0.7">
+    <rect x="30" y="180" width="50" height="120"/>
+    <rect x="90" y="150" width="60" height="150"/>
+    <rect x="160" y="200" width="45" height="100"/>
+    <rect x="220" y="130" width="70" height="170"/>
+    <rect x="410" y="170" width="55" height="130"/>
+    <rect x="480" y="140" width="65" height="160"/>
+    <rect x="560" y="190" width="50" height="110"/>
+    <rect x="620" y="160" width="60" height="140"/>
+  </g>
+
+  <!-- ground / sidewalk near side -->
+  <rect y="380" width="699" height="70" fill="#A0AEC0"/>
+  <line x1="0" y1="380" x2="699" y2="380" stroke="#718096" stroke-width="3"/>
+
+  <!-- crosswalk strip at bottom -->
+  <g fill="#E2E8F0">
+    <rect x="20" y="395" width="30" height="40" rx="2"/>
+    <rect x="70" y="395" width="30" height="40" rx="2"/>
+    <rect x="120" y="395" width="30" height="40" rx="2"/>
+    <rect x="170" y="395" width="30" height="40" rx="2"/>
+    <rect x="220" y="395" width="30" height="40" rx="2"/>
+    <rect x="270" y="395" width="30" height="40" rx="2"/>
+    <rect x="320" y="395" width="30" height="40" rx="2"/>
+    <rect x="370" y="395" width="30" height="40" rx="2"/>
+    <rect x="420" y="395" width="30" height="40" rx="2"/>
+    <rect x="470" y="395" width="30" height="40" rx="2"/>
+    <rect x="520" y="395" width="30" height="40" rx="2"/>
+    <rect x="570" y="395" width="30" height="40" rx="2"/>
+    <rect x="620" y="395" width="30" height="40" rx="2"/>
+  </g>
+
+  <!-- road surface -->
+  <rect x="0" y="230" width="699" height="150" fill="url(#roadGrad)"/>
+
+  <!-- road top edge / far sidewalk -->
+  <rect y="225" width="699" height="10" fill="#A0AEC0"/>
+
+  <!-- zebra stripes on road -->
+  <g fill="#E2E8F0" opacity="0.9">
+    <rect x="40" y="245" width="16" height="120" rx="2"/>
+    <rect x="90" y="245" width="16" height="120" rx="2"/>
+    <rect x="140" y="245" width="16" height="120" rx="2"/>
+    <rect x="190" y="245" width="16" height="120" rx="2"/>
+    <rect x="240" y="245" width="16" height="120" rx="2"/>
+    <rect x="290" y="245" width="16" height="120" rx="2"/>
+    <rect x="340" y="245" width="16" height="120" rx="2"/>
+    <rect x="390" y="245" width="16" height="120" rx="2"/>
+    <rect x="440" y="245" width="16" height="120" rx="2"/>
+    <rect x="490" y="245" width="16" height="120" rx="2"/>
+    <rect x="540" y="245" width="16" height="120" rx="2"/>
+    <rect x="590" y="245" width="16" height="120" rx="2"/>
+    <rect x="640" y="245" width="16" height="120" rx="2"/>
+  </g>
+
+  <!-- lane divider -->
+  <line x1="0" y1="305" x2="699" y2="305" stroke="#F6E05E" stroke-width="3" stroke-dasharray="25,20"/>
+
+  <!-- traffic signal pole (background for signal head) -->
+  <rect x="600" y="110" width="10" height="130" fill="#4A5568"/>
+  <rect x="575" y="95" width="60" height="75" rx="6" fill="#2D3748" stroke="#A0AEC0" stroke-width="3"/>
+  <!-- red lens placeholder (off) -->
+  <circle cx="605" cy="118" r="16" fill="#3a1214"/>
+  <!-- green lens placeholder (off) -->
+  <circle cx="605" cy="150" r="16" fill="#12321a"/>
+  <!-- pedestrian signal sign -->
+  <rect x="590" y="175" width="30" height="18" rx="2" fill="#F6AD55"/>
+  <text x="605" y="188" font-size="10" text-anchor="middle" fill="#1A202C">行人</text>
+
+  <!-- small street lamp -->
+  <rect x="120" y="100" width="6" height="130" fill="#4A5568"/>
+  <circle cx="123" cy="105" r="10" fill="#F6E05E" opacity="0.6"/>
+
+  <!-- subtle vignette for depth -->
+  <rect width="699" height="450" fill="none" stroke="#1A202C" stroke-width="20" opacity="0.08"/>
+</svg>

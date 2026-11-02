@@ -1,0 +1,15 @@
+{"event":"traffic.attempt_started","data":{"gameVersion":"0.2.0","taskMode":"go_nogo","inputSource":"local","totalTrials":8,"cueWindow":2.4,"feedbackDuration":0.85,"walkDuration":1.1,"trialPlan":["red","green","green","red","green","red","green","red"]}}
+{"event":"traffic.trial_started","data":{"trial":1,"light":"red","elapsed":0.003}}
+{"event":"traffic.correct_withhold","data":{"trial":1,"elapsed":2.403,"note":"no_response_during_red"}}
+{"event":"traffic.trial_result","data":{"trial":1,"light":"red","result":"correct_withhold","reactionTime":-1,"elapsed":3.253}}
+{"event":"traffic.trial_started","data":{"trial":2,"light":"green","elapsed":3.256}}
+{"event":"traffic.correct_start","data":{"trial":2,"reactionTime":0.612,"elapsed":3.868}}
+{"event":"traffic.crossing_complete","data":{"trial":2,"elapsed":4.968}}
+{"event":"traffic.trial_result","data":{"trial":2,"light":"green","result":"correct_start","reactionTime":0.612,"elapsed":5.818}}
+{"event":"traffic.trial_started","data":{"trial":3,"light":"green","elapsed":5.821}}
+{"event":"traffic.missed_go","data":{"trial":3,"elapsed":8.221,"note":"no_response_during_green"}}
+{"event":"traffic.trial_result","data":{"trial":3,"light":"green","result":"missed_go","reactionTime":-1,"elapsed":9.071}}
+{"event":"traffic.trial_started","data":{"trial":4,"light":"red","elapsed":9.074}}
+{"event":"traffic.false_start","data":{"trial":4,"reactionTime":0.845,"elapsed":9.919}}
+{"event":"traffic.trial_result","data":{"trial":4,"light":"red","result":"false_start","reactionTime":0.845,"elapsed":10.769}}
+{"event":"traffic.attempt_finished","data":{"gameVersion":"0.2.0","taskMode":"go_nogo","totalTrials":8,"correctStarts":1,"falseStarts":1,"correctWithholds":1,"missedGos":1,"trialLog":[{"trial":1,"light":"red","result":"correct_withhold","reactionTime":-1},{"trial":2,"light":"green","result":"correct_start","reactionTime":0.612},{"trial":3,"light":"green","result":"missed_go","reactionTime":-1},{"trial":4,"light":"red","result":"false_start","reactionTime":0.845}],"elapsed":10.769,"summary":"红绿灯任务完成 | 正确启动 1 | 误启动 1 | 正确等待 1 | 漏响应 1"}}
