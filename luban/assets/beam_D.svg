@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450" width="700" height="450">
+  <!-- 木块 D：纵向，位置 418,110 52x230，允许方向 down（绘制层：第2层） -->
+  <rect x="424" y="342" width="46" height="11" rx="5" fill="#000000" opacity="0.20"/>
+  <rect x="418" y="110" width="52" height="230" rx="6" fill="#96602F"/>
+  <rect x="418" y="110" width="52" height="10" rx="5" fill="#B07A45"/>
+  <rect x="418" y="330" width="52" height="10" rx="5" fill="#784A24"/>
+  <rect x="418" y="110" width="9" height="230" fill="#C8935F"/>
+  <rect x="461" y="110" width="9" height="230" fill="#62391B"/>
+  <g stroke="#6E4420" stroke-width="2" opacity="0.35" fill="none">
+    <path d="M436 124 q -5 60 0 120 t 0 82"/>
+    <path d="M449 130 q 4 70 0 130 t 0 66"/>
+  </g>
+</svg>

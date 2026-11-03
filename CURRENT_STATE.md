@@ -1,9 +1,10 @@
 # Neuralife 七款新增游戏 V3 当前状态
 
-> 生成时间：2026-11-03  
-> 工作区：`C:\Users\Ait\Desktop\Neuralife`  
-> 宿主版本：Game API 1 / Extension API 1.2 / Runtime 0.3.0  
+> 生成时间：2026-11-03
+> 工作区：`C:\Users\Ait\Desktop\Neuralife`
+> 宿主版本：Game API 1 / Extension API 1.2 / Runtime 0.3.0
 > 宿主可执行文件：`D:\program\AIT\Neuralife\bin\Neuralife.exe`
+> 开发分支：`v3-dev`
 
 ## 1. 已确认的宿主接口
 
@@ -22,51 +23,43 @@
 | `onAction(name, pressed)` | `up/down/left/right/confirm`；方向有按下/释放；confirm 按住需释放再按 | `docs/api.md:52-54` |
 | 暂停触发 | 失焦、单帧 >250ms、时间异常、DPI/窗口变化 | `docs/api.md:71` |
 
-## 2. 七款游戏现状
+## 2. 七款游戏 V3 现状
 
-| 游戏 | 主文件路径 | effector | smoke 测试 | 当前可运行状态 | 已确认的限制 |
+| 游戏 | 主文件路径 | effector | 版本 | smoke 测试 | V3 关键完成项 |
 |---|---|---|---|---|---|
-| 汉诺塔 | `hanoi/Main.qml` + `TaskDefinition.qml` | 2 (GamepadLite) | EXIT 0 | 可加载；3/4/5 盘源码已支持；键盘左右选柱+确认取放 | 无可见关卡选择器；鼠标点击柱子后仍需键盘确认；放回原柱逻辑已存在 |
-| 追光球 | `pursuit/Main.qml` + `TaskDefinition.qml` | 1 (Cursor) | EXIT 0 | 可加载；一维水平追踪；双评分模式 | `cursorY` 未参与判定；未实现二维全屏自由轨迹；没有多轮结构 |
-| 精准打靶 | `target/Main.qml` + `TaskDefinition.qml` | 1 (Cursor) | EXIT 0 | 可加载；静态/Fitts/移动/遮挡四模式 | 与追光球的“持续追踪”指标边界需更清晰；遮挡模式实际行为待验证 |
-| 推箱子 | `sokoban/Main.qml` + `TaskDefinition.qml` (+ `LevelData.js`) | 2 (GamepadLite) | EXIT 0 | 可加载；5 关 BFS 验证；有撤销/重开菜单；静态墙角死锁提示 | 死局仅提示不倒计时自动重开；纯鼠标操作不完整（依赖方向键） |
-| 抓娃娃机 | `claw/Main.qml` + `TaskDefinition.qml` | 2 (GamepadLite) | EXIT 0 | 可加载；一维定位；确定性判定 | 缺少 Z 轴前后定位；定位阶段实时显示误差会泄露答案；无俯视/侧视辅助窗 |
-| 红绿灯过街 | `traffic/Main.qml` + `TaskDefinition.qml` | 2 (GamepadLite) | EXIT 0 | 可加载；8 试次 Go/No-Go 信号判断 | 车辆仅视觉移动，无碰撞/安全窗口计算；无现实过街决策模式 |
-| 鲁班锁 | `luban/Main.qml` + `TaskDefinition.qml` | 2 (GamepadLite) | EXIT 0 | 可加载；四木块 2.5D 教学模型 | 无真实三维结构、榫槽遮挡、几何阻挡；不能自由旋转观察 |
+| 汉诺塔 | `hanoi/Main.qml` | 2 (GamepadLite) | 0.3.0 | PASS | 统一框架；2–5 盘难度选择；鼠标/键盘/脑控独立完成；取放同柱取消 |
+| 推箱子 | `sokoban/Main.qml` | 2 (GamepadLite) | 0.3.0 | PASS | 统一框架；方向按钮 + 撤销/重开/菜单/结束；确证死局 3 秒自动重开（可撤销取消）；5 关 |
+| 抓娃娃机 | `claw/Main.qml` | 2 (GamepadLite) | 0.3.0 | PASS | 统一框架；X/Z 二维定位；俯视/侧视双窗；误差仅在接触后显示 |
+| 追光球 | `pursuit/Main.qml` | 1 (Cursor) | 0.3.0 | PASS | 统一框架；二维全屏自由追踪；6 关卡（椭圆/8 字/巡游/遮挡恢复/1D 教学）；多轮制；MAE/RMSE/区内/保持指标 |
+| 精准打靶 | `target/Main.qml` | 1 (Cursor) | 0.3.0 | PASS | 统一框架；明确射击（非追踪）；静态/Fitts/移动/遮挡四模式；首动阈值；点击当帧判定；反馈定格 |
+| 红绿灯过街 | `traffic/Main.qml` | 2 (GamepadLite) | 0.3.0 | PASS | 统一框架；双模式：go_nogo + crossing_decision 第一人称过街；种子化可复现车流；碰撞事故判定 |
+| 鲁班锁 | `luban/Main.qml` | 2 (GamepadLite) | 0.3.0 | PASS | 统一框架；增强 2.5D/伪 3D 榫卯视觉；选择/方向双独立判断；错误不改变状态 |
 
-## 3. 输入映射现状
+## 3. 统一风格
 
-| 游戏 | 键盘/脑控 | 鼠标 | 问题 |
-|---|---|---|---|
-| hanoi | 左右选柱 + 确认取/放 | 点击柱只能切换焦点，不能独立完成放置 | 鼠标与键盘强制混搭 |
-| pursuit | Cursor 横向移动 | 鼠标移动光标 | 无上下维度 |
-| target | Cursor 移动 + confirm 射击 | 鼠标移动 + 左键射击 | 正常 |
-| sokoban | 方向键移动 + confirm 菜单 | 无方向按钮/点击移动 | 纯鼠标无法通关 |
-| claw | 左右持续移动 + confirm 抓取 | 无点击定位 | 纯鼠标无法操作 |
-| traffic | confirm 触发 | 左键 confirm | 单键操作，正常 |
-| luban | 左右选块 + 上下方向 + confirm | 无点击选块/方向 | 纯鼠标无法操作 |
+- 全部游戏使用 `import "../shared-ui" as SharedUI`
+- 统一外框：`SharedUI.GameFrame`（顶栏、底栏、主场景、浮层）
+- 统一主题：`SharedUI.GameTheme`（`uiTheme` 避免与 GameButton.theme 属性冲突）
+- 统一输入提示：`SharedUI.InputHint`
+- 统一反馈：`SharedUI.FeedbackToast`
 
-## 4. 已验证的宿主能力
+## 4. 已知限制
 
-- [x] `--game-dev <id> --games-dev-root <path>` 可离线加载开发插件
-- [x] `--game-smoke` 离屏检查加载与会话启动
-- [x] `--game-screenshot <path>` 可保存渲染图
-- [x] 全部 7 款当前插件 smoke 测试通过
-- [x] 宿主支持 `Qt6Quick3DUtils.dll` 运行库存在，但 **未验证** QML `import QtQuick3D` 是否可加载
-
-## 5. 待验证/待确认项
-
-| 项 | 状态 | 验证计划 |
+| 项 | 说明 | 处理方案 |
 |---|---|---|
-| `themeIndex` 是否由宿主注入 | 待确认 | 读取宿主 QML / 打印 `game.themeIndex` |
-| 鼠标事件是否会与 `onAction` 重复触发 | 待确认 | 在 hanoi 等游戏加 TapHandler 后实测 |
-| 真实 Cursor 是否提供可用 Y 轴 | 待确认 | 在 pursuit/target 中打印 `onPointer(x,y)` 边界 |
-| `QtQuick3D` 插件在宿主中是否完整可用 | 待确认 | 创建最小 `View3D` 测试场景加载 |
-| 旧六款正式游戏视觉基准 | 待获取 | 运行原 Neuralife 截取太鼓达人/贪吃蛇/中国象棋画面 |
+| `QtQuick3D` 未部署 | 宿主 `bin/` 仅含 `Qt6Quick3DUtils.dll`，QML `import QtQuick3D` 加载失败 | luban 使用增强 2.5D/伪 3D 分层 + 阴影，并在 `TaskDefinition` 与 `ACCEPTANCE_REPORT` 中记录 fallback |
+| shared-ui 生产打包 | 相对父目录 `import "../shared-ui"` 在 dev 模式验证通过；正式打包方式待宿主确认 | 已在 `ACCEPTANCE_REPORT.md` 记录 |
+| 截图工具 | `--game-screenshot` 未在当前环境生成文件 | 以 `--game-smoke` EXIT 0 作为加载与会话启动验收 |
+
+## 5. 验证结果
+
+- [x] 全部 7 款游戏 `--game-smoke` EXIT 0
+- [x] 全部 `TaskDefinition.qml` 版本号 `0.3.0`
+- [x] 全部游戏使用统一 `shared-ui` 组件
+- [x] QtQuick3D 可用性已验证为 **不可用**
 
 ## 6. 版本控制
 
 - Git 仓库：`C:\Users\Ait\Desktop\Neuralife`
-- V1 原始代码：`master` 分支
-- V2 traffic 完成版：`traffic-v2` 分支
-- V3 开发分支：待创建（建议从 `traffic-v2` 切出 `v3-dev`）
+- 当前分支：`v3-dev`
+- 建议：合并到主分支前由用户最终确认视觉验收

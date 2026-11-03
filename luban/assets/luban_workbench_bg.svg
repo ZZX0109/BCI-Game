@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450" width="700" height="450">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#13233B"/>
+      <stop offset="1" stop-color="#0B1422"/>
+    </linearGradient>
+    <radialGradient id="spot" cx="0.5" cy="0.52" r="0.55">
+      <stop offset="0" stop-color="#F5D9A8" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#F5D9A8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tableGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6B4426"/>
+      <stop offset="1" stop-color="#53341C"/>
+    </linearGradient>
+    <radialGradient id="shadowGrad" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#000000" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 深蓝背景墙 -->
+  <rect width="700" height="450" fill="url(#bgGrad)"/>
+
+  <!-- 暖色局部聚光 -->
+  <ellipse cx="350" cy="255" rx="330" ry="225" fill="url(#spot)"/>
+
+  <!-- 木桌正面厚度 -->
+  <rect x="25" y="392" width="650" height="28" rx="8" fill="#3A2413"/>
+  <rect x="25" y="392" width="650" height="7" rx="3" fill="#2A1A0D"/>
+
+  <!-- 木桌桌面 -->
+  <rect x="25" y="92" width="650" height="308" rx="14" fill="url(#tableGrad)"/>
+  <rect x="25" y="92" width="650" height="9" rx="4" fill="#7D5433"/>
+
+  <!-- 桌面木板拼缝 -->
+  <g stroke="#472C16" stroke-width="3" opacity="0.65">
+    <line x1="45" y1="165" x2="655" y2="165"/>
+    <line x1="45" y1="235" x2="655" y2="235"/>
+    <line x1="45" y1="305" x2="655" y2="305"/>
+    <line x1="45" y1="372" x2="655" y2="372"/>
+  </g>
+  <g stroke="#7A5230" stroke-width="1.5" opacity="0.5">
+    <line x1="45" y1="168" x2="655" y2="168"/>
+    <line x1="45" y1="238" x2="655" y2="238"/>
+    <line x1="45" y1="308" x2="655" y2="308"/>
+  </g>
+
+  <!-- 拼图下方桌面阴影 -->
+  <ellipse cx="350" cy="318" rx="245" ry="38" fill="url(#shadowGrad)"/>
+</svg>

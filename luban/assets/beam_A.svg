@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450" width="700" height="450">
+  <!-- 木块 A：横向，位置 170,140 360x52，允许方向 up -->
+  <rect x="176" y="197" width="352" height="13" rx="6" fill="#000000" opacity="0.20"/>
+  <rect x="170" y="140" width="360" height="52" rx="6" fill="#C89B6D"/>
+  <rect x="170" y="140" width="360" height="10" rx="5" fill="#E3BC8C"/>
+  <rect x="170" y="182" width="360" height="10" rx="5" fill="#9C7243"/>
+  <rect x="170" y="140" width="9" height="52" fill="#EFD3AC"/>
+  <rect x="521" y="140" width="9" height="52" fill="#87603A"/>
+  <g stroke="#8A6238" stroke-width="2" opacity="0.35" fill="none">
+    <path d="M188 157 q 60 -6 130 0 t 130 0 t 96 -2"/>
+    <path d="M192 171 q 70 5 140 0 t 138 0"/>
+    <path d="M204 164 q 50 -4 100 0 t 118 2"/>
+  </g>
+</svg>
