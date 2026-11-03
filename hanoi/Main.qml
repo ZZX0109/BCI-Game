@@ -16,8 +16,8 @@ Item {
     // ------------------------------------------------------------------
     // 统一主题
     // ------------------------------------------------------------------
-    SharedUI.GameTheme { id: theme }
-    SharedUI.FeedbackToast { id: toast; theme: theme; parent: root }
+    SharedUI.GameTheme { id: uiTheme }
+    SharedUI.FeedbackToast { id: toast; theme: uiTheme; parent: root }
 
     // ------------------------------------------------------------------
     // 逻辑状态
@@ -274,7 +274,7 @@ Item {
     SharedUI.GameFrame {
         id: frame
         anchors.fill: parent
-        theme: theme
+        theme: uiTheme
         title: qsTr("汉诺塔")
         subtitle: qsTr("目标：把全部盘从 A 柱移到 C 柱　规则：大盘不能压小盘")
         mode: qsTr("%1 盘 · %2").arg(root.discCount).arg(root.phase === "select" ? qsTr("选择圆盘") : root.phase === "place" ? qsTr("选择放置柱") : qsTr("选择关卡"))
@@ -409,7 +409,7 @@ Item {
 
             SharedUI.InputHint {
                 id: hintText
-                theme: theme
+                theme: uiTheme
                 source: root.inputSource
                 anchors.verticalCenter: parent.verticalCenter
                 keyboardHint: root.phase === "select" ? qsTr("←→ 选择柱子，确认取盘")
@@ -425,8 +425,8 @@ Item {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: qsTr("步数 %1 / 最优 %2").arg(root.moves).arg(root.optimalMoves)
-                color: theme.secondaryText
-                font.pixelSize: theme.captionPx
+                color: uiTheme.secondaryText
+                font.pixelSize: uiTheme.captionPx
             }
         }
 
@@ -439,7 +439,7 @@ Item {
             SharedUI.LevelSelector {
                 id: levelSelector
                 anchors.centerIn: parent
-                theme: theme
+                theme: uiTheme
                 title: qsTr("选择难度")
                 levels: root.levelOptions
                 currentIndex: root.discCount - 2
@@ -449,7 +449,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: levelSelector.bottom
                 anchors.topMargin: 16
-                theme: theme
+                theme: uiTheme
                 text: qsTr("开始")
                 highlighted: true
                 onClicked: root.selectLevel(levelSelector.currentIndex)
@@ -460,13 +460,13 @@ Item {
         Rectangle {
             parent: frame.overlayItem
             anchors.fill: parent
-            color: theme.background
+            color: uiTheme.background
             opacity: 0.75
             visible: root.isPaused
             Text {
                 anchors.centerIn: parent
                 text: qsTr("已暂停")
-                color: theme.warning
+                color: uiTheme.warning
                 font.pixelSize: 36
                 font.bold: true
             }
