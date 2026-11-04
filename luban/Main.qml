@@ -444,6 +444,10 @@ Item {
     function handleAction(name, pressed) {
         if (pressed !== true) return
         if (root.isPaused) return
+        if (root.tutorialOpen) {
+            if (name === "confirm") root.tutorialOpen = false
+            return
+        }
         if (root.phase === "level_clear" || root.phase === "finished") {
             if (name === "confirm") {
                 if (root.phase === "finished") {
