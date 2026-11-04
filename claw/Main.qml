@@ -361,10 +361,10 @@ Item {
                 radius: 8
 
                 // 坐标轴标签
-                Text { anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.margins: 6; text: qsTr("前"); color: uiTheme.secondaryText; font.pixelSize: 12 }
-                Text { anchors.top: parent.top; anchors.left: parent.left; anchors.margins: 6; text: qsTr("后"); color: uiTheme.secondaryText; font.pixelSize: 12 }
-                Text { anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.margins: 6; text: qsTr("左"); color: uiTheme.secondaryText; font.pixelSize: 12 }
-                Text { anchors.bottom: parent.bottom; anchors.right: parent.right; anchors.margins: 6; text: qsTr("右"); color: uiTheme.secondaryText; font.pixelSize: 12 }
+                Text { anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.margins: 6; text: qsTr("前"); color: uiTheme.secondaryText; font.pixelSize: 12; font.family: uiTheme.fontFamily }
+                Text { anchors.top: parent.top; anchors.left: parent.left; anchors.margins: 6; text: qsTr("后"); color: uiTheme.secondaryText; font.pixelSize: 12; font.family: uiTheme.fontFamily }
+                Text { anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.margins: 6; text: qsTr("左"); color: uiTheme.secondaryText; font.pixelSize: 12; font.family: uiTheme.fontFamily }
+                Text { anchors.bottom: parent.bottom; anchors.right: parent.right; anchors.margins: 6; text: qsTr("右"); color: uiTheme.secondaryText; font.pixelSize: 12; font.family: uiTheme.fontFamily }
 
                 // 映射函数
                 function mapX(v) { return 20 + (v - root.xMin) / (root.xMax - root.xMin) * (width - 40) }
@@ -375,7 +375,7 @@ Item {
                     x: parent.mapX(root.toyFloorX) - 14
                     y: parent.mapZ(root.toyFloorZ) - 14
                     width: 28; height: 28; radius: 14
-                    color: root.toyState === "binned" ? uiTheme.success : "#E8B44F"
+                    color: root.toyState === "binned" ? uiTheme.success : uiTheme.warning
                     border.width: 2; border.color: uiTheme.panelBorder
                     visible: root.toyState !== "attached"
                 }
@@ -385,7 +385,7 @@ Item {
                     x: parent.mapX(root.clawX) - 10
                     y: parent.mapZ(root.clawZ) - 10
                     width: 20; height: 20; radius: 10
-                    color: "#6E7A85"
+                    color: uiTheme.secondaryText
                     border.width: 2; border.color: uiTheme.primary
                 }
 
@@ -417,6 +417,7 @@ Item {
                     text: qsTr("侧视（X-高度）")
                     color: uiTheme.secondaryText
                     font.pixelSize: uiTheme.captionPx
+                    font.family: uiTheme.fontFamily
                 }
 
                 function mapX(v) { return 20 + (v - root.xMin) / (root.xMax - root.xMin) * (width - 40) }
@@ -435,7 +436,7 @@ Item {
                     y: parent.mapY(root.clawY) - 20
                     width: 28; height: 40
                     radius: 6
-                    color: "#6E7A85"
+                    color: uiTheme.secondaryText
                     border.width: 2; border.color: uiTheme.primary
                 }
 
@@ -445,7 +446,7 @@ Item {
                     y: 40
                     width: 2
                     height: parent.mapY(root.clawY) - 60
-                    color: "#8F938E"
+                    color: uiTheme.secondaryText
                 }
 
                 // 玩具侧视（只在 floor 或 attached 时可见）
@@ -455,7 +456,7 @@ Item {
                     y: parent.mapY(root.floorY) - 24
                     width: 24; height: 24
                     radius: 12
-                    color: root.toyState === "attached" ? uiTheme.success : "#E8B44F"
+                    color: root.toyState === "attached" ? uiTheme.success : uiTheme.warning
                     border.width: 2; border.color: uiTheme.panelBorder
                 }
             }
@@ -483,7 +484,7 @@ Item {
                     color: root.phase === "aligning"
                            ? uiTheme.secondaryText
                            : (root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger)
-                    font.pixelSize: 17; font.bold: true
+                    font.pixelSize: 17; font.bold: true; font.family: uiTheme.fontFamily
                 }
             }
 
@@ -503,6 +504,7 @@ Item {
                         .arg(root.lastJudgedSuccess ? qsTr("成功") : qsTr("失败"))
                     color: root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger
                     font.pixelSize: 15
+                    font.family: uiTheme.fontFamily
                 }
             }
         }
@@ -559,6 +561,7 @@ Item {
                 text: qsTr("自主成功 %1 ｜ 辅助成功 %2").arg(root.successesUnassisted).arg(root.successesAssisted)
                 color: uiTheme.secondaryText
                 font.pixelSize: uiTheme.captionPx
+                font.family: uiTheme.fontFamily
             }
         }
 

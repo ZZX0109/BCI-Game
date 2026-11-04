@@ -473,9 +473,9 @@ Item {
                         Rectangle {
                             visible: wall
                             anchors.fill: parent
-                            color: uiTheme.primaryText
-                            Rectangle { anchors.top: parent.top; width: parent.width; height: 5; color: uiTheme.primaryHover }
-                            Rectangle { anchors.bottom: parent.bottom; width: parent.width; height: 5; color: uiTheme.secondaryText }
+                            color: uiTheme.panelBorder
+                            Rectangle { anchors.top: parent.top; width: parent.width; height: 5; color: uiTheme.secondaryText }
+                            Rectangle { anchors.bottom: parent.bottom; width: parent.width; height: 5; color: Qt.darker(uiTheme.panelBorder, 1.5) }
                         }
                     }
                 }
@@ -495,7 +495,7 @@ Item {
                     y: parent.gridY + parseInt(parts[0]) * parent.cell + parent.cell * 0.10 - (justPushed ? 4 * root.pushFlash : 0)
                     width: parent.cell * 0.80; height: parent.cell * 0.80
                     radius: 6
-                    color: deadlocked ? "#8A4A4A" : (onGoal ? "#3E8A6E" : "#B5814E")
+                    color: deadlocked ? uiTheme.danger : (onGoal ? uiTheme.success : uiTheme.warning)
                     border.width: justPushed ? 4 : 2
                     border.color: deadlocked ? uiTheme.danger : (justPushed ? uiTheme.warning : uiTheme.panelBorder)
                     Rectangle {
@@ -515,7 +515,7 @@ Item {
                 width: parent.cell * 0.64; height: parent.cell * 0.64
                 Rectangle {
                     anchors.fill: parent; radius: width / 2
-                    color: "#FFFFFF"; border.width: 2; border.color: uiTheme.panelBorder
+                    color: uiTheme.primaryText; border.width: 2; border.color: uiTheme.panelBorder
                 }
                 Rectangle {
                     width: parent.width * 0.34; height: parent.width * 0.34; radius: 2
@@ -535,11 +535,11 @@ Item {
                     spacing: 6
                     Text {
                         text: qsTr("检测到死锁，%1 秒后自动重开").arg(root.deadlockSecondsLeft.toFixed(1))
-                        color: uiTheme.danger; font.pixelSize: 18; font.bold: true
+                        color: uiTheme.danger; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true
                     }
                     Text {
                         text: qsTr("点击“撤销”或“重开”可取消倒计时")
-                        color: uiTheme.secondaryText; font.pixelSize: 14
+                        color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily
                     }
                 }
             }
@@ -629,6 +629,7 @@ Item {
                     text: qsTr("恢复菜单")
                     color: uiTheme.primaryText
                     font.pixelSize: uiTheme.headingPx
+                    font.family: uiTheme.fontFamily
                     font.bold: true
                 }
                 Repeater {

@@ -14,10 +14,10 @@ Rectangle {
     height: toastText.height + 20
     radius: theme.buttonRadius
     color: {
-        if (toastType === "success") return Qt.rgba(0.18, 0.55, 0.55, 0.95)
-        if (toastType === "warning") return Qt.rgba(0.72, 0.51, 0.17, 0.95)
-        if (toastType === "danger") return Qt.rgba(0.77, 0.33, 0.33, 0.95)
-        return Qt.rgba(0.21, 0.54, 0.61, 0.95)
+        if (toastType === "success") return theme.primary
+        if (toastType === "warning") return theme.warning
+        if (toastType === "danger") return theme.danger
+        return theme.panelBorder
     }
     opacity: 0
 
@@ -25,8 +25,9 @@ Rectangle {
         id: toastText
         anchors.centerIn: parent
         text: root.text
-        color: "#FFFFFF"
+        color: theme.background
         font.pixelSize: theme.bodyPx
+        font.family: theme.fontFamily
         font.bold: true
     }
 

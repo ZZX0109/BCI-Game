@@ -1029,13 +1029,13 @@ Item {
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 text: root.levelId + qsTr(" · %1 车道").arg(root.laneCount)
-                                color: uiTheme.primaryText; font.pixelSize: 26; font.bold: true
+                                color: uiTheme.primaryText; font.pixelSize: 26; font.family: uiTheme.fontFamily; font.bold: true
                             }
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 text: root.levelIndex === 0 ? qsTr("按住 → 前进，注意车流，必要时按 ← 退回")
                                                              : qsTr("观察相邻车道反向车流，逐车道穿越")
-                                color: uiTheme.secondaryText; font.pixelSize: 15
+                                color: uiTheme.secondaryText; font.pixelSize: 15; font.family: uiTheme.fontFamily
                             }
                         }
                     }
@@ -1055,12 +1055,12 @@ Item {
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 text: qsTr("被撞到了")
-                                color: uiTheme.danger; font.pixelSize: 24; font.bold: true
+                                color: uiTheme.danger; font.pixelSize: 24; font.family: uiTheme.fontFamily; font.bold: true
                             }
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 text: qsTr("本关重试（同种子，车流一致）")
-                                color: uiTheme.secondaryText; font.pixelSize: 14
+                                color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily
                             }
                         }
                     }
@@ -1080,12 +1080,12 @@ Item {
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 text: qsTr("安全到达对岸")
-                                color: uiTheme.success; font.pixelSize: 24; font.bold: true
+                                color: uiTheme.success; font.pixelSize: 24; font.family: uiTheme.fontFamily; font.bold: true
                             }
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 text: qsTr("用时 %1 秒 · 碰撞 %2 次").arg(root.simTime.toFixed(1)).arg(root.collisionsThisLevel)
-                                color: uiTheme.secondaryText; font.pixelSize: 14
+                                color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily
                             }
                         }
                     }
@@ -1104,7 +1104,7 @@ Item {
                         width: 204
                         spacing: 10
 
-                        Text { text: qsTr("关卡进度"); color: uiTheme.secondaryText; font.pixelSize: 13 }
+                        Text { text: qsTr("关卡进度"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
                         Row {
                             spacing: 5
                             Repeater {
@@ -1118,7 +1118,7 @@ Item {
                             }
                         }
 
-                        Text { text: qsTr("横穿进度"); color: uiTheme.secondaryText; font.pixelSize: 13 }
+                        Text { text: qsTr("横穿进度"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
                         Rectangle {
                             width: 204; height: 10; radius: 5
                             color: uiTheme.panelBorder
@@ -1129,26 +1129,26 @@ Item {
                             }
                         }
 
-                        Text { text: qsTr("车道数"); color: uiTheme.secondaryText; font.pixelSize: 13 }
-                        Text { text: root.laneCount; color: uiTheme.primaryText; font.pixelSize: 20; font.bold: true }
+                        Text { text: qsTr("车道数"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
+                        Text { text: root.laneCount; color: uiTheme.primaryText; font.pixelSize: 20; font.family: uiTheme.fontFamily; font.bold: true }
 
-                        Text { text: qsTr("本关碰撞"); color: uiTheme.secondaryText; font.pixelSize: 13 }
+                        Text { text: qsTr("本关碰撞"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
                         Text {
                             text: root.collisionsThisLevel
                             color: root.collisionsThisLevel > 0 ? uiTheme.danger : uiTheme.success
-                            font.pixelSize: 20; font.bold: true
+                            font.pixelSize: 20; font.family: uiTheme.fontFamily; font.bold: true
                         }
 
-                        Text { text: qsTr("累计碰撞"); color: uiTheme.secondaryText; font.pixelSize: 13 }
-                        Text { text: root.collisionsTotal; color: uiTheme.primaryText; font.pixelSize: 18; font.bold: true }
+                        Text { text: qsTr("累计碰撞"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
+                        Text { text: root.collisionsTotal; color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true }
 
-                        Text { text: qsTr("尝试次数"); color: uiTheme.secondaryText; font.pixelSize: 13 }
-                        Text { text: root.attemptNo; color: uiTheme.primaryText; font.pixelSize: 18; font.bold: true }
+                        Text { text: qsTr("尝试次数"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
+                        Text { text: root.attemptNo; color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true }
 
-                        Text { text: qsTr("本关用时"); color: uiTheme.secondaryText; font.pixelSize: 13 }
+                        Text { text: qsTr("本关用时"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
                         Text {
                             text: root.simTime.toFixed(1) + qsTr(" 秒")
-                            color: uiTheme.primaryText; font.pixelSize: 18; font.bold: true
+                            color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true
                         }
 
                         Text {
@@ -1156,7 +1156,7 @@ Item {
                             text: qsTr("状态：") + (root.phase === "playing" ? qsTr("可移动")
                                   : root.phase === "level_intro" ? qsTr("准备")
                                   : root.phase === "hit" ? qsTr("失误") : qsTr("通关"))
-                            color: uiTheme.secondaryText; font.pixelSize: 13
+                            color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily
                             wrapMode: Text.WordWrap
                         }
                     }
@@ -1177,7 +1177,7 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             text: qsTr("← 后退")
-                            color: uiTheme.primaryText; font.pixelSize: 18; font.bold: true
+                            color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true
                         }
                         MouseArea {
                             id: mouseLeft
@@ -1200,7 +1200,7 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             text: qsTr("前进 →")
-                            color: "#FFFFFF"; font.pixelSize: 18; font.bold: true
+                            color: uiTheme.background; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true
                         }
                         MouseArea {
                             id: mouseRight
@@ -1223,7 +1223,7 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             text: qsTr("重开本关")
-                            color: uiTheme.primaryText; font.pixelSize: 16
+                            color: uiTheme.primaryText; font.pixelSize: 16; font.family: uiTheme.fontFamily
                         }
                         MouseArea {
                             id: retryArea
@@ -1243,6 +1243,7 @@ Item {
                                          : qsTr("按住方向键持续移动，松开即停")
                         color: uiTheme.secondaryText
                         font.pixelSize: 13
+                        font.family: uiTheme.fontFamily
                         wrapMode: Text.WordWrap
                     }
                 }
@@ -1273,6 +1274,7 @@ Item {
                 text: qsTr("碰撞 %1 次 · 已通关 %2/%3").arg(root.collisionsTotal).arg(root.clearedCount).arg(root.levelPlans.length)
                 color: uiTheme.secondaryText
                 font.pixelSize: uiTheme.captionPx
+                font.family: uiTheme.fontFamily
             }
         }
 

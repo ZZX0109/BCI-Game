@@ -452,14 +452,14 @@ Item {
                         width: root.barrierW
                         height: 483
                         radius: 8
-                        color: "#2A4A5E"
+                        color: uiTheme.panel
                         border.width: 2
                         border.color: uiTheme.primary
                         opacity: 0.92
                         Text {
                             anchors.centerIn: parent
                             text: qsTr("挡板")
-                            color: uiTheme.primaryText; font.pixelSize: 14; font.bold: true
+                            color: uiTheme.primaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily; font.bold: true
                         }
                     }
 
@@ -471,7 +471,7 @@ Item {
                         readonly property real cy: root.phase === "shot_feedback" ? root.shotTargetY : root.targetSceneY
                         x: cx; y: cy
 
-                        Rectangle { x: -root.targetR; y: -root.targetR; width: root.targetR * 2; height: root.targetR * 2; radius: root.targetR; color: "#16273A"; border.width: 4; border.color: root.onTarget ? uiTheme.success : uiTheme.panelBorder }
+                        Rectangle { x: -root.targetR; y: -root.targetR; width: root.targetR * 2; height: root.targetR * 2; radius: root.targetR; color: uiTheme.background; border.width: 4; border.color: root.onTarget ? uiTheme.success : uiTheme.panelBorder }
                         Rectangle { x: -root.targetR * 0.62; y: -root.targetR * 0.62; width: root.targetR * 1.24; height: root.targetR * 1.24; radius: root.targetR * 0.62; color: "transparent"; border.width: 2; border.color: uiTheme.panelBorder }
                         Rectangle { x: -root.targetR * 0.28; y: -root.targetR * 0.28; width: root.targetR * 0.56; height: root.targetR * 0.56; radius: root.targetR * 0.28; color: uiTheme.success; opacity: root.onTarget ? 1.0 : 0.45 }
                         Text {
@@ -504,10 +504,10 @@ Item {
                         visible: root.phase === "target_visible" || root.phase === "shot_feedback"
                         x: root.phase === "shot_feedback" ? root.shotAimX : root.aimX
                         y: root.phase === "shot_feedback" ? root.shotAimY : root.aimY
-                        Rectangle { width: 2; height: 28; color: "#E7BC84"; x: -1; y: -14 }
-                        Rectangle { width: 28; height: 2; color: "#E7BC84"; x: -14; y: -1 }
-                        Rectangle { width: 10; height: 10; radius: 5; color: "transparent"; border.width: 2; border.color: "#E7BC84"; x: -5; y: -5 }
-                        Rectangle { width: 2; height: 2; color: "#FB7777"; x: -1; y: -1 }
+                        Rectangle { width: 2; height: 28; color: uiTheme.warning; x: -1; y: -14 }
+                        Rectangle { width: 28; height: 2; color: uiTheme.warning; x: -14; y: -1 }
+                        Rectangle { width: 10; height: 10; radius: 5; color: "transparent"; border.width: 2; border.color: uiTheme.warning; x: -5; y: -5 }
+                        Rectangle { width: 2; height: 2; color: uiTheme.danger; x: -1; y: -1 }
                     }
 
                     // 场景内状态提示
@@ -520,7 +520,7 @@ Item {
                                  ? qsTr("已在靶内：按确认/左键射击")
                                  : qsTr("移动准星对准环形靶（距离 %1px / 半径 %2px）").arg(Math.round(root.distToTarget)).arg(root.targetR))
                         color: root.occludedNow ? uiTheme.warning : (root.onTarget ? uiTheme.success : uiTheme.secondaryText)
-                        font.pixelSize: 15; font.bold: root.onTarget
+                        font.pixelSize: 15; font.family: uiTheme.fontFamily; font.bold: root.onTarget
                     }
 
                     // 鼠标交互：直接采场景局部坐标 → 准星=判定点
@@ -552,26 +552,26 @@ Item {
                     Column {
                         x: 16; y: 14; spacing: 8; width: 201
 
-                        Text { text: qsTr("已射击"); color: uiTheme.secondaryText; font.pixelSize: 14 }
-                        Text { text: qsTr("%1 / %2").arg(Math.min(root.trialIndex + (root.phase === "shot_feedback" ? 1 : 0), root.trialPlan.length)).arg(root.trialPlan.length); color: uiTheme.primaryText; font.pixelSize: 24; font.bold: true }
+                        Text { text: qsTr("已射击"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
+                        Text { text: qsTr("%1 / %2").arg(Math.min(root.trialIndex + (root.phase === "shot_feedback" ? 1 : 0), root.trialPlan.length)).arg(root.trialPlan.length); color: uiTheme.primaryText; font.pixelSize: 24; font.family: uiTheme.fontFamily; font.bold: true }
 
-                        Text { text: qsTr("命中率"); color: uiTheme.secondaryText; font.pixelSize: 14 }
-                        Text { text: (root.trialIndex > 0 ? Math.round(root.hits / Math.max(1, root.hits + root.misses) * 100) : 0) + "%"; color: uiTheme.success; font.pixelSize: 22; font.bold: true }
+                        Text { text: qsTr("命中率"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
+                        Text { text: (root.trialIndex > 0 ? Math.round(root.hits / Math.max(1, root.hits + root.misses) * 100) : 0) + "%"; color: uiTheme.success; font.pixelSize: 22; font.family: uiTheme.fontFamily; font.bold: true }
 
-                        Text { text: qsTr("命中 / 脱靶 / 超时"); color: uiTheme.secondaryText; font.pixelSize: 14 }
-                        Text { text: qsTr("%1 / %2 / %3").arg(root.hits).arg(root.misses).arg(root.timeouts); color: uiTheme.primaryText; font.pixelSize: 18; font.bold: true }
+                        Text { text: qsTr("命中 / 脱靶 / 超时"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
+                        Text { text: qsTr("%1 / %2 / %3").arg(root.hits).arg(root.misses).arg(root.timeouts); color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true }
 
-                        Text { text: qsTr("最近误差"); color: uiTheme.secondaryText; font.pixelSize: 14 }
-                        Text { text: root.phase === "shot_feedback" ? Math.round(root.lastDistance) + " px" : "—"; color: root.lastWasHit ? uiTheme.success : uiTheme.danger; font.pixelSize: 20; font.bold: true }
+                        Text { text: qsTr("最近误差"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
+                        Text { text: root.phase === "shot_feedback" ? Math.round(root.lastDistance) + " px" : "—"; color: root.lastWasHit ? uiTheme.success : uiTheme.danger; font.pixelSize: 20; font.family: uiTheme.fontFamily; font.bold: true }
 
-                        Text { text: qsTr("最近首动延迟"); color: uiTheme.secondaryText; font.pixelSize: 14 }
-                        Text { text: root.firstActionLatency >= 0 ? root.firstActionLatency.toFixed(3) + " s" : qsTr("未动"); color: uiTheme.warning; font.pixelSize: 18; font.bold: true }
+                        Text { text: qsTr("最近首动延迟"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
+                        Text { text: root.firstActionLatency >= 0 ? root.firstActionLatency.toFixed(3) + " s" : qsTr("未动"); color: uiTheme.warning; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true }
 
-                        Text { text: qsTr("目标半径"); color: uiTheme.secondaryText; font.pixelSize: 14 }
-                        Text { text: root.targetR + " px"; color: uiTheme.primaryText; font.pixelSize: 18; font.bold: true }
+                        Text { text: qsTr("目标半径"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
+                        Text { text: root.targetR + " px"; color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true }
 
-                        Text { text: qsTr("本试次用时"); color: uiTheme.secondaryText; font.pixelSize: 14 }
-                        Text { text: root.phase === "target_visible" ? (root.hostElapsed() - root.trialStartedAt).toFixed(1) + " s" : "—"; color: uiTheme.primaryText; font.pixelSize: 18; font.bold: true }
+                        Text { text: qsTr("本试次用时"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
+                        Text { text: root.phase === "target_visible" ? (root.hostElapsed() - root.trialStartedAt).toFixed(1) + " s" : "—"; color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true }
                     }
                 }
             }
@@ -601,6 +601,7 @@ Item {
                 text: root.phase === "complete" ? qsTr("会话结束") : (root.phase === "shot_feedback" ? qsTr("反馈中…") : qsTr("准备射击"))
                 color: uiTheme.secondaryText
                 font.pixelSize: uiTheme.captionPx
+                font.family: uiTheme.fontFamily
             }
         }
 

@@ -414,15 +414,15 @@ Item {
                 border.color: root.inZone ? uiTheme.success : uiTheme.panelBorder
             }
 
-            // 目标球（亮黄，与玩家球区分）
-            Rectangle {
-                visible: root.targetVisible
-                x: root.targetX * scene.width - 22
-                y: root.targetY * scene.height - 22
-                width: 44; height: 44; radius: 22
-                color: "#FFD24A"
-                border.width: 3; border.color: "#FFF3B0"
-            }
+                // 目标球（琥珀色，与玩家球区分）
+                Rectangle {
+                    visible: root.targetVisible
+                    x: root.targetX * scene.width - 22
+                    y: root.targetY * scene.height - 22
+                    width: 44; height: 44; radius: 22
+                    color: uiTheme.warning
+                    border.width: 3; border.color: uiTheme.warningHover
+                }
 
             // 遮挡提示
             Text {
@@ -431,6 +431,7 @@ Item {
                 text: qsTr("目标遮挡中…")
                 color: uiTheme.warning
                 font.pixelSize: 22
+                font.family: uiTheme.fontFamily
                 font.bold: true
             }
 
@@ -453,7 +454,7 @@ Item {
                 y: root.ballY * scene.height - 16
                 width: 32; height: 32; radius: 16
                 color: uiTheme.primary
-                border.width: 3; border.color: root.inZone ? "#FFFFFF" : "#E8925A"
+                border.width: 3; border.color: root.inZone ? "#FFFFFF" : uiTheme.warning
             }
 
             // 倒计时
@@ -463,6 +464,7 @@ Item {
                 text: qsTr("%1").arg(Math.ceil(root.countdownValue))
                 color: uiTheme.primaryText
                 font.pixelSize: 72
+                font.family: uiTheme.fontFamily
                 font.bold: true
             }
 
@@ -475,6 +477,7 @@ Item {
                       : qsTr("五轮完成…")
                 color: uiTheme.primaryText
                 font.pixelSize: 26
+                font.family: uiTheme.fontFamily
                 font.bold: true
             }
 
@@ -494,7 +497,7 @@ Item {
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
                     text: qsTr("第 %1/%2 轮").arg(root.roundIndex + 1).arg(root.roundPlan.length)
-                    color: uiTheme.secondaryText; font.pixelSize: 14
+                    color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily
                 }
             }
 
@@ -534,6 +537,7 @@ Item {
                 text: qsTr("本轮已跟随 %1s").arg(root.inZoneDuration.toFixed(1))
                 color: uiTheme.secondaryText
                 font.pixelSize: uiTheme.captionPx
+                font.family: uiTheme.fontFamily
             }
         }
 

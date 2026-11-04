@@ -573,24 +573,24 @@ Item {
               .arg(Math.round(root.levelTime))
         inputSource: root.inputSource
 
-        Rectangle {
-            parent: frame.contentItem
-            anchors.fill: parent
-            color: "#120E0B"
-            radius: 14
-            clip: true
-
-            View3D {
-                id: view
+            Rectangle {
+                parent: frame.contentItem
                 anchors.fill: parent
-                camera: orbitCamera
+                color: uiTheme.sceneBackground
+                radius: 14
+                clip: true
 
-                environment: SceneEnvironment {
-                    clearColor: "#120E0B"
-                    backgroundMode: SceneEnvironment.Color
-                    antialiasingMode: SceneEnvironment.MSAA
-                    antialiasingQuality: SceneEnvironment.High
-                }
+                View3D {
+                    id: view
+                    anchors.fill: parent
+                    camera: orbitCamera
+
+                    environment: SceneEnvironment {
+                        clearColor: uiTheme.sceneBackground
+                        backgroundMode: SceneEnvironment.Color
+                        antialiasingMode: SceneEnvironment.MSAA
+                        antialiasingQuality: SceneEnvironment.High
+                    }
 
                 PerspectiveCamera {
                     id: orbitCamera
@@ -615,22 +615,22 @@ Item {
                     brightness: 0.52
                 }
 
-                Model {
-                    source: "#Rectangle"
-                    y: -3.52 * root.voxelUnit
-                    eulerRotation.x: -90
-                    scale: Qt.vector3d(6.6, 6.6, 1)
-                    materials: PrincipledMaterial {
-                        baseColor: "#4A321F"
-                        baseColorMap: Texture {
-                            source: "assets/wood.png"
-                            scaleU: 5
-                            scaleV: 5
+                    Model {
+                        source: "#Rectangle"
+                        y: -3.52 * root.voxelUnit
+                        eulerRotation.x: -90
+                        scale: Qt.vector3d(6.6, 6.6, 1)
+                        materials: PrincipledMaterial {
+                            baseColor: "#2A2A2A"
+                            baseColorMap: Texture {
+                                source: "assets/wood.png"
+                                scaleU: 5
+                                scaleV: 5
+                            }
+                            roughness: 0.88
+                            metalness: 0.0
                         }
-                        roughness: 0.88
-                        metalness: 0.0
                     }
-                }
 
                 Repeater3D {
                     model: root.level.pieces
@@ -734,17 +734,17 @@ Item {
             }
 
             // 方向选择面板
-            Rectangle {
-                visible: root.selectedId !== "" && root.phase === "playing"
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.rightMargin: 18
-                width: 152
-                height: dirColumn.height + 26
-                radius: 12
-                color: "#CC1B1712"
-                border.width: 1
-                border.color: "#4A3A28"
+                Rectangle {
+                    visible: root.selectedId !== "" && root.phase === "playing"
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.rightMargin: 18
+                    width: 152
+                    height: dirColumn.height + 26
+                    radius: uiTheme.dialogRadius
+                    color: uiTheme.panel
+                    border.width: 1
+                    border.color: uiTheme.panelBorder
 
                 Column {
                     id: dirColumn
@@ -755,8 +755,9 @@ Item {
                     Text {
                         width: parent.width
                         text: qsTr("%1 的抽出方向").arg(root.selectedId)
-                        color: "#E8D9C3"
+                        color: uiTheme.primaryText
                         font.pixelSize: 13
+                        font.family: uiTheme.fontFamily
                         horizontalAlignment: Text.AlignHCenter
                         wrapMode: Text.WordWrap
                     }
@@ -792,7 +793,7 @@ Item {
 
                 SharedUI.GameButton {
                     width: 108
-                    height: 38
+                    height: 32
                     theme: uiTheme
                     objectName: "btnUndo"
                     text: qsTr("撤销一步")
@@ -801,7 +802,7 @@ Item {
                 }
                 SharedUI.GameButton {
                     width: 108
-                    height: 38
+                    height: 32
                     theme: uiTheme
                     objectName: "btnReset"
                     text: qsTr("复位机关")
@@ -823,8 +824,9 @@ Item {
                     return qsTr("已选 %1：拖动它沿长轴抽出，或点右侧方向按钮（模式 %2）")
                             .arg(root.selectedId).arg(root.mode)
                 }
-                color: "#B9A78F"
+                color: uiTheme.secondaryText
                 font.pixelSize: 13
+                font.family: uiTheme.fontFamily
                 wrapMode: Text.WordWrap
             }
 
@@ -832,7 +834,7 @@ Item {
             Rectangle {
                 anchors.fill: parent
                 visible: root.phase === "level_clear" || root.phase === "finished"
-                color: "#B3080605"
+                color: Qt.rgba(0.02, 0.02, 0.02, 0.72)
 
                 Column {
                     anchors.centerIn: parent
@@ -841,21 +843,23 @@ Item {
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: root.phase === "finished" ? qsTr("三关全部拆解") : qsTr("机关已完全拆开")
-                        color: "#F0DFC6"
+                        color: uiTheme.primaryText
                         font.pixelSize: 28
+                        font.family: uiTheme.fontFamily
                         font.bold: true
                     }
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("用时 %1s · 尝试 %2 次 · 被挡 %3 次")
                               .arg(Math.round(root.levelTime)).arg(root.attempts).arg(root.blockedCount)
-                        color: "#C7B49A"
+                        color: uiTheme.secondaryText
                         font.pixelSize: 16
+                        font.family: uiTheme.fontFamily
                     }
                     SharedUI.GameButton {
                         anchors.horizontalCenter: parent.horizontalCenter
                         width: 190
-                        height: 44
+                        height: 32
                         theme: uiTheme
                         text: root.phase === "finished" ? qsTr("结束本局") : qsTr("进入下一关")
                         onClicked: {

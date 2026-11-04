@@ -279,16 +279,17 @@ Item {
             radius: 16
             clip: true
 
-            // 中央大木台
+            // 中央平台
             Rectangle {
                 x: 30; y: 300; width: 640; height: 180
                 radius: 14
-                color: "#5C3D24"
-                Rectangle { x: 0; y: 0; width: 640; height: 12; radius: 6; color: "#7D5433" }
-                Rectangle { x: 0; y: 164; width: 640; height: 16; radius: 7; color: "#3E2716" }
+                color: uiTheme.panel
+                border.color: uiTheme.panelBorder; border.width: 1
+                Rectangle { x: 0; y: 0; width: 640; height: 12; radius: 6; color: uiTheme.panelBorder }
+                Rectangle { x: 0; y: 164; width: 640; height: 16; radius: 7; color: Qt.darker(uiTheme.panel, 1.3) }
                 Repeater {
                     model: 4
-                    Rectangle { x: 20; y: 40 + index * 34; width: 600; height: 2; color: "#472C16"; opacity: 0.6 }
+                    Rectangle { x: 20; y: 40 + index * 34; width: 600; height: 2; color: uiTheme.panelBorder; opacity: 0.6 }
                 }
             }
 
@@ -305,26 +306,26 @@ Item {
                     Rectangle {
                         x: pegItem.cx - 90; y: 428
                         width: 180; height: 18; radius: 6
-                        color: pegItem.isFocused ? "#8A6A45" : "#6B4A2C"
+                        color: pegItem.isFocused ? uiTheme.panelBorder : Qt.darker(uiTheme.panel, 1.2)
                         border.width: 2
                         border.color: {
                             if (root.heldDisc >= 0 && pegItem.isFocused)
                                 return pegItem.isLegalTarget ? uiTheme.success : uiTheme.danger
                             if (pegItem.isFocused) return uiTheme.primary
-                            return "#4A3320"
+                            return uiTheme.panelBorder
                         }
                     }
                     Rectangle {
                         x: pegItem.cx - 6; y: 190
                         width: 12; height: 240
-                        color: "#8F938E"
-                        Rectangle { x: 0; y: 0; width: 4; height: 240; color: "#B8BCB6" }
+                        color: uiTheme.secondaryText
+                        Rectangle { x: 0; y: 0; width: 4; height: 240; color: uiTheme.primaryText }
                     }
                     Text {
                         x: pegItem.cx - 10; y: 452
                         text: root.pegLabels[pegItem.index]
                         color: pegItem.isFocused ? uiTheme.primary : uiTheme.secondaryText
-                        font.pixelSize: 22; font.bold: true
+                        font.pixelSize: 22; font.family: uiTheme.fontFamily; font.bold: true
                     }
                     Rectangle {
                         visible: pegItem.isFocused
@@ -368,7 +369,7 @@ Item {
                             Text {
                                 anchors.centerIn: parent
                                 text: parent.discSize
-                                color: uiTheme.primaryText; font.pixelSize: 15; font.bold: true
+                                color: uiTheme.primaryText; font.pixelSize: 15; font.family: uiTheme.fontFamily; font.bold: true
                             }
                         }
                     }
@@ -382,13 +383,13 @@ Item {
                 width: dw; height: 34; radius: 9
                 x: root.pegCenterX[root.focusPole] - dw / 2
                 y: 190
-                color: "#FFF3B0"
-                border.width: 3; border.color: "#E7BC84"
-                Text {
-                    anchors.centerIn: parent
-                    text: qsTr("手持 %1").arg(root.heldDisc)
-                    color: uiTheme.primaryText; font.pixelSize: 14; font.bold: true
-                }
+                color: uiTheme.warning
+                border.width: 3; border.color: uiTheme.warningHover
+                    Text {
+                        anchors.centerIn: parent
+                        text: qsTr("手持 %1").arg(root.heldDisc)
+                        color: uiTheme.background; font.pixelSize: 14; font.family: uiTheme.fontFamily; font.bold: true
+                    }
             }
 
             // 会话进度（第 n/5）
@@ -407,7 +408,7 @@ Item {
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
                     text: qsTr("第 %1/5 局").arg(root.roundIndex + 1)
-                    color: uiTheme.secondaryText; font.pixelSize: 14
+                    color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily
                 }
             }
 
@@ -425,19 +426,19 @@ Item {
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("第 %1 局完成").arg(root.roundIndex + 1)
-                        color: uiTheme.primaryText; font.pixelSize: 24; font.bold: true
+                        color: uiTheme.primaryText; font.pixelSize: 24; font.family: uiTheme.fontFamily; font.bold: true
                     }
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("用步 %1（最优 %2）").arg(root.moves).arg(root.optimalMoves)
-                        color: uiTheme.secondaryText; font.pixelSize: 16
+                        color: uiTheme.secondaryText; font.pixelSize: 16; font.family: uiTheme.fontFamily
                     }
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: root.roundIndex < root.roundPlan.length - 1
                               ? qsTr("即将进入第 %1 局…").arg(root.roundIndex + 2)
                               : qsTr("五局完成…")
-                        color: uiTheme.success; font.pixelSize: 14
+                        color: uiTheme.success; font.pixelSize: 14; font.family: uiTheme.fontFamily
                     }
                 }
             }
@@ -472,6 +473,7 @@ Item {
                 text: qsTr("步数 %1 / 最优 %2").arg(root.moves).arg(root.optimalMoves)
                 color: uiTheme.secondaryText
                 font.pixelSize: uiTheme.captionPx
+                font.family: uiTheme.fontFamily
             }
         }
 

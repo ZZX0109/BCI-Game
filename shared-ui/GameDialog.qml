@@ -41,6 +41,7 @@ Rectangle {
                 text: root.title
                 color: theme.primaryText
                 font.pixelSize: theme.headingPx
+                font.family: theme.fontFamily
                 font.bold: true
                 wrapMode: Text.WordWrap
             }
@@ -52,6 +53,7 @@ Rectangle {
                 text: root.message
                 color: theme.secondaryText
                 font.pixelSize: theme.bodyPx
+                font.family: theme.fontFamily
                 wrapMode: Text.WordWrap
             }
 

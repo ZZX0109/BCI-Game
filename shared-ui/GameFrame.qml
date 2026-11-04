@@ -31,6 +31,7 @@ Rectangle {
             text: root.title
             color: theme.primaryText
             font.pixelSize: theme.titlePx
+            font.family: theme.fontFamily
             font.bold: true
         }
 
@@ -43,6 +44,7 @@ Rectangle {
             text: root.subtitle
             color: theme.secondaryText
             font.pixelSize: theme.captionPx
+            font.family: theme.fontFamily
         }
 
         Text {
@@ -53,6 +55,7 @@ Rectangle {
             text: "[" + root.inputSource.toUpperCase() + "]"
             color: theme.primary
             font.pixelSize: theme.captionPx
+            font.family: theme.fontFamily
             font.bold: true
         }
 
@@ -63,6 +66,7 @@ Rectangle {
             text: root.mode
             color: theme.secondaryText
             font.pixelSize: theme.bodyPx
+            font.family: theme.fontFamily
         }
     }
 

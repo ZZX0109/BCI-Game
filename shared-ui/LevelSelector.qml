@@ -27,6 +27,7 @@ Rectangle {
             text: root.title
             color: theme.primaryText
             font.pixelSize: theme.headingPx
+            font.family: theme.fontFamily
             font.bold: true
         }
 
@@ -46,15 +47,17 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     Text {
                         text: modelData.label
-                        color: index === root.currentIndex ? "#FFFFFF" : theme.primaryText
+                        color: index === root.currentIndex ? theme.background : theme.primaryText
                         font.pixelSize: theme.bodyPx
+                        font.family: theme.fontFamily
                         font.bold: true
                     }
                     Text {
                         visible: modelData.description !== undefined
                         text: modelData.description || ""
-                        color: index === root.currentIndex ? "#E0F0F0" : theme.secondaryText
+                        color: index === root.currentIndex ? theme.background : theme.secondaryText
                         font.pixelSize: theme.captionPx
+                        font.family: theme.fontFamily
                     }
                 }
 

@@ -31,6 +31,7 @@ Rectangle {
             text: root.title
             color: theme.primaryText
             font.pixelSize: theme.headingPx
+            font.family: theme.fontFamily
             font.bold: true
         }
 
@@ -47,6 +48,7 @@ Rectangle {
                     text: modelData.label
                     color: theme.secondaryText
                     font.pixelSize: theme.bodyPx
+                    font.family: theme.fontFamily
                 }
                 Text {
                     anchors.right: parent.right
@@ -54,6 +56,7 @@ Rectangle {
                     text: modelData.value
                     color: modelData.color || theme.primaryText
                     font.pixelSize: theme.bodyPx
+                    font.family: theme.fontFamily
                     font.bold: true
                 }
             }
@@ -66,6 +69,7 @@ Rectangle {
             text: root.hint
             color: theme.secondaryText
             font.pixelSize: theme.captionPx
+            font.family: theme.fontFamily
             wrapMode: Text.WordWrap
         }
     }

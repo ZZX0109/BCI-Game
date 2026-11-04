@@ -13,6 +13,7 @@ Text {
 
     color: theme.secondaryText
     font.pixelSize: theme.captionPx
+    font.family: theme.fontFamily
     text: {
         if (source === "bci" && bciHint !== "") return bciHint
         if (source === "pointer" && mouseHint !== "") return mouseHint
