@@ -1,8 +1,8 @@
 # Neuralife 七款游戏 V4 交付状态
 
 > 依据：`C:\Users\Ait\Downloads\Neuralife_七款新增游戏_V4_确认版开发规格书.md`
-> 更新：2026-11-04（第五次）· 全部改动均有备份在 `C:\Users\Ait\Desktop\Neuralife_V3_backup_20261103\`
-> 本次（第五次）：修复 luban 宿主 `onPointer` 坐标到 `View3D` 局部坐标的映射；建立 `docs/ORIGINAL_VISUAL_BASELINE.md` 并标记 `BASE-01` 为 BLOCKED。
+> 更新：2026-11-04（第六次）· 全部改动均有备份在 `C:\Users\Ait\Desktop\Neuralife_V3_backup_20261103\`
+> 本次（第六次）：按宿主内置 balance/pong 样例的暗色极简风格，统一七款游戏的场景背景、HUD、文字、按钮颜色；补充七款游戏 smoke 截图至 `screenshots/`。
 
 ## 一、总览
 
@@ -33,21 +33,27 @@
 | §10.1 事件协议 | 每款按协议记录 | ✅ |
 | §10.3 测试材料 | 截图 / 日志 / 验收表 / CHANGELOG | ✅ 见第三节 |
 | §10.4 验收矩阵 | 逐项 PASS/FAIL/BLOCKED/NOT TESTED | ✅ **51 PASS / 1 PARTIAL / 1 OBSOLETE**（53 行） |
-| §1 视觉同源 | 场景背景/HUD 统一接入主题令牌，消除 V2 深蓝硬编码 | ✅ 第四次完成（见第六节） |
+| §1 视觉同源 | 场景背景/HUD 统一接入主题令牌，按宿主 balance/pong 样例统一为暗色极简风格 | ✅ 第六次完成（见第六节） |
 
 ## 二·补 视觉同源（§1）完成记录
 
-六款游戏（luban 3D 古风台面除外）已完成 V2 深蓝 → 浅色主题令牌的迁移：
+全部七款游戏与共享 UI 已按宿主内置 `balance/Main.qml` 与 `pong/Main.qml` 的真实代码风格，迁移为暗色极简主题：
 
-- **场景背景**：`#101C2C/#101F36/#0F1B2C/#1A222C` → `uiTheme.panel`
-- **HUD 面板/结算卡/状态卡**：`#1F3043/#1B2A38/#1B2C3F` → `uiTheme.panel` + `uiTheme.panelBorder` + 令牌文字
-- **霓虹青绿高亮** `#5ADCCB`、成功绿 `#68D5B5` → `uiTheme.primary` / `uiTheme.success`
-- **深蓝浅色文字** `#AAC0CB/#F5F8F8` → `uiTheme.secondaryText` / `uiTheme.primaryText`
-- **深蓝边框** `#0B1422/#50647A/#33506A` → `uiTheme.panelBorder`
+- **场景背景**：统一为 `#050505`（`uiTheme.background` / `uiTheme.sceneBackground`）
+- **HUD 面板/结算卡/状态卡**：`#121212`（`uiTheme.panel`）+ `#333333`（`uiTheme.panelBorder`）
+- **成功/目标/进度高亮**：薄荷绿 `#80ff9b` → `uiTheme.primary` / `uiTheme.success`
+- **警告/时间/高亮**：琥珀 `#ffdf70` → `uiTheme.warning`
+- **错误/死局/碰撞**：珊瑚红 `#ff6b6b` → `uiTheme.danger`
+- **主文字**：米白 `#f5f5ef` → `uiTheme.primaryText`
+- **次要文字**：灰绿 `#8f938e` → `uiTheme.secondaryText`
+- **字体**：全量 Text 接入 `Segoe UI`（`uiTheme.fontFamily`）
+- **按钮**：FluentWinUI3 风格，32 px 高、4 px 圆角
 
-**保留的玩法物件材质色**（规格书 §1.2 允许因玩法不同而变化）：木台棕、盘子橙、棋盘墙深色、车体蓝/橙、靶心深蓝盘、准星橙红、夹爪金属灰、玩具金色。
+**保留的玩法物件材质色**（规格书 §1.2 允许因玩法不同而变化，本次仅做去饱和/暗化以融入暗底）：
+盘子橙 → `uiTheme.warning`、目标球 → `uiTheme.warning`、箱子 → `uiTheme.warning`/`uiTheme.success`/`uiTheme.danger`、
+车体蓝/橙保持、靶心保持深色底+绿心、夹爪金属灰 → `uiTheme.secondaryText`、玩具金色 → `uiTheme.warning`。
 
-**themeIndex 现状**：宿主 `game` 对象仅暴露 `elapsedSeconds/finish/inputSource/record/width/height`，**未暴露主题信号**，故 `GameTheme.themeIndex` 固定 0（Light）。已在 `GameTheme.qml` 注释标明待宿主接口接入（BASE-03）。
+**themeIndex 现状**：宿主 `game` 对象仅暴露 `elapsedSeconds/finish/inputSource/record/width/height`，**未暴露主题信号**，故 `GameTheme.themeIndex` 固定 0（Dark）。已在 `GameTheme.qml` 注释标明待宿主接口接入（BASE-03）。
 
 ## 三、证据清单
 
@@ -62,8 +68,8 @@
 | luban 几何求解/可解性 | `docs/logs/luban_solver_report.txt` | ✅ 三关拆卸序列（L2 锁 2 件 / L3 锁 3 件） |
 | luban 运行时判据校验 | `docs/logs/luban_runtime_check.txt` | ✅ 与求解器结论一致 |
 | luban 渲染证据 | `docs/shots/luban_v4_*.png` | ✅ 真实宿主渲染 |
-| 其余六款截图 | `docs/shots/` | 🟡 仅启动帧；操作态观感需实机 |
-| 原版六款风格基准 `BASE-01` | `docs/ORIGINAL_VISUAL_BASELINE.md` | ⛔ 当前环境无法获取原版六款运行画面，BLOCKED；已记录可获取的 Pong 样例截图与阻塞原因 |
+| 七款风格统一 smoke 截图 | `screenshots/{claw,hanoi,luban,pursuit,sokoban,target,traffic}.png` | ✅ 真实宿主离屏 smoke |
+| 原版六款风格基准 `BASE-01` | `docs/ORIGINAL_VISUAL_BASELINE.md` | ⛔ 当前环境无法获取原版六款运行画面，BLOCKED；已记录可获取的 Pong 样例截图与阻塞原因；本次按 balance/pong 样例代码风格完成统一 |
 
 ## 四、还需要真人上手的部分（已压缩到 3 条）
 
@@ -87,7 +93,14 @@
 | `luban/Main.qml` `onPointer(x,y)` | 宿主 Cursor 坐标是根 Item 坐标，直接 `view.pick(x,y)` 会因 `GameFrame` 边距产生偏移 | 新增 `pickAtRoot(rx, ry)` 先 `view.mapFromItem(root, rx, ry)` 再 pick（2026-11-04 修） |
 | `traffic/Main.qml` `holdGrace=1.5` | 单次按下若收不到 release，只保证 1.5s 有效；C01 全程冲刺需 1.97s，**若宿主不转发按键自动重复，玩家会在马路中间停住被撞** | 未改代码（属设计选择）；harness 用 0.4s 补按等价自动重复通过。需实机确认宿主是否转发 auto-repeat |
 
-## 六、下一步候选
+## 六、本次风格统一提交
+
+- 分支：`v3-dev`
+- 提交：`7e5966b` style(ui): unify seven games to dark minimalist theme
+- 变更：8 个共享 UI 组件 + 7 款游戏 Main.qml + 7 张 smoke 截图
+- 冒烟：7/7 `EXIT=0`
+
+## 七、下一步候选
 
 1. 实机补第四条那 3 类（luban 三维手势优先，因为它也是唯一 PARTIAL 的一项）。
 2. `BASE-01`：需要原版六款运行截图。
