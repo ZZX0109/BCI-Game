@@ -383,8 +383,7 @@ Item {
             id: scene
             parent: frame.contentItem
             anchors.fill: parent
-            color: uiTheme.panel
-            radius: 16
+            color: "transparent"
             clip: true
             readonly property real tolPx: root.roundCfg.tolerance * Math.min(width, height)
 

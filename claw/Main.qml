@@ -334,178 +334,213 @@ Item {
         mode: qsTr("尝试 %1 / %2 · %3").arg(Math.min(root.attempts + 1, root.attemptsTotal)).arg(root.attemptsTotal).arg(root.difficulty)
         inputSource: root.inputSource
 
-        // 主场景：俯视定位图（X-Z 平面）
+        // 主场景：2.5D 娃娃机正视视角
+        // X = 导轨左右；Z = 深度（透视缩短：远处地板更高、玩具更小）；Y = 抓爪高度
         Rectangle {
+            id: scene
             parent: frame.contentItem
             anchors.fill: parent
-            color: uiTheme.panel
-            radius: 16
+            color: uiTheme.background
             clip: true
 
-            // 俯视图标题
-            Text {
-                x: 24; y: 16
-                text: qsTr("俯视定位（X-Z）")
+            readonly property real cabL: 36
+            readonly property real cabR: scene.width - 132
+            readonly property real cabT: 100
+            readonly property real cabB: scene.height - 44
+            readonly property real railY: cabT + 16
+            readonly property real floorFarY: cabB - 116
+            readonly property real floorNearY: cabB - 20
+
+            // 玻璃柜内部的装饰玩具（背景层，颜色刻意压暗，目标玩具为唯一琥珀色）
+            readonly property var decoToys: [
+                { x: 160, z: 70 }, { x: 300, z: 50 }, { x: 520, z: 90 },
+                { x: 230, z: 210 }, { x: 470, z: 225 }
+            ]
+            readonly property var decoColors: ["#5d6b5f", "#6b5d5d", "#5d5f6b", "#66594a", "#4f6659"]
+
+            function mapX(x) {
+                return cabL + 24 + (x - root.xMin) / (root.xMax - root.xMin) * (cabR - cabL - 48)
+            }
+            function zN(z) { return (z - root.zMin) / (root.zMax - root.zMin) } // 0=远 1=近
+            function floorY(z) { return floorFarY + zN(z) * (floorNearY - floorFarY) }
+            function scl(z) { return 0.78 + zN(z) * 0.32 }
+
+            readonly property real headProgress:
+                Math.max(0, Math.min(1, (root.clawY - root.clawTopY) / (root.floorY - root.clawTopY)))
+            readonly property real headY:
+                railY + headProgress * (floorY(root.clawZ) - railY - 42)
+
+            // 玻璃柜内壁
+            Rectangle {
+                x: scene.cabL; y: scene.cabT
+                width: scene.cabR - scene.cabL
+                height: scene.cabB - scene.cabT
+                color: "transparent"
+                border.width: 2; border.color: uiTheme.panelBorder
+            }
+
+            // 顶部导轨 + 滑台
+            Rectangle {
+                x: scene.cabL; y: scene.railY
+                width: scene.cabR - scene.cabL; height: 6
+                color: uiTheme.panelBorder
+            }
+            Rectangle {
+                x: scene.mapX(root.clawX) - 16; y: scene.railY - 4
+                width: 32; height: 14; radius: 3
                 color: uiTheme.secondaryText
-                font.pixelSize: uiTheme.captionPx
+                border.width: 1; border.color: uiTheme.primary
             }
 
-            // 俯视场景区域
-            Rectangle {
-                id: topView
-                x: 24; y: 44
-                width: 420; height: 340
-                color: uiTheme.background
-                border.color: uiTheme.panelBorder
-                border.width: 2
-                radius: 8
-
-                // 坐标轴标签
-                Text { anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.margins: 6; text: qsTr("前"); color: uiTheme.secondaryText; font.pixelSize: 12; font.family: uiTheme.fontFamily }
-                Text { anchors.top: parent.top; anchors.left: parent.left; anchors.margins: 6; text: qsTr("后"); color: uiTheme.secondaryText; font.pixelSize: 12; font.family: uiTheme.fontFamily }
-                Text { anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.margins: 6; text: qsTr("左"); color: uiTheme.secondaryText; font.pixelSize: 12; font.family: uiTheme.fontFamily }
-                Text { anchors.bottom: parent.bottom; anchors.right: parent.right; anchors.margins: 6; text: qsTr("右"); color: uiTheme.secondaryText; font.pixelSize: 12; font.family: uiTheme.fontFamily }
-
-                // 映射函数
-                function mapX(v) { return 20 + (v - root.xMin) / (root.xMax - root.xMin) * (width - 40) }
-                function mapZ(v) { return 20 + (v - root.zMin) / (root.zMax - root.zMin) * (height - 40) }
-
-                // 玩具
+            // 深度地板线（近疏远密，制造透视）
+            Repeater {
+                model: 5
                 Rectangle {
-                    x: parent.mapX(root.toyFloorX) - 14
-                    y: parent.mapZ(root.toyFloorZ) - 14
-                    width: 28; height: 28; radius: 14
-                    color: root.toyState === "binned" ? uiTheme.success : uiTheme.warning
-                    border.width: 2; border.color: uiTheme.panelBorder
-                    visible: root.toyState !== "attached"
+                    required property int index
+                    x: scene.cabL + 8
+                    width: scene.cabR - scene.cabL - 16
+                    height: 1
+                    y: scene.floorY(root.zMin + index * (root.zMax - root.zMin) / 4)
+                    color: uiTheme.panelBorder
+                    opacity: 0.35
                 }
+            }
 
-                // 夹爪投影（俯视图）
+            // 背景玩具堆
+            Repeater {
+                model: scene.decoToys
                 Rectangle {
-                    x: parent.mapX(root.clawX) - 10
-                    y: parent.mapZ(root.clawZ) - 10
-                    width: 20; height: 20; radius: 10
+                    required property int index
+                    readonly property real s: scene.scl(scene.decoToys[index].z)
+                    x: scene.mapX(scene.decoToys[index].x) - 11 * s
+                    y: scene.floorY(scene.decoToys[index].z) - 22 * s
+                    width: 22 * s; height: 22 * s; radius: 8 * s
+                    color: scene.decoColors[index % scene.decoColors.length]
+                    opacity: 0.9
+                }
+            }
+
+            // 缆绳
+            Rectangle {
+                x: scene.mapX(root.clawX) - 1
+                y: scene.railY + 10
+                width: 2
+                height: Math.max(0, scene.headY - scene.railY - 10)
+                color: uiTheme.secondaryText
+            }
+
+            // 抓爪本体 + 双爪
+            Item {
+                x: scene.mapX(root.clawX)
+                y: scene.headY
+                Rectangle {
+                    x: -14; y: 0
+                    width: 28; height: 14; radius: 4
                     color: uiTheme.secondaryText
                     border.width: 2; border.color: uiTheme.primary
                 }
-
-                // 容差椭圆（仅在接触后显示，或作为辅助模式选项）
-                Rectangle {
-                    visible: root.phase !== "aligning" && root.contactAt >= 0
-                    x: parent.mapX(root.toyFloorX) - parent.mapX(root.toyFloorX + root.tolerance) + parent.mapX(root.toyFloorX)
-                    y: parent.mapZ(root.toyFloorZ) - 6
-                    width: (parent.mapX(root.toyFloorX + root.tolerance) - parent.mapX(root.toyFloorX)) * 2
-                    height: 12
-                    radius: 6
-                    color: root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger
-                    opacity: 0.4
-                }
+                Rectangle { x: -12; y: 14; width: 4; height: 14; color: uiTheme.primary }
+                Rectangle { x:  8; y: 14; width: 4; height: 14; color: uiTheme.primary }
             }
 
-            // 侧视图（X-Y 平面）
+            // 容差环（仅在接触后显示）
             Rectangle {
-                id: sideView
-                x: 468; y: 44
-                width: 220; height: 340
-                color: uiTheme.background
-                border.color: uiTheme.panelBorder
-                border.width: 2
-                radius: 8
+                visible: root.phase !== "aligning" && root.contactAt >= 0
+                readonly property real s: scene.scl(root.clawZ)
+                x: scene.mapX(root.clawX) - 23 * s
+                y: scene.floorY(root.clawZ) - 8 * s
+                width: 46 * s; height: 16 * s; radius: 8 * s
+                color: "transparent"
+                border.width: 3
+                border.color: root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger
+                opacity: 0.85
+            }
 
+            // 目标玩具（地板上）
+            Rectangle {
+                visible: root.toyState === "floor"
+                readonly property real s: scene.scl(root.toyFloorZ)
+                x: scene.mapX(root.toyFloorX) - 13 * s
+                y: scene.floorY(root.toyFloorZ) - 26 * s
+                width: 26 * s; height: 26 * s; radius: 9 * s
+                color: uiTheme.warning
+                border.width: 2; border.color: uiTheme.background
+            }
+
+            // 目标玩具（被夹住，跟爪移动）
+            Rectangle {
+                visible: root.toyState === "attached"
+                x: scene.mapX(root.clawX) - 12
+                y: scene.headY + 26
+                width: 24; height: 24; radius: 9
+                color: uiTheme.warning
+                border.width: 2; border.color: uiTheme.background
+            }
+
+            // 投放仓（右侧）
+            Rectangle {
+                x: scene.cabR + 18
+                y: scene.cabT + 40
+                width: scene.width - 24 - (scene.cabR + 18)
+                height: scene.cabB - scene.cabT - 40
+                color: "transparent"
+                border.width: 2; border.color: uiTheme.panelBorder
                 Text {
-                    x: 12; y: 12
-                    text: qsTr("侧视（X-高度）")
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top; anchors.topMargin: 14
+                    text: qsTr("投放口")
                     color: uiTheme.secondaryText
-                    font.pixelSize: uiTheme.captionPx
-                    font.family: uiTheme.fontFamily
-                }
-
-                function mapX(v) { return 20 + (v - root.xMin) / (root.xMax - root.xMin) * (width - 40) }
-                function mapY(v) { return 40 + (v - root.clawTopY) / (root.floorY - root.clawTopY) * (height - 80) }
-
-                // 地板
-                Rectangle {
-                    x: 10; y: parent.mapY(root.floorY)
-                    width: parent.width - 20; height: 6
-                    color: "#5C3D24"
-                }
-
-                // 夹爪侧视
-                Rectangle {
-                    x: parent.mapX(root.clawX) - 14
-                    y: parent.mapY(root.clawY) - 20
-                    width: 28; height: 40
-                    radius: 6
-                    color: uiTheme.secondaryText
-                    border.width: 2; border.color: uiTheme.primary
-                }
-
-                // 缆绳
-                Rectangle {
-                    x: parent.mapX(root.clawX) - 1
-                    y: 40
-                    width: 2
-                    height: parent.mapY(root.clawY) - 60
-                    color: uiTheme.secondaryText
-                }
-
-                // 玩具侧视（只在 floor 或 attached 时可见）
-                Rectangle {
-                    visible: root.toyState !== "binned"
-                    x: parent.mapX(root.toyState === "attached" ? root.clawX : root.toyFloorX) - 12
-                    y: parent.mapY(root.floorY) - 24
-                    width: 24; height: 24
-                    radius: 12
-                    color: root.toyState === "attached" ? uiTheme.success : uiTheme.warning
-                    border.width: 2; border.color: uiTheme.panelBorder
+                    font.pixelSize: 13; font.family: uiTheme.fontFamily
                 }
             }
 
-            // 中央状态提示（对齐阶段不泄露具体误差数值）
+            // 目标玩具（已投放，停在仓底）
             Rectangle {
+                visible: root.toyState === "binned"
+                x: (scene.cabR + 18) + (scene.width - 24 - (scene.cabR + 18)) / 2 - 11
+                y: scene.cabB - 34
+                width: 22; height: 22; radius: 8
+                color: uiTheme.success
+                border.width: 2; border.color: uiTheme.background
+            }
+
+            // 状态提示（悬浮文字，pong 式，无面板）
+            Text {
                 anchors.horizontalCenter: parent.horizontalCenter
-                y: 400
-                width: 640; height: 44; radius: 8
-                color: uiTheme.panel; border.color: uiTheme.panelBorder; border.width: 1
-                Text {
-                    anchors.centerIn: parent
-                    text: {
-                        if (root.phase === "aligning") {
-                            // V4：定位阶段不泄露方向/误差，不提前告知"已对准"
-                            return qsTr("凭视觉对准目标（左右/前后调整），按确认抓取")
-                        }
-                        if (root.phase === "lowering") return qsTr("下降中…")
-                        if (root.phase === "lifting") return root.lastJudgedSuccess ? qsTr("已夹住，升起…") : qsTr("未夹住，升起…")
-                        if (root.phase === "transport") return qsTr("运往投放仓…")
-                        if (root.phase === "release") return qsTr("释放中…")
-                        if (root.phase === "attempt_end") return root.lastJudgedSuccess ? qsTr("投放成功！") : qsTr("未抓到，进入下一次尝试…")
-                        return ""
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 76
+                text: {
+                    if (root.phase === "aligning") {
+                        // V4：定位阶段不泄露方向/误差，不提前告知"已对准"
+                        return qsTr("凭视觉对准目标（左右/前后调整），按确认抓取")
                     }
-                    color: root.phase === "aligning"
-                           ? uiTheme.secondaryText
-                           : (root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger)
-                    font.pixelSize: 17; font.bold: true; font.family: uiTheme.fontFamily
+                    if (root.phase === "lowering") return qsTr("下降中…")
+                    if (root.phase === "lifting") return root.lastJudgedSuccess ? qsTr("已夹住，升起…") : qsTr("未夹住，升起…")
+                    if (root.phase === "transport") return qsTr("运往投放仓…")
+                    if (root.phase === "release") return qsTr("释放中…")
+                    if (root.phase === "attempt_end") return root.lastJudgedSuccess ? qsTr("投放成功！") : qsTr("未抓到，进入下一次尝试…")
+                    return ""
                 }
+                color: root.phase === "aligning"
+                       ? uiTheme.secondaryText
+                       : (root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger)
+                font.pixelSize: 18; font.bold: true; font.family: uiTheme.fontFamily
             }
 
             // 接触后结果显示（不泄露给对齐阶段）
-            Rectangle {
+            Text {
                 visible: root.phase !== "aligning" && root.contactAt >= 0
                 anchors.horizontalCenter: parent.horizontalCenter
-                y: 450
-                width: 560; height: 34; radius: 6
-                color: root.lastJudgedSuccess ? "#1C3A32" : "#3A1C1C"
-                Text {
-                    anchors.centerIn: parent
-                    text: qsTr("接触误差：dx=%1 px, dz=%2 px, 归一化误差=%3, 结果：%4")
-                        .arg(Math.round(root.offsetAtTriggerX))
-                        .arg(Math.round(root.offsetAtTriggerZ))
-                        .arg(root.lastNormalizedError.toFixed(2))
-                        .arg(root.lastJudgedSuccess ? qsTr("成功") : qsTr("失败"))
-                    color: root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger
-                    font.pixelSize: 15
-                    font.family: uiTheme.fontFamily
-                }
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 52
+                text: qsTr("接触误差：dx=%1 px, dz=%2 px, 归一化误差=%3, 结果：%4")
+                    .arg(Math.round(root.offsetAtTriggerX))
+                    .arg(Math.round(root.offsetAtTriggerZ))
+                    .arg(root.lastNormalizedError.toFixed(2))
+                    .arg(root.lastJudgedSuccess ? qsTr("成功") : qsTr("失败"))
+                color: root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger
+                font.pixelSize: 14
+                font.family: uiTheme.fontFamily
             }
         }
 

@@ -275,8 +275,7 @@ Item {
         Rectangle {
             parent: frame.contentItem
             anchors.fill: parent
-            color: uiTheme.panel
-            radius: 16
+            color: "transparent"
             clip: true
 
             // 中央平台

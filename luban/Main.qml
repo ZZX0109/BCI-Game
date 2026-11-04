@@ -577,7 +577,6 @@ Item {
                 parent: frame.contentItem
                 anchors.fill: parent
                 color: uiTheme.sceneBackground
-                radius: 14
                 clip: true
 
                 View3D {

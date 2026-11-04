@@ -431,7 +431,7 @@ Item {
                 Rectangle {
                     id: sceneRect
                     x: 24; y: 116; width: 700; height: 483
-                    color: uiTheme.panel; radius: 16; clip: true
+                    color: uiTheme.background; clip: true
 
                     // 地面网格
                     Repeater {
@@ -547,7 +547,7 @@ Item {
                 // 右侧指标
                 Rectangle {
                     x: 743; y: 116; width: 233; height: 483
-                    color: uiTheme.panel; radius: 12
+                    color: "transparent"
                     border.color: uiTheme.panelBorder; border.width: 1
                     Column {
                         x: 16; y: 14; spacing: 8; width: 201

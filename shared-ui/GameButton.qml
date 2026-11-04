@@ -1,7 +1,6 @@
 import QtQuick
 
-// 统一按钮：支持鼠标点击、键盘/脑控聚焦、禁用状态
-// 视觉对齐宿主 FluentWinUI3 / balance 样例：深色底、灰白字、薄荷绿高亮
+// 统一按钮：透明底 + 米白描边（pong 语言），高亮时薄荷绿填充
 Rectangle {
     id: root
 
@@ -18,18 +17,18 @@ Rectangle {
     radius: theme.buttonRadius
 
     color: {
-        if (dimmed) return theme.panel
+        if (dimmed) return Qt.rgba(1, 1, 1, 0.04)
         if (highlighted) {
             if (mouseArea.pressed) return theme.primaryPressed
             if (mouseArea.containsMouse) return theme.primaryHover
             return theme.primary
         }
-        if (mouseArea.pressed) return Qt.darker(theme.panel, 1.3)
-        if (mouseArea.containsMouse) return Qt.lighter(theme.panel, 1.15)
-        return theme.panel
+        if (mouseArea.pressed) return Qt.rgba(1, 1, 1, 0.12)
+        if (mouseArea.containsMouse) return Qt.rgba(1, 1, 1, 0.07)
+        return "transparent"
     }
 
-    border.color: highlighted ? theme.primary : theme.panelBorder
+    border.color: highlighted ? theme.primary : (dimmed ? theme.disabledText : theme.secondaryText)
     border.width: 1
 
     Text {

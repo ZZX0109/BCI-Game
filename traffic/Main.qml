@@ -824,8 +824,7 @@ Item {
                 Rectangle {
                     x: 24; y: 104
                     width: root.sceneW; height: root.sceneH
-                    color: uiTheme.panel
-                    radius: 12
+                    color: uiTheme.background
                     clip: true
 
                     Canvas {

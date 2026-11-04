@@ -439,8 +439,7 @@ Item {
         Rectangle {
             parent: frame.contentItem
             anchors.fill: parent
-            color: uiTheme.panel
-            radius: 16
+            color: "transparent"
             clip: true
 
             readonly property real cell: Math.min(620 / Math.max(1, root.cols), 420 / Math.max(1, root.rows))
