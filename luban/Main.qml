@@ -15,9 +15,9 @@ Item {
     readonly property real voxelUnit: LevelData.UNIT
     readonly property var axisList: ["+x", "-x", "+y", "-y", "+z", "-z"]
     readonly property var axisNames: ({
-        "+x": qsTr("右 →X"), "-x": qsTr("左 ←X"),
-        "+y": qsTr("上 ↑Y"), "-y": qsTr("下 ↓Y"),
-        "+z": qsTr("前 →Z"), "-z": qsTr("后 ←Z")
+        "+x": qsTr("右 →"), "-x": qsTr("左 ←"),
+        "+y": qsTr("上 ↑"), "-y": qsTr("下 ↓"),
+        "+z": qsTr("前"), "-z": qsTr("后")
     })
     readonly property var axisVectors: ({
         "+x": [1, 0, 0], "-x": [-1, 0, 0],
@@ -41,6 +41,13 @@ Item {
     property bool sessionStarted: false
     property string mode: "orbit"
     property string axisFocus: "+x"
+
+    // 新手引导与可动提示：让玩家「看图即懂」
+    property bool tutorialOpen: false
+    property bool hintsOn: true
+    property var movableMap: ({})
+    property string hoverPid: ""
+    property real pulse: 0
 
     property bool animActive: false
     property string animPid: ""
@@ -158,6 +165,22 @@ Item {
         return d
     }
 
+    // 当前就能沿长轴滑动的木件集合（提示高亮用；能滑动 ≠ 一定能完全抽出）
+    function updateMovable() {
+        var m = {}
+        var ps = root.level.pieces
+        for (var i = 0; i < ps.length; i++) {
+            var pid = ps[i].id
+            if (root.removedMap[pid] === true) continue
+            var posName = ps[i].axis === "x" ? "+x" : (ps[i].axis === "y" ? "+y" : "+z")
+            var negName = ps[i].axis === "x" ? "-x" : (ps[i].axis === "y" ? "-y" : "-z")
+            if (root.freeDistance(pid, root.axisVectors[posName], 0.4) > 0.3
+                    || root.freeDistance(pid, root.axisVectors[negName], 0.4) > 0.3)
+                m[pid] = true
+        }
+        root.movableMap = m
+    }
+
     // 完全脱离组装体所需的位移
     function clearDistance(pid, dir) {
         var piece = root.pieceById(pid)
@@ -218,6 +241,7 @@ Item {
         root.blockedCount = 0
         root.undoCount = 0
         root.resetCount = 0
+        root.tutorialOpen = true
         root.loadLevel(0)
     }
 
@@ -246,6 +270,7 @@ Item {
             "pieces": lv.pieces.length,
             "elapsed": root.hostElapsed()
         })
+        root.updateMovable()
     }
 
     function selectByPid(pid) {
@@ -323,6 +348,7 @@ Item {
             root.record("luban.partial", { "piece": pid, "level": root.level.id, "via": "axis" })
             root.notify(qsTr("%1 滑到接触面后停住").arg(pid), "warning")
         }
+        root.updateMovable()
     }
 
     function completeLevel() {
@@ -361,6 +387,7 @@ Item {
         root.undoCount += 1
         root.phase = "playing"
         root.record("luban.undo", { "piece": last.pid, "level": root.level.id })
+        root.updateMovable()
     }
 
     function resetLevel() {
@@ -377,6 +404,7 @@ Item {
         root.mode = "orbit"          // 复位后回到观察模式，避免卡在选轴模式
         root.record("luban.reset", { "level": root.level.id })
         root.notify(qsTr("已复位到初始锁合"), "info")
+        root.updateMovable()
     }
 
     // ------------------------------------------------------------------
@@ -397,6 +425,7 @@ Item {
             root.shakeT = Math.max(0, root.shakeT - seconds)
             if (root.shakeT === 0) root.shakePid = ""
         }
+        root.pulse = (root.pulse + seconds * 2.2) % (Math.PI * 2)
         if (!root.animActive) return
         root.animT += seconds
         var k = root.animDur <= 0 ? 1 : Math.min(1, root.animT / root.animDur)
@@ -675,10 +704,11 @@ Item {
                                     }
                                     roughness: 0.62
                                     metalness: 0.02
+                                    // 选中件暖橙发光；当前可滑动的件呼吸绿光；悬停微亮
                                     emissiveFactor: Qt.vector3d(
-                                        root.selectedId === pieceRoot.pid ? 0.28 : 0.0,
-                                        root.selectedId === pieceRoot.pid ? 0.18 : 0.0,
-                                        root.selectedId === pieceRoot.pid ? 0.05 : 0.0)
+                                        root.selectedId === pieceRoot.pid ? 0.55 : (root.hoverPid === pieceRoot.pid ? 0.10 : 0.0),
+                                        root.selectedId === pieceRoot.pid ? 0.30 : (root.hintsOn && root.movableMap[pieceRoot.pid] === true ? 0.16 + Math.sin(root.pulse) * 0.10 : (root.hoverPid === pieceRoot.pid ? 0.05 : 0.0)),
+                                        root.selectedId === pieceRoot.pid ? 0.06 : 0.0)
                                 }
                             }
                         }
@@ -703,7 +733,11 @@ Item {
                 }
 
                 onPositionChanged: function(mouse) {
-                    if (!pressed) return
+                    if (!pressed) {
+                        var hov = view.pick(mouse.x, mouse.y)
+                        root.hoverPid = hov.objectHit ? hov.objectHit.objectName : ""
+                        return
+                    }
                     if (!root.dragging) {
                         if (Math.abs(mouse.x - root.pressX) + Math.abs(mouse.y - root.pressY) < 6) return
                         root.dragging = true
@@ -810,23 +844,98 @@ Item {
                 }
             }
 
-            Text {
+            // 图例 + 操作提示
+            Row {
                 anchors.left: parent.left
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 62
                 anchors.leftMargin: 18
+                spacing: 18
+
+                Rectangle {
+                    width: 14; height: 14; radius: 3
+                    color: "transparent"; border.width: 2; border.color: uiTheme.primary
+                    anchors.verticalCenter: parent.verticalCenter
+                    Rectangle {
+                        anchors.fill: parent; radius: 3
+                        color: uiTheme.primary; opacity: 0.35 + Math.sin(root.pulse) * 0.2
+                    }
+                }
+                Text {
+                    text: qsTr("发绿光 = 当前可以滑动")
+                    color: uiTheme.secondaryText
+                    font.pixelSize: 13; font.family: uiTheme.fontFamily
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                Rectangle {
+                    width: 14; height: 14; radius: 3
+                    color: "#E8A154"; border.width: 1; border.color: uiTheme.panelBorder
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                Text {
+                    text: qsTr("橙光 = 已选中")
+                    color: uiTheme.secondaryText
+                    font.pixelSize: 13; font.family: uiTheme.fontFamily
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Text {
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 30
+                anchors.leftMargin: 18
                 width: parent.width - 360
                 text: {
                     if (root.phase === "level_clear" || root.phase === "finished") return qsTr("本关完成")
-                    if (root.selectedId === "")
-                        return qsTr("拖动空白处旋转 · 滚轮缩放 · 点击木件选中后再拖动或选方向")
-                    return qsTr("已选 %1：拖动它沿长轴抽出，或点右侧方向按钮（模式 %2）")
-                            .arg(root.selectedId).arg(root.mode)
+                    if (root.mode === "axis" && root.selectedId !== "")
+                        return qsTr("已选 %1：确认抽出方向（按长轴两端选）").arg(root.selectedId)
+                    if (root.selectedId !== "")
+                        return qsTr("已选 %1：直接拖动它即可滑出，或按确认进入方向选择").arg(root.selectedId)
+                    return qsTr("点击发光的木件选中它 · 拖动 = 沿它的长轴滑动 · 拖空白处旋转视角")
                 }
                 color: uiTheme.secondaryText
                 font.pixelSize: 13
                 font.family: uiTheme.fontFamily
                 wrapMode: Text.WordWrap
+            }
+
+            // 玩法说明遮罩：首次进入必看
+            Rectangle {
+                anchors.fill: parent
+                visible: root.tutorialOpen
+                color: Qt.rgba(0.02, 0.02, 0.02, 0.82)
+                z: 10
+
+                Column {
+                    anchors.centerIn: parent
+                    spacing: 12
+                    width: Math.min(520, parent.width - 80)
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("鲁班锁 · 玩法")
+                        color: uiTheme.primaryText
+                        font.pixelSize: 26; font.family: uiTheme.fontFamily; font.bold: true
+                    }
+                    Text {
+                        width: parent.width
+                        text: qsTr("1. 所有木件只能沿各自的长轴方向滑动\n2. 闪绿光的木件表示当前没有被卡死，可以直接滑动\n3. 点击木件选中（变橙光），拖动它滑出；全部抽出即过关\n4. 拖动空白处旋转视角，滚轮缩放\n5. 被挡住时木件会抖动并提示，换一件或换方向再试")
+                        color: uiTheme.primaryText
+                        font.pixelSize: 16; font.family: uiTheme.fontFamily
+                        wrapMode: Text.WordWrap
+                        lineHeight: 1.4
+                    }
+                    SharedUI.GameButton {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: 160; height: 36
+                        theme: uiTheme
+                        objectName: "btnTutorialClose"
+                        text: qsTr("开始拆解")
+                        highlighted: true
+                        onClicked: root.tutorialOpen = false
+                    }
+                }
             }
 
             // 完成遮罩
