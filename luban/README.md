@@ -1,49 +1,91 @@
-# 鲁班锁 · 教学模型（luban V2）
+# 鲁班锁（luban V4 · 真实三维）
 
-> 版本 0.2.0｜effector=2（GamepadLite）｜设计画布 1000×700
-> 本游戏是**四木块 2.5D 教学型空间拆卸模型**，不是实体六根鲁班锁；研究结果不得表述为"真实三维鲁班锁拆解"。
+> 版本 0.4.0｜effector=2（GamepadLite）｜设计画布 1000×700｜渲染 Qt Quick 3D
 
-## 玩法
+这一版把 V2/V3 的「四张二维木条图 + 写死前置表」整体替换为**真实三维互锁机关**：
+木件是三维实体（盒体并集），可见几何与碰撞几何是同一份数据，榫槽是实体凹槽而不是贴图；
+某件能不能抽出来，每次都按当前空间状态逐格做几何重叠检测，游戏里没有任何"正确顺序表"。
 
-按依赖规则依次抽出 4 根木块。两根独立判断：
+## 运行前提（重要）
 
-1. **选择判断**：选中的木块前置木块是否都已抽出？（规划/依赖推理）
-2. **方向判断**：玩家指定的抽出方向是否与该木块允许方向一致？（空间方向映射）
+宿主默认使用 **软件渲染后端**，Qt Quick 3D 在软件后端下无法出图（`View3D` 会打印
+"not based on QRhi ... not going to display anything"）。因此 luban 需要 RHI 后端：
 
-| 木块 | 前置要求 | 允许方向 |
+- 用启动器：`.\play.bat luban` / `.\play.ps1 luban` —— 已自动设置 `QT_QUICK_BACKEND=rhi`；
+- 手工启动时需自行设置，例如
+  `set QT_QUICK_BACKEND=rhi && Neuralife.exe --game-dev luban --games-dev-root "C:\Users\Ait\Desktop\Neuralife"`；
+- 冒烟截图同理，并需真实窗口平台（offscreen 插件下 RHI 无法 present，会得到空白图）：
+  `QT_QPA_PLATFORM=windows QT_QUICK_BACKEND=rhi Neuralife.exe ... --game-smoke --game-screenshot x.png`
+
+宿主侧 Qt Quick 3D 运行时是后补安装的（见 `../docs/luban_3d_deployment.md`，含完整文件清单与回滚方法）。
+
+## 三关
+
+| 关 | 名称 | 木件 | 起始被锁 | 说明 |
+|---|---|---|---|---|
+| L1 | 教学 · 三件交叉 | 3 | 无 | 三根木条互穿，每根只能沿自己的长轴抽出；选错方向会被实体挡住 |
+| L2 | 基础互锁 · 四件 | 4 | 2 件 | 必须先移走某一件，另两件的可动状态才改变 |
+| L3 | 经典 · 六件鲁班 | 6 | 3 件 | 六件立体互锁；起始只有 3 件能整件抽出，其余必须等结构改变 |
+
+三关的盒体数据由 `../tools/luban_solver.py` 生成并**每次运行时重新校验**；几何与拆解可行性报告见
+`../docs/logs/luban_solver_report.txt`，运行时判据一致性见 `../docs/logs/luban_runtime_check.txt`。
+
+## 操作
+
+**鼠标**
+
+| 操作 | 效果 |
+|---|---|
+| 拖动空白处 | 旋转视角（上下限制 4°–72°） |
+| 滚轮 | 缩放（165–700） |
+| 点击木件 | 选中，出现描边高亮与右侧方向面板 |
+| 拖动已选木件 | 沿其长轴连续抽出，撞到别的构件就停在接触位置 |
+| 右侧方向按钮 | 沿指定 ±X/±Y/±Z 方向滑动：空间足够则整件抽出，不够则停在接触面并提示被谁挡住 |
+| 撤销一步 / 复位机关 | 回退上一次抽取位移 / 回到初始锁合状态 |
+
+**键盘与脑控（GamepadLite）**：三种模式循环
+
+| 模式 | ←→↑↓ | 确认 |
 |---|---|---|
-| A | 无 | 上 |
-| B | A | 右 |
-| C | A、B | 左 |
-| D | B | 下 |
+| `orbit` 观察 | 旋转视角 | 进入 `select` |
+| `select` 选件 | 在未拆木件中循环 | 进入 `axis` |
+| `axis` 选方向 | 在 6 个方向间循环 | 执行抽取 |
 
-合法完成顺序 ≥2 条：`A,B,C,D` 与 `A,B,D,C` 均可。
+## 数据记录（`game.record`，宿主自动补时间戳）
 
-## 操作映射（onAction，脉冲边沿触发，pressed=true 生效）
+- `luban.level_started`：level、levelIndex、pieces、elapsed
+- `luban.select`：piece、level
+- `luban.probe`：piece、dir、free、clear、blocked —— `free` 是实测可滑距离，`clear` 是移出所需距离
+- `luban.extract`：piece、via=axis|drag
+- `luban.partial`：滑到接触面停住（未移出）
+- `luban.undo` / `luban.reset`
+- `luban.level_clear`：seconds、attempts、blocked、undo、reset
+- `luban.session_finished`：levels、seconds、blocked、undo
 
-| 阶段 | 左/右 | 上/下 | 确认 |
-|---|---|---|---|
-| ① 选择木块 | 在剩余木块中循环切换 | 上=请求提示（hintsUsed+1） | 选定：依赖不满足→原因反馈，状态不变；满足→进入② |
-| ② 选择方向 | 设定方向 左/右 | 设定方向 上/下 | 未选方向→返回①；方向错误→原因反馈，状态不变；正确→抽出动画 |
-| ③ 抽出中 | 忽略 | 忽略 | 忽略（650ms 动画，暂停可冻结） |
+游戏不记录"解码失败"类指标：它只能看到已接收到的指令，看不到用户真实意图。
 
-## 数据记录（game.record，宿主自动补时间戳）
+## 与规格的取舍（诚实记录）
 
-- `luban.attempt_started`：版本、taskMode=teaching_4piece、inputSource、规则表
-- `luban.piece_selected` / `luban.invalid_choice`（缺哪些前置）
-- `luban.direction_selected` / `luban.invalid_direction`（chosen vs expected）
-- `luban.hint_used` / `luban.extraction_started` / `luban.extraction_completed`
-- `luban.attempt_finished` + 一次 `game.finish()`
+1. **木纹 UV**：`#Cube` 六个面的 UV 固定，纹理按长轴旋转只是近似（`rotationUV` 依木件轴向取 0° 或 90°），
+   个别面木纹方向不会与长轴完全一致；这是 Box 图元 + 单张贴图的固有限制，未做自定义 mesh 展开。
+2. **倒角**：木件由轴对齐盒体拼出，没有真实倒角；凹槽的深度与台阶是几何本身，接触阴影由实时阴影提供。
+3. **抽出后的摆放**：木件沿原方向滑出后停留在被抽出的位置（不再飞向固定托盘），
+   可随时"复位机关"回到锁合状态。
+4. **L3 不是文献复刻的某一款六件鲁班锁**：它是按"2×2×6 实心木条 + 半宽榫槽 + 交叉点沿轴错开"规则
+   由求解器搜索并验证的**等价六件机关**（起始锁 3 件、存在 6 步拆卸序列），
+   未声称与任何商业作品或经典图谱一致。
 
-无"解码失败"指标：游戏只看到已接收指令，看不到用户真实意图。
+## 素材
 
-## 素材来源
+- `assets/wood.png`：`../tools/make_wood_texture.py` 程序化生成的木纹贴图（自制，无外部版权素材）。
+- 本目录遗留的 `beam_A~D.png/svg`、`luban_workbench_bg.*` 是 V2/V3 的 2.5D 素材，**V4 已不再引用**，仅作历史留存。
 
-`assets/*.svg` 为本项目原创矢量素材：木桌背景 + A/D/B/C 四根木块分层图，
-全部配准在同一 700×450 透明画布，按 A→D→B→C 顺序叠放形成编织式交锁视觉。
+## 0.4.0 返修记录（2026-11-03，自动取证装置发现）
 
-## 验证
+1. **抽出后卡在选轴模式**：`finishSlide()` 抽出木件后清了 `selectedId` 但没清 `mode`，
+   而 `handleAction` 在 `axis` 模式下要求 `selectedId !== ""` 才动作 —— 结果键鼠/脑控玩家
+   抽出第一件后再也选不到下一件。改为抽出后 `mode = "select"`。
+2. **复位后同样卡住**：`resetLevel()` 增加 `mode = "orbit"`。
 
-- `python ../tools/check_qml.py Main.qml` 括号平衡通过
-- `--game-smoke` 离屏加载与会话启动 EXIT 0，截图见 `../docs/shots/`
-- 玩法级验收（L-01～L-08）需键鼠/脚本输入，见 `../tests/acceptance_matrix.csv`
+两条均由 `tools/run_scenarios.py luban` 的 `L-06` 场景回归验证（键盘 + 模拟脑控各跑一遍）。
+

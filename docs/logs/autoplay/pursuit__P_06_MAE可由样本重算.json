@@ -1,0 +1,8592 @@
+{
+  "game": "pursuit",
+  "scenario": "P-06 MAE可由样本重算",
+  "ok": true,
+  "passed": 6,
+  "total": 6,
+  "error": null,
+  "checks": [
+    {
+      "check": "P-06a 第一轮已结算",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "P-06b 有可见样本",
+      "ok": true,
+      "detail": "500 条"
+    },
+    {
+      "check": "P-06c MAE 可由样本重算（±8%）",
+      "ok": true,
+      "detail": "重算 0.2291 vs 结算 0.2291（偏差 0.0%）"
+    },
+    {
+      "check": "P-06d RMSE 可由样本重算（±8%）",
+      "ok": true,
+      "detail": "重算 0.3647 vs 结算 0.3645（偏差 0.0%）"
+    },
+    {
+      "check": "P-06e 样本字段完整",
+      "ok": true,
+      "detail": "字段=['error2d', 'inZone', 'playerX', 'playerY', 'profile', 'round', 'sampleIndex', 'simTime', 'targetX', 'targetY', 'visible']"
+    },
+    {
+      "check": "P-06f 误差非零（有说服力）",
+      "ok": true,
+      "detail": "mae=0.2291"
+    }
+  ],
+  "simSeconds": 28.128,
+  "finished": false,
+  "eventCount": 503,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "pursuit.attempt_started",
+      "data": {
+        "gameVersion": "0.4.0",
+        "inputSource": "local",
+        "pathSeed": 12017,
+        "roundDuration": 25.0,
+        "roundPlan": [
+          "line",
+          "ellipse",
+          "figure8",
+          "roam",
+          "roamocc"
+        ]
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "pursuit.round_started",
+      "data": {
+        "occlusion": 0,
+        "profile": "line",
+        "round": 1,
+        "roundDuration": 25.0,
+        "speed": 0.22,
+        "tolerance": 0.16,
+        "totalRounds": 5
+      }
+    },
+    {
+      "t": 3.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.272,
+        "inZone": false,
+        "playerX": 0.439,
+        "playerY": 0.5,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 1,
+        "simTime": 0.056,
+        "targetX": 0.167,
+        "targetY": 0.501,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.185,
+        "inZone": false,
+        "playerX": 0.367,
+        "playerY": 0.5,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 2,
+        "simTime": 0.10400000000000004,
+        "targetX": 0.182,
+        "targetY": 0.502,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.12,
+        "inZone": true,
+        "playerX": 0.317,
+        "playerY": 0.5,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 3,
+        "simTime": 0.15200000000000008,
+        "targetX": 0.197,
+        "targetY": 0.503,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.28,
+        "playerY": 0.501,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 4,
+        "simTime": 0.20800000000000013,
+        "targetX": 0.214,
+        "targetY": 0.504,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.031,
+        "inZone": true,
+        "playerX": 0.259,
+        "playerY": 0.502,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 5,
+        "simTime": 0.25600000000000017,
+        "targetX": 0.229,
+        "targetY": 0.505,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.008,
+        "inZone": true,
+        "playerX": 0.251,
+        "playerY": 0.502,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 6,
+        "simTime": 0.3040000000000002,
+        "targetX": 0.244,
+        "targetY": 0.506,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.014,
+        "inZone": true,
+        "playerX": 0.245,
+        "playerY": 0.503,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 7,
+        "simTime": 0.35200000000000026,
+        "targetX": 0.258,
+        "targetY": 0.507,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.028,
+        "inZone": true,
+        "playerX": 0.248,
+        "playerY": 0.504,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 8,
+        "simTime": 0.4080000000000003,
+        "targetX": 0.276,
+        "targetY": 0.508,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.039,
+        "inZone": true,
+        "playerX": 0.251,
+        "playerY": 0.505,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 9,
+        "simTime": 0.45600000000000035,
+        "targetX": 0.29,
+        "targetY": 0.509,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.045,
+        "inZone": true,
+        "playerX": 0.26,
+        "playerY": 0.506,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 10,
+        "simTime": 0.5040000000000003,
+        "targetX": 0.305,
+        "targetY": 0.51,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.051,
+        "inZone": true,
+        "playerX": 0.269,
+        "playerY": 0.507,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 11,
+        "simTime": 0.5520000000000004,
+        "targetX": 0.32,
+        "targetY": 0.511,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.056,
+        "inZone": true,
+        "playerX": 0.281,
+        "playerY": 0.508,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 12,
+        "simTime": 0.6080000000000004,
+        "targetX": 0.337,
+        "targetY": 0.512,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.058,
+        "inZone": true,
+        "playerX": 0.294,
+        "playerY": 0.509,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 13,
+        "simTime": 0.6560000000000005,
+        "targetX": 0.352,
+        "targetY": 0.513,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.062,
+        "inZone": true,
+        "playerX": 0.305,
+        "playerY": 0.51,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 14,
+        "simTime": 0.7040000000000005,
+        "targetX": 0.367,
+        "targetY": 0.514,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.062,
+        "inZone": true,
+        "playerX": 0.32,
+        "playerY": 0.511,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 15,
+        "simTime": 0.7520000000000006,
+        "targetX": 0.382,
+        "targetY": 0.515,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.333,
+        "playerY": 0.512,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 16,
+        "simTime": 0.8080000000000006,
+        "targetX": 0.399,
+        "targetY": 0.516,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.064,
+        "inZone": true,
+        "playerX": 0.35,
+        "playerY": 0.513,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 17,
+        "simTime": 0.8560000000000006,
+        "targetX": 0.414,
+        "targetY": 0.517,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.362,
+        "playerY": 0.514,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 18,
+        "simTime": 0.9040000000000007,
+        "targetX": 0.428,
+        "targetY": 0.518,
+        "visible": true
+      }
+    },
+    {
+      "t": 3.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.378,
+        "playerY": 0.515,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 19,
+        "simTime": 0.9520000000000007,
+        "targetX": 0.443,
+        "targetY": 0.519,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.394,
+        "playerY": 0.516,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 20,
+        "simTime": 1.0080000000000007,
+        "targetX": 0.46,
+        "targetY": 0.52,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.409,
+        "playerY": 0.517,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 21,
+        "simTime": 1.0560000000000007,
+        "targetX": 0.475,
+        "targetY": 0.521,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.424,
+        "playerY": 0.518,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 22,
+        "simTime": 1.1040000000000008,
+        "targetX": 0.49,
+        "targetY": 0.522,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.437,
+        "playerY": 0.518,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 23,
+        "simTime": 1.1520000000000008,
+        "targetX": 0.505,
+        "targetY": 0.523,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.456,
+        "playerY": 0.52,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 24,
+        "simTime": 1.2080000000000009,
+        "targetX": 0.522,
+        "targetY": 0.524,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.468,
+        "playerY": 0.52,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 25,
+        "simTime": 1.256000000000001,
+        "targetX": 0.537,
+        "targetY": 0.525,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.485,
+        "playerY": 0.521,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 26,
+        "simTime": 1.304000000000001,
+        "targetX": 0.552,
+        "targetY": 0.526,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.499,
+        "playerY": 0.522,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 27,
+        "simTime": 1.352000000000001,
+        "targetX": 0.566,
+        "targetY": 0.527,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.517,
+        "playerY": 0.524,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 28,
+        "simTime": 1.408000000000001,
+        "targetX": 0.584,
+        "targetY": 0.528,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.531,
+        "playerY": 0.524,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 29,
+        "simTime": 1.456000000000001,
+        "targetX": 0.598,
+        "targetY": 0.529,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.546,
+        "playerY": 0.525,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 30,
+        "simTime": 1.5040000000000011,
+        "targetX": 0.613,
+        "targetY": 0.53,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.561,
+        "playerY": 0.526,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 31,
+        "simTime": 1.5520000000000012,
+        "targetX": 0.628,
+        "targetY": 0.531,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.578,
+        "playerY": 0.527,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 32,
+        "simTime": 1.6080000000000012,
+        "targetX": 0.645,
+        "targetY": 0.532,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.594,
+        "playerY": 0.528,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 33,
+        "simTime": 1.6560000000000012,
+        "targetX": 0.66,
+        "targetY": 0.533,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.606,
+        "playerY": 0.529,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 34,
+        "simTime": 1.7040000000000013,
+        "targetX": 0.675,
+        "targetY": 0.534,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.623,
+        "playerY": 0.53,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 35,
+        "simTime": 1.7520000000000013,
+        "targetX": 0.69,
+        "targetY": 0.534,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.638,
+        "playerY": 0.531,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 36,
+        "simTime": 1.8080000000000014,
+        "targetX": 0.707,
+        "targetY": 0.536,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.655,
+        "playerY": 0.532,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 37,
+        "simTime": 1.8560000000000014,
+        "targetX": 0.722,
+        "targetY": 0.536,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.669,
+        "playerY": 0.533,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 38,
+        "simTime": 1.9040000000000015,
+        "targetX": 0.736,
+        "targetY": 0.537,
+        "visible": true
+      }
+    },
+    {
+      "t": 4.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.684,
+        "playerY": 0.534,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 39,
+        "simTime": 1.9520000000000015,
+        "targetX": 0.751,
+        "targetY": 0.538,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.701,
+        "playerY": 0.535,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 40,
+        "simTime": 2.0080000000000013,
+        "targetX": 0.768,
+        "targetY": 0.539,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.716,
+        "playerY": 0.536,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 41,
+        "simTime": 2.0560000000000014,
+        "targetX": 0.783,
+        "targetY": 0.54,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.732,
+        "playerY": 0.537,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 42,
+        "simTime": 2.1040000000000014,
+        "targetX": 0.798,
+        "targetY": 0.541,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.744,
+        "playerY": 0.538,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 43,
+        "simTime": 2.1520000000000015,
+        "targetX": 0.813,
+        "targetY": 0.542,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.764,
+        "playerY": 0.539,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 44,
+        "simTime": 2.2080000000000015,
+        "targetX": 0.83,
+        "targetY": 0.543,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.776,
+        "playerY": 0.54,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 45,
+        "simTime": 2.2560000000000016,
+        "targetX": 0.845,
+        "targetY": 0.544,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.047,
+        "inZone": true,
+        "playerX": 0.793,
+        "playerY": 0.541,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 46,
+        "simTime": 2.3040000000000016,
+        "targetX": 0.84,
+        "targetY": 0.545,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.019,
+        "inZone": true,
+        "playerX": 0.807,
+        "playerY": 0.542,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 47,
+        "simTime": 2.3520000000000016,
+        "targetX": 0.826,
+        "targetY": 0.546,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.007,
+        "inZone": true,
+        "playerX": 0.814,
+        "playerY": 0.543,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 48,
+        "simTime": 2.4080000000000017,
+        "targetX": 0.808,
+        "targetY": 0.547,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.022,
+        "inZone": true,
+        "playerX": 0.815,
+        "playerY": 0.544,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 49,
+        "simTime": 2.4560000000000017,
+        "targetX": 0.794,
+        "targetY": 0.548,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.034,
+        "inZone": true,
+        "playerX": 0.812,
+        "playerY": 0.545,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 50,
+        "simTime": 2.504000000000002,
+        "targetX": 0.779,
+        "targetY": 0.549,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.041,
+        "inZone": true,
+        "playerX": 0.805,
+        "playerY": 0.546,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 51,
+        "simTime": 2.552000000000002,
+        "targetX": 0.764,
+        "targetY": 0.55,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.051,
+        "inZone": true,
+        "playerX": 0.797,
+        "playerY": 0.547,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 52,
+        "simTime": 2.608000000000002,
+        "targetX": 0.747,
+        "targetY": 0.551,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.053,
+        "inZone": true,
+        "playerX": 0.785,
+        "playerY": 0.548,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 53,
+        "simTime": 2.656000000000002,
+        "targetX": 0.732,
+        "targetY": 0.552,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.059,
+        "inZone": true,
+        "playerX": 0.776,
+        "playerY": 0.549,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 54,
+        "simTime": 2.704000000000002,
+        "targetX": 0.717,
+        "targetY": 0.553,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.059,
+        "inZone": true,
+        "playerX": 0.761,
+        "playerY": 0.55,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 55,
+        "simTime": 2.752000000000002,
+        "targetX": 0.702,
+        "targetY": 0.554,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.063,
+        "inZone": true,
+        "playerX": 0.748,
+        "playerY": 0.551,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 56,
+        "simTime": 2.808000000000002,
+        "targetX": 0.685,
+        "targetY": 0.555,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.063,
+        "inZone": true,
+        "playerX": 0.733,
+        "playerY": 0.552,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 57,
+        "simTime": 2.856000000000002,
+        "targetX": 0.67,
+        "targetY": 0.556,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.064,
+        "inZone": true,
+        "playerX": 0.72,
+        "playerY": 0.552,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 58,
+        "simTime": 2.904000000000002,
+        "targetX": 0.656,
+        "targetY": 0.557,
+        "visible": true
+      }
+    },
+    {
+      "t": 5.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.706,
+        "playerY": 0.553,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 59,
+        "simTime": 2.952000000000002,
+        "targetX": 0.641,
+        "targetY": 0.557,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.065,
+        "inZone": true,
+        "playerX": 0.689,
+        "playerY": 0.554,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 60,
+        "simTime": 3.0080000000000022,
+        "targetX": 0.624,
+        "targetY": 0.558,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.676,
+        "playerY": 0.555,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 61,
+        "simTime": 3.0560000000000023,
+        "targetX": 0.609,
+        "targetY": 0.559,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.659,
+        "playerY": 0.556,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 62,
+        "simTime": 3.1040000000000023,
+        "targetX": 0.594,
+        "targetY": 0.56,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.647,
+        "playerY": 0.557,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 63,
+        "simTime": 3.1520000000000024,
+        "targetX": 0.579,
+        "targetY": 0.561,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.628,
+        "playerY": 0.558,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 64,
+        "simTime": 3.2080000000000024,
+        "targetX": 0.562,
+        "targetY": 0.562,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.615,
+        "playerY": 0.559,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 65,
+        "simTime": 3.2560000000000024,
+        "targetX": 0.547,
+        "targetY": 0.563,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.599,
+        "playerY": 0.56,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 66,
+        "simTime": 3.3040000000000025,
+        "targetX": 0.532,
+        "targetY": 0.564,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.584,
+        "playerY": 0.561,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 67,
+        "simTime": 3.3520000000000025,
+        "targetX": 0.518,
+        "targetY": 0.565,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.567,
+        "playerY": 0.562,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 68,
+        "simTime": 3.4080000000000026,
+        "targetX": 0.5,
+        "targetY": 0.566,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.552,
+        "playerY": 0.563,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 69,
+        "simTime": 3.4560000000000026,
+        "targetX": 0.486,
+        "targetY": 0.567,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.539,
+        "playerY": 0.564,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 70,
+        "simTime": 3.5040000000000027,
+        "targetX": 0.471,
+        "targetY": 0.568,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.522,
+        "playerY": 0.565,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 71,
+        "simTime": 3.5520000000000027,
+        "targetX": 0.456,
+        "targetY": 0.569,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.508,
+        "playerY": 0.565,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 72,
+        "simTime": 3.6080000000000028,
+        "targetX": 0.439,
+        "targetY": 0.57,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.49,
+        "playerY": 0.566,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 73,
+        "simTime": 3.656000000000003,
+        "targetX": 0.424,
+        "targetY": 0.57,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.477,
+        "playerY": 0.567,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 74,
+        "simTime": 3.704000000000003,
+        "targetX": 0.409,
+        "targetY": 0.571,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.461,
+        "playerY": 0.568,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 75,
+        "simTime": 3.752000000000003,
+        "targetX": 0.394,
+        "targetY": 0.572,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.445,
+        "playerY": 0.569,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 76,
+        "simTime": 3.808000000000003,
+        "targetX": 0.377,
+        "targetY": 0.573,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.43,
+        "playerY": 0.57,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 77,
+        "simTime": 3.856000000000003,
+        "targetX": 0.362,
+        "targetY": 0.574,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.414,
+        "playerY": 0.571,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 78,
+        "simTime": 3.904000000000003,
+        "targetX": 0.348,
+        "targetY": 0.575,
+        "visible": true
+      }
+    },
+    {
+      "t": 6.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.401,
+        "playerY": 0.572,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 79,
+        "simTime": 3.952000000000003,
+        "targetX": 0.333,
+        "targetY": 0.576,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.382,
+        "playerY": 0.573,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 80,
+        "simTime": 4.008000000000003,
+        "targetX": 0.316,
+        "targetY": 0.577,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.37,
+        "playerY": 0.574,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 81,
+        "simTime": 4.056000000000003,
+        "targetX": 0.301,
+        "targetY": 0.578,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.352,
+        "playerY": 0.575,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 82,
+        "simTime": 4.104000000000003,
+        "targetX": 0.286,
+        "targetY": 0.579,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.339,
+        "playerY": 0.575,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 83,
+        "simTime": 4.152000000000003,
+        "targetX": 0.271,
+        "targetY": 0.579,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.32,
+        "playerY": 0.577,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 84,
+        "simTime": 4.208000000000003,
+        "targetX": 0.254,
+        "targetY": 0.58,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.307,
+        "playerY": 0.577,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 85,
+        "simTime": 4.256000000000003,
+        "targetX": 0.239,
+        "targetY": 0.581,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.292,
+        "playerY": 0.578,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 86,
+        "simTime": 4.304000000000003,
+        "targetX": 0.224,
+        "targetY": 0.582,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.276,
+        "playerY": 0.579,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 87,
+        "simTime": 4.352000000000003,
+        "targetX": 0.21,
+        "targetY": 0.583,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.26,
+        "playerY": 0.58,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 88,
+        "simTime": 4.408000000000003,
+        "targetX": 0.192,
+        "targetY": 0.584,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.244,
+        "playerY": 0.581,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 89,
+        "simTime": 4.456000000000003,
+        "targetX": 0.178,
+        "targetY": 0.585,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.232,
+        "playerY": 0.582,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 90,
+        "simTime": 4.504000000000003,
+        "targetX": 0.163,
+        "targetY": 0.586,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.062,
+        "inZone": true,
+        "playerX": 0.214,
+        "playerY": 0.583,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 91,
+        "simTime": 4.552000000000003,
+        "targetX": 0.152,
+        "targetY": 0.586,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.03,
+        "inZone": true,
+        "playerX": 0.199,
+        "playerY": 0.583,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 92,
+        "simTime": 4.608000000000003,
+        "targetX": 0.169,
+        "targetY": 0.587,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.009,
+        "inZone": true,
+        "playerX": 0.192,
+        "playerY": 0.584,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 93,
+        "simTime": 4.656000000000003,
+        "targetX": 0.184,
+        "targetY": 0.588,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.013,
+        "inZone": true,
+        "playerX": 0.187,
+        "playerY": 0.585,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 94,
+        "simTime": 4.704000000000003,
+        "targetX": 0.199,
+        "targetY": 0.589,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.026,
+        "inZone": true,
+        "playerX": 0.188,
+        "playerY": 0.586,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 95,
+        "simTime": 4.752000000000003,
+        "targetX": 0.214,
+        "targetY": 0.59,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.038,
+        "inZone": true,
+        "playerX": 0.193,
+        "playerY": 0.587,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 96,
+        "simTime": 4.808000000000003,
+        "targetX": 0.231,
+        "targetY": 0.591,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.046,
+        "inZone": true,
+        "playerX": 0.2,
+        "playerY": 0.588,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 97,
+        "simTime": 4.856000000000003,
+        "targetX": 0.246,
+        "targetY": 0.592,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.05,
+        "inZone": true,
+        "playerX": 0.21,
+        "playerY": 0.589,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 98,
+        "simTime": 4.9040000000000035,
+        "targetX": 0.26,
+        "targetY": 0.592,
+        "visible": true
+      }
+    },
+    {
+      "t": 7.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.057,
+        "inZone": true,
+        "playerX": 0.218,
+        "playerY": 0.589,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 99,
+        "simTime": 4.9520000000000035,
+        "targetX": 0.275,
+        "targetY": 0.593,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.058,
+        "inZone": true,
+        "playerX": 0.235,
+        "playerY": 0.591,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 100,
+        "simTime": 5.008000000000004,
+        "targetX": 0.292,
+        "targetY": 0.594,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.062,
+        "inZone": true,
+        "playerX": 0.245,
+        "playerY": 0.591,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 101,
+        "simTime": 5.056000000000004,
+        "targetX": 0.307,
+        "targetY": 0.595,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.062,
+        "inZone": true,
+        "playerX": 0.26,
+        "playerY": 0.592,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 102,
+        "simTime": 5.104000000000004,
+        "targetX": 0.322,
+        "targetY": 0.596,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.064,
+        "inZone": true,
+        "playerX": 0.273,
+        "playerY": 0.593,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 103,
+        "simTime": 5.152000000000004,
+        "targetX": 0.337,
+        "targetY": 0.597,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.064,
+        "inZone": true,
+        "playerX": 0.29,
+        "playerY": 0.594,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 104,
+        "simTime": 5.208000000000004,
+        "targetX": 0.354,
+        "targetY": 0.598,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.065,
+        "inZone": true,
+        "playerX": 0.304,
+        "playerY": 0.595,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 105,
+        "simTime": 5.256000000000004,
+        "targetX": 0.369,
+        "targetY": 0.598,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.317,
+        "playerY": 0.595,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 106,
+        "simTime": 5.304000000000004,
+        "targetX": 0.384,
+        "targetY": 0.599,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.333,
+        "playerY": 0.596,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 107,
+        "simTime": 5.352000000000004,
+        "targetX": 0.398,
+        "targetY": 0.6,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.348,
+        "playerY": 0.597,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 108,
+        "simTime": 5.408000000000004,
+        "targetX": 0.416,
+        "targetY": 0.601,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.365,
+        "playerY": 0.598,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 109,
+        "simTime": 5.456000000000004,
+        "targetX": 0.43,
+        "targetY": 0.602,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.377,
+        "playerY": 0.599,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 110,
+        "simTime": 5.504000000000004,
+        "targetX": 0.445,
+        "targetY": 0.602,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.394,
+        "playerY": 0.6,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 111,
+        "simTime": 5.552000000000004,
+        "targetX": 0.46,
+        "targetY": 0.603,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.41,
+        "playerY": 0.601,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 112,
+        "simTime": 5.608000000000004,
+        "targetX": 0.477,
+        "targetY": 0.604,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.425,
+        "playerY": 0.601,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 113,
+        "simTime": 5.656000000000004,
+        "targetX": 0.492,
+        "targetY": 0.605,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.44,
+        "playerY": 0.602,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 114,
+        "simTime": 5.704000000000004,
+        "targetX": 0.507,
+        "targetY": 0.606,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.454,
+        "playerY": 0.603,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 115,
+        "simTime": 5.752000000000004,
+        "targetX": 0.522,
+        "targetY": 0.606,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.472,
+        "playerY": 0.604,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 116,
+        "simTime": 5.808000000000004,
+        "targetX": 0.539,
+        "targetY": 0.607,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.485,
+        "playerY": 0.605,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 117,
+        "simTime": 5.856000000000004,
+        "targetX": 0.554,
+        "targetY": 0.608,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.502,
+        "playerY": 0.605,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 118,
+        "simTime": 5.904000000000004,
+        "targetX": 0.568,
+        "targetY": 0.609,
+        "visible": true
+      }
+    },
+    {
+      "t": 8.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.515,
+        "playerY": 0.606,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 119,
+        "simTime": 5.952000000000004,
+        "targetX": 0.583,
+        "targetY": 0.61,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.534,
+        "playerY": 0.607,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 120,
+        "simTime": 6.0080000000000044,
+        "targetX": 0.6,
+        "targetY": 0.61,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.547,
+        "playerY": 0.608,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 121,
+        "simTime": 6.0560000000000045,
+        "targetX": 0.615,
+        "targetY": 0.611,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.563,
+        "playerY": 0.609,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 122,
+        "simTime": 6.1040000000000045,
+        "targetX": 0.63,
+        "targetY": 0.612,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.578,
+        "playerY": 0.609,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 123,
+        "simTime": 6.152000000000005,
+        "targetX": 0.645,
+        "targetY": 0.613,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.595,
+        "playerY": 0.61,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 124,
+        "simTime": 6.208000000000005,
+        "targetX": 0.662,
+        "targetY": 0.614,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.61,
+        "playerY": 0.611,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 125,
+        "simTime": 6.256000000000005,
+        "targetX": 0.677,
+        "targetY": 0.614,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.623,
+        "playerY": 0.612,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 126,
+        "simTime": 6.304000000000005,
+        "targetX": 0.692,
+        "targetY": 0.615,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.64,
+        "playerY": 0.612,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 127,
+        "simTime": 6.352000000000005,
+        "targetX": 0.706,
+        "targetY": 0.616,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.654,
+        "playerY": 0.613,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 128,
+        "simTime": 6.408000000000005,
+        "targetX": 0.724,
+        "targetY": 0.617,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.672,
+        "playerY": 0.614,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 129,
+        "simTime": 6.456000000000005,
+        "targetX": 0.738,
+        "targetY": 0.617,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.685,
+        "playerY": 0.615,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 130,
+        "simTime": 6.504000000000005,
+        "targetX": 0.753,
+        "targetY": 0.618,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.701,
+        "playerY": 0.616,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 131,
+        "simTime": 6.552000000000005,
+        "targetX": 0.768,
+        "targetY": 0.619,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.718,
+        "playerY": 0.616,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 132,
+        "simTime": 6.608000000000005,
+        "targetX": 0.785,
+        "targetY": 0.62,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.733,
+        "playerY": 0.617,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 133,
+        "simTime": 6.656000000000005,
+        "targetX": 0.8,
+        "targetY": 0.62,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.748,
+        "playerY": 0.618,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 134,
+        "simTime": 6.704000000000005,
+        "targetX": 0.815,
+        "targetY": 0.621,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.761,
+        "playerY": 0.618,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 135,
+        "simTime": 6.752000000000005,
+        "targetX": 0.83,
+        "targetY": 0.622,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.78,
+        "playerY": 0.619,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 136,
+        "simTime": 6.808000000000005,
+        "targetX": 0.847,
+        "targetY": 0.623,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.046,
+        "inZone": true,
+        "playerX": 0.792,
+        "playerY": 0.62,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 137,
+        "simTime": 6.856000000000005,
+        "targetX": 0.838,
+        "targetY": 0.623,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.02,
+        "inZone": true,
+        "playerX": 0.804,
+        "playerY": 0.621,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 138,
+        "simTime": 6.904000000000005,
+        "targetX": 0.824,
+        "targetY": 0.624,
+        "visible": true
+      }
+    },
+    {
+      "t": 9.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.005,
+        "inZone": true,
+        "playerX": 0.813,
+        "playerY": 0.621,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 139,
+        "simTime": 6.952000000000005,
+        "targetX": 0.809,
+        "targetY": 0.625,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.021,
+        "inZone": true,
+        "playerX": 0.813,
+        "playerY": 0.622,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 140,
+        "simTime": 7.008000000000005,
+        "targetX": 0.792,
+        "targetY": 0.625,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.034,
+        "inZone": true,
+        "playerX": 0.81,
+        "playerY": 0.623,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 141,
+        "simTime": 7.056000000000005,
+        "targetX": 0.777,
+        "targetY": 0.626,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.042,
+        "inZone": true,
+        "playerX": 0.804,
+        "playerY": 0.624,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 142,
+        "simTime": 7.104000000000005,
+        "targetX": 0.762,
+        "targetY": 0.627,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.048,
+        "inZone": true,
+        "playerX": 0.795,
+        "playerY": 0.624,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 143,
+        "simTime": 7.1520000000000055,
+        "targetX": 0.747,
+        "targetY": 0.627,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.055,
+        "inZone": true,
+        "playerX": 0.784,
+        "playerY": 0.625,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 144,
+        "simTime": 7.2080000000000055,
+        "targetX": 0.73,
+        "targetY": 0.628,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.057,
+        "inZone": true,
+        "playerX": 0.772,
+        "playerY": 0.626,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 145,
+        "simTime": 7.256000000000006,
+        "targetX": 0.715,
+        "targetY": 0.629,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.062,
+        "inZone": true,
+        "playerX": 0.762,
+        "playerY": 0.626,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 146,
+        "simTime": 7.304000000000006,
+        "targetX": 0.7,
+        "targetY": 0.63,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.061,
+        "inZone": true,
+        "playerX": 0.746,
+        "playerY": 0.627,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 147,
+        "simTime": 7.352000000000006,
+        "targetX": 0.686,
+        "targetY": 0.63,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.065,
+        "inZone": true,
+        "playerX": 0.733,
+        "playerY": 0.628,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 148,
+        "simTime": 7.408000000000006,
+        "targetX": 0.668,
+        "targetY": 0.631,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.064,
+        "inZone": true,
+        "playerX": 0.717,
+        "playerY": 0.629,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 149,
+        "simTime": 7.456000000000006,
+        "targetX": 0.654,
+        "targetY": 0.632,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.065,
+        "inZone": true,
+        "playerX": 0.704,
+        "playerY": 0.629,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 150,
+        "simTime": 7.504000000000006,
+        "targetX": 0.639,
+        "targetY": 0.632,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.69,
+        "playerY": 0.63,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 151,
+        "simTime": 7.552000000000006,
+        "targetX": 0.624,
+        "targetY": 0.633,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.673,
+        "playerY": 0.631,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 152,
+        "simTime": 7.608000000000006,
+        "targetX": 0.607,
+        "targetY": 0.634,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.659,
+        "playerY": 0.631,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 153,
+        "simTime": 7.656000000000006,
+        "targetX": 0.592,
+        "targetY": 0.634,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.643,
+        "playerY": 0.632,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 154,
+        "simTime": 7.704000000000006,
+        "targetX": 0.577,
+        "targetY": 0.635,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.631,
+        "playerY": 0.633,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 155,
+        "simTime": 7.752000000000006,
+        "targetX": 0.562,
+        "targetY": 0.636,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.611,
+        "playerY": 0.633,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 156,
+        "simTime": 7.808000000000006,
+        "targetX": 0.545,
+        "targetY": 0.636,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.599,
+        "playerY": 0.634,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 157,
+        "simTime": 7.856000000000006,
+        "targetX": 0.53,
+        "targetY": 0.637,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.582,
+        "playerY": 0.635,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 158,
+        "simTime": 7.904000000000006,
+        "targetX": 0.516,
+        "targetY": 0.638,
+        "visible": true
+      }
+    },
+    {
+      "t": 10.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.568,
+        "playerY": 0.635,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 159,
+        "simTime": 7.952000000000006,
+        "targetX": 0.501,
+        "targetY": 0.638,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.55,
+        "playerY": 0.636,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 160,
+        "simTime": 8.008000000000004,
+        "targetX": 0.484,
+        "targetY": 0.639,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.536,
+        "playerY": 0.637,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 161,
+        "simTime": 8.056,
+        "targetX": 0.469,
+        "targetY": 0.639,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.522,
+        "playerY": 0.637,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 162,
+        "simTime": 8.103999999999994,
+        "targetX": 0.454,
+        "targetY": 0.64,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.506,
+        "playerY": 0.638,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 163,
+        "simTime": 8.151999999999989,
+        "targetX": 0.439,
+        "targetY": 0.641,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.49,
+        "playerY": 0.639,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 164,
+        "simTime": 8.207999999999982,
+        "targetX": 0.422,
+        "targetY": 0.641,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.473,
+        "playerY": 0.639,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 165,
+        "simTime": 8.255999999999977,
+        "targetX": 0.407,
+        "targetY": 0.642,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.461,
+        "playerY": 0.64,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 166,
+        "simTime": 8.303999999999972,
+        "targetX": 0.392,
+        "targetY": 0.642,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.444,
+        "playerY": 0.64,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 167,
+        "simTime": 8.351999999999967,
+        "targetX": 0.378,
+        "targetY": 0.643,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.428,
+        "playerY": 0.641,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 168,
+        "simTime": 8.40799999999996,
+        "targetX": 0.36,
+        "targetY": 0.644,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.412,
+        "playerY": 0.642,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 169,
+        "simTime": 8.455999999999955,
+        "targetX": 0.346,
+        "targetY": 0.644,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.398,
+        "playerY": 0.642,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 170,
+        "simTime": 8.50399999999995,
+        "targetX": 0.331,
+        "targetY": 0.645,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.384,
+        "playerY": 0.643,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 171,
+        "simTime": 8.551999999999945,
+        "targetX": 0.316,
+        "targetY": 0.645,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.365,
+        "playerY": 0.644,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 172,
+        "simTime": 8.607999999999938,
+        "targetX": 0.299,
+        "targetY": 0.646,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.352,
+        "playerY": 0.644,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 173,
+        "simTime": 8.655999999999933,
+        "targetX": 0.284,
+        "targetY": 0.647,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.336,
+        "playerY": 0.645,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 174,
+        "simTime": 8.703999999999928,
+        "targetX": 0.269,
+        "targetY": 0.647,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.323,
+        "playerY": 0.645,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 175,
+        "simTime": 8.751999999999923,
+        "targetX": 0.254,
+        "targetY": 0.648,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.304,
+        "playerY": 0.646,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 176,
+        "simTime": 8.807999999999916,
+        "targetX": 0.237,
+        "targetY": 0.648,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.29,
+        "playerY": 0.646,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 177,
+        "simTime": 8.855999999999911,
+        "targetX": 0.222,
+        "targetY": 0.649,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.274,
+        "playerY": 0.647,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 178,
+        "simTime": 8.903999999999906,
+        "targetX": 0.208,
+        "targetY": 0.649,
+        "visible": true
+      }
+    },
+    {
+      "t": 11.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.26,
+        "playerY": 0.648,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 179,
+        "simTime": 8.9519999999999,
+        "targetX": 0.193,
+        "targetY": 0.65,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.243,
+        "playerY": 0.648,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 180,
+        "simTime": 9.007999999999894,
+        "targetX": 0.176,
+        "targetY": 0.651,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.227,
+        "playerY": 0.649,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 181,
+        "simTime": 9.055999999999889,
+        "targetX": 0.161,
+        "targetY": 0.651,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.063,
+        "inZone": true,
+        "playerX": 0.208,
+        "playerY": 0.619,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 182,
+        "simTime": 9.103999999999884,
+        "targetX": 0.154,
+        "targetY": 0.652,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.187,
+        "inZone": false,
+        "playerX": 0.16,
+        "playerY": 0.466,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 183,
+        "simTime": 9.151999999999878,
+        "targetX": 0.169,
+        "targetY": 0.652,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.324,
+        "inZone": false,
+        "playerX": 0.119,
+        "playerY": 0.336,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 184,
+        "simTime": 9.207999999999872,
+        "targetX": 0.186,
+        "targetY": 0.653,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.412,
+        "inZone": false,
+        "playerX": 0.094,
+        "playerY": 0.255,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 185,
+        "simTime": 9.255999999999867,
+        "targetX": 0.201,
+        "targetY": 0.653,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.48,
+        "inZone": false,
+        "playerX": 0.075,
+        "playerY": 0.195,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 186,
+        "simTime": 9.303999999999862,
+        "targetX": 0.216,
+        "targetY": 0.654,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.532,
+        "inZone": false,
+        "playerX": 0.061,
+        "playerY": 0.15,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 187,
+        "simTime": 9.351999999999856,
+        "targetX": 0.23,
+        "targetY": 0.654,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.578,
+        "inZone": false,
+        "playerX": 0.049,
+        "playerY": 0.112,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 188,
+        "simTime": 9.40799999999985,
+        "targetX": 0.248,
+        "targetY": 0.655,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.608,
+        "inZone": false,
+        "playerX": 0.042,
+        "playerY": 0.089,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 189,
+        "simTime": 9.455999999999845,
+        "targetX": 0.262,
+        "targetY": 0.655,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.632,
+        "inZone": false,
+        "playerX": 0.036,
+        "playerY": 0.071,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 190,
+        "simTime": 9.50399999999984,
+        "targetX": 0.277,
+        "targetY": 0.656,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.652,
+        "inZone": false,
+        "playerX": 0.032,
+        "playerY": 0.058,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 191,
+        "simTime": 9.551999999999834,
+        "targetX": 0.292,
+        "targetY": 0.656,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.671,
+        "inZone": false,
+        "playerX": 0.028,
+        "playerY": 0.047,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 192,
+        "simTime": 9.607999999999828,
+        "targetX": 0.309,
+        "targetY": 0.657,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.685,
+        "inZone": false,
+        "playerX": 0.026,
+        "playerY": 0.04,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 193,
+        "simTime": 9.655999999999823,
+        "targetX": 0.324,
+        "targetY": 0.657,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.697,
+        "inZone": false,
+        "playerX": 0.025,
+        "playerY": 0.035,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 194,
+        "simTime": 9.703999999999818,
+        "targetX": 0.339,
+        "targetY": 0.658,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.709,
+        "inZone": false,
+        "playerX": 0.024,
+        "playerY": 0.031,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 195,
+        "simTime": 9.751999999999812,
+        "targetX": 0.354,
+        "targetY": 0.658,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.721,
+        "inZone": false,
+        "playerX": 0.022,
+        "playerY": 0.028,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 196,
+        "simTime": 9.807999999999806,
+        "targetX": 0.371,
+        "targetY": 0.659,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.73,
+        "inZone": false,
+        "playerX": 0.022,
+        "playerY": 0.026,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 197,
+        "simTime": 9.855999999999801,
+        "targetX": 0.386,
+        "targetY": 0.659,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.74,
+        "inZone": false,
+        "playerX": 0.021,
+        "playerY": 0.024,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 198,
+        "simTime": 9.903999999999796,
+        "targetX": 0.4,
+        "targetY": 0.66,
+        "visible": true
+      }
+    },
+    {
+      "t": 12.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.749,
+        "inZone": false,
+        "playerX": 0.021,
+        "playerY": 0.023,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 199,
+        "simTime": 9.95199999999979,
+        "targetX": 0.415,
+        "targetY": 0.66,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.759,
+        "inZone": false,
+        "playerX": 0.021,
+        "playerY": 0.022,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 200,
+        "simTime": 10.007999999999784,
+        "targetX": 0.432,
+        "targetY": 0.66,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.769,
+        "inZone": false,
+        "playerX": 0.021,
+        "playerY": 0.022,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 201,
+        "simTime": 10.055999999999779,
+        "targetX": 0.447,
+        "targetY": 0.661,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.778,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.021,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 202,
+        "simTime": 10.103999999999774,
+        "targetX": 0.462,
+        "targetY": 0.661,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.787,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.021,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 203,
+        "simTime": 10.151999999999768,
+        "targetX": 0.477,
+        "targetY": 0.662,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.798,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.021,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 204,
+        "simTime": 10.207999999999762,
+        "targetX": 0.494,
+        "targetY": 0.662,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.807,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.021,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 205,
+        "simTime": 10.255999999999757,
+        "targetX": 0.509,
+        "targetY": 0.663,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.816,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 206,
+        "simTime": 10.303999999999752,
+        "targetX": 0.524,
+        "targetY": 0.663,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.826,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 207,
+        "simTime": 10.351999999999746,
+        "targetX": 0.538,
+        "targetY": 0.663,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.837,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 208,
+        "simTime": 10.40799999999974,
+        "targetX": 0.556,
+        "targetY": 0.664,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.847,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 209,
+        "simTime": 10.455999999999735,
+        "targetX": 0.57,
+        "targetY": 0.664,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.857,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 210,
+        "simTime": 10.50399999999973,
+        "targetX": 0.585,
+        "targetY": 0.665,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.867,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 211,
+        "simTime": 10.551999999999724,
+        "targetX": 0.6,
+        "targetY": 0.665,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.879,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 212,
+        "simTime": 10.607999999999718,
+        "targetX": 0.617,
+        "targetY": 0.666,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.89,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 213,
+        "simTime": 10.655999999999713,
+        "targetX": 0.632,
+        "targetY": 0.666,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.9,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 214,
+        "simTime": 10.703999999999708,
+        "targetX": 0.647,
+        "targetY": 0.666,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.911,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 215,
+        "simTime": 10.751999999999702,
+        "targetX": 0.662,
+        "targetY": 0.667,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.923,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 216,
+        "simTime": 10.807999999999696,
+        "targetX": 0.679,
+        "targetY": 0.667,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.934,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 217,
+        "simTime": 10.85599999999969,
+        "targetX": 0.694,
+        "targetY": 0.667,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.945,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 218,
+        "simTime": 10.903999999999685,
+        "targetX": 0.708,
+        "targetY": 0.668,
+        "visible": true
+      }
+    },
+    {
+      "t": 13.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.956,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 219,
+        "simTime": 10.95199999999968,
+        "targetX": 0.723,
+        "targetY": 0.668,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.969,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 220,
+        "simTime": 11.007999999999674,
+        "targetX": 0.74,
+        "targetY": 0.668,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.981,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 221,
+        "simTime": 11.055999999999669,
+        "targetX": 0.755,
+        "targetY": 0.669,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.992,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 222,
+        "simTime": 11.103999999999663,
+        "targetX": 0.77,
+        "targetY": 0.669,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 1.003,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 223,
+        "simTime": 11.151999999999658,
+        "targetX": 0.785,
+        "targetY": 0.669,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 1.017,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 224,
+        "simTime": 11.207999999999652,
+        "targetX": 0.802,
+        "targetY": 0.67,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 1.028,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 225,
+        "simTime": 11.255999999999647,
+        "targetX": 0.817,
+        "targetY": 0.67,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 1.04,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 226,
+        "simTime": 11.303999999999641,
+        "targetX": 0.832,
+        "targetY": 0.67,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 1.052,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 227,
+        "simTime": 11.351999999999636,
+        "targetX": 0.846,
+        "targetY": 0.671,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 1.044,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 228,
+        "simTime": 11.40799999999963,
+        "targetX": 0.836,
+        "targetY": 0.671,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 1.033,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 229,
+        "simTime": 11.455999999999625,
+        "targetX": 0.822,
+        "targetY": 0.671,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 1.022,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 230,
+        "simTime": 11.50399999999962,
+        "targetX": 0.807,
+        "targetY": 0.672,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 1.01,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 231,
+        "simTime": 11.551999999999614,
+        "targetX": 0.792,
+        "targetY": 0.672,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.998,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 232,
+        "simTime": 11.607999999999608,
+        "targetX": 0.775,
+        "targetY": 0.672,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.987,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 233,
+        "simTime": 11.655999999999603,
+        "targetX": 0.76,
+        "targetY": 0.673,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.976,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 234,
+        "simTime": 11.703999999999597,
+        "targetX": 0.745,
+        "targetY": 0.673,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.965,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 235,
+        "simTime": 11.751999999999592,
+        "targetX": 0.73,
+        "targetY": 0.673,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.953,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 236,
+        "simTime": 11.807999999999586,
+        "targetX": 0.713,
+        "targetY": 0.673,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.942,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 237,
+        "simTime": 11.85599999999958,
+        "targetX": 0.698,
+        "targetY": 0.674,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.932,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 238,
+        "simTime": 11.903999999999575,
+        "targetX": 0.684,
+        "targetY": 0.674,
+        "visible": true
+      }
+    },
+    {
+      "t": 14.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.921,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 239,
+        "simTime": 11.95199999999957,
+        "targetX": 0.669,
+        "targetY": 0.674,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.909,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 240,
+        "simTime": 12.007999999999564,
+        "targetX": 0.652,
+        "targetY": 0.674,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.899,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 241,
+        "simTime": 12.055999999999559,
+        "targetX": 0.637,
+        "targetY": 0.675,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.89,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 242,
+        "simTime": 12.103999999999553,
+        "targetX": 0.622,
+        "targetY": 0.675,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.88,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 243,
+        "simTime": 12.151999999999548,
+        "targetX": 0.607,
+        "targetY": 0.675,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.869,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 244,
+        "simTime": 12.207999999999542,
+        "targetX": 0.59,
+        "targetY": 0.675,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.859,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 245,
+        "simTime": 12.255999999999537,
+        "targetX": 0.575,
+        "targetY": 0.676,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.85,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 246,
+        "simTime": 12.303999999999531,
+        "targetX": 0.56,
+        "targetY": 0.676,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.841,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 247,
+        "simTime": 12.351999999999526,
+        "targetX": 0.546,
+        "targetY": 0.676,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.83,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 248,
+        "simTime": 12.40799999999952,
+        "targetX": 0.528,
+        "targetY": 0.676,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.821,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 249,
+        "simTime": 12.455999999999515,
+        "targetX": 0.514,
+        "targetY": 0.676,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.813,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 250,
+        "simTime": 12.50399999999951,
+        "targetX": 0.499,
+        "targetY": 0.677,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.804,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 251,
+        "simTime": 12.551999999999504,
+        "targetX": 0.484,
+        "targetY": 0.677,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.794,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 252,
+        "simTime": 12.607999999999498,
+        "targetX": 0.467,
+        "targetY": 0.677,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.786,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 253,
+        "simTime": 12.655999999999493,
+        "targetX": 0.452,
+        "targetY": 0.677,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.779,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 254,
+        "simTime": 12.703999999999487,
+        "targetX": 0.437,
+        "targetY": 0.677,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.771,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 255,
+        "simTime": 12.751999999999482,
+        "targetX": 0.422,
+        "targetY": 0.677,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.762,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 256,
+        "simTime": 12.807999999999476,
+        "targetX": 0.405,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.755,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 257,
+        "simTime": 12.85599999999947,
+        "targetX": 0.39,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.748,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 258,
+        "simTime": 12.903999999999465,
+        "targetX": 0.376,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 15.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.741,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 259,
+        "simTime": 12.95199999999946,
+        "targetX": 0.361,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.733,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 260,
+        "simTime": 13.007999999999454,
+        "targetX": 0.344,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.727,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 261,
+        "simTime": 13.055999999999448,
+        "targetX": 0.329,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.721,
+        "inZone": false,
+        "playerX": 0.02,
+        "playerY": 0.02,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 262,
+        "simTime": 13.103999999999443,
+        "targetX": 0.314,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.558,
+        "inZone": false,
+        "playerX": 0.084,
+        "playerY": 0.164,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 263,
+        "simTime": 13.151999999999438,
+        "targetX": 0.299,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.388,
+        "inZone": false,
+        "playerX": 0.15,
+        "playerY": 0.314,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 264,
+        "simTime": 13.207999999999432,
+        "targetX": 0.282,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.284,
+        "inZone": false,
+        "playerX": 0.185,
+        "playerY": 0.407,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 265,
+        "simTime": 13.255999999999426,
+        "targetX": 0.267,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.207,
+        "inZone": false,
+        "playerX": 0.209,
+        "playerY": 0.476,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 266,
+        "simTime": 13.303999999999421,
+        "targetX": 0.252,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.152,
+        "inZone": true,
+        "playerX": 0.223,
+        "playerY": 0.528,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 267,
+        "simTime": 13.351999999999416,
+        "targetX": 0.238,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.107,
+        "inZone": true,
+        "playerX": 0.229,
+        "playerY": 0.572,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 268,
+        "simTime": 13.40799999999941,
+        "targetX": 0.22,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.084,
+        "inZone": true,
+        "playerX": 0.23,
+        "playerY": 0.599,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 269,
+        "simTime": 13.455999999999404,
+        "targetX": 0.206,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.225,
+        "playerY": 0.62,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 270,
+        "simTime": 13.5039999999994,
+        "targetX": 0.191,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.063,
+        "inZone": true,
+        "playerX": 0.22,
+        "playerY": 0.635,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 271,
+        "simTime": 13.551999999999394,
+        "targetX": 0.176,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.059,
+        "inZone": true,
+        "playerX": 0.208,
+        "playerY": 0.648,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 272,
+        "simTime": 13.607999999999388,
+        "targetX": 0.159,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.049,
+        "inZone": true,
+        "playerX": 0.199,
+        "playerY": 0.656,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 273,
+        "simTime": 13.655999999999382,
+        "targetX": 0.156,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.026,
+        "inZone": true,
+        "playerX": 0.19,
+        "playerY": 0.662,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 274,
+        "simTime": 13.703999999999377,
+        "targetX": 0.171,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.013,
+        "inZone": true,
+        "playerX": 0.183,
+        "playerY": 0.667,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 275,
+        "simTime": 13.751999999999372,
+        "targetX": 0.186,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.024,
+        "inZone": true,
+        "playerX": 0.181,
+        "playerY": 0.67,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 276,
+        "simTime": 13.807999999999366,
+        "targetX": 0.203,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.034,
+        "inZone": true,
+        "playerX": 0.185,
+        "playerY": 0.673,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 277,
+        "simTime": 13.85599999999936,
+        "targetX": 0.218,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.044,
+        "inZone": true,
+        "playerX": 0.189,
+        "playerY": 0.675,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 278,
+        "simTime": 13.903999999999355,
+        "targetX": 0.232,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 16.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.048,
+        "inZone": true,
+        "playerX": 0.2,
+        "playerY": 0.676,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 279,
+        "simTime": 13.95199999999935,
+        "targetX": 0.247,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.056,
+        "inZone": true,
+        "playerX": 0.208,
+        "playerY": 0.677,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 280,
+        "simTime": 14.007999999999344,
+        "targetX": 0.264,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.057,
+        "inZone": true,
+        "playerX": 0.223,
+        "playerY": 0.678,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 281,
+        "simTime": 14.055999999999338,
+        "targetX": 0.279,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.061,
+        "inZone": true,
+        "playerX": 0.233,
+        "playerY": 0.678,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 282,
+        "simTime": 14.103999999999333,
+        "targetX": 0.294,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.061,
+        "inZone": true,
+        "playerX": 0.248,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 283,
+        "simTime": 14.151999999999328,
+        "targetX": 0.309,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.064,
+        "inZone": true,
+        "playerX": 0.263,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 284,
+        "simTime": 14.207999999999322,
+        "targetX": 0.326,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.064,
+        "inZone": true,
+        "playerX": 0.277,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 285,
+        "simTime": 14.255999999999316,
+        "targetX": 0.341,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.065,
+        "inZone": true,
+        "playerX": 0.291,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 286,
+        "simTime": 14.303999999999311,
+        "targetX": 0.356,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.304,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 287,
+        "simTime": 14.351999999999306,
+        "targetX": 0.37,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.065,
+        "inZone": true,
+        "playerX": 0.322,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 288,
+        "simTime": 14.4079999999993,
+        "targetX": 0.388,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.334,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 289,
+        "simTime": 14.455999999999294,
+        "targetX": 0.402,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.351,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 290,
+        "simTime": 14.503999999999289,
+        "targetX": 0.417,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.365,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 291,
+        "simTime": 14.551999999999284,
+        "targetX": 0.432,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.383,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 292,
+        "simTime": 14.607999999999278,
+        "targetX": 0.449,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.397,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 293,
+        "simTime": 14.655999999999272,
+        "targetX": 0.464,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.412,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 294,
+        "simTime": 14.703999999999267,
+        "targetX": 0.479,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.427,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 295,
+        "simTime": 14.751999999999262,
+        "targetX": 0.494,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.443,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 296,
+        "simTime": 14.807999999999256,
+        "targetX": 0.511,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.459,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 297,
+        "simTime": 14.85599999999925,
+        "targetX": 0.526,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.471,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 298,
+        "simTime": 14.903999999999245,
+        "targetX": 0.54,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 17.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.489,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 299,
+        "simTime": 14.95199999999924,
+        "targetX": 0.555,
+        "targetY": 0.68,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.504,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 300,
+        "simTime": 15.007999999999234,
+        "targetX": 0.572,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.521,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 301,
+        "simTime": 15.055999999999228,
+        "targetX": 0.587,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.535,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 302,
+        "simTime": 15.103999999999223,
+        "targetX": 0.602,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.55,
+        "playerY": 0.68,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 303,
+        "simTime": 15.151999999999218,
+        "targetX": 0.617,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.567,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 304,
+        "simTime": 15.207999999999211,
+        "targetX": 0.634,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.581,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 305,
+        "simTime": 15.255999999999206,
+        "targetX": 0.649,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.597,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 306,
+        "simTime": 15.303999999999201,
+        "targetX": 0.664,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.609,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 307,
+        "simTime": 15.351999999999196,
+        "targetX": 0.678,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.629,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 308,
+        "simTime": 15.40799999999919,
+        "targetX": 0.696,
+        "targetY": 0.679,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.642,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 309,
+        "simTime": 15.455999999999184,
+        "targetX": 0.71,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.659,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 310,
+        "simTime": 15.503999999999179,
+        "targetX": 0.725,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.673,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 311,
+        "simTime": 15.551999999999174,
+        "targetX": 0.74,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.69,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 312,
+        "simTime": 15.607999999999167,
+        "targetX": 0.757,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.705,
+        "playerY": 0.679,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 313,
+        "simTime": 15.655999999999162,
+        "targetX": 0.772,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.719,
+        "playerY": 0.678,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 314,
+        "simTime": 15.703999999999157,
+        "targetX": 0.787,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.735,
+        "playerY": 0.678,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 315,
+        "simTime": 15.751999999999152,
+        "targetX": 0.802,
+        "targetY": 0.678,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.75,
+        "playerY": 0.678,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 316,
+        "simTime": 15.807999999999145,
+        "targetX": 0.819,
+        "targetY": 0.677,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.767,
+        "playerY": 0.678,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 317,
+        "simTime": 15.85599999999914,
+        "targetX": 0.834,
+        "targetY": 0.677,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.78,
+        "playerY": 0.678,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 318,
+        "simTime": 15.903999999999135,
+        "targetX": 0.848,
+        "targetY": 0.677,
+        "visible": true
+      }
+    },
+    {
+      "t": 18.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.04,
+        "inZone": true,
+        "playerX": 0.796,
+        "playerY": 0.678,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 319,
+        "simTime": 15.95199999999913,
+        "targetX": 0.837,
+        "targetY": 0.677,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.008,
+        "inZone": true,
+        "playerX": 0.812,
+        "playerY": 0.678,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 320,
+        "simTime": 16.007999999999125,
+        "targetX": 0.82,
+        "targetY": 0.677,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.01,
+        "inZone": true,
+        "playerX": 0.815,
+        "playerY": 0.677,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 321,
+        "simTime": 16.05599999999912,
+        "targetX": 0.805,
+        "targetY": 0.677,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.025,
+        "inZone": true,
+        "playerX": 0.815,
+        "playerY": 0.677,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 322,
+        "simTime": 16.103999999999115,
+        "targetX": 0.79,
+        "targetY": 0.676,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.036,
+        "inZone": true,
+        "playerX": 0.812,
+        "playerY": 0.677,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 323,
+        "simTime": 16.15199999999911,
+        "targetX": 0.775,
+        "targetY": 0.676,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.045,
+        "inZone": true,
+        "playerX": 0.802,
+        "playerY": 0.677,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 324,
+        "simTime": 16.207999999999103,
+        "targetX": 0.758,
+        "targetY": 0.676,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.052,
+        "inZone": true,
+        "playerX": 0.795,
+        "playerY": 0.677,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 325,
+        "simTime": 16.255999999999098,
+        "targetX": 0.743,
+        "targetY": 0.676,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.054,
+        "inZone": true,
+        "playerX": 0.782,
+        "playerY": 0.676,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 326,
+        "simTime": 16.303999999999093,
+        "targetX": 0.728,
+        "targetY": 0.676,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.059,
+        "inZone": true,
+        "playerX": 0.773,
+        "playerY": 0.676,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 327,
+        "simTime": 16.351999999999087,
+        "targetX": 0.714,
+        "targetY": 0.675,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.06,
+        "inZone": true,
+        "playerX": 0.756,
+        "playerY": 0.676,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 328,
+        "simTime": 16.40799999999908,
+        "targetX": 0.696,
+        "targetY": 0.675,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.063,
+        "inZone": true,
+        "playerX": 0.745,
+        "playerY": 0.676,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 329,
+        "simTime": 16.455999999999076,
+        "targetX": 0.682,
+        "targetY": 0.675,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.063,
+        "inZone": true,
+        "playerX": 0.73,
+        "playerY": 0.676,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 330,
+        "simTime": 16.50399999999907,
+        "targetX": 0.667,
+        "targetY": 0.675,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.064,
+        "inZone": true,
+        "playerX": 0.716,
+        "playerY": 0.675,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 331,
+        "simTime": 16.551999999999065,
+        "targetX": 0.652,
+        "targetY": 0.674,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.065,
+        "inZone": true,
+        "playerX": 0.7,
+        "playerY": 0.675,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 332,
+        "simTime": 16.60799999999906,
+        "targetX": 0.635,
+        "targetY": 0.674,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.065,
+        "inZone": true,
+        "playerX": 0.685,
+        "playerY": 0.675,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 333,
+        "simTime": 16.655999999999054,
+        "targetX": 0.62,
+        "targetY": 0.674,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.673,
+        "playerY": 0.675,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 334,
+        "simTime": 16.70399999999905,
+        "targetX": 0.605,
+        "targetY": 0.674,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.656,
+        "playerY": 0.674,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 335,
+        "simTime": 16.751999999999043,
+        "targetX": 0.59,
+        "targetY": 0.673,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.642,
+        "playerY": 0.674,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 336,
+        "simTime": 16.807999999999037,
+        "targetX": 0.573,
+        "targetY": 0.673,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.624,
+        "playerY": 0.674,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 337,
+        "simTime": 16.85599999999903,
+        "targetX": 0.558,
+        "targetY": 0.673,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.611,
+        "playerY": 0.674,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 338,
+        "simTime": 16.903999999999026,
+        "targetX": 0.544,
+        "targetY": 0.673,
+        "visible": true
+      }
+    },
+    {
+      "t": 19.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.595,
+        "playerY": 0.673,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 339,
+        "simTime": 16.95199999999902,
+        "targetX": 0.529,
+        "targetY": 0.672,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.579,
+        "playerY": 0.673,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 340,
+        "simTime": 17.007999999999015,
+        "targetX": 0.512,
+        "targetY": 0.672,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.564,
+        "playerY": 0.673,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 341,
+        "simTime": 17.05599999999901,
+        "targetX": 0.497,
+        "targetY": 0.672,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.549,
+        "playerY": 0.673,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 342,
+        "simTime": 17.103999999999004,
+        "targetX": 0.482,
+        "targetY": 0.671,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.536,
+        "playerY": 0.672,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 343,
+        "simTime": 17.151999999999,
+        "targetX": 0.467,
+        "targetY": 0.671,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.516,
+        "playerY": 0.672,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 344,
+        "simTime": 17.207999999998993,
+        "targetX": 0.45,
+        "targetY": 0.671,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.504,
+        "playerY": 0.672,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 345,
+        "simTime": 17.255999999998988,
+        "targetX": 0.435,
+        "targetY": 0.67,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.066,
+        "inZone": true,
+        "playerX": 0.487,
+        "playerY": 0.671,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 346,
+        "simTime": 17.303999999998982,
+        "targetX": 0.42,
+        "targetY": 0.67,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.068,
+        "inZone": true,
+        "playerX": 0.474,
+        "playerY": 0.671,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 347,
+        "simTime": 17.351999999998977,
+        "targetX": 0.406,
+        "targetY": 0.67,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.455,
+        "playerY": 0.671,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 348,
+        "simTime": 17.40799999999897,
+        "targetX": 0.388,
+        "targetY": 0.669,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.441,
+        "playerY": 0.671,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 349,
+        "simTime": 17.455999999998966,
+        "targetX": 0.374,
+        "targetY": 0.669,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.426,
+        "playerY": 0.67,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 350,
+        "simTime": 17.50399999999896,
+        "targetX": 0.359,
+        "targetY": 0.669,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.067,
+        "inZone": true,
+        "playerX": 0.411,
+        "playerY": 0.67,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 351,
+        "simTime": 17.551999999998955,
+        "targetX": 0.344,
+        "targetY": 0.668,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.071,
+        "inZone": true,
+        "playerX": 0.398,
+        "playerY": 0.67,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 352,
+        "simTime": 17.60799999999895,
+        "targetX": 0.327,
+        "targetY": 0.668,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.078,
+        "inZone": true,
+        "playerX": 0.39,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 353,
+        "simTime": 17.655999999998944,
+        "targetX": 0.312,
+        "targetY": 0.668,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.086,
+        "inZone": true,
+        "playerX": 0.384,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 354,
+        "simTime": 17.70399999999894,
+        "targetX": 0.297,
+        "targetY": 0.667,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.097,
+        "inZone": true,
+        "playerX": 0.379,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 355,
+        "simTime": 17.751999999998933,
+        "targetX": 0.282,
+        "targetY": 0.667,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.11,
+        "inZone": true,
+        "playerX": 0.375,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 356,
+        "simTime": 17.807999999998927,
+        "targetX": 0.265,
+        "targetY": 0.667,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.123,
+        "inZone": true,
+        "playerX": 0.373,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 357,
+        "simTime": 17.85599999999892,
+        "targetX": 0.25,
+        "targetY": 0.666,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.136,
+        "inZone": true,
+        "playerX": 0.371,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 358,
+        "simTime": 17.903999999998916,
+        "targetX": 0.236,
+        "targetY": 0.666,
+        "visible": true
+      }
+    },
+    {
+      "t": 20.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.149,
+        "inZone": true,
+        "playerX": 0.37,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 359,
+        "simTime": 17.95199999999891,
+        "targetX": 0.221,
+        "targetY": 0.666,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.165,
+        "inZone": false,
+        "playerX": 0.369,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 360,
+        "simTime": 18.007999999998905,
+        "targetX": 0.204,
+        "targetY": 0.665,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.179,
+        "inZone": false,
+        "playerX": 0.368,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 361,
+        "simTime": 18.0559999999989,
+        "targetX": 0.189,
+        "targetY": 0.665,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.194,
+        "inZone": false,
+        "playerX": 0.368,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 362,
+        "simTime": 18.103999999998894,
+        "targetX": 0.174,
+        "targetY": 0.664,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.208,
+        "inZone": false,
+        "playerX": 0.367,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 363,
+        "simTime": 18.15199999999889,
+        "targetX": 0.159,
+        "targetY": 0.664,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.209,
+        "inZone": false,
+        "playerX": 0.367,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 364,
+        "simTime": 18.207999999998883,
+        "targetX": 0.158,
+        "targetY": 0.663,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.194,
+        "inZone": false,
+        "playerX": 0.367,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 365,
+        "simTime": 18.255999999998878,
+        "targetX": 0.173,
+        "targetY": 0.663,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.179,
+        "inZone": false,
+        "playerX": 0.367,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 366,
+        "simTime": 18.303999999998872,
+        "targetX": 0.188,
+        "targetY": 0.663,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.164,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 367,
+        "simTime": 18.351999999998867,
+        "targetX": 0.202,
+        "targetY": 0.662,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.147,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 368,
+        "simTime": 18.40799999999886,
+        "targetX": 0.22,
+        "targetY": 0.662,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.132,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 369,
+        "simTime": 18.455999999998856,
+        "targetX": 0.234,
+        "targetY": 0.661,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.117,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 370,
+        "simTime": 18.50399999999885,
+        "targetX": 0.249,
+        "targetY": 0.661,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.103,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 371,
+        "simTime": 18.551999999998845,
+        "targetX": 0.264,
+        "targetY": 0.66,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.085,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 372,
+        "simTime": 18.60799999999884,
+        "targetX": 0.281,
+        "targetY": 0.66,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.071,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 373,
+        "simTime": 18.655999999998834,
+        "targetX": 0.296,
+        "targetY": 0.66,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.056,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 374,
+        "simTime": 18.70399999999883,
+        "targetX": 0.311,
+        "targetY": 0.659,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.042,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 375,
+        "simTime": 18.751999999998823,
+        "targetX": 0.326,
+        "targetY": 0.659,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.026,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 376,
+        "simTime": 18.807999999998817,
+        "targetX": 0.343,
+        "targetY": 0.658,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.014,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 377,
+        "simTime": 18.85599999999881,
+        "targetX": 0.358,
+        "targetY": 0.658,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.013,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 378,
+        "simTime": 18.903999999998806,
+        "targetX": 0.372,
+        "targetY": 0.657,
+        "visible": true
+      }
+    },
+    {
+      "t": 21.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.024,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 379,
+        "simTime": 18.9519999999988,
+        "targetX": 0.387,
+        "targetY": 0.657,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.04,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 380,
+        "simTime": 19.007999999998795,
+        "targetX": 0.404,
+        "targetY": 0.656,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.055,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 381,
+        "simTime": 19.05599999999879,
+        "targetX": 0.419,
+        "targetY": 0.656,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.069,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 382,
+        "simTime": 19.103999999998784,
+        "targetX": 0.434,
+        "targetY": 0.655,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.084,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 383,
+        "simTime": 19.15199999999878,
+        "targetX": 0.449,
+        "targetY": 0.655,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.101,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 384,
+        "simTime": 19.207999999998773,
+        "targetX": 0.466,
+        "targetY": 0.654,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.116,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 385,
+        "simTime": 19.255999999998767,
+        "targetX": 0.481,
+        "targetY": 0.654,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.13,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 386,
+        "simTime": 19.303999999998762,
+        "targetX": 0.496,
+        "targetY": 0.653,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.145,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 387,
+        "simTime": 19.351999999998757,
+        "targetX": 0.51,
+        "targetY": 0.653,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.162,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 388,
+        "simTime": 19.40799999999875,
+        "targetX": 0.528,
+        "targetY": 0.652,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.177,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 389,
+        "simTime": 19.455999999998745,
+        "targetX": 0.542,
+        "targetY": 0.652,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.192,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 390,
+        "simTime": 19.50399999999874,
+        "targetX": 0.557,
+        "targetY": 0.651,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.207,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 391,
+        "simTime": 19.551999999998735,
+        "targetX": 0.572,
+        "targetY": 0.651,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.224,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 392,
+        "simTime": 19.60799999999873,
+        "targetX": 0.589,
+        "targetY": 0.65,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.239,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 393,
+        "simTime": 19.655999999998723,
+        "targetX": 0.604,
+        "targetY": 0.649,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.253,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 394,
+        "simTime": 19.703999999998718,
+        "targetX": 0.619,
+        "targetY": 0.649,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.268,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 395,
+        "simTime": 19.751999999998713,
+        "targetX": 0.634,
+        "targetY": 0.648,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.285,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 396,
+        "simTime": 19.807999999998707,
+        "targetX": 0.651,
+        "targetY": 0.648,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.3,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 397,
+        "simTime": 19.8559999999987,
+        "targetX": 0.666,
+        "targetY": 0.647,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.315,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 398,
+        "simTime": 19.903999999998696,
+        "targetX": 0.68,
+        "targetY": 0.647,
+        "visible": true
+      }
+    },
+    {
+      "t": 22.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.33,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 399,
+        "simTime": 19.95199999999869,
+        "targetX": 0.695,
+        "targetY": 0.646,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.347,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 400,
+        "simTime": 20.007999999998685,
+        "targetX": 0.712,
+        "targetY": 0.645,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.362,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 401,
+        "simTime": 20.05599999999868,
+        "targetX": 0.727,
+        "targetY": 0.645,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.377,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 402,
+        "simTime": 20.103999999998674,
+        "targetX": 0.742,
+        "targetY": 0.644,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.391,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 403,
+        "simTime": 20.15199999999867,
+        "targetX": 0.757,
+        "targetY": 0.644,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.409,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 404,
+        "simTime": 20.207999999998663,
+        "targetX": 0.774,
+        "targetY": 0.643,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.424,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 405,
+        "simTime": 20.255999999998657,
+        "targetX": 0.789,
+        "targetY": 0.642,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.438,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 406,
+        "simTime": 20.303999999998652,
+        "targetX": 0.804,
+        "targetY": 0.642,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.453,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 407,
+        "simTime": 20.351999999998647,
+        "targetX": 0.818,
+        "targetY": 0.641,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.47,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 408,
+        "simTime": 20.40799999999864,
+        "targetX": 0.836,
+        "targetY": 0.641,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.484,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 409,
+        "simTime": 20.455999999998635,
+        "targetX": 0.85,
+        "targetY": 0.64,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.47,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 410,
+        "simTime": 20.50399999999863,
+        "targetX": 0.835,
+        "targetY": 0.639,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.455,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 411,
+        "simTime": 20.551999999998625,
+        "targetX": 0.82,
+        "targetY": 0.639,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.438,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 412,
+        "simTime": 20.60799999999862,
+        "targetX": 0.803,
+        "targetY": 0.638,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.423,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 413,
+        "simTime": 20.655999999998613,
+        "targetX": 0.788,
+        "targetY": 0.638,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.408,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 414,
+        "simTime": 20.703999999998608,
+        "targetX": 0.773,
+        "targetY": 0.637,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.394,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 415,
+        "simTime": 20.751999999998603,
+        "targetX": 0.758,
+        "targetY": 0.636,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.376,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 416,
+        "simTime": 20.807999999998597,
+        "targetX": 0.741,
+        "targetY": 0.636,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.362,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 417,
+        "simTime": 20.85599999999859,
+        "targetX": 0.726,
+        "targetY": 0.635,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.347,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 418,
+        "simTime": 20.903999999998586,
+        "targetX": 0.712,
+        "targetY": 0.634,
+        "visible": true
+      }
+    },
+    {
+      "t": 23.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.333,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 419,
+        "simTime": 20.95199999999858,
+        "targetX": 0.697,
+        "targetY": 0.634,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.315,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 420,
+        "simTime": 21.007999999998574,
+        "targetX": 0.68,
+        "targetY": 0.633,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.301,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 421,
+        "simTime": 21.05599999999857,
+        "targetX": 0.665,
+        "targetY": 0.632,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.286,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 422,
+        "simTime": 21.103999999998564,
+        "targetX": 0.65,
+        "targetY": 0.632,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.272,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 423,
+        "simTime": 21.15199999999856,
+        "targetX": 0.635,
+        "targetY": 0.631,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.255,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 424,
+        "simTime": 21.207999999998552,
+        "targetX": 0.618,
+        "targetY": 0.63,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.24,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 425,
+        "simTime": 21.255999999998547,
+        "targetX": 0.603,
+        "targetY": 0.63,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.226,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 426,
+        "simTime": 21.303999999998542,
+        "targetX": 0.588,
+        "targetY": 0.629,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.211,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 427,
+        "simTime": 21.351999999998537,
+        "targetX": 0.574,
+        "targetY": 0.628,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.195,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 428,
+        "simTime": 21.40799999999853,
+        "targetX": 0.556,
+        "targetY": 0.627,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.18,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 429,
+        "simTime": 21.455999999998525,
+        "targetX": 0.542,
+        "targetY": 0.627,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.166,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 430,
+        "simTime": 21.50399999999852,
+        "targetX": 0.527,
+        "targetY": 0.626,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.152,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 431,
+        "simTime": 21.551999999998515,
+        "targetX": 0.512,
+        "targetY": 0.625,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.136,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 432,
+        "simTime": 21.60799999999851,
+        "targetX": 0.495,
+        "targetY": 0.625,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.122,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 433,
+        "simTime": 21.655999999998503,
+        "targetX": 0.48,
+        "targetY": 0.624,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.109,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 434,
+        "simTime": 21.703999999998498,
+        "targetX": 0.465,
+        "targetY": 0.623,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.096,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 435,
+        "simTime": 21.751999999998493,
+        "targetX": 0.45,
+        "targetY": 0.623,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.082,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 436,
+        "simTime": 21.807999999998486,
+        "targetX": 0.433,
+        "targetY": 0.622,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.071,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 437,
+        "simTime": 21.85599999999848,
+        "targetX": 0.418,
+        "targetY": 0.621,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.061,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 438,
+        "simTime": 21.903999999998476,
+        "targetX": 0.404,
+        "targetY": 0.62,
+        "visible": true
+      }
+    },
+    {
+      "t": 24.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.054,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 439,
+        "simTime": 21.95199999999847,
+        "targetX": 0.389,
+        "targetY": 0.62,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.05,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 440,
+        "simTime": 22.007999999998464,
+        "targetX": 0.372,
+        "targetY": 0.619,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.052,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 441,
+        "simTime": 22.05599999999846,
+        "targetX": 0.357,
+        "targetY": 0.618,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.057,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 442,
+        "simTime": 22.103999999998454,
+        "targetX": 0.342,
+        "targetY": 0.617,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.065,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 443,
+        "simTime": 22.15199999999845,
+        "targetX": 0.327,
+        "targetY": 0.617,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.077,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 444,
+        "simTime": 22.207999999998442,
+        "targetX": 0.31,
+        "targetY": 0.616,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.089,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 445,
+        "simTime": 22.255999999998437,
+        "targetX": 0.295,
+        "targetY": 0.615,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.102,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 446,
+        "simTime": 22.30399999999843,
+        "targetX": 0.28,
+        "targetY": 0.614,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.115,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 447,
+        "simTime": 22.351999999998426,
+        "targetX": 0.266,
+        "targetY": 0.614,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.131,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 448,
+        "simTime": 22.40799999999842,
+        "targetX": 0.248,
+        "targetY": 0.613,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.144,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 449,
+        "simTime": 22.455999999998415,
+        "targetX": 0.234,
+        "targetY": 0.612,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.158,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 450,
+        "simTime": 22.50399999999841,
+        "targetX": 0.219,
+        "targetY": 0.611,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.172,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 451,
+        "simTime": 22.551999999998404,
+        "targetX": 0.204,
+        "targetY": 0.61,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.189,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 452,
+        "simTime": 22.6079999999984,
+        "targetX": 0.187,
+        "targetY": 0.61,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.203,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 453,
+        "simTime": 22.655999999998393,
+        "targetX": 0.172,
+        "targetY": 0.609,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.218,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 454,
+        "simTime": 22.703999999998388,
+        "targetX": 0.157,
+        "targetY": 0.608,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.217,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 455,
+        "simTime": 22.751999999998382,
+        "targetX": 0.158,
+        "targetY": 0.607,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.201,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 456,
+        "simTime": 22.807999999998376,
+        "targetX": 0.175,
+        "targetY": 0.606,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.188,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 457,
+        "simTime": 22.85599999999837,
+        "targetX": 0.19,
+        "targetY": 0.606,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.174,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 458,
+        "simTime": 22.903999999998366,
+        "targetX": 0.204,
+        "targetY": 0.605,
+        "visible": true
+      }
+    },
+    {
+      "t": 25.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.161,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 459,
+        "simTime": 22.95199999999836,
+        "targetX": 0.219,
+        "targetY": 0.604,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.145,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 460,
+        "simTime": 23.007999999998354,
+        "targetX": 0.236,
+        "targetY": 0.603,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.133,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 461,
+        "simTime": 23.05599999999835,
+        "targetX": 0.251,
+        "targetY": 0.602,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.121,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 462,
+        "simTime": 23.103999999998344,
+        "targetX": 0.266,
+        "targetY": 0.602,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.109,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 463,
+        "simTime": 23.15199999999834,
+        "targetX": 0.281,
+        "targetY": 0.601,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.097,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 464,
+        "simTime": 23.207999999998332,
+        "targetX": 0.298,
+        "targetY": 0.6,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.088,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 465,
+        "simTime": 23.255999999998327,
+        "targetX": 0.313,
+        "targetY": 0.599,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.08,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 466,
+        "simTime": 23.30399999999832,
+        "targetX": 0.328,
+        "targetY": 0.598,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.075,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 467,
+        "simTime": 23.351999999998316,
+        "targetX": 0.342,
+        "targetY": 0.598,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.073,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 468,
+        "simTime": 23.40799999999831,
+        "targetX": 0.36,
+        "targetY": 0.597,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.074,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 469,
+        "simTime": 23.455999999998305,
+        "targetX": 0.374,
+        "targetY": 0.596,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.077,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 470,
+        "simTime": 23.5039999999983,
+        "targetX": 0.389,
+        "targetY": 0.595,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.084,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 471,
+        "simTime": 23.551999999998294,
+        "targetX": 0.404,
+        "targetY": 0.594,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.094,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 472,
+        "simTime": 23.607999999998288,
+        "targetX": 0.421,
+        "targetY": 0.593,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.104,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 473,
+        "simTime": 23.655999999998283,
+        "targetX": 0.436,
+        "targetY": 0.592,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.115,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 474,
+        "simTime": 23.703999999998278,
+        "targetX": 0.451,
+        "targetY": 0.592,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.126,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 475,
+        "simTime": 23.751999999998272,
+        "targetX": 0.466,
+        "targetY": 0.591,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.141,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 476,
+        "simTime": 23.807999999998266,
+        "targetX": 0.483,
+        "targetY": 0.59,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.154,
+        "inZone": true,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 477,
+        "simTime": 23.85599999999826,
+        "targetX": 0.498,
+        "targetY": 0.589,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.167,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 478,
+        "simTime": 23.903999999998256,
+        "targetX": 0.512,
+        "targetY": 0.588,
+        "visible": true
+      }
+    },
+    {
+      "t": 26.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.181,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 479,
+        "simTime": 23.95199999999825,
+        "targetX": 0.527,
+        "targetY": 0.587,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.196,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 480,
+        "simTime": 24.007999999998244,
+        "targetX": 0.544,
+        "targetY": 0.586,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.056,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.21,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 481,
+        "simTime": 24.05599999999824,
+        "targetX": 0.559,
+        "targetY": 0.586,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.104,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.224,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 482,
+        "simTime": 24.103999999998234,
+        "targetX": 0.574,
+        "targetY": 0.585,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.152,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.238,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 483,
+        "simTime": 24.151999999998228,
+        "targetX": 0.589,
+        "targetY": 0.584,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.208,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.255,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 484,
+        "simTime": 24.207999999998222,
+        "targetX": 0.606,
+        "targetY": 0.583,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.256,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.269,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 485,
+        "simTime": 24.255999999998217,
+        "targetX": 0.621,
+        "targetY": 0.582,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.304,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.283,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 486,
+        "simTime": 24.30399999999821,
+        "targetX": 0.636,
+        "targetY": 0.581,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.352,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.298,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 487,
+        "simTime": 24.351999999998206,
+        "targetX": 0.65,
+        "targetY": 0.58,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.408,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.315,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 488,
+        "simTime": 24.4079999999982,
+        "targetX": 0.668,
+        "targetY": 0.579,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.456,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.329,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 489,
+        "simTime": 24.455999999998195,
+        "targetX": 0.682,
+        "targetY": 0.579,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.504,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.343,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 490,
+        "simTime": 24.50399999999819,
+        "targetX": 0.697,
+        "targetY": 0.578,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.552,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.358,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 491,
+        "simTime": 24.551999999998184,
+        "targetX": 0.712,
+        "targetY": 0.577,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.608,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.375,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 492,
+        "simTime": 24.607999999998178,
+        "targetX": 0.729,
+        "targetY": 0.576,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.656,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.389,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 493,
+        "simTime": 24.655999999998173,
+        "targetX": 0.744,
+        "targetY": 0.575,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.704,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.404,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 494,
+        "simTime": 24.703999999998167,
+        "targetX": 0.759,
+        "targetY": 0.574,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.752,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.419,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 495,
+        "simTime": 24.751999999998162,
+        "targetX": 0.774,
+        "targetY": 0.573,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.808,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.436,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 496,
+        "simTime": 24.807999999998156,
+        "targetX": 0.791,
+        "targetY": 0.572,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.856,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.45,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 497,
+        "simTime": 24.85599999999815,
+        "targetX": 0.806,
+        "targetY": 0.571,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.904,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.465,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 498,
+        "simTime": 24.903999999998145,
+        "targetX": 0.82,
+        "targetY": 0.57,
+        "visible": true
+      }
+    },
+    {
+      "t": 27.952,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.479,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 499,
+        "simTime": 24.95199999999814,
+        "targetX": 0.835,
+        "targetY": 0.57,
+        "visible": true
+      }
+    },
+    {
+      "t": 28.008,
+      "name": "pursuit.sample",
+      "data": {
+        "error2d": 0.492,
+        "inZone": false,
+        "playerX": 0.366,
+        "playerY": 0.669,
+        "profile": "line",
+        "round": 1,
+        "sampleIndex": 500,
+        "simTime": 25.007999999998134,
+        "targetX": 0.848,
+        "targetY": 0.569,
+        "visible": true
+      }
+    },
+    {
+      "t": 28.008,
+      "name": "pursuit.round_finished",
+      "data": {
+        "inZoneRatio": 0.6641074856046184,
+        "mae2d": 0.2290697332981018,
+        "occludedSeconds": 0.0,
+        "occlusion": 0,
+        "profile": "line",
+        "reason": "time_complete",
+        "recaptureSeconds": -1.0,
+        "rmse2d": 0.3645304101107781,
+        "round": 1,
+        "tolerance": 0.16,
+        "visibleSeconds": 25.007999999998134
+      }
+    }
+  ]
+}

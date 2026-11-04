@@ -1,5 +1,48 @@
 # Neuralife 七款脑控游戏 — 缺陷清单与修复方案
 
+> **V4 处置状态（2026-11-03）**：本文档记录的是 V2 代码（traffic 178 行、hanoi 232 行等）的缺陷。
+> V4 已重写 hanoi / pursuit / target / traffic / luban，并修复 claw 的信息泄露；下表各条对应处置如下，
+> 明细见 `docs/V4_STATUS.md`、`docs/traffic_CHANGELOG.md`。
+>
+> | 原问题 | 处置 |
+> |---|---|
+> | P0-1 / P0-2（traffic 红灯不停、途中变灯仍走完） | **已消除**：V4 删除灯色主玩法，改为真实车流 + 几何碰撞，不再存在「红灯规则」这条失效路径（`traffic/Main.qml` 0.4.0 全量重写） |
+> | P1-6 / P2-8 / P2-9 / P2-13（traffic 指标与死值） | **已消除**：相关变量随重写一并删除，改为 `move_segment` / `car_sample` / `collision` / `level_cleared` 事件 |
+> | P2-3（`Math.random()` 无种子） | **已修**：traffic 使用 Park-Miller 每车道独立种子；hanoi/pursuit/target 均为确定性实现 |
+> | 7 款共通「finish 后仍提示按确认重开」 | **已修**：hanoi/target/pursuit/traffic 结算后仅调用一次 `game.finish()`，重开由宿主完成页接管 |
+> | claw 辅助率恒等于成功率 | **已修**：对齐阶段不再提示方向/变绿，辅助标记独立记录 |
+> | luban 伪 3D | **已消除**：宿主补装 Qt Quick 3D 6.11.1 运行时，luban 0.4.0 改为真三维盒体几何 + 逐格碰撞，三关经几何求解验证（`docs/luban_3d_deployment.md`、`docs/logs/luban_solver_report.txt`）；旧阻断报告已标注失效 |
+>
+> 其余条款（尤其需要实机取证的部分）见 `tests/acceptance_matrix.csv`。
+
+## V4 第四次复核新增（2026-11-03 · 视觉同源审计）
+
+对照规格书 §1 逐款审计，功能玩法层全部合规（pursuit 五轮/R5 遮挡、claw 二维 X/Z+俯视侧视、traffic 种子+碰撞+脑控降速、sokoban 死局恢复等均无打折），**唯一短板是视觉同源**：
+
+| ID | 级别 | 范围 | 问题 | 处置 |
+|---|---|---|---|---|
+| **P1-32** | 视觉（已修） | hanoi/pursuit/target/sokoban/claw/traffic | 六款场景背景仍硬编码 V2 深蓝（`#101C2C/#101F36/#0F1B2C/#1A222C`），与外框 `GameTheme` 浅色令牌割裂，构成规格书 §1.2 明令禁止的「深蓝数据仪表盘」 | 背景→`uiTheme.panel`；HUD/结算卡→令牌；霓虹 `#5ADCCB`→`uiTheme.primary`、`#68D5B5`→`uiTheme.success`、`#FB7777`→`uiTheme.danger`、深蓝文字→`primaryText/secondaryText`。luban 3D 古风台面保留 |
+| **P2-33** | 系统（待宿主） | 全部 | `GameTheme.themeIndex` 恒为 0(Light)，宿主 `game` 对象未暴露主题信号，`BASE-03`（切换宿主主题表现一致）无法接入 | 已在 `GameTheme.qml` 注释标明；待宿主提供 theme/colorScheme 接口后接入 |
+| 核查项 | 无缺陷 | traffic | 规格书 §8.4「扫掠碰撞/固定时间步长」——`findCollision` 是连续位置判据 + `substep=0.008s` 固定子步（最快车单步位移 0.026 单位 ≪ 碰撞阈值 0.72），穿透风险数值上已规避 | 仅加注释说明，不硬改避免回归 |
+
+> 视觉同源改造证据：`docs/shots/v5_theme_{hanoi,target,sokoban,claw}.png`；回归 7/7 冒烟 + 31 场景自动取证全绿。
+
+## V4 第三次复核新增（2026-11-03 · 自动取证装置上线后）
+
+引入 `tools/fake_host.py`（按宿主契约投递 `started/step/action/pointer/paused/resumed`）后，
+原先「只能真人手玩」的 29 项里 28 项已自动验证，过程中又抓出 3 个新问题：
+
+| ID | 级别 | 游戏 | 问题 | 处置 |
+|---|---|---|---|---|
+| **P0-29** | 阻断（已修） | luban | `finishSlide()` 抽出木件后把 `selectedId` 清空，但 `mode` 仍停在 `axis`；`handleAction` 在 axis 模式下要求 `selectedId !== ""` 才会执行，于是**键鼠/脑控玩家抽出第一件后就再也选不到下一件，整关卡死** | 抽出后 `root.mode = "select"`；自动取证 `autoplay/luban__L_06_键盘全流程.json` 验证 |
+| **P1-30** | 指标/流程（已修） | luban | `resetLevel()` 同样不重置 `mode`，复位后卡在 `axis` | 复位后 `root.mode = "orbit"`；`L-06i` 验证 |
+| **P2-31** | 系统性（待实机确认） | traffic | `holdGrace = 1.5` 使「收不到 release 的按住」只保证 1.5s 有效；C01 全程冲刺需 1.97s，**若宿主不转发按键自动重复，玩家会在马路中间停住被车撞** | 未改代码（属防漏 release 的设计选择）；harness 用 0.4s 补按等价 auto-repeat 通过。需在真机确认宿主是否转发 auto-repeat，若不转发则改为「按住期间持续有效 + onStopping/pause 时释放」 |
+
+> 另记两条取证边界（不是代码缺陷）：luban 的 `View3D.pick` 需要真实渲染帧，离屏环境拿不到，
+> 所以「鼠标点选木件 / 拖动抽出」仍是 `PARTIAL`；luban 的撤销/复位按钮在离屏下点不到，
+> 目前是调按钮绑定的同一函数验证功能，不是点击验证。
+
+
 | 项目 | 内容 |
 |---|---|
 | 评审对象 | `C:\Users\Ait\Desktop\Neuralife\{hanoi,pursuit,target,sokoban,claw,traffic,luban}` |

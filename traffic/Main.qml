@@ -1,366 +1,603 @@
 import QtQuick
 import "../shared-ui" as SharedUI
 
-// Traffic Light V3：统一框架 + 双模式
-//   - go_nogo：保留 V2 信号判断任务（与 V2 数据兼容）
-//   - crossing_decision：第一人称/近第一人称道路过街情境，可复现车流
-// 重要约束：红灯不操作 != 神经抑制成功；绿灯不操作 != 解码失败。
+// 红绿灯过马路 V4 —— 侧视/斜侧视街道躲车（Frogger 式）
+//
+// 设计要点（V4 §8）：
+//  1. 权威真值只存在于世界坐标：crossX = 玩家横穿进度，travelY = 车流纵向位置。
+//     屏幕像素只由 projectToScreen 投影，绝不参与碰撞判定。
+//  2. 玩家用方向键按住前进/后退，松开停止；不再按确认自动播放过街动画。
+//  3. 车流由种子预先生成（每车道独立 RNG），按固定 8ms 子步推进，
+//     碰撞在每个子步用"车道横向重叠 + 纵向实体重叠"判定，不会高速穿模。
+//  4. 生成后做最小安全间隙校验，保证每关都存在可通关窗口（不生成必死车流）。
 Item {
     id: root
     required property var taskContext
     required property var game
 
-    readonly property string inputSource: (game && game.inputSource) ? game.inputSource : "local"
-    function hostElapsed() {
-        if (game && typeof game.elapsedSeconds === "number") return game.elapsedSeconds
-        if (game && typeof game.elapsedSeconds === "function") return game.elapsedSeconds()
-        return localElapsed
-    }
+    readonly property string gameVersion: "0.4.0"
+    readonly property string inputSource: (game && game.inputSource) ? String(game.inputSource) : "local"
+    readonly property bool isBci: inputSource.toLowerCase() === "bci"
 
+    // ------------------------------------------------------------------
+    // 世界尺度与投影基向量（像素/世界单位）
+    //   横穿方向 u：每车道右移 UX、上移 UY  → 前进在屏幕上向右上，符合 §8.2
+    //   车流方向 v：近似水平，仅轻微下倾，保证车头方向可读
+    // ------------------------------------------------------------------
+    readonly property real crossDx: 58.0
+    readonly property real crossDy: 52.0
+    readonly property real carDx: 42.0
+    readonly property real carDy: 1.5
+    readonly property real originX: 66.0
+    readonly property real originY: 392.0
+    readonly property real sceneW: 700
+    readonly property real sceneH: 470
+
+    // 实体尺寸（世界单位）
+    readonly property real pedHalfWidth: 0.17   // 横穿方向半宽
+    readonly property real pedHalfDepth: 0.22   // 车流方向半深
+    readonly property real crossSpeed: 1.55     // 世界单位/秒
+    readonly property real bciStepUnit: 0.5     // 脑控离散步长
+    readonly property real bciCarSpeedScale: 0.62
+    readonly property real holdGrace: 1.5       // 未收到 release 时的保险按住时长
+    readonly property real vCull: 12.0
+    readonly property int maxCars: 24
+    readonly property real substep: 0.008
+
+    function projX(u, v) { return originX + u * crossDx + v * carDx }
+    function projY(u, v) { return originY - u * crossDy + v * carDy }
+    function projScale(u) { return 1.0 / (1.0 + Math.max(0, u) * 0.055) }
+    function clampNum(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v) }
+    function r2(v) { return Math.round(v * 100) / 100 }
+
+    // ------------------------------------------------------------------
+    // 主题与 toast
+    // ------------------------------------------------------------------
     SharedUI.GameTheme { id: uiTheme }
     SharedUI.FeedbackToast { id: toast; theme: uiTheme; parent: root }
 
     // ------------------------------------------------------------------
-    // 配置
-    // ------------------------------------------------------------------
-    property string taskMode: "crossing_decision" // go_nogo | crossing_decision
-    property int seed: 42
-    property var trialPlan: []
-
-    property real cueWindow: 2.4
-    property real feedbackDuration: 0.85
-    property real walkDuration: 1.1
-
-    // Park-Miller RNG
-    QtObject {
-        id: rng
-        property int state: 1
-        function seed(v) { state = (Math.floor(Math.abs(Number(v) || 1)) % 2147483646) + 1 }
-        function next() { state = (state * 48271) % 2147483647; return state / 2147483647 }
-        function pickInt(low, high) { return low + Math.floor(next() * (high - low + 1)) }
-        function pickReal(low, high) { return low + next() * (high - low) }
-        function pickBool() { return next() >= 0.5 }
-        function pickOne(arr) { return arr[pickInt(0, arr.length - 1)] }
-    }
-
-    // ------------------------------------------------------------------
     // 会话状态
     // ------------------------------------------------------------------
-    property bool sessionFinished: false
-    property bool isPaused: false
-    property int trialIndex: 0
-    property string phase: "idle"       // idle | trial_cue | trial_walking | trial_feedback | session_complete
-    property string currentLight: "red"
-
-    property real localElapsed: 0.0
-    property real trialTimer: 0.0
-    property real walkProgress: 0.0
-    property real trialStartedAt: 0.0
-
-    property bool respondedThisTrial: false
-    property real reactionTime: -1.0
-    property string trialResult: ""     // correct_start | false_start | correct_withhold | missed_go | accident
-
-    property int correctStarts: 0
-    property int falseStarts: 0
-    property int correctWithholds: 0
-    property int missedGos: 0
-    property int accidents: 0
-    property var trialLog: []
-
-    property string feedbackText: ""
-    property string feedbackColor: "#F5F8F8"
-
-    // crossing_decision 车流状态
+    property int seed: 42
+    property var levelPlans: []
+    property int levelIndex: 0
+    property int attemptNo: 1
+    // idle | level_intro | playing | hit | level_clear | session_complete
+    property string phase: "idle"
+    property real phaseTimer: 0
+    property real simTime: 0
+    property real sessionTime: 0
+    property real crossingX: -0.6
+    property real finishX: 2.45
+    property int laneCount: 2
+    property var lanes: []
     property var cars: []
-    property bool collidedThisTrial: false
+    property var carSlots: []
+    property int collisionsTotal: 0
+    property int collisionsThisLevel: 0
+    property int clearedCount: 0
+    property var levelResults: []
+    property bool isPaused: false
+    property bool sessionFinished: false
+    property real walkPhase: 0
+    property string hitKind: ""
+    property real hitFlash: 0
 
+    // 输入（按住状态）
+    property bool rightHeld: false
+    property bool leftHeld: false
+    property real holdRightUntil: -1
+    property real holdLeftUntil: -1
+    property bool mouseRightHeld: false
+    property bool mouseLeftHeld: false
+    property real bciTargetX: -0.6
+
+    // 移动分段记录
+    property bool movingNow: false
+    property real segFrom: 0
+    property real segT0: 0
+    property string segSource: "none"
+    property string activeSource: "none"
+
+    property real lastSampleT: -1
+
+    readonly property string levelId: (levelIndex < levelPlans.length && levelPlans[levelIndex])
+                                        ? levelPlans[levelIndex].id : "C00"
+    readonly property real crossProgress: (finishX > 0) ? clampNum((crossingX + 0.6) / (finishX + 0.6), 0, 1) : 0
+    readonly property bool atStartSidewalk: crossingX + pedHalfWidth <= 0.0
+
+    // ------------------------------------------------------------------
+    // 关卡配置（V4 §8.2 五组可测难度）
+    // ------------------------------------------------------------------
+    function buildLevels() {
+        return [
+            { id: "C01", lanes: [
+                { dir: 1,  s0: 1.5, s1: 1.9, g0: 3.0, g1: 4.2, truckRatio: 0.0 },
+                { dir: -1, s0: 1.4, s1: 1.8, g0: 3.2, g1: 4.4, truckRatio: 0.0 }
+            ] },
+            { id: "C02", lanes: [
+                { dir: 1,  s0: 1.9, s1: 2.4, g0: 2.7, g1: 3.6, truckRatio: 0.0 },
+                { dir: -1, s0: 1.6, s1: 2.0, g0: 2.9, g1: 3.8, truckRatio: 0.0 },
+                { dir: 1,  s0: 2.2, s1: 2.6, g0: 2.6, g1: 3.4, truckRatio: 0.0 }
+            ] },
+            { id: "C03", lanes: [
+                { dir: -1, s0: 2.2, s1: 3.0, g0: 2.3, g1: 3.1, truckRatio: 0.0 },
+                { dir: 1,  s0: 2.6, s1: 3.2, g0: 2.2, g1: 2.9, truckRatio: 0.0 },
+                { dir: -1, s0: 2.0, s1: 2.6, g0: 2.4, g1: 3.2, truckRatio: 0.0 },
+                { dir: 1,  s0: 2.4, s1: 3.0, g0: 2.3, g1: 3.0, truckRatio: 0.0 }
+            ] },
+            { id: "C04", lanes: [
+                { dir: 1,  s0: 1.8, s1: 2.3, g0: 2.7, g1: 3.5, truckRatio: 0.30 },
+                { dir: -1, s0: 2.0, s1: 2.6, g0: 2.5, g1: 3.3, truckRatio: 0.75 },
+                { dir: 1,  s0: 2.3, s1: 2.9, g0: 2.4, g1: 3.1, truckRatio: 0.55 },
+                { dir: -1, s0: 1.9, s1: 2.4, g0: 2.6, g1: 3.4, truckRatio: 0.25 }
+            ] },
+            { id: "C05", lanes: [
+                { dir: 1,  s0: 2.4, s1: 3.0, g0: 2.1, g1: 2.8, truckRatio: 0.10 },
+                { dir: -1, s0: 2.2, s1: 2.8, g0: 2.2, g1: 2.9, truckRatio: 0.10 },
+                { dir: 1,  s0: 2.6, s1: 3.2, g0: 2.0, g1: 2.7, truckRatio: 0.10 },
+                { dir: -1, s0: 2.3, s1: 2.9, g0: 2.1, g1: 2.8, truckRatio: 0.10 },
+                { dir: 1,  s0: 2.5, s1: 3.1, g0: 2.1, g1: 2.8, truckRatio: 0.10 }
+            ] }
+        ]
+    }
+
+    // ------------------------------------------------------------------
+    // 确定性车流生成（Park-Miller，每车道独立种子）
+    // ------------------------------------------------------------------
+    function seedRng(st, value) {
+        st.state = (Math.floor(Math.abs(Number(value) || 1)) % 2147483646) + 1
+    }
+    function rngNext(st) {
+        st.state = (st.state * 48271) % 2147483647
+        return st.state / 2147483647
+    }
+    function rngRange(st, lo, hi) { return lo + rngNext(st) * (hi - lo) }
+
+    // 单车穿过玩家穿越线（v=0）时占用的时间半径
+    function passHalfWidth(ev) {
+        return (ev.len * 0.5 + pedHalfDepth) / ev.speed
+    }
+
+    function buildLaneSchedule(laneCfg, laneIdx, levelSeed) {
+        var st = { state: 1 }
+        seedRng(st, levelSeed * 977 + laneIdx * 131 + 17)
+
+        var evs = []
+        var horizon = 240.0
+        var t = rngRange(st, 0.6, laneCfg.g0)
+        var guard = 0
+        while (t < horizon && guard < 400) {
+            guard++
+            var isTruck = rngNext(st) < laneCfg.truckRatio
+            var len = isTruck ? 2.5 : (1.55 + rngNext(st) * 0.35)
+            var spd = rngRange(st, laneCfg.s0, laneCfg.s1) * (isBci ? bciCarSpeedScale : 1.0)
+            var kind = isTruck ? "truck" : (rngNext(st) < 0.3 ? "van" : "sedan")
+            evs.push({ tc: t, speed: spd, len: len, kind: kind })
+            t = t + rngRange(st, laneCfg.g0, laneCfg.g1)
+        }
+
+        // 最小安全间隙校验：不足则顺延后车，保证可控通关窗口（不产生必死车流）
+        var fixed = 0
+        for (var i = 1; i < evs.length; ++i) {
+            var a = evs[i - 1]
+            var b = evs[i]
+            var clear = (b.tc - passHalfWidth(b)) - (a.tc + passHalfWidth(a))
+            if (clear < 1.05) {
+                b.tc += (1.05 - clear)
+                fixed++
+            }
+        }
+
+        return {
+            lane: laneIdx,
+            dir: laneCfg.dir,
+            events: evs,
+            next: 0,
+            minClear: minClearWindow(evs),
+            fairnessFix: fixed
+        }
+    }
+
+    function minClearWindow(evs) {
+        var m = 99
+        for (var i = 1; i < evs.length; ++i) {
+            var clear = (evs[i].tc - passHalfWidth(evs[i])) - (evs[i - 1].tc + passHalfWidth(evs[i - 1]))
+            if (clear < m) m = clear
+        }
+        return m
+    }
+
+    // ------------------------------------------------------------------
+    // 生命周期
+    // ------------------------------------------------------------------
     function loadConfig() {
         try {
-            var r = taskContext.config.read({ mode: "crossing_decision", seed: 42 })
+            var r = taskContext.config.read({ seed: 42 })
             if (r && r.ok && r.values) {
-                var m = String(r.values.mode)
-                if (m === "go_nogo" || m === "crossing_decision") taskMode = m
                 var s = parseInt(r.values.seed)
-                if (!isNaN(s)) seed = s
+                if (!isNaN(s) && s > 0) seed = s
             }
         } catch (e) {
-            console.log("traffic: config.read unavailable, using defaults")
+            console.log("traffic: config.read unavailable")
         }
     }
 
-    // ------------------------------------------------------------------
-    // 试次表生成
-    // ------------------------------------------------------------------
-    function buildTrialPlan() {
-        rng.seed(seed)
-        var plan = []
-
-        if (taskMode === "go_nogo") {
-            // 与 V2 兼容的 8 试次序列
-            plan = ["red","green","green","red","green","red","green","red"]
-        } else {
-            // crossing_decision：每试次含灯色 + 可复现车流
-            var lightSeq = ["red","green","green","red","green","red","green","red"]
-            for (var i = 0; i < lightSeq.length; ++i) {
-                plan.push({
-                    light: lightSeq[i],
-                    cars: buildCarPlan(i)
-                })
-            }
-        }
-        return plan
-    }
-
-    function buildCarPlan(trialIdx) {
-        // 第一人称道路：两条车道，车辆从左右驶来
-        // 设计坐标系：道路 y 范围约 220–480；行人从 y=480 走到 y=220
-        var carPlan = []
-        var laneYs = [280, 390] // 近车道、远车道（近似）
-        var count = rng.pickInt(2, 5)
-        for (var c = 0; c < count; ++c) {
-            var lane = rng.pickInt(0, 1)
-            var speed = rng.pickReal(180, 320) // px/s
-            var direction = rng.pickBool() ? 1 : -1 // 1: 左→右, -1: 右→左
-            var spawnTime = rng.pickReal(0.0, cueWindow + walkDuration + 1.0)
-            var startX = direction > 0 ? -250 : 1050
-            var width = rng.pickInt(70, 110)
-            var length = rng.pickInt(34, 52)
-            carPlan.push({
-                lane: lane,
-                y: laneYs[lane],
-                speed: Math.round(speed * 10) / 10,
-                direction: direction,
-                spawnTime: Math.round(spawnTime * 100) / 100,
-                startX: startX,
-                width: width,
-                length: length,
-                color: rng.pickOne(["#E8925A", "#5ADCCB", "#9AAEE5", "#E7BC84", "#FB7777"])
-            })
-        }
-        return carPlan
-    }
-
-    function currentTrial() {
-        if (trialPlan.length === 0) return null
-        if (taskMode === "go_nogo") return { light: trialPlan[trialIndex] }
-        return trialPlan[trialIndex]
-    }
-
-    // ------------------------------------------------------------------
-    // 会话生命周期
-    // ------------------------------------------------------------------
     function startSession() {
         loadConfig()
-        trialPlan = buildTrialPlan()
+        levelPlans = buildLevels()
         sessionFinished = false
         isPaused = false
-        trialIndex = 0
-        localElapsed = 0.0
-        trialLog = []
-        correctStarts = 0; falseStarts = 0; correctWithholds = 0; missedGos = 0; accidents = 0
+        sessionTime = 0
+        levelIndex = 0
+        attemptNo = 1
+        collisionsTotal = 0
+        clearedCount = 0
+        levelResults = []
+        hitFlash = 0
 
         game.record("traffic.attempt_started", {
-            gameVersion: "0.3.0",
-            taskMode: taskMode,
+            gameVersion: gameVersion,
             inputSource: inputSource,
             seed: seed,
-            totalTrials: trialPlan.length,
-            cueWindow: cueWindow,
-            feedbackDuration: feedbackDuration,
-            walkDuration: walkDuration,
-            trialPlan: trialPlan.slice()
+            levelPlan: levelPlans.map(function (l) { return l.id }),
+            bciCarSpeedScale: isBci ? bciCarSpeedScale : 1.0,
+            crossSpeed: crossSpeed,
+            pedHalfWidth: pedHalfWidth,
+            pedHalfDepth: pedHalfDepth,
+            substep: substep,
+            elapsed: hostElapsed()
         })
-
-        startTrial()
+        startLevel(0)
     }
 
-    function startTrial() {
-        if (sessionFinished) return
-        if (trialIndex >= trialPlan.length) {
-            finishSession()
-            return
-        }
-
-        var t = currentTrial()
-        currentLight = t.light
-        phase = "trial_cue"
-        trialTimer = 0.0
-        walkProgress = 0.0
-        respondedThisTrial = false
-        reactionTime = -1.0
-        trialResult = ""
-        feedbackText = ""
-        collidedThisTrial = false
+    function startLevel(idx) {
+        levelIndex = idx
+        var lv = levelPlans[idx]
+        laneCount = lv.lanes.length
+        finishX = laneCount + 0.45
+        crossingX = -0.6
+        bciTargetX = -0.6
+        collisionsThisLevel = 0
+        simTime = 0
+        phaseTimer = 0
+        lastSampleT = -1
         cars = []
+        syncCarSlots()
+        movingNow = false
+        segFrom = crossingX
+        segT0 = 0
+        segSource = "none"
+        mouseLeftHeld = false
+        mouseRightHeld = false
+        rightHeld = false
+        leftHeld = false
 
-        trialStartedAt = hostElapsed()
-        game.record("traffic.trial_started", {
-            trial: trialIndex + 1,
-            light: currentLight,
+        var levelSeed = seed + idx * 1009
+        var built = []
+        var laneDesc = []
+        for (var i = 0; i < lv.lanes.length; ++i) {
+            var sch = buildLaneSchedule(lv.lanes[i], i, levelSeed)
+            built.push(sch)
+            laneDesc.push({
+                lane: i,
+                dir: lv.lanes[i].dir,
+                speedRange: [r2(lv.lanes[i].s0 * (isBci ? bciCarSpeedScale : 1.0)),
+                             r2(lv.lanes[i].s1 * (isBci ? bciCarSpeedScale : 1.0))],
+                gapRange: [lv.lanes[i].g0, lv.lanes[i].g1],
+                minClearSec: r2(sch.minClear),
+                fairnessFix: sch.fairnessFix,
+                events: sch.events.slice(0, 24)
+            })
+        }
+        lanes = built
+
+        phase = "level_intro"
+        roadCanvas.requestPaint()
+
+        game.record("traffic.level_started", {
+            levelId: lv.id,
+            levelIndex: idx,
+            attempt: attemptNo,
+            seed: levelSeed,
+            laneCount: laneCount,
+            finishX: r2(finishX),
+            startX: -0.6,
+            lanes: laneDesc,
+            inputSource: inputSource,
             elapsed: hostElapsed()
         })
     }
 
-    function confirmAction() {
-        if (phase !== "trial_cue" || respondedThisTrial || isPaused) return
-
-        respondedThisTrial = true
-        reactionTime = hostElapsed() - trialStartedAt
-
-        if (currentLight === "green") {
-            trialResult = "correct_start"
-            correctStarts++
-            game.record("traffic.correct_start", {
-                trial: trialIndex + 1,
-                reactionTime: reactionTime,
-                elapsed: hostElapsed()
-            })
-            phase = "trial_walking"
-            walkAnim.start()
-        } else {
-            trialResult = "false_start"
-            falseStarts++
-            game.record("traffic.false_start", {
-                trial: trialIndex + 1,
-                reactionTime: reactionTime,
-                elapsed: hostElapsed()
-            })
-            enterFeedback("红灯误启动", "#FB7777")
-        }
+    function beginPlaying() {
+        if (phase !== "level_intro") return
+        phase = "playing"
+        phaseTimer = 0
     }
 
-    function endCueWindow() {
-        if (phase !== "trial_cue") return
-
-        if (currentLight === "red") {
-            trialResult = "correct_withhold"
-            correctWithholds++
-            game.record("traffic.correct_withhold", {
-                trial: trialIndex + 1,
-                elapsed: hostElapsed(),
-                note: "no_response_during_red"
-            })
-            enterFeedback("正确等待", "#68D5B5")
-        } else {
-            trialResult = "missed_go"
-            missedGos++
-            game.record("traffic.missed_go", {
-                trial: trialIndex + 1,
-                elapsed: hostElapsed(),
-                note: "no_response_during_green"
-            })
-            enterFeedback("漏响应", "#E7BC84")
-        }
-    }
-
-    function onWalkingComplete() {
-        if (phase !== "trial_walking") return
-        if (collidedThisTrial) {
-            trialResult = "accident"
-            accidents++
-            game.record("traffic.accident", {
-                trial: trialIndex + 1,
-                elapsed: hostElapsed()
-            })
-            enterFeedback("被车撞到", "#FB7777")
-        } else {
-            game.record("traffic.crossing_complete", {
-                trial: trialIndex + 1,
-                elapsed: hostElapsed()
-            })
-            enterFeedback("成功过街", "#68D5B5")
-        }
-    }
-
-    function enterFeedback(text, color) {
-        feedbackText = text
-        feedbackColor = color
-        phase = "trial_feedback"
-        trialTimer = 0.0
-    }
-
-    function endFeedback() {
-        if (phase !== "trial_feedback") return
-
-        trialLog.push({
-            trial: trialIndex + 1,
-            light: currentLight,
-            result: trialResult,
-            reactionTime: reactionTime
-        })
-
-        game.record("traffic.trial_result", {
-            trial: trialIndex + 1,
-            light: currentLight,
-            result: trialResult,
-            reactionTime: reactionTime,
+    function retryLevel(reason) {
+        attemptNo++
+        game.record("traffic.level_retry", {
+            levelId: levelId,
+            reason: reason,
+            attempt: attemptNo,
+            collapsedAtX: r2(crossingX),
             elapsed: hostElapsed()
         })
+        startLevel(levelIndex)
+    }
 
-        trialIndex++
-        startTrial()
+    function onCollision(car) {
+        if (phase !== "playing") return
+        phase = "hit"
+        phaseTimer = 0
+        hitKind = car.kind
+        hitFlash = 1.0
+        collisionsThisLevel++
+        collisionsTotal++
+        movingNow = false
+        closeMoveSegment()
+        game.record("traffic.collision", {
+            levelId: levelId,
+            lane: car.lane,
+            carV: r2(car.v),
+            carSpeed: r2(car.speed),
+            carDir: car.dir,
+            carLen: r2(car.len),
+            carKind: car.kind,
+            playerX: r2(crossingX),
+            t: r2(simTime),
+            inputSource: inputSource,
+            elapsed: hostElapsed()
+        })
+        toast.show(qsTr("被车撞到，本关重试"), "danger")
+    }
+
+    function onCrossingSuccess() {
+        if (phase !== "playing") return
+        phase = "level_clear"
+        phaseTimer = 0
+        movingNow = false
+        closeMoveSegment()
+        clearedCount++
+        var res = {
+            levelId: levelId,
+            levelIndex: levelIndex,
+            attempt: attemptNo,
+            crossingTime: r2(simTime),
+            collisions: collisionsThisLevel,
+            inputSource: inputSource
+        }
+        var next = levelResults.slice()
+        next.push(res)
+        levelResults = next
+        game.record("traffic.level_cleared", res)
+        toast.show(qsTr("安全到达对岸"), "success")
     }
 
     function finishSession() {
         if (sessionFinished) return
         sessionFinished = true
         phase = "session_complete"
-
         var result = {
-            gameVersion: "0.3.0",
-            taskMode: taskMode,
-            totalTrials: trialPlan.length,
-            correctStarts: correctStarts,
-            falseStarts: falseStarts,
-            correctWithholds: correctWithholds,
-            missedGos: missedGos,
-            accidents: accidents,
-            trialLog: trialLog.slice(),
+            gameVersion: gameVersion,
+            totalLevels: levelPlans.length,
+            clearedLevels: clearedCount,
+            collisions: collisionsTotal,
+            attempts: attemptNo,
+            levels: levelResults,
+            inputSource: inputSource,
             elapsed: hostElapsed(),
-            summary: qsTr("红绿灯任务完成 | 正确启动 %1 | 误启动 %2 | 正确等待 %3 | 漏响应 %4 | 事故 %5")
-                     .arg(correctStarts).arg(falseStarts).arg(correctWithholds).arg(missedGos).arg(accidents)
+            summary: qsTr("过街任务完成：%1/%2 关，碰撞 %3 次，共 %4 次尝试")
+                     .arg(clearedCount).arg(levelPlans.length).arg(collisionsTotal).arg(attemptNo)
         }
-
         game.record("traffic.attempt_finished", result)
         game.finish(result)
     }
 
-    // ------------------------------------------------------------------
-    // 车流推进（crossing_decision）
-    // ------------------------------------------------------------------
-    function advanceCars(dt) {
-        if (taskMode !== "crossing_decision") return
-        var t = currentTrial()
-        if (!t || !t.cars) return
-
-        var newCars = []
-        var pedestrianBox = null
-        if (phase === "trial_walking") {
-            var py = 480 - walkProgress * 260
-            pedestrianBox = { x: 470, y: py - 30, w: 60, h: 60 }
-        }
-
-        for (var i = 0; i < t.cars.length; ++i) {
-            var c = t.cars[i]
-            if (trialTimer < c.spawnTime) continue
-            var elapsedSinceSpawn = trialTimer - c.spawnTime
-            var x = c.startX + c.direction * c.speed * elapsedSinceSpawn
-            if (x > -200 && x < 1200) {
-                newCars.push({ x: x, y: c.y, w: c.width, h: c.length, color: c.color })
-                if (pedestrianBox) {
-                    if (rectOverlap(x, c.y - c.length / 2, c.width, c.length,
-                                    pedestrianBox.x, pedestrianBox.y, pedestrianBox.w, pedestrianBox.h)) {
-                        collidedThisTrial = true
-                    }
-                }
-            }
-        }
-        cars = newCars
+    function hostElapsed() {
+        if (game && typeof game.elapsedSeconds === "number") return game.elapsedSeconds
+        return sessionTime
     }
 
-    function rectOverlap(x1, y1, w1, h1, x2, y2, w2, h2) {
-        return x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2
+    // ------------------------------------------------------------------
+    // 输入：键盘 / 鼠标按住 / 脑控离散步进，全部落到同一套世界坐标推进
+    // ------------------------------------------------------------------
+    function pressDirection(dir, source) {
+        if (isPaused || sessionFinished) return
+        if (phase === "level_intro") beginPlaying()
+        if (phase === "hit") { retryLevel("hit_skip"); return }
+        if (phase === "level_clear") { advanceLevel(); return }
+        if (phase !== "playing") return
+
+        if (isBci) {
+            bciTargetX = clampNum(bciTargetX + dir * bciStepUnit, -0.9, finishX + 0.3)
+            activeSource = "bci"
+            game.record("traffic.bci_step", {
+                levelId: levelId, dir: dir, targetX: r2(bciTargetX),
+                playerX: r2(crossingX), t: r2(simTime), elapsed: hostElapsed()
+            })
+            return
+        }
+        if (source === "mouse") {
+            if (dir > 0) mouseRightHeld = true; else mouseLeftHeld = true
+        } else {
+            if (dir > 0) { rightHeld = true; holdRightUntil = simTime + holdGrace }
+            else { leftHeld = true; holdLeftUntil = simTime + holdGrace }
+        }
+        activeSource = source
+    }
+
+    function releaseDirection(dir, source) {
+        if (source === "mouse") {
+            if (dir > 0) mouseRightHeld = false; else mouseLeftHeld = false
+        } else {
+            if (dir > 0) rightHeld = false; else leftHeld = false
+        }
+    }
+
+    function releaseAll() {
+        rightHeld = false; leftHeld = false
+        mouseRightHeld = false; mouseLeftHeld = false
+        holdRightUntil = -1; holdLeftUntil = -1
+    }
+
+    function advanceLevel() {
+        if (levelIndex < levelPlans.length - 1) {
+            attemptNo = 1
+            startLevel(levelIndex + 1)
+        } else {
+            finishSession()
+        }
+    }
+
+    function closeMoveSegment() {
+        if (!movingNow) return
+        movingNow = false
+        if (Math.abs(crossingX - segFrom) < 0.01) return
+        game.record("traffic.move_segment", {
+            levelId: levelId,
+            fromX: r2(segFrom),
+            toX: r2(crossingX),
+            t0: r2(segT0),
+            t1: r2(simTime),
+            dir: crossingX > segFrom ? "forward" : "back",
+            source: segSource,
+            elapsed: hostElapsed()
+        })
+    }
+
+    // ------------------------------------------------------------------
+    // 固定子步仿真：车辆推进 + 玩家推进 + 碰撞
+    // ------------------------------------------------------------------
+    function axisInput() {
+        var rightOn = mouseRightHeld || (rightHeld && simTime <= holdRightUntil)
+        var leftOn = mouseLeftHeld || (leftHeld && simTime <= holdLeftUntil)
+        return (rightOn ? 1 : 0) - (leftOn ? 1 : 0)
+    }
+
+    function stepSim(dt) {
+        simTime += dt
+        phaseTimer += dt
+
+        var axis = axisInput()
+        if (phase === "playing" && axis !== 0 && !movingNow) {
+            movingNow = true
+            segFrom = crossingX
+            segT0 = simTime
+            segSource = (mouseRightHeld || mouseLeftHeld) ? "mouse" : (isBci ? "bci" : "keyboard")
+        } else if (phase === "playing" && axis === 0 && !isBci && movingNow) {
+            closeMoveSegment()
+        }
+
+        // 玩家推进（脑控为向步进目标的连续逼近）
+        if (phase === "playing") {
+            var before = crossingX
+            var desired = crossingX
+            if (isBci) {
+                desired = bciTargetX
+            } else if (axis !== 0) {
+                desired = crossingX + axis * crossSpeed * dt
+            }
+            if (desired > crossingX) crossingX = Math.min(desired, crossingX + crossSpeed * dt)
+            else if (desired < crossingX) crossingX = Math.max(desired, crossingX - crossSpeed * dt)
+            crossingX = clampNum(crossingX, -0.9, finishX + 0.3)
+            if (Math.abs(crossingX - before) > 0.0001) walkPhase += Math.abs(crossingX - before) * 9.0
+            if (isBci && movingNow && Math.abs(crossingX - bciTargetX) < 0.005) closeMoveSegment()
+        }
+
+        // 车流推进（所有非结束阶段都持续运动 → TR-01）
+        if (phase !== "session_complete") {
+            spawnDueCars()
+            for (var i = 0; i < cars.length; ++i) {
+                var c = cars[i]
+                c.v += c.dir * c.speed * dt
+            }
+            cullCars()
+        }
+
+        // 碰撞（仅 playing）
+        if (phase === "playing") {
+            var hitCar = findCollision()
+            if (hitCar) { onCollision(hitCar); return }
+            if (crossingX >= finishX) { onCrossingSuccess(); return }
+        }
+
+        // 阶段推进
+        if (phase === "level_intro" && phaseTimer >= 1.1) beginPlaying()
+        else if (phase === "hit" && phaseTimer >= 1.5) retryLevel("collision")
+        else if (phase === "level_clear" && phaseTimer >= 1.4) advanceLevel()
+    }
+
+    function spawnDueCars() {
+        for (var i = 0; i < lanes.length; ++i) {
+            var ln = lanes[i]
+            while (ln.next < ln.events.length) {
+                var ev = ln.events[ln.next]
+                if (simTime < ev.tc - vCull / ev.speed) break
+                var v0 = ln.dir * ev.speed * (simTime - ev.tc)
+                cars.push({
+                    id: ln.lane + "-" + ln.next,
+                    lane: ln.lane,
+                    dir: ln.dir,
+                    speed: ev.speed,
+                    len: ev.len,
+                    kind: ev.kind,
+                    v: v0
+                })
+                ln.next++
+            }
+        }
+    }
+
+    function cullCars() {
+        var keep = []
+        for (var i = 0; i < cars.length; ++i) {
+            if (Math.abs(cars[i].v) <= vCull) keep.push(cars[i])
+        }
+        cars = keep
+    }
+
+    function findCollision() {
+        // 碰撞判定（配合固定子步 substep=0.008s 即构成"扫掠碰撞"，规格书 8.4）：
+        // 单步内最快车位移 = maxSpeed*substep ≈ 3.2*0.008 = 0.026 单位，
+        // 远小于碰撞阈值（车半长 + pedHalfDepth ≥ 0.72 单位），
+        // 故车辆不会在相邻两步间跨过玩家而漏判。
+        // 判据为「车前沿（c.v 为车中心沿车流方向坐标）是否已压到玩家身深区间」，
+        // 而非逐帧采样位置差，等价于连续扫掠区间重叠。
+        var pLo = crossingX - pedHalfWidth
+        var pHi = crossingX + pedHalfWidth
+        for (var i = 0; i < cars.length; ++i) {
+            var c = cars[i]
+            var laneLo = c.lane
+            var laneHi = c.lane + 1
+            if (pHi <= laneLo || pLo >= laneHi) continue
+            if (Math.abs(c.v) <= c.len * 0.5 + pedHalfDepth) return c
+        }
+        return null
+    }
+
+    function syncCarSlots() {
+        var slots = []
+        for (var i = 0; i < maxCars; ++i) slots.push(i < cars.length ? cars[i] : null)
+        carSlots = slots
+    }
+
+    function sampleTraffic() {
+        if (simTime - lastSampleT < 0.5) return
+        lastSampleT = simTime
+        var arr = []
+        for (var i = 0; i < cars.length; ++i) {
+            var c = cars[i]
+            if (Math.abs(c.v) <= 3.2) arr.push([c.lane, r2(c.v), r2(c.speed), c.dir, c.kind])
+        }
+        game.record("traffic.car_sample", {
+            levelId: levelId,
+            t: r2(simTime),
+            playerX: r2(crossingX),
+            cars: arr
+        })
     }
 
     // ------------------------------------------------------------------
@@ -371,67 +608,204 @@ Item {
         function onStarted() { root.startSession() }
         function onStep(seconds) { root.advance(seconds) }
         function onAction(name, pressed) {
-            if (name === "confirm" && pressed === true) root.confirmAction()
+            if (root.sessionFinished) return
+            if (name === "right") pressed ? root.pressDirection(1, "keyboard") : root.releaseDirection(1, "keyboard")
+            else if (name === "left") pressed ? root.pressDirection(-1, "keyboard") : root.releaseDirection(-1, "keyboard")
+            else if (name === "confirm" && pressed === true) {
+                if (root.phase === "level_intro") root.beginPlaying()
+                else if (root.phase === "hit") root.retryLevel("confirm")
+                else if (root.phase === "level_clear") root.advanceLevel()
+            }
         }
-        function onPointer(x, y) { /* 本模式不需要指针 */ }
-        function onPaused() {
-            root.isPaused = true
-            if (walkAnim.running) walkAnim.pause()
-        }
-        function onResumed() {
-            root.isPaused = false
-            if (walkAnim.paused) walkAnim.resume()
-        }
-        function onStopping() { root.isPaused = true }
+        function onPointer(x, y) { /* GamepadLite 游戏不需要指针 */ }
+        function onPaused() { root.isPaused = true; root.releaseAll(); root.closeMoveSegment() }
+        function onResumed() { root.isPaused = false }
+        function onStopping() { root.isPaused = true; root.releaseAll() }
     }
 
     function advance(seconds) {
         if (isPaused || sessionFinished) return
-        localElapsed += seconds
-
-        if (phase === "trial_cue") {
-            trialTimer += seconds
-            advanceCars(seconds)
-            if (trialTimer >= cueWindow) {
-                trialTimer = cueWindow
-                endCueWindow()
-            }
-        } else if (phase === "trial_walking") {
-            trialTimer += seconds
-            advanceCars(seconds)
-            // walkAnim 驱动 walkProgress；碰撞检测在 advanceCars 中
-            if (collidedThisTrial) {
-                walkAnim.stop()
-                onWalkingComplete()
-            }
-        } else if (phase === "trial_feedback") {
-            trialTimer += seconds
-            if (trialTimer >= feedbackDuration) {
-                trialTimer = feedbackDuration
-                endFeedback()
-            }
+        sessionTime += seconds
+        if (phase === "session_complete" || phase === "idle") return
+        var remaining = Math.min(seconds, 0.25)
+        var guard = 0
+        while (remaining > 0.0001 && guard < 64) {
+            guard++
+            var step = Math.min(substep, remaining)
+            remaining -= step
+            stepSim(step)
+            if (phase === "session_complete") break
         }
+        if (hitFlash > 0) hitFlash = Math.max(0, hitFlash - seconds * 1.6)
+        syncCarSlots()
+        sampleTraffic()
     }
 
-    NumberAnimation {
-        id: walkAnim
-        target: root
-        property: "walkProgress"
-        from: 0; to: 1
-        duration: root.walkDuration * 1000
-        onFinished: root.onWalkingComplete()
+    Component.onCompleted: {
+        carSlots = []
+        for (var i = 0; i < maxCars; ++i) carSlots.push(null)
     }
 
     // ------------------------------------------------------------------
-    // 视觉布局
+    // 静态道路绘制（Canvas，与投影同一套函数）
+    // ------------------------------------------------------------------
+    function quadPath(ctx, u0, u1, v0, v1) {
+        ctx.beginPath()
+        ctx.moveTo(projX(u0, v0), projY(u0, v0))
+        ctx.lineTo(projX(u1, v0), projY(u1, v0))
+        ctx.lineTo(projX(u1, v1), projY(u1, v1))
+        ctx.lineTo(projX(u0, v1), projY(u0, v1))
+        ctx.closePath()
+    }
+
+    function paintRoad(ctx) {
+        var W = sceneW
+        var H = sceneH
+        var N = laneCount
+        var farEdgeU = N + 1.55
+        var parkU = farEdgeU + 1.25
+        var baseY = projY(farEdgeU, 0)
+        var V0 = -18
+        var V1 = 18
+
+        ctx.clearRect(0, 0, W, H)
+
+        // ---------- 天空 ----------
+        var sky = ctx.createLinearGradient(0, 0, 0, H)
+        sky.addColorStop(0, "#16273A")
+        sky.addColorStop(0.45, "#2B4660")
+        sky.addColorStop(1, "#3E5B74")
+        ctx.fillStyle = sky
+        ctx.fillRect(0, 0, W, H)
+
+        // ---------- 天际线（楼群基底沿对岸外缘的对角线）----------
+        var bi = 0
+        for (var vv = V0; vv < V1; vv += 1.15) {
+            var bw = 42 + ((bi * 37) % 52)
+            var bh = 42 + ((bi * 61) % 120)
+            var bxp = projX(parkU, vv)
+            var byp = projY(parkU, vv)
+            ctx.fillStyle = (bi % 2 === 0) ? "#1E2E3E" : "#243546"
+            ctx.fillRect(bxp - bw * 0.35, byp - bh, bw, bh + 10)
+            ctx.fillStyle = "rgba(231,188,132,0.30)"
+            for (var wy = 0; wy < Math.floor(bh / 16); ++wy) {
+                for (var wx = 0; wx < Math.floor(bw / 14); ++wx) {
+                    if (((bi * 3 + wx * 2 + wy) % 5) === 0)
+                        ctx.fillRect(bxp - bw * 0.35 + 6 + wx * 14, byp - bh + 8 + wy * 16, 5, 7)
+                }
+            }
+            bi++
+        }
+
+        // ---------- 对岸绿化带 ----------
+        ctx.fillStyle = "#2A3A38"
+        quadPath(ctx, farEdgeU, parkU, V0, V1)
+        ctx.fill()
+
+        // 绿化带上的树
+        for (var tv = V0 + 0.6; tv < V1; tv += 1.55) {
+            var tx = projX(farEdgeU + 0.62, tv)
+            var ty = projY(farEdgeU + 0.62, tv)
+            var ts = projScale(farEdgeU + 0.62)
+            ctx.fillStyle = "#3C2C1E"
+            ctx.fillRect(tx - 2 * ts, ty - 16 * ts, 4 * ts, 16 * ts)
+            ctx.fillStyle = "#33513F"
+            ctx.beginPath()
+            ctx.arc(tx, ty - 22 * ts, 11 * ts, 0, Math.PI * 2)
+            ctx.fill()
+            ctx.fillStyle = "#3E5C48"
+            ctx.beginPath()
+            ctx.arc(tx - 5 * ts, ty - 26 * ts, 7 * ts, 0, Math.PI * 2)
+            ctx.fill()
+        }
+
+        // ---------- 对岸人行道 ----------
+        ctx.fillStyle = "#4B5867"
+        quadPath(ctx, N, farEdgeU, V0, V1)
+        ctx.fill()
+        ctx.fillStyle = "rgba(255,255,255,0.05)"
+        for (var pv = V0; pv < V1; pv += 0.9) {
+            quadPath(ctx, N, farEdgeU, pv, pv + 0.05)
+            ctx.fill()
+        }
+
+        // ---------- 路面 ----------
+        ctx.fillStyle = "#2F353D"
+        quadPath(ctx, 0, N, V0, V1)
+        ctx.fill()
+        for (var i = 0; i < N; ++i) {
+            ctx.fillStyle = (i % 2 === 0) ? "#333A43" : "#2C323A"
+            quadPath(ctx, i, i + 1, V0, V1)
+            ctx.fill()
+        }
+
+        // 分道虚线
+        ctx.fillStyle = "rgba(232,238,244,0.55)"
+        for (var d = 1; d < N; ++d) {
+            for (var dv = V0; dv < V1; dv += 1.7) {
+                quadPath(ctx, d - 0.025, d + 0.025, dv, dv + 0.85)
+                ctx.fill()
+            }
+        }
+
+        // 斑马线：玩家正走在上面
+        ctx.fillStyle = "rgba(236,242,248,0.80)"
+        for (var cw = 0; cw < N; ++cw) {
+            quadPath(ctx, cw + 0.15, cw + 0.85, -0.55, 0.55)
+            ctx.fill()
+        }
+
+        // 路缘石
+        ctx.fillStyle = "#6B7C90"
+        quadPath(ctx, -0.06, 0.0, V0, V1)
+        ctx.fill()
+        quadPath(ctx, N, N + 0.06, V0, V1)
+        ctx.fill()
+
+        // ---------- 起点人行道 ----------
+        ctx.fillStyle = "#485565"
+        quadPath(ctx, -1.75, 0, V0, V1)
+        ctx.fill()
+        ctx.fillStyle = "rgba(255,255,255,0.05)"
+        for (var sv = V0; sv < V1; sv += 0.9) {
+            quadPath(ctx, -1.75, 0, sv, sv + 0.05)
+            ctx.fill()
+        }
+
+        // 起点标识线
+        ctx.fillStyle = "rgba(90,220,203,0.55)"
+        quadPath(ctx, -0.10, -0.04, V0, V1)
+        ctx.fill()
+
+        // ---------- 对岸路灯 ----------
+        var lampV = [-10.5, -5.2, 0.0, 5.2, 10.5]
+        for (var l = 0; l < lampV.length; ++l) {
+            var lx = projX(N + 0.95, lampV[l])
+            var ly = projY(N + 0.95, lampV[l])
+            var ls = projScale(N + 0.95)
+            ctx.fillStyle = "#5A6B7C"
+            ctx.fillRect(lx - 2 * ls, ly - 58 * ls, 4 * ls, 58 * ls)
+            ctx.fillStyle = "rgba(240,205,150,0.9)"
+            ctx.beginPath()
+            ctx.arc(lx, ly - 60 * ls, 4.5 * ls, 0, Math.PI * 2)
+            ctx.fill()
+            ctx.fillStyle = "rgba(240,205,150,0.10)"
+            ctx.beginPath()
+            ctx.arc(lx, ly - 60 * ls, 16 * ls, 0, Math.PI * 2)
+            ctx.fill()
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // 界面
     // ------------------------------------------------------------------
     SharedUI.GameFrame {
         id: frame
         anchors.fill: parent
         theme: uiTheme
         title: qsTr("红绿灯过马路")
-        subtitle: taskMode === "go_nogo" ? qsTr("Go/No-Go 信号判断") : qsTr("第一人称道路过街决策")
-        mode: qsTr("试次 %1 / %2").arg(Math.min(root.trialIndex + 1, root.trialPlan.length)).arg(root.trialPlan.length)
+        subtitle: qsTr("观察车流，← 后退 / → 前进，安全到达对岸")
+        mode: root.levelId + " · " + qsTr("第 %1/%2 关").arg(root.levelIndex + 1).arg(root.levelPlans.length)
         inputSource: root.inputSource
 
         Item {
@@ -446,243 +820,430 @@ Item {
                 scale: Math.min(parent.width / 1000, parent.height / 700)
                 transformOrigin: Item.Center
 
-                // ------------------- 主场景 -------------------
+                // -------------------- 街道场景 --------------------
                 Rectangle {
-                    x: 24; y: 116; width: 701; height: 483
-                    color: "#1A202C"; radius: 16; clip: true
+                    x: 24; y: 104
+                    width: root.sceneW; height: root.sceneH
+                    color: uiTheme.panel
+                    radius: 12
+                    clip: true
 
-                    // 背景：城市/天空
+                    Canvas {
+                        id: roadCanvas
+                        anchors.fill: parent
+                        onPaint: {
+                            var ctx = getContext("2d")
+                            root.paintRoad(ctx)
+                        }
+                        Component.onCompleted: requestPaint()
+                    }
+
+                    // 车辆（固定池，避免逐帧重建 delegate）
+                    Repeater {
+                        model: root.maxCars
+                        Item {
+                            id: carItem
+                            required property int index
+                            readonly property var car: root.carSlots[index] !== undefined ? root.carSlots[index] : null
+                            readonly property bool active: car !== null
+                            readonly property real sc: active ? root.projScale(car.lane + 0.5) : 1
+                            readonly property real cw: active ? car.len * root.carDx * sc : 0
+                            readonly property real ch: active ? (car.kind === "truck" ? 46 : 34) * sc : 0
+                            readonly property real cx: active ? root.projX(car.lane + 0.5, car.v) : -999
+                            readonly property real cy: active ? root.projY(car.lane + 0.5, car.v) : -999
+
+                            visible: active
+                            x: cx - cw / 2
+                            y: cy - ch
+                            width: cw
+                            height: ch
+                            z: 500 - (active ? (car.lane + 0.5) * 10 : 0)
+
+                            // 阴影
+                            Rectangle {
+                                x: parent.width * 0.04
+                                y: parent.height - 5
+                                width: parent.width * 0.92
+                                height: 9
+                                radius: 5
+                                color: "#000000"
+                                opacity: 0.28
+                            }
+                            // 车身
+                            Rectangle {
+                                width: parent.width
+                                height: parent.height
+                                radius: Math.min(8, parent.height * 0.3)
+                                color: carItem.active ? (carItem.car.kind === "truck" ? "#6B7C8C"
+                                                        : (carItem.car.kind === "van" ? "#C0632F" : "#3E7FB8")) : "#000000"
+                                border.width: 1
+                                border.color: "#10171F"
+                                opacity: 0.97
+                            }
+                            // 车厢/车顶
+                            Rectangle {
+                                x: parent.width * 0.16
+                                y: -parent.height * 0.34
+                                width: parent.width * 0.68
+                                height: parent.height * 0.56
+                                radius: 4
+                                color: carItem.active ? (carItem.car.kind === "truck" ? "#8A99A6" : "#2E5F8C") : "#000000"
+                                border.width: 1
+                                border.color: "#0E141B"
+                            }
+                            // 前挡风
+                            Rectangle {
+                                x: carItem.car && carItem.car.dir > 0 ? parent.width * 0.66 : parent.width * 0.14
+                                y: -parent.height * 0.22
+                                width: parent.width * 0.2
+                                height: parent.height * 0.34
+                                radius: 3
+                                color: "#9FC6DE"
+                                opacity: 0.75
+                            }
+                            // 车轮
+                            Rectangle {
+                                x: parent.width * 0.14; y: parent.height * 0.62
+                                width: parent.width * 0.16; height: parent.height * 0.34
+                                radius: 3; color: "#11181F"
+                            }
+                            Rectangle {
+                                x: parent.width * 0.7; y: parent.height * 0.62
+                                width: parent.width * 0.16; height: parent.height * 0.34
+                                radius: 3; color: "#11181F"
+                            }
+                            // 车灯（表示车头方向）
+                            Rectangle {
+                                x: carItem.car && carItem.car.dir > 0 ? parent.width - parent.width * 0.06 : 0
+                                y: parent.height * 0.22
+                                width: parent.width * 0.06
+                                height: parent.height * 0.2
+                                radius: 2
+                                color: "#F3D98B"
+                            }
+                        }
+                    }
+
+                    // 玩家
+                    Item {
+                        id: playerItem
+                        readonly property real sc: root.projScale(root.crossingX)
+                        readonly property real px: root.projX(root.crossingX, 0)
+                        readonly property real py: root.projY(root.crossingX, 0)
+                        readonly property real pw: 30 * sc
+                        readonly property real ph: 56 * sc
+                        readonly property bool walking: root.movingNow
+                        readonly property real swing: Math.sin(root.walkPhase) * (walking ? 1 : 0)
+
+                        visible: root.phase !== "session_complete"
+                        width: pw; height: ph
+                        x: px - pw / 2
+                        y: py - ph
+                        z: 500 - root.crossingX * 10 + 6
+                        rotation: root.phase === "hit" ? -62 : 0
+                        transformOrigin: Item.Bottom
+
+                        // 影子
+                        Rectangle {
+                            x: -playerItem.pw * 0.25
+                            y: playerItem.ph - 4
+                            width: playerItem.pw * 1.5
+                            height: 8
+                            radius: 4
+                            color: "#000000"
+                            opacity: 0.3
+                        }
+                        // 腿
+                        Rectangle {
+                            x: playerItem.pw * 0.28
+                            y: playerItem.ph * 0.62
+                            width: playerItem.pw * 0.16
+                            height: playerItem.ph * 0.4
+                            color: "#22303F"
+                            rotation: playerItem.swing * 16
+                            transformOrigin: Item.Top
+                        }
+                        Rectangle {
+                            x: playerItem.pw * 0.56
+                            y: playerItem.ph * 0.62
+                            width: playerItem.pw * 0.16
+                            height: playerItem.ph * 0.4
+                            color: "#22303F"
+                            rotation: -playerItem.swing * 16
+                            transformOrigin: Item.Top
+                        }
+                        // 躯干
+                        Rectangle {
+                            x: playerItem.pw * 0.16
+                            y: playerItem.ph * 0.28
+                            width: playerItem.pw * 0.68
+                            height: playerItem.ph * 0.38
+                            radius: playerItem.pw * 0.18
+                            color: "#4FB3A8"
+                            border.width: 1
+                            border.color: "#0E1A20"
+                        }
+                        // 头
+                        Rectangle {
+                            x: playerItem.pw * 0.26
+                            y: playerItem.ph * 0.04
+                            width: playerItem.pw * 0.48
+                            height: playerItem.pw * 0.48
+                            radius: width / 2
+                            color: "#E8C39E"
+                            border.width: 1
+                            border.color: "#0E1A20"
+                        }
+                        // 头发
+                        Rectangle {
+                            x: playerItem.pw * 0.26
+                            y: playerItem.ph * 0.02
+                            width: playerItem.pw * 0.48
+                            height: playerItem.pw * 0.2
+                            radius: width / 2
+                            color: "#2C3A48"
+                        }
+                    }
+
+                    // 撞击闪红
                     Rectangle {
                         anchors.fill: parent
-                        gradient: Gradient {
-                            GradientStop { position: 0.0; color: "#1F3043" }
-                            GradientStop { position: 0.45; color: "#2A3B4D" }
-                            GradientStop { position: 0.46; color: "#101820" }
-                            GradientStop { position: 1.0; color: "#182330" }
-                        }
+                        color: "#C45353"
+                        opacity: root.hitFlash * 0.35
+                        visible: root.hitFlash > 0.01
                     }
 
-                    // 第一人称道路（crossing_decision）
-                    Item {
-                        visible: root.taskMode === "crossing_decision"
-                        anchors.fill: parent
-
-                        // 道路透视：梯形
-                        Rectangle {
-                            anchors.fill: parent
-                            color: "#2D333B"
-                        }
-                        // 道路边线
-                        Rectangle {
-                            x: 120; y: 220; width: 6; height: 260; color: "#F5F8F8"; opacity: 0.8
-                        }
-                        Rectangle {
-                            x: 575; y: 220; width: 6; height: 260; color: "#F5F8F8"; opacity: 0.8
-                        }
-                        // 中线
-                        Repeater {
-                            model: 6
-                            Rectangle {
-                                x: 345 + index * 2
-                                y: 220 + index * 44
-                                width: 4
-                                height: 22
-                                color: "#E7BC84"
-                                opacity: 0.6
-                            }
-                        }
-                        // 斑马线
-                        Repeater {
-                            model: 8
-                            Rectangle {
-                                x: 200 + index * 44
-                                y: 440
-                                width: 20
-                                height: 40
-                                color: "#F5F8F8"
-                                opacity: 0.85
-                            }
-                        }
-
-                        // 车辆
-                        Repeater {
-                            model: root.cars
-                            Rectangle {
-                                required property var modelData
-                                x: modelData.x
-                                y: modelData.y - modelData.h / 2
-                                width: modelData.w
-                                height: modelData.h
-                                radius: 6
-                                color: modelData.color
-                                border.width: 2
-                                border.color: "#0B1422"
-                            }
-                        }
-
-                        // 行人（近大远小）
-                        Rectangle {
-                            visible: root.phase === "trial_walking" || root.phase === "trial_feedback"
-                            x: 470
-                            y: 480 - root.walkProgress * 260
-                            width: 40 + root.walkProgress * 20
-                            height: 60 + root.walkProgress * 30
-                            color: "#5ADCCB"
-                            radius: 10
-                            border.width: 2
-                            border.color: "#F5F8F8"
-                        }
-
-                        // 信号灯
-                        Rectangle {
-                            x: 620; y: 80; width: 50; height: 80; radius: 6
-                            color: "#2D3748"; border.color: "#A0AEC0"; border.width: 3
-                            Rectangle {
-                                x: 13; y: 10; width: 24; height: 24; radius: 12
-                                color: root.currentLight === "red" ? "#FF4D4D" : "#3a1214"
-                                opacity: root.currentLight === "red" ? 1.0 : 0.35
-                            }
-                            Rectangle {
-                                x: 13; y: 44; width: 24; height: 24; radius: 12
-                                color: root.currentLight === "green" ? "#68D5B5" : "#12321a"
-                                opacity: root.currentLight === "green" ? 1.0 : 0.35
-                            }
-                        }
-                    }
-
-                    // go_nogo 场景（保留 V2 视觉）
-                    Item {
-                        visible: root.taskMode === "go_nogo"
-                        anchors.fill: parent
-
-                        Image {
-                            x: 1; y: 1; width: 699; height: 450
-                            source: "assets/traffic_city_bg.png"
-                            fillMode: Image.Stretch
-                        }
-
-                        Rectangle {
-                            x: 575; y: 95; width: 60; height: 75; radius: 6
-                            color: "#2D3748"; border.color: "#A0AEC0"; border.width: 3
-                            Rectangle {
-                                x: 18; y: 10; width: 24; height: 24; radius: 12
-                                color: root.currentLight === "red" ? "#FF4D4D" : "#3a1214"
-                                opacity: root.currentLight === "red" ? 1.0 : 0.35
-                            }
-                            Rectangle {
-                                x: 18; y: 42; width: 24; height: 24; radius: 12
-                                color: root.currentLight === "green" ? "#68D5B5" : "#12321a"
-                                opacity: root.currentLight === "green" ? 1.0 : 0.35
-                            }
-                        }
-
-                        Image {
-                            x: 70 + root.localElapsed * 20 % 950
-                            y: 270; width: 195; height: 90
-                            source: "assets/traffic_car_blue.png"
-                            opacity: 0.95
-                        }
-                        Image {
-                            x: 640 - root.localElapsed * 25 % 950
-                            y: 360; width: 195; height: 90
-                            source: "assets/traffic_car_coral.png"
-                            opacity: 0.95
-                        }
-
-                        Image {
-                            x: 330 + root.walkProgress * 100
-                            y: 440 - root.walkProgress * 182
-                            width: 80; height: 104
-                            scale: 1 - root.walkProgress * 0.28
-                            source: "assets/traffic_pedestrian.png"
-                            transformOrigin: Item.Bottom
-                        }
-                    }
-
-                    // 即时提示
+                    // 关卡开场横幅
                     Rectangle {
-                        x: 40; y: 130; width: 260; height: 44; radius: 6
-                        color: "#0B1422"; opacity: 0.85
-                        Text {
+                        visible: root.phase === "level_intro"
+                        anchors.centerIn: parent
+                        width: 400; height: 116
+                        radius: 12
+                        color: uiTheme.panel
+                        opacity: 0.96
+                        border.width: 2
+                        border.color: uiTheme.primary
+                        Column {
                             anchors.centerIn: parent
-                            text: root.phase === "trial_cue"
-                                  ? (root.currentLight === "green" ? qsTr("绿灯：请按确认键过街") : qsTr("红灯：请等待"))
-                                  : root.feedbackText
-                            color: root.phase === "trial_cue"
-                                   ? (root.currentLight === "green" ? "#68D5B5" : "#FB7777")
-                                   : root.feedbackColor
-                            font.pixelSize: 15; font.bold: true
+                            spacing: 6
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: root.levelId + qsTr(" · %1 车道").arg(root.laneCount)
+                                color: uiTheme.primaryText; font.pixelSize: 26; font.bold: true
+                            }
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: root.levelIndex === 0 ? qsTr("按住 → 前进，注意车流，必要时按 ← 退回")
+                                                             : qsTr("观察相邻车道反向车流，逐车道穿越")
+                                color: uiTheme.secondaryText; font.pixelSize: 15
+                            }
+                        }
+                    }
+
+                    // 失败提示
+                    Rectangle {
+                        visible: root.phase === "hit"
+                        anchors.centerIn: parent
+                        width: 360; height: 104
+                        radius: 12
+                        color: uiTheme.panel
+                        border.width: 2
+                        border.color: uiTheme.danger
+                        Column {
+                            anchors.centerIn: parent
+                            spacing: 6
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: qsTr("被撞到了")
+                                color: uiTheme.danger; font.pixelSize: 24; font.bold: true
+                            }
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: qsTr("本关重试（同种子，车流一致）")
+                                color: uiTheme.secondaryText; font.pixelSize: 14
+                            }
+                        }
+                    }
+
+                    // 通关提示
+                    Rectangle {
+                        visible: root.phase === "level_clear"
+                        anchors.centerIn: parent
+                        width: 360; height: 104
+                        radius: 12
+                        color: uiTheme.panel
+                        border.width: 2
+                        border.color: uiTheme.success
+                        Column {
+                            anchors.centerIn: parent
+                            spacing: 6
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: qsTr("安全到达对岸")
+                                color: uiTheme.success; font.pixelSize: 24; font.bold: true
+                            }
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: qsTr("用时 %1 秒 · 碰撞 %2 次").arg(root.simTime.toFixed(1)).arg(root.collisionsThisLevel)
+                                color: uiTheme.secondaryText; font.pixelSize: 14
+                            }
                         }
                     }
                 }
 
-                // ------------------- 右侧指标 -------------------
+                // -------------------- 右侧状态面板 --------------------
                 Rectangle {
-                    x: 743; y: 116; width: 233; height: 483
-                    color: "#1F3043"; radius: 12
+                    x: 740; y: 104
+                    width: 236; height: root.sceneH
+                    radius: 12
+                    color: uiTheme.panel
+                    border.color: uiTheme.panelBorder; border.width: 1
+
                     Column {
-                        x: 16; y: 16; spacing: 12; width: 201
+                        x: 16; y: 16
+                        width: 204
+                        spacing: 10
 
-                        Text { text: qsTr("当前灯色"); color: "#AAC0CB"; font.pixelSize: 14 }
-                        Rectangle {
-                            width: 201; height: 42; radius: 8
-                            color: root.currentLight === "green" ? "#1C3A32" : "#3A1C1C"
-                            Text {
-                                anchors.centerIn: parent
-                                text: root.currentLight === "green" ? qsTr("绿灯") : qsTr("红灯")
-                                color: root.currentLight === "green" ? "#68D5B5" : "#FB7777"
-                                font.pixelSize: 20; font.bold: true
-                            }
-                        }
-
-                        Text { text: qsTr("阶段"); color: "#AAC0CB"; font.pixelSize: 14 }
-                        Text {
-                            text: {
-                                if (root.phase === "trial_cue") return qsTr("刺激窗口")
-                                if (root.phase === "trial_walking") return qsTr("过街中")
-                                if (root.phase === "trial_feedback") return qsTr("反馈")
-                                if (root.phase === "session_complete") return qsTr("完成")
-                                return qsTr("准备")
-                            }
-                            color: "#F5F8F8"; font.pixelSize: 18; font.bold: true
-                        }
-
-                        Text { text: qsTr("正确启动"); color: "#AAC0CB"; font.pixelSize: 14 }
-                        Text { text: root.correctStarts; color: "#68D5B5"; font.pixelSize: 22; font.bold: true }
-
-                        Text { text: qsTr("误启动"); color: "#AAC0CB"; font.pixelSize: 14 }
-                        Text { text: root.falseStarts; color: "#FB7777"; font.pixelSize: 22; font.bold: true }
-
-                        Text { text: qsTr("正确等待"); color: "#AAC0CB"; font.pixelSize: 14 }
-                        Text { text: root.correctWithholds; color: "#68D5B5"; font.pixelSize: 22; font.bold: true }
-
-                        Text { text: qsTr("漏响应"); color: "#AAC0CB"; font.pixelSize: 14 }
-                        Text { text: root.missedGos; color: "#E7BC84"; font.pixelSize: 22; font.bold: true }
-
-                        Text { text: qsTr("事故"); color: "#AAC0CB"; font.pixelSize: 14; visible: root.taskMode === "crossing_decision" }
-                        Text { text: root.accidents; color: "#FB7777"; font.pixelSize: 22; font.bold: true; visible: root.taskMode === "crossing_decision" }
-
-                        Text { text: qsTr("最近反应时"); color: "#AAC0CB"; font.pixelSize: 14 }
-                        Text {
-                            text: root.reactionTime >= 0 ? qsTr("%1 秒").arg(root.reactionTime.toFixed(3)) : qsTr("—")
-                            color: "#F5F8F8"; font.pixelSize: 18; font.bold: true
-                        }
-
-                        Text { text: qsTr("试次进度"); color: "#AAC0CB"; font.pixelSize: 14 }
-                        Grid {
-                            columns: 8; spacing: 5
+                        Text { text: qsTr("关卡进度"); color: uiTheme.secondaryText; font.pixelSize: 13 }
+                        Row {
+                            spacing: 5
                             Repeater {
-                                model: root.trialPlan.length
+                                model: root.levelPlans.length
                                 Rectangle {
-                                    width: 20; height: 20; radius: 4
-                                    color: {
-                                        if (index > root.trialIndex) return "#50647A"
-                                        if (index === root.trialIndex && root.phase !== "session_complete") return "#5ADCCB"
-                                        return root.trialLog[index] ? "#68D5B5" : "#50647A"
-                                    }
+                                    required property int index
+                                    width: 36; height: 8; radius: 4
+                                    color: index < root.levelResults.length ? uiTheme.primary
+                                         : index === root.levelIndex ? uiTheme.success : uiTheme.panelBorder
                                 }
                             }
                         }
+
+                        Text { text: qsTr("横穿进度"); color: uiTheme.secondaryText; font.pixelSize: 13 }
+                        Rectangle {
+                            width: 204; height: 10; radius: 5
+                            color: uiTheme.panelBorder
+                            Rectangle {
+                                width: 204 * root.crossProgress
+                                height: 10; radius: 5
+                                color: uiTheme.success
+                            }
+                        }
+
+                        Text { text: qsTr("车道数"); color: uiTheme.secondaryText; font.pixelSize: 13 }
+                        Text { text: root.laneCount; color: uiTheme.primaryText; font.pixelSize: 20; font.bold: true }
+
+                        Text { text: qsTr("本关碰撞"); color: uiTheme.secondaryText; font.pixelSize: 13 }
+                        Text {
+                            text: root.collisionsThisLevel
+                            color: root.collisionsThisLevel > 0 ? uiTheme.danger : uiTheme.success
+                            font.pixelSize: 20; font.bold: true
+                        }
+
+                        Text { text: qsTr("累计碰撞"); color: uiTheme.secondaryText; font.pixelSize: 13 }
+                        Text { text: root.collisionsTotal; color: uiTheme.primaryText; font.pixelSize: 18; font.bold: true }
+
+                        Text { text: qsTr("尝试次数"); color: uiTheme.secondaryText; font.pixelSize: 13 }
+                        Text { text: root.attemptNo; color: uiTheme.primaryText; font.pixelSize: 18; font.bold: true }
+
+                        Text { text: qsTr("本关用时"); color: uiTheme.secondaryText; font.pixelSize: 13 }
+                        Text {
+                            text: root.simTime.toFixed(1) + qsTr(" 秒")
+                            color: uiTheme.primaryText; font.pixelSize: 18; font.bold: true
+                        }
+
+                        Text {
+                            width: 204
+                            text: qsTr("状态：") + (root.phase === "playing" ? qsTr("可移动")
+                                  : root.phase === "level_intro" ? qsTr("准备")
+                                  : root.phase === "hit" ? qsTr("失误") : qsTr("通关"))
+                            color: uiTheme.secondaryText; font.pixelSize: 13
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+                }
+
+                // -------------------- 操作区（鼠标全程可玩）--------------------
+                Row {
+                    x: 24; y: 596
+                    spacing: 16
+
+                    Rectangle {
+                        width: 150; height: 56
+                        radius: uiTheme.buttonRadius
+                        color: mouseLeft.pressed ? uiTheme.primaryPressed : uiTheme.panel
+                        border.width: 2
+                        border.color: (root.phase === "playing") ? uiTheme.primary : uiTheme.panelBorder
+                        opacity: (root.phase === "playing") ? 1.0 : 0.5
+                        Text {
+                            anchors.centerIn: parent
+                            text: qsTr("← 后退")
+                            color: uiTheme.primaryText; font.pixelSize: 18; font.bold: true
+                        }
+                        MouseArea {
+                            id: mouseLeft
+                            objectName: "btnLeft"
+                            anchors.fill: parent
+                            enabled: root.phase === "playing"
+                            onPressed: root.pressDirection(-1, "mouse")
+                            onReleased: root.releaseDirection(-1, "mouse")
+                            onCanceled: root.releaseDirection(-1, "mouse")
+                        }
+                    }
+
+                    Rectangle {
+                        width: 150; height: 56
+                        radius: uiTheme.buttonRadius
+                        color: mouseRight.pressed ? uiTheme.primaryPressed : uiTheme.primary
+                        border.width: 2
+                        border.color: uiTheme.primaryHover
+                        opacity: (root.phase === "playing") ? 1.0 : 0.5
+                        Text {
+                            anchors.centerIn: parent
+                            text: qsTr("前进 →")
+                            color: "#FFFFFF"; font.pixelSize: 18; font.bold: true
+                        }
+                        MouseArea {
+                            id: mouseRight
+                            objectName: "btnRight"
+                            anchors.fill: parent
+                            enabled: root.phase === "playing"
+                            onPressed: root.pressDirection(1, "mouse")
+                            onReleased: root.releaseDirection(1, "mouse")
+                            onCanceled: root.releaseDirection(1, "mouse")
+                        }
+                    }
+
+                    Rectangle {
+                        width: 132; height: 56
+                        anchors.verticalCenter: parent.verticalCenter
+                        radius: uiTheme.buttonRadius
+                        color: retryArea.pressed ? uiTheme.panelBorder : uiTheme.panel
+                        border.width: 2
+                        border.color: uiTheme.panelBorder
+                        Text {
+                            anchors.centerIn: parent
+                            text: qsTr("重开本关")
+                            color: uiTheme.primaryText; font.pixelSize: 16
+                        }
+                        MouseArea {
+                            id: retryArea
+                            objectName: "btnRetry"
+                            anchors.fill: parent
+                            onClicked: {
+                                if (root.phase === "playing" || root.phase === "hit" || root.phase === "level_clear")
+                                    root.retryLevel("manual")
+                            }
+                        }
+                    }
+
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 210
+                        text: root.isBci ? qsTr("脑控：左右脉冲按固定步长移动，车速已降速 %1×").arg(root.bciCarSpeedScale)
+                                         : qsTr("按住方向键持续移动，松开即停")
+                        color: uiTheme.secondaryText
+                        font.pixelSize: 13
+                        wrapMode: Text.WordWrap
                     }
                 }
             }
@@ -700,16 +1261,16 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 theme: uiTheme
                 source: root.inputSource
-                keyboardHint: qsTr("确认键：绿灯过街 / 红灯等待")
-                mouseHint: qsTr("点击确认按钮：绿灯过街 / 红灯等待")
-                bciHint: qsTr("Trigger/Confirm 响应信号")
+                keyboardHint: qsTr("→ 前进 / ← 后退（可松开停下，随时退回）")
+                mouseHint: qsTr("按住画面中的「前进 / 后退」按钮")
+                bciHint: qsTr("left/right 脉冲离散步进；脑控模式车速已降速")
             }
 
-            Item { width: Math.max(24, parent.width - 420) }
+            Item { width: Math.max(24, parent.width - 470) }
 
             Text {
                 anchors.verticalCenter: parent.verticalCenter
-                text: root.phase === "session_complete" ? qsTr("会话结束") : qsTr("等待信号灯…")
+                text: qsTr("碰撞 %1 次 · 已通关 %2/%3").arg(root.collisionsTotal).arg(root.clearedCount).arg(root.levelPlans.length)
                 color: uiTheme.secondaryText
                 font.pixelSize: uiTheme.captionPx
             }

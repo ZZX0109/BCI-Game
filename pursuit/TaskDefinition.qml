@@ -4,9 +4,9 @@ QtObject {
     readonly property int gameApi: 1
     readonly property string moduleKind: "games"
     readonly property string moduleId: "pursuit"
-    readonly property string version: "0.3.0"
+    readonly property string version: "0.4.0"
     readonly property string title: qsTr("追光球")
-    readonly property string description: qsTr("连续追踪任务 V3。二维全屏自由追踪 + 多关卡（椭圆/8字/自由巡游/遮挡恢复）+ 多轮制；保留 1D 教学正弦模式。MAE/RMSE/区内占比/最长保持/连续保持指标；确定性时间函数轨迹。BCI 使用 Cursor。")
+    readonly property string description: qsTr("连续追踪任务 V4。固定五轮二维自由追踪，25 秒/轮、自动推进、无选关：R1 直线宽转弯 / R2 椭圆 / R3 8字 / R4 种子化平滑自由轨迹 / R5 自由轨迹+遮挡。目标由确定性 targetAt(round,time,seed) 生成，X/Y 均参与；评分按整段可见轨迹 MAE/RMSE/区内占比/重捕获，遮挡段误差单列；不实时显示误差数值。BCI 使用 Cursor。")
     readonly property string entryPoint: "Main.qml"
     readonly property int effector: 1
     readonly property int designWidth: 1000

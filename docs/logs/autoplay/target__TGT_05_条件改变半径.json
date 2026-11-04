@@ -1,0 +1,520 @@
+{
+  "game": "target",
+  "scenario": "TGT-05 条件改变半径",
+  "ok": true,
+  "passed": 6,
+  "total": 6,
+  "error": null,
+  "checks": [
+    {
+      "check": "TGT-05a 计划里出现多种半径",
+      "ok": true,
+      "detail": "实际=[30, 46, 62] 期望=[30, 46, 62]"
+    },
+    {
+      "check": "TGT-05b 条件写在试次里",
+      "ok": true,
+      "detail": "实际=['30', '46', '62'] 期望=['30', '46', '62']"
+    },
+    {
+      "check": "TGT-05c 运行时半径 == 计划半径",
+      "ok": true,
+      "detail": "[(62, 62), (62, 62), (30, 30), (46, 46), (46, 46), (62, 62)]"
+    },
+    {
+      "check": "TGT-05d 三种半径都实际跑到了",
+      "ok": true,
+      "detail": "实际=[30, 46, 62] 期望=[30, 46, 62]"
+    },
+    {
+      "check": "TGT-05e 半径外 2px 全部判 miss",
+      "ok": true,
+      "detail": "越界却判中=[]"
+    },
+    {
+      "check": "TGT-05f 越界样本确实越界",
+      "ok": true,
+      "detail": "[(62, 64.0, False), (62, 64.0, False), (30, 32.0, False), (46, 48.0, False), (46, 48.0, False), (62, 64.0, False)]"
+    }
+  ],
+  "simSeconds": 8.352,
+  "finished": false,
+  "eventCount": 20,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "target.attempt_started",
+      "data": {
+        "gameVersion": "0.4.0",
+        "inputSource": "local",
+        "seed": 42,
+        "taskMode": "fitts_targets",
+        "totalTrials": 12,
+        "trialPlan": [
+          {
+            "distance": "420",
+            "kind": "static",
+            "r": 62,
+            "size": "62",
+            "x": 602.0,
+            "y": 374.0
+          },
+          {
+            "distance": "200",
+            "kind": "static",
+            "r": 62,
+            "size": "62",
+            "x": 437.0,
+            "y": 488.0
+          },
+          {
+            "distance": "420",
+            "kind": "static",
+            "r": 30,
+            "size": "30",
+            "x": 123.0,
+            "y": 210.0
+          },
+          {
+            "distance": "420",
+            "kind": "static",
+            "r": 46,
+            "size": "46",
+            "x": 488.0,
+            "y": 417.0
+          },
+          {
+            "distance": "200",
+            "kind": "static",
+            "r": 46,
+            "size": "46",
+            "x": 391.0,
+            "y": 243.0
+          },
+          {
+            "distance": "420",
+            "kind": "static",
+            "r": 62,
+            "size": "62",
+            "x": 152.0,
+            "y": 403.0
+          },
+          {
+            "distance": "200",
+            "kind": "static",
+            "r": 30,
+            "size": "30",
+            "x": 161.0,
+            "y": 204.0
+          },
+          {
+            "distance": "200",
+            "kind": "static",
+            "r": 46,
+            "size": "46",
+            "x": 353.0,
+            "y": 258.0
+          },
+          {
+            "distance": "420",
+            "kind": "static",
+            "r": 30,
+            "size": "30",
+            "x": 427.0,
+            "y": 200.0
+          },
+          {
+            "distance": "200",
+            "kind": "static",
+            "r": 62,
+            "size": "62",
+            "x": 231.0,
+            "y": 241.0
+          },
+          {
+            "distance": "420",
+            "kind": "static",
+            "r": 46,
+            "size": "46",
+            "x": 595.0,
+            "y": 450.0
+          },
+          {
+            "distance": "200",
+            "kind": "static",
+            "r": 30,
+            "size": "30",
+            "x": 529.0,
+            "y": 262.0
+          }
+        ]
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "target.trial_started",
+      "data": {
+        "condition": {
+          "distance": "420",
+          "group": "",
+          "size": "62"
+        },
+        "elapsed": 0.0,
+        "occlusion": null,
+        "targetR": 62,
+        "targetX": 602.0,
+        "targetY": 374.0,
+        "totalTrials": 12,
+        "trial": 1
+      }
+    },
+    {
+      "t": 0.112,
+      "name": "target.shot_debug",
+      "data": {
+        "aimX": 642.0,
+        "aimY": 258.0,
+        "blocked": false,
+        "condition": "62",
+        "distance": 64.0,
+        "elapsed": 0.11200000000000004,
+        "firstActionLatency": -1.0,
+        "hit": false,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 62.0,
+        "targetX": 578.0,
+        "targetY": 258.0,
+        "trial": 1
+      }
+    },
+    {
+      "t": 0.112,
+      "name": "target.miss",
+      "data": {
+        "aimX": 642.0,
+        "aimY": 258.0,
+        "blocked": false,
+        "condition": "62",
+        "distance": 64.0,
+        "elapsed": 0.11200000000000004,
+        "firstActionLatency": -1.0,
+        "hit": false,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 62.0,
+        "targetX": 578.0,
+        "targetY": 258.0,
+        "trial": 1
+      }
+    },
+    {
+      "t": 0.616,
+      "name": "target.trial_started",
+      "data": {
+        "condition": {
+          "distance": "200",
+          "group": "",
+          "size": "62"
+        },
+        "elapsed": 0.6160000000000004,
+        "occlusion": null,
+        "targetR": 62,
+        "targetX": 437.0,
+        "targetY": 488.0,
+        "totalTrials": 12,
+        "trial": 2
+      }
+    },
+    {
+      "t": 1.488,
+      "name": "target.shot_debug",
+      "data": {
+        "aimX": 477.0,
+        "aimY": 372.0,
+        "blocked": false,
+        "condition": "62",
+        "distance": 64.0,
+        "elapsed": 1.488000000000001,
+        "firstActionLatency": -1.0,
+        "hit": false,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 62.0,
+        "targetX": 413.0,
+        "targetY": 372.0,
+        "trial": 2
+      }
+    },
+    {
+      "t": 1.488,
+      "name": "target.miss",
+      "data": {
+        "aimX": 477.0,
+        "aimY": 372.0,
+        "blocked": false,
+        "condition": "62",
+        "distance": 64.0,
+        "elapsed": 1.488000000000001,
+        "firstActionLatency": -1.0,
+        "hit": false,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 62.0,
+        "targetX": 413.0,
+        "targetY": 372.0,
+        "trial": 2
+      }
+    },
+    {
+      "t": 1.992,
+      "name": "target.trial_started",
+      "data": {
+        "condition": {
+          "distance": "420",
+          "group": "",
+          "size": "30"
+        },
+        "elapsed": 1.9920000000000015,
+        "occlusion": null,
+        "targetR": 30,
+        "targetX": 123.0,
+        "targetY": 210.0,
+        "totalTrials": 12,
+        "trial": 3
+      }
+    },
+    {
+      "t": 2.864,
+      "name": "target.shot_debug",
+      "data": {
+        "aimX": 131.0,
+        "aimY": 94.0,
+        "blocked": false,
+        "condition": "30",
+        "distance": 32.0,
+        "elapsed": 2.864000000000002,
+        "firstActionLatency": -1.0,
+        "hit": false,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 30.0,
+        "targetX": 99.0,
+        "targetY": 94.0,
+        "trial": 3
+      }
+    },
+    {
+      "t": 2.864,
+      "name": "target.miss",
+      "data": {
+        "aimX": 131.0,
+        "aimY": 94.0,
+        "blocked": false,
+        "condition": "30",
+        "distance": 32.0,
+        "elapsed": 2.864000000000002,
+        "firstActionLatency": -1.0,
+        "hit": false,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 30.0,
+        "targetX": 99.0,
+        "targetY": 94.0,
+        "trial": 3
+      }
+    },
+    {
+      "t": 3.368,
+      "name": "target.trial_started",
+      "data": {
+        "condition": {
+          "distance": "420",
+          "group": "",
+          "size": "46"
+        },
+        "elapsed": 3.3680000000000025,
+        "occlusion": null,
+        "targetR": 46,
+        "targetX": 488.0,
+        "targetY": 417.0,
+        "totalTrials": 12,
+        "trial": 4
+      }
+    },
+    {
+      "t": 4.24,
+      "name": "target.shot_debug",
+      "data": {
+        "aimX": 512.0,
+        "aimY": 301.0,
+        "blocked": false,
+        "condition": "46",
+        "distance": 48.0,
+        "elapsed": 4.240000000000003,
+        "firstActionLatency": -1.0,
+        "hit": false,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 46.0,
+        "targetX": 464.0,
+        "targetY": 301.0,
+        "trial": 4
+      }
+    },
+    {
+      "t": 4.24,
+      "name": "target.miss",
+      "data": {
+        "aimX": 512.0,
+        "aimY": 301.0,
+        "blocked": false,
+        "condition": "46",
+        "distance": 48.0,
+        "elapsed": 4.240000000000003,
+        "firstActionLatency": -1.0,
+        "hit": false,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 46.0,
+        "targetX": 464.0,
+        "targetY": 301.0,
+        "trial": 4
+      }
+    },
+    {
+      "t": 4.744,
+      "name": "target.trial_started",
+      "data": {
+        "condition": {
+          "distance": "200",
+          "group": "",
+          "size": "46"
+        },
+        "elapsed": 4.744000000000003,
+        "occlusion": null,
+        "targetR": 46,
+        "targetX": 391.0,
+        "targetY": 243.0,
+        "totalTrials": 12,
+        "trial": 5
+      }
+    },
+    {
+      "t": 5.616,
+      "name": "target.shot_debug",
+      "data": {
+        "aimX": 415.0,
+        "aimY": 127.0,
+        "blocked": false,
+        "condition": "46",
+        "distance": 48.0,
+        "elapsed": 5.616000000000004,
+        "firstActionLatency": -1.0,
+        "hit": false,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 46.0,
+        "targetX": 367.0,
+        "targetY": 127.0,
+        "trial": 5
+      }
+    },
+    {
+      "t": 5.616,
+      "name": "target.miss",
+      "data": {
+        "aimX": 415.0,
+        "aimY": 127.0,
+        "blocked": false,
+        "condition": "46",
+        "distance": 48.0,
+        "elapsed": 5.616000000000004,
+        "firstActionLatency": -1.0,
+        "hit": false,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 46.0,
+        "targetX": 367.0,
+        "targetY": 127.0,
+        "trial": 5
+      }
+    },
+    {
+      "t": 6.12,
+      "name": "target.trial_started",
+      "data": {
+        "condition": {
+          "distance": "420",
+          "group": "",
+          "size": "62"
+        },
+        "elapsed": 6.1200000000000045,
+        "occlusion": null,
+        "targetR": 62,
+        "targetX": 152.0,
+        "targetY": 403.0,
+        "totalTrials": 12,
+        "trial": 6
+      }
+    },
+    {
+      "t": 6.992,
+      "name": "target.shot_debug",
+      "data": {
+        "aimX": 192.0,
+        "aimY": 287.0,
+        "blocked": false,
+        "condition": "62",
+        "distance": 64.0,
+        "elapsed": 6.992000000000005,
+        "firstActionLatency": -1.0,
+        "hit": false,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 62.0,
+        "targetX": 128.0,
+        "targetY": 287.0,
+        "trial": 6
+      }
+    },
+    {
+      "t": 6.992,
+      "name": "target.miss",
+      "data": {
+        "aimX": 192.0,
+        "aimY": 287.0,
+        "blocked": false,
+        "condition": "62",
+        "distance": 64.0,
+        "elapsed": 6.992000000000005,
+        "firstActionLatency": -1.0,
+        "hit": false,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 62.0,
+        "targetX": 128.0,
+        "targetY": 287.0,
+        "trial": 6
+      }
+    },
+    {
+      "t": 7.496,
+      "name": "target.trial_started",
+      "data": {
+        "condition": {
+          "distance": "200",
+          "group": "",
+          "size": "30"
+        },
+        "elapsed": 7.496000000000006,
+        "occlusion": null,
+        "targetR": 30,
+        "targetX": 161.0,
+        "targetY": 204.0,
+        "totalTrials": 12,
+        "trial": 7
+      }
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "game": "luban",
+  "scenario": "L-02 双向可动差异",
+  "ok": true,
+  "passed": 8,
+  "total": 8,
+  "error": null,
+  "checks": [
+    {
+      "check": "L-02a 关卡已装载",
+      "ok": true,
+      "detail": "3 件"
+    },
+    {
+      "check": "L-02b 能选中一件",
+      "ok": true,
+      "detail": "selectedId=p1"
+    },
+    {
+      "check": "L-02c 同一件上存在被挡住的方向",
+      "ok": true,
+      "detail": "受阻方向=['+x', '-x', '+y', '-y']"
+    },
+    {
+      "check": "L-02d 同一件上存在抽得走的方向",
+      "ok": true,
+      "detail": "可动方向=['+z']"
+    },
+    {
+      "check": "L-02e 两个方向确实不同",
+      "ok": true,
+      "detail": "受阻=['+x', '-x', '+y', '-y'] 可动=['+z']"
+    },
+    {
+      "check": "L-02f probe 判定与实际结果一致",
+      "ok": true,
+      "detail": "[('+x', True, False), ('-x', True, False), ('+y', True, False), ('-y', True, False), ('+z', False, True)]"
+    },
+    {
+      "check": "L-02g 受阻方向 free 为 0（贴住接触面）",
+      "ok": true,
+      "detail": "[('+x', 0.0), ('-x', 0.0), ('+y', 0.0), ('-y', 0.0)]"
+    },
+    {
+      "check": "L-02h 可动方向 free 明显更大",
+      "ok": true,
+      "detail": "[('+z', 24.0)]"
+    }
+  ],
+  "simSeconds": 1.408,
+  "finished": false,
+  "eventCount": 8,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "luban.level_started",
+      "data": {
+        "elapsed": 0.0,
+        "level": "L1",
+        "levelIndex": 0,
+        "pieces": 3
+      }
+    },
+    {
+      "t": 0.496,
+      "name": "luban.select",
+      "data": {
+        "level": "L1",
+        "piece": "p1"
+      }
+    },
+    {
+      "t": 0.624,
+      "name": "luban.probe",
+      "data": {
+        "blocked": true,
+        "clear": 7.3,
+        "dir": "+x",
+        "free": 0.0,
+        "piece": "p1"
+      }
+    },
+    {
+      "t": 0.72,
+      "name": "luban.probe",
+      "data": {
+        "blocked": true,
+        "clear": 7.3,
+        "dir": "-x",
+        "free": 0.0,
+        "piece": "p1"
+      }
+    },
+    {
+      "t": 0.816,
+      "name": "luban.probe",
+      "data": {
+        "blocked": true,
+        "clear": 5.3,
+        "dir": "+y",
+        "free": 0.0,
+        "piece": "p1"
+      }
+    },
+    {
+      "t": 0.912,
+      "name": "luban.probe",
+      "data": {
+        "blocked": true,
+        "clear": 5.3,
+        "dir": "-y",
+        "free": 0.0,
+        "piece": "p1"
+      }
+    },
+    {
+      "t": 1.008,
+      "name": "luban.probe",
+      "data": {
+        "blocked": false,
+        "clear": 6.3,
+        "dir": "+z",
+        "free": 24.0,
+        "piece": "p1"
+      }
+    },
+    {
+      "t": 1.328,
+      "name": "luban.extract",
+      "data": {
+        "level": "L1",
+        "piece": "p1",
+        "via": "axis"
+      }
+    }
+  ]
+}

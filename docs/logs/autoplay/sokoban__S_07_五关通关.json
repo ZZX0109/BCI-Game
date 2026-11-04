@@ -1,0 +1,1160 @@
+{
+  "game": "sokoban",
+  "scenario": "S-07 五关通关",
+  "ok": true,
+  "passed": 4,
+  "total": 4,
+  "error": null,
+  "checks": [
+    {
+      "check": "S-07a 五关全部完成",
+      "ok": true,
+      "detail": "实际=['S01', 'S02', 'S03', 'S04', 'S05'] 期望=['S01', 'S02', 'S03', 'S04', 'S05']"
+    },
+    {
+      "check": "S-07b 会话已结束",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "S-07c 只结束一次",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "S-07d 结束原因为 completed",
+      "ok": true,
+      "detail": "实际='completed' 期望='completed'"
+    }
+  ],
+  "simSeconds": 4.048,
+  "finished": true,
+  "eventCount": 84,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "sokoban.attempt_started",
+      "data": {
+        "gameVersion": "0.3.0",
+        "inputSource": "local",
+        "levelPlan": [
+          {
+            "id": "S01",
+            "version": 1
+          },
+          {
+            "id": "S02",
+            "version": 1
+          },
+          {
+            "id": "S03",
+            "version": 1
+          },
+          {
+            "id": "S04",
+            "version": 1
+          },
+          {
+            "id": "S05",
+            "version": 1
+          }
+        ],
+        "taskMode": "multi_level"
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "sokoban.level_started",
+      "data": {
+        "boxes": 1,
+        "cols": 8,
+        "elapsed": 0.0,
+        "goals": 1,
+        "levelCount": 5,
+        "levelId": "S01",
+        "levelIndex": 1,
+        "levelVersion": 1,
+        "name": "Guide",
+        "rows": 5
+      }
+    },
+    {
+      "t": 0.192,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 0.19200000000000012,
+        "inputSource": "local",
+        "levelId": "S01",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 0.192,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 0.19200000000000012,
+        "from": "2,3",
+        "levelId": "S01",
+        "pushes": 1,
+        "result": "success",
+        "to": "2,4",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 0.192,
+      "name": "sokoban.level_completed",
+      "data": {
+        "elapsed": 0.19200000000000012,
+        "levelId": "S01",
+        "levelVersion": 1,
+        "moves": 1,
+        "pushes": 1,
+        "undosUsed": 0
+      }
+    },
+    {
+      "t": 1.032,
+      "name": "sokoban.level_started",
+      "data": {
+        "boxes": 1,
+        "cols": 8,
+        "elapsed": 1.0320000000000007,
+        "goals": 1,
+        "levelCount": 5,
+        "levelId": "S02",
+        "levelIndex": 2,
+        "levelVersion": 1,
+        "name": "Corner",
+        "rows": 7
+      }
+    },
+    {
+      "t": 1.032,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 1.0320000000000007,
+        "inputSource": "local",
+        "levelId": "S02",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 1.032,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 1.0320000000000007,
+        "from": "5,3",
+        "levelId": "S02",
+        "moves": 1,
+        "result": "success",
+        "to": "5,4",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 1.048,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "up",
+        "elapsed": 1.0480000000000007,
+        "inputSource": "local",
+        "levelId": "S02",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 1.048,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "up",
+        "elapsed": 1.0480000000000007,
+        "from": "5,4",
+        "levelId": "S02",
+        "moves": 2,
+        "result": "success",
+        "to": "4,4",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 1.064,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "up",
+        "elapsed": 1.0640000000000007,
+        "inputSource": "local",
+        "levelId": "S02",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 1.064,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "up",
+        "elapsed": 1.0640000000000007,
+        "from": "4,4",
+        "levelId": "S02",
+        "moves": 3,
+        "result": "success",
+        "to": "3,4",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 1.08,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "up",
+        "elapsed": 1.0800000000000007,
+        "inputSource": "local",
+        "levelId": "S02",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 1.08,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "up",
+        "elapsed": 1.0800000000000007,
+        "from": "3,4",
+        "levelId": "S02",
+        "moves": 4,
+        "result": "success",
+        "to": "2,4",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 1.096,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "left",
+        "elapsed": 1.0960000000000008,
+        "inputSource": "local",
+        "levelId": "S02",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 1.096,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "left",
+        "elapsed": 1.0960000000000008,
+        "from": "2,4",
+        "levelId": "S02",
+        "moves": 5,
+        "result": "success",
+        "to": "2,3",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 1.112,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "left",
+        "elapsed": 1.1120000000000008,
+        "inputSource": "local",
+        "levelId": "S02",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 1.112,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "left",
+        "elapsed": 1.1120000000000008,
+        "from": "2,2",
+        "levelId": "S02",
+        "pushes": 1,
+        "result": "success",
+        "to": "2,1",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 1.128,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "up",
+        "elapsed": 1.1280000000000008,
+        "inputSource": "local",
+        "levelId": "S02",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 1.128,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "up",
+        "elapsed": 1.1280000000000008,
+        "from": "2,2",
+        "levelId": "S02",
+        "moves": 7,
+        "result": "success",
+        "to": "1,2",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 1.144,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "left",
+        "elapsed": 1.1440000000000008,
+        "inputSource": "local",
+        "levelId": "S02",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 1.144,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "left",
+        "elapsed": 1.1440000000000008,
+        "from": "1,2",
+        "levelId": "S02",
+        "moves": 8,
+        "result": "success",
+        "to": "1,1",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 1.16,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "down",
+        "elapsed": 1.1600000000000008,
+        "inputSource": "local",
+        "levelId": "S02",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 1.16,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "down",
+        "elapsed": 1.1600000000000008,
+        "from": "2,1",
+        "levelId": "S02",
+        "pushes": 2,
+        "result": "success",
+        "to": "3,1",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 1.176,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "down",
+        "elapsed": 1.1760000000000008,
+        "inputSource": "local",
+        "levelId": "S02",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 1.176,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "down",
+        "elapsed": 1.1760000000000008,
+        "from": "3,1",
+        "levelId": "S02",
+        "pushes": 3,
+        "result": "success",
+        "to": "4,1",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 1.176,
+      "name": "sokoban.level_completed",
+      "data": {
+        "elapsed": 1.1760000000000008,
+        "levelId": "S02",
+        "levelVersion": 1,
+        "moves": 10,
+        "pushes": 3,
+        "undosUsed": 0
+      }
+    },
+    {
+      "t": 2.016,
+      "name": "sokoban.level_started",
+      "data": {
+        "boxes": 1,
+        "cols": 8,
+        "elapsed": 2.0160000000000013,
+        "goals": 1,
+        "levelCount": 5,
+        "levelId": "S03",
+        "levelIndex": 3,
+        "levelVersion": 1,
+        "name": "Route",
+        "rows": 6
+      }
+    },
+    {
+      "t": 2.016,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "left",
+        "elapsed": 2.0160000000000013,
+        "inputSource": "local",
+        "levelId": "S03",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.016,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "left",
+        "elapsed": 2.0160000000000013,
+        "from": "3,3",
+        "levelId": "S03",
+        "moves": 1,
+        "result": "success",
+        "to": "3,2",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 2.032,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "up",
+        "elapsed": 2.0320000000000014,
+        "inputSource": "local",
+        "levelId": "S03",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.032,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "up",
+        "elapsed": 2.0320000000000014,
+        "from": "3,2",
+        "levelId": "S03",
+        "moves": 2,
+        "result": "success",
+        "to": "2,2",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 2.048,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 2.0480000000000014,
+        "inputSource": "local",
+        "levelId": "S03",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.048,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 2.0480000000000014,
+        "from": "2,3",
+        "levelId": "S03",
+        "pushes": 1,
+        "result": "success",
+        "to": "2,4",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 2.064,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 2.0640000000000014,
+        "inputSource": "local",
+        "levelId": "S03",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.064,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 2.0640000000000014,
+        "from": "2,4",
+        "levelId": "S03",
+        "pushes": 2,
+        "result": "success",
+        "to": "2,5",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 2.08,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 2.0800000000000014,
+        "inputSource": "local",
+        "levelId": "S03",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.08,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 2.0800000000000014,
+        "from": "2,5",
+        "levelId": "S03",
+        "pushes": 3,
+        "result": "success",
+        "to": "2,6",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 2.096,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "up",
+        "elapsed": 2.0960000000000014,
+        "inputSource": "local",
+        "levelId": "S03",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.096,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "up",
+        "elapsed": 2.0960000000000014,
+        "from": "2,5",
+        "levelId": "S03",
+        "moves": 6,
+        "result": "success",
+        "to": "1,5",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 2.112,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 2.1120000000000014,
+        "inputSource": "local",
+        "levelId": "S03",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.112,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 2.1120000000000014,
+        "from": "1,5",
+        "levelId": "S03",
+        "moves": 7,
+        "result": "success",
+        "to": "1,6",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 2.128,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "down",
+        "elapsed": 2.1280000000000014,
+        "inputSource": "local",
+        "levelId": "S03",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.128,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "down",
+        "elapsed": 2.1280000000000014,
+        "from": "2,6",
+        "levelId": "S03",
+        "pushes": 4,
+        "result": "success",
+        "to": "3,6",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 2.128,
+      "name": "sokoban.level_completed",
+      "data": {
+        "elapsed": 2.1280000000000014,
+        "levelId": "S03",
+        "levelVersion": 1,
+        "moves": 8,
+        "pushes": 4,
+        "undosUsed": 0
+      }
+    },
+    {
+      "t": 2.968,
+      "name": "sokoban.level_started",
+      "data": {
+        "boxes": 2,
+        "cols": 9,
+        "elapsed": 2.968000000000002,
+        "goals": 2,
+        "levelCount": 5,
+        "levelId": "S04",
+        "levelIndex": 4,
+        "levelVersion": 1,
+        "name": "TwoBoxes",
+        "rows": 6
+      }
+    },
+    {
+      "t": 2.968,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 2.968000000000002,
+        "inputSource": "local",
+        "levelId": "S04",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.968,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 2.968000000000002,
+        "from": "3,3",
+        "levelId": "S04",
+        "pushes": 1,
+        "result": "success",
+        "to": "3,4",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 2.984,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 2.984000000000002,
+        "inputSource": "local",
+        "levelId": "S04",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.984,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 2.984000000000002,
+        "from": "3,4",
+        "levelId": "S04",
+        "pushes": 2,
+        "result": "success",
+        "to": "3,5",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 3.0,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 3.000000000000002,
+        "inputSource": "local",
+        "levelId": "S04",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 3.0,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 3.000000000000002,
+        "from": "3,5",
+        "levelId": "S04",
+        "pushes": 3,
+        "result": "success",
+        "to": "3,6",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 3.016,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "left",
+        "elapsed": 3.0160000000000022,
+        "inputSource": "local",
+        "levelId": "S04",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 3.016,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "left",
+        "elapsed": 3.0160000000000022,
+        "from": "3,5",
+        "levelId": "S04",
+        "moves": 4,
+        "result": "success",
+        "to": "3,4",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 3.032,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "left",
+        "elapsed": 3.0320000000000022,
+        "inputSource": "local",
+        "levelId": "S04",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 3.032,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "left",
+        "elapsed": 3.0320000000000022,
+        "from": "3,4",
+        "levelId": "S04",
+        "moves": 5,
+        "result": "success",
+        "to": "3,3",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 3.048,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "left",
+        "elapsed": 3.0480000000000023,
+        "inputSource": "local",
+        "levelId": "S04",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 3.048,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "left",
+        "elapsed": 3.0480000000000023,
+        "from": "3,3",
+        "levelId": "S04",
+        "moves": 6,
+        "result": "success",
+        "to": "3,2",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 3.064,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "up",
+        "elapsed": 3.0640000000000023,
+        "inputSource": "local",
+        "levelId": "S04",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 3.064,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "up",
+        "elapsed": 3.0640000000000023,
+        "from": "3,2",
+        "levelId": "S04",
+        "moves": 7,
+        "result": "success",
+        "to": "2,2",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 3.08,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 3.0800000000000023,
+        "inputSource": "local",
+        "levelId": "S04",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 3.08,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 3.0800000000000023,
+        "from": "2,3",
+        "levelId": "S04",
+        "pushes": 4,
+        "result": "success",
+        "to": "2,4",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 3.096,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 3.0960000000000023,
+        "inputSource": "local",
+        "levelId": "S04",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 3.096,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 3.0960000000000023,
+        "from": "2,4",
+        "levelId": "S04",
+        "pushes": 5,
+        "result": "success",
+        "to": "2,5",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 3.112,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 3.1120000000000023,
+        "inputSource": "local",
+        "levelId": "S04",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 3.112,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 3.1120000000000023,
+        "from": "2,5",
+        "levelId": "S04",
+        "pushes": 6,
+        "result": "success",
+        "to": "2,6",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 3.112,
+      "name": "sokoban.level_completed",
+      "data": {
+        "elapsed": 3.1120000000000023,
+        "levelId": "S04",
+        "levelVersion": 1,
+        "moves": 10,
+        "pushes": 6,
+        "undosUsed": 0
+      }
+    },
+    {
+      "t": 3.952,
+      "name": "sokoban.level_started",
+      "data": {
+        "boxes": 2,
+        "cols": 8,
+        "elapsed": 3.952000000000003,
+        "goals": 2,
+        "levelCount": 5,
+        "levelId": "S05",
+        "levelIndex": 5,
+        "levelVersion": 1,
+        "name": "Challenge",
+        "rows": 7
+      }
+    },
+    {
+      "t": 3.952,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "left",
+        "elapsed": 3.952000000000003,
+        "inputSource": "local",
+        "levelId": "S05",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 3.952,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "left",
+        "elapsed": 3.952000000000003,
+        "from": "4,3",
+        "levelId": "S05",
+        "moves": 1,
+        "result": "success",
+        "to": "4,2",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 3.968,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "up",
+        "elapsed": 3.968000000000003,
+        "inputSource": "local",
+        "levelId": "S05",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 3.968,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "up",
+        "elapsed": 3.968000000000003,
+        "from": "3,2",
+        "levelId": "S05",
+        "pushes": 1,
+        "result": "success",
+        "to": "2,2",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 3.984,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 3.984000000000003,
+        "inputSource": "local",
+        "levelId": "S05",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 3.984,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 3.984000000000003,
+        "from": "3,3",
+        "levelId": "S05",
+        "pushes": 2,
+        "result": "success",
+        "to": "3,4",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 4.0,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 4.000000000000003,
+        "inputSource": "local",
+        "levelId": "S05",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 4.0,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 4.000000000000003,
+        "from": "3,4",
+        "levelId": "S05",
+        "pushes": 3,
+        "result": "success",
+        "to": "3,5",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 4.016,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "down",
+        "elapsed": 4.016000000000003,
+        "inputSource": "local",
+        "levelId": "S05",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 4.016,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "down",
+        "elapsed": 4.016000000000003,
+        "from": "3,4",
+        "levelId": "S05",
+        "moves": 5,
+        "result": "success",
+        "to": "4,4",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 4.032,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 4.032000000000003,
+        "inputSource": "local",
+        "levelId": "S05",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 4.032,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 4.032000000000003,
+        "from": "4,4",
+        "levelId": "S05",
+        "moves": 6,
+        "result": "success",
+        "to": "4,5",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 4.048,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "up",
+        "elapsed": 4.048000000000003,
+        "inputSource": "local",
+        "levelId": "S05",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 4.048,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "up",
+        "elapsed": 4.048000000000003,
+        "from": "3,5",
+        "levelId": "S05",
+        "pushes": 4,
+        "result": "success",
+        "to": "2,5",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 4.048,
+      "name": "sokoban.level_completed",
+      "data": {
+        "elapsed": 4.048000000000003,
+        "levelId": "S05",
+        "levelVersion": 1,
+        "moves": 7,
+        "pushes": 4,
+        "undosUsed": 0
+      }
+    },
+    {
+      "t": 4.048,
+      "name": "sokoban.attempt_finished",
+      "data": {
+        "autoRestarts": 0,
+        "blockedPush": 0,
+        "blockedWall": 0,
+        "elapsed": 4.048000000000003,
+        "gameVersion": "0.3.0",
+        "levelsCompleted": 5,
+        "moves": 7,
+        "pushes": 4,
+        "reason": "completed",
+        "summary": "推箱子通关 | 五关完成 | 总步数 7 | 推动 4 | 撤销 0",
+        "totalLevels": 5,
+        "undosUsed": 0
+      }
+    }
+  ]
+}

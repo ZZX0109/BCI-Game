@@ -1,0 +1,126 @@
+{
+  "game": "claw",
+  "scenario": "C-06 暂停冻结动画",
+  "ok": true,
+  "passed": 6,
+  "total": 6,
+  "error": null,
+  "checks": [
+    {
+      "check": "C-06a 已进入下降段",
+      "ok": true,
+      "detail": "实际='lowering' 期望='lowering'"
+    },
+    {
+      "check": "C-06b 暂停期间相位不变",
+      "ok": true,
+      "detail": "实际='lowering' 期望='lowering'"
+    },
+    {
+      "check": "C-06c 夹爪没有继续下落",
+      "ok": true,
+      "detail": "175.20 -> 175.20"
+    },
+    {
+      "check": "C-06d 相位计时冻结",
+      "ok": true,
+      "detail": "0.264 -> 0.264"
+    },
+    {
+      "check": "C-06e 恢复后继续下落",
+      "ok": true,
+      "detail": "175.20 -> 193.60"
+    },
+    {
+      "check": "C-06f 恢复后仍能走完整套动作",
+      "ok": true,
+      "detail": "phase=transport"
+    }
+  ],
+  "simSeconds": 1.896,
+  "finished": false,
+  "eventCount": 4,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "claw.attempt_started",
+      "data": {
+        "assistEnabled": false,
+        "attemptsTotal": 5,
+        "difficulty": "standard",
+        "gameVersion": "0.3.0",
+        "inputMode": "held",
+        "inputSource": "local",
+        "seed": 42,
+        "taskMode": "precision_grasp_2d",
+        "tolerance": 40.0,
+        "toyPlan": [
+          {
+            "x": 130.0,
+            "z": 165.0
+          },
+          {
+            "x": 508.0,
+            "z": 114.0
+          },
+          {
+            "x": 404.0,
+            "z": 85.0
+          },
+          {
+            "x": 193.0,
+            "z": 78.0
+          },
+          {
+            "x": 264.0,
+            "z": 215.0
+          }
+        ]
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "claw.trial_started",
+      "data": {
+        "attempt": 1,
+        "clawX": 350.0,
+        "clawZ": 140.0,
+        "elapsed": 0.0,
+        "toyX": 130.0,
+        "toyZ": 165.0
+      }
+    },
+    {
+      "t": 0.096,
+      "name": "claw.grasp_trigger",
+      "data": {
+        "assisted": false,
+        "attempt": 1,
+        "clawX": 350.0,
+        "clawZ": 140.0,
+        "elapsed": 0.09600000000000003,
+        "offsetAtTriggerX": 220.0,
+        "offsetAtTriggerZ": -25.0,
+        "tolerance": 40.0,
+        "toyX": 130.0,
+        "toyZ": 165.0
+      }
+    },
+    {
+      "t": 0.992,
+      "name": "claw.grasp_fail",
+      "data": {
+        "assisted": false,
+        "attempt": 1,
+        "dx": 220.0,
+        "dz": -25.0,
+        "elapsed": 0.9920000000000008,
+        "normalizedError": 5.535397456371133,
+        "offsetAtTriggerX": 220.0,
+        "offsetAtTriggerZ": -25.0,
+        "reason": "misaligned",
+        "triggerToContactMs": 896.0
+      }
+    }
+  ]
+}

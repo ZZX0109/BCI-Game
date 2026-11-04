@@ -1,0 +1,180 @@
+{
+  "game": "target",
+  "scenario": "TGT-03 点击当帧判定",
+  "ok": true,
+  "passed": 6,
+  "total": 6,
+  "error": null,
+  "checks": [
+    {
+      "check": "TGT-03a 产生一次射击记录",
+      "ok": true,
+      "detail": "共 1 次"
+    },
+    {
+      "check": "TGT-03b 用的是当帧指针坐标",
+      "ok": true,
+      "detail": "aim=(112.0,296.0) target=(112.0,296.0)"
+    },
+    {
+      "check": "TGT-03c 距离在半径内",
+      "ok": true,
+      "detail": "distance=0.0 r=46.0"
+    },
+    {
+      "check": "TGT-03d 判定为命中",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TGT-03e 命中有对应事件",
+      "ok": true,
+      "detail": "实际=True 期望=True"
+    },
+    {
+      "check": "TGT-03f 进入反馈态",
+      "ok": true,
+      "detail": "实际='shot_feedback' 期望='shot_feedback'"
+    }
+  ],
+  "simSeconds": 1.008,
+  "finished": false,
+  "eventCount": 4,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "target.attempt_started",
+      "data": {
+        "gameVersion": "0.4.0",
+        "inputSource": "local",
+        "seed": 42,
+        "taskMode": "static_accuracy",
+        "totalTrials": 8,
+        "trialPlan": [
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 136.0,
+            "y": 412.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 550.0,
+            "y": 317.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 436.0,
+            "y": 263.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 205.0,
+            "y": 250.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 283.0,
+            "y": 505.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 546.0,
+            "y": 245.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 153.0,
+            "y": 458.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 354.0,
+            "y": 217.0
+          }
+        ]
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "target.trial_started",
+      "data": {
+        "condition": {
+          "distance": "free",
+          "group": "",
+          "size": "standard"
+        },
+        "elapsed": 0.0,
+        "occlusion": null,
+        "targetR": 46.0,
+        "targetX": 136.0,
+        "targetY": 412.0,
+        "totalTrials": 8,
+        "trial": 1
+      }
+    },
+    {
+      "t": 0.976,
+      "name": "target.shot_debug",
+      "data": {
+        "aimX": 112.0,
+        "aimY": 296.0,
+        "blocked": false,
+        "condition": "standard",
+        "distance": 0.0,
+        "elapsed": 0.9760000000000008,
+        "firstActionLatency": 0.9600000000000007,
+        "hit": true,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 46.0,
+        "targetX": 112.0,
+        "targetY": 296.0,
+        "trial": 1
+      }
+    },
+    {
+      "t": 0.976,
+      "name": "target.hit",
+      "data": {
+        "aimX": 112.0,
+        "aimY": 296.0,
+        "blocked": false,
+        "condition": "standard",
+        "distance": 0.0,
+        "elapsed": 0.9760000000000008,
+        "firstActionLatency": 0.9600000000000007,
+        "hit": true,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 46.0,
+        "targetX": 112.0,
+        "targetY": 296.0,
+        "trial": 1
+      }
+    }
+  ]
+}

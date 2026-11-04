@@ -1,7 +1,7 @@
 import QtQuick
 import "../shared-ui" as SharedUI
 
-// 汉诺塔 V3：统一框架 + 鼠标/键盘/脑控独立完成 + 2–5 盘难度选择
+// 汉诺塔 V4：固定五局 3/3/4/4/5，自动推进；鼠标/键盘/脑控各自独立完成
 Item {
     id: root
     required property var taskContext
@@ -10,7 +10,7 @@ Item {
     readonly property string inputSource: (game && game.inputSource) ? game.inputSource : "local"
     function hostElapsed() {
         if (game && typeof game.elapsedSeconds === "number") return game.elapsedSeconds
-        return localElapsed
+        return localElapsedSec
     }
 
     // ------------------------------------------------------------------
@@ -20,9 +20,11 @@ Item {
     SharedUI.FeedbackToast { id: toast; theme: uiTheme; parent: root }
 
     // ------------------------------------------------------------------
-    // 逻辑状态
+    // 逻辑状态（单一线程真值）
     // ------------------------------------------------------------------
-    property int discCount: 3
+    readonly property var roundPlan: [3, 3, 4, 4, 5]
+    property int roundIndex: 0                 // 0..4
+    property int discCount: 3                  // 当前局盘数
     property var poles: [[], [], []]
     property int focusPole: 0
     property int heldDisc: -1
@@ -33,20 +35,18 @@ Item {
     property int cancelledPicks: 0
     property bool sessionFinished: false
     property bool isPaused: false
-    property string phase: "select_level" // select_level | select | place | complete
-    property real localElapsed: 0.0
+    // select | place | round_feedback | complete
+    property string phase: "select"
+    property real localElapsedSec: 0.0
+    property real roundTime: 0.0
+    property real feedbackRemaining: 0.0
+    property var roundResults: []
     property real settleAnim: 0.0
 
     readonly property int optimalMoves: Math.pow(2, discCount) - 1
     readonly property var discColors: ["#E8B44F", "#DB7B54", "#C95D63", "#6B8EAE", "#5B8C5A"]
     readonly property var pegLabels: ["A", "B", "C"]
     readonly property var pegCenterX: [146, 341, 536]
-    readonly property var levelOptions: [
-        { id: 2, label: qsTr("教学 2 盘"), description: qsTr("最优 3 步") },
-        { id: 3, label: qsTr("标准 3 盘"), description: qsTr("最优 7 步") },
-        { id: 4, label: qsTr("进阶 4 盘"), description: qsTr("最优 15 步") },
-        { id: 5, label: qsTr("挑战 5 盘"), description: qsTr("最优 31 步") }
-    ]
 
     function discWidth(d) { return 60 + d * 40 }
 
@@ -59,96 +59,82 @@ Item {
     function topOf(p) { return poles[p].length > 0 ? poles[p][poles[p].length - 1] : 0 }
 
     // ------------------------------------------------------------------
-    // 配置与生命周期
+    // 生命周期：整个会话固定五局
     // ------------------------------------------------------------------
-    function loadConfig() {
-        try {
-            var r = taskContext.config.read({ discCount: 3 })
-            if (r && r.ok && r.values) {
-                var n = Number(r.values.discCount)
-                if (n >= 2 && n <= 5) discCount = n
-            }
-        } catch (e) {
-            console.log("hanoi: config.read unavailable, using default discCount=3")
-        }
-    }
-
     function startSession() {
-        loadConfig()
         sessionFinished = false
         isPaused = false
-        moves = 0; illegal = 0; emptyPicks = 0; cancelledPicks = 0
-        localElapsed = 0.0
+        localElapsedSec = 0.0
+        roundIndex = 0
+        roundResults = []
         settleAnim = 0.0
-        heldDisc = -1
-        selectedPole = -1
-        focusPole = 0
-        phase = "select_level"
-
         game.record("hanoi.attempt_started", {
-            gameVersion: "0.3.0",
-            taskMode: "hanoi_standard",
+            gameVersion: "0.4.0",
+            roundPlan: roundPlan,
             inputSource: inputSource,
             elapsed: hostElapsed()
         })
+        startRound(0)
     }
 
-    function selectLevel(index) {
-        discCount = levelOptions[index].id
-        startGame()
-    }
-
-    function startGame() {
+    function startRound(index) {
+        roundIndex = index
+        discCount = roundPlan[index]
         var fresh = [[], [], []]
-        for (var i = discCount; i >= 1; --i) fresh[0].push(i)
+        for (var d = discCount; d >= 1; --d) fresh[0].push(d)
         poles = fresh
         focusPole = 0
         heldDisc = -1
         selectedPole = -1
         moves = 0; illegal = 0; emptyPicks = 0; cancelledPicks = 0
-        localElapsed = 0.0
+        roundTime = 0.0
+        feedbackRemaining = 0.0
         settleAnim = 0.0
         phase = "select"
-
-        game.record("hanoi.level_started", {
+        game.record("hanoi.round_started", {
+            round: index + 1,
+            totalRounds: roundPlan.length,
             discCount: discCount,
-            optimalMoves: optimalMoves,
-            elapsed: hostElapsed()
+            optimalMoves: Math.pow(2, discCount) - 1
         })
+    }
+
+    function completeRound() {
+        if (phase === "round_feedback" || sessionFinished) return
+        var optimal = Math.pow(2, discCount) - 1
+        var result = {
+            round: roundIndex + 1,
+            discCount: discCount,
+            moves: moves,
+            optimalMoves: optimal,
+            extraMoves: moves - optimal,
+            illegal: illegal,
+            emptyPicks: emptyPicks,
+            cancelledPicks: cancelledPicks,
+            elapsed: roundTime
+        }
+        var next = roundResults.slice()
+        next.push(result)
+        roundResults = next
+        game.record("hanoi.round_finished", result)
+        phase = "round_feedback"
+        feedbackRemaining = 1.5
+        settleAnimLoop.start()
     }
 
     function finishSession() {
         if (sessionFinished) return
         sessionFinished = true
         phase = "complete"
-
-        game.record("hanoi.trial_result", {
-            result: "solved",
-            discCount: discCount,
-            moves: moves,
-            optimalMoves: optimalMoves,
-            extraMoves: moves - optimalMoves,
-            illegal: illegal,
-            cancelledPicks: cancelledPicks,
-            elapsed: hostElapsed()
-        })
-
         var result = {
-            gameVersion: "0.3.0",
-            discCount: discCount,
-            moves: moves,
-            optimalMoves: optimalMoves,
-            extraMoves: moves - optimalMoves,
-            illegal: illegal,
-            emptyPicks: emptyPicks,
-            cancelledPicks: cancelledPicks,
-            elapsed: hostElapsed(),
-            summary: qsTr("汉诺塔完成 | %1盘 用步 %2（最优 %3）| 违规 %4 | 取消 %5")
-                     .arg(discCount).arg(moves).arg(optimalMoves).arg(illegal).arg(cancelledPicks)
+            gameVersion: "0.4.0",
+            totalRounds: roundResults.length,
+            rounds: roundResults,
+            elapsed: localElapsedSec,
+            summary: qsTr("汉诺塔已完成五局（3/3/4/4/5）")
         }
         game.record("hanoi.attempt_finished", result)
         game.finish(result)
-        settleAnimLoop.start()
     }
 
     // ------------------------------------------------------------------
@@ -157,7 +143,6 @@ Item {
     function selectPoleAndConfirm(pole, source) {
         if (isPaused || sessionFinished) return
         if (phase !== "select" && phase !== "place") return
-
         var oldFocus = focusPole
         focusPole = pole
         if (oldFocus !== pole) {
@@ -170,6 +155,7 @@ Item {
     }
 
     function moveFocus(delta, source) {
+        if (isPaused || sessionFinished) return
         if (phase !== "select" && phase !== "place") return
         var from = focusPole
         focusPole = (focusPole + delta + 3) % 3
@@ -180,10 +166,11 @@ Item {
     }
 
     function tryConfirm(source) {
+        if (isPaused || sessionFinished) return
         if (phase !== "select" && phase !== "place") return
-        if (isPaused) return
 
         if (heldDisc < 0) {
+            // 取盘
             if (poles[focusPole].length === 0) {
                 emptyPicks++
                 toast.show(qsTr("柱 %1 是空的").arg(pegLabels[focusPole]), "danger")
@@ -197,6 +184,7 @@ Item {
             phase = "place"
             game.record("hanoi.pick", { pole: focusPole, disc: heldDisc, source: source, elapsed: hostElapsed() })
         } else {
+            // 放盘
             var top = topOf(focusPole)
             if (!(top === 0 || heldDisc < top)) {
                 illegal++
@@ -227,7 +215,8 @@ Item {
                     validMoveIndex: moves, source: source, elapsed: hostElapsed()
                 })
             }
-            if (poles[2].length === discCount) finishSession()
+            // 只有本局完成才进入结算，绝不直接 game.finish()
+            if (poles[2].length === discCount) completeRound()
         }
     }
 
@@ -241,12 +230,6 @@ Item {
         function onAction(name, pressed) {
             if (pressed !== true) return
             if (root.isPaused || root.sessionFinished) return
-            if (root.phase === "select_level") {
-                if (name === "left") levelSelector.moveLeft()
-                else if (name === "right") levelSelector.moveRight()
-                else if (name === "confirm") root.selectLevel(levelSelector.currentIndex)
-                return
-            }
             if (name === "left") root.moveFocus(-1, "keyboard")
             else if (name === "right") root.moveFocus(1, "keyboard")
             else if (name === "confirm") root.tryConfirm("keyboard")
@@ -257,9 +240,18 @@ Item {
         function onStopping() { root.isPaused = true }
     }
 
+    // 统一逻辑时钟：暂停时冻结计时与自动推进
     function advance(seconds) {
         if (isPaused || sessionFinished) return
-        localElapsed += seconds
+        localElapsedSec += seconds
+        if (phase === "select" || phase === "place") roundTime += seconds
+        if (phase === "round_feedback") {
+            feedbackRemaining = Math.max(0, feedbackRemaining - seconds)
+            if (feedbackRemaining === 0) {
+                if (roundIndex < roundPlan.length - 1) startRound(roundIndex + 1)
+                else finishSession()
+            }
+        }
     }
 
     SequentialAnimation {
@@ -277,13 +269,13 @@ Item {
         theme: uiTheme
         title: qsTr("汉诺塔")
         subtitle: qsTr("目标：把全部盘从 A 柱移到 C 柱　规则：大盘不能压小盘")
-        mode: qsTr("%1 盘 · %2").arg(root.discCount).arg(root.phase === "select" ? qsTr("选择圆盘") : root.phase === "place" ? qsTr("选择放置柱") : qsTr("选择关卡"))
+        mode: qsTr("第 %1/5 局 · %2 盘").arg(root.roundIndex + 1).arg(root.discCount)
         inputSource: root.inputSource
 
         Rectangle {
             parent: frame.contentItem
             anchors.fill: parent
-            color: "#101C2C"
+            color: uiTheme.panel
             radius: 16
             clip: true
 
@@ -300,7 +292,7 @@ Item {
                 }
             }
 
-            // 三柱
+            // 三柱（整块可点击：鼠标独立取放）
             Repeater {
                 model: 3
                 Item {
@@ -317,8 +309,8 @@ Item {
                         border.width: 2
                         border.color: {
                             if (root.heldDisc >= 0 && pegItem.isFocused)
-                                return pegItem.isLegalTarget ? "#68D5B5" : "#FB7777"
-                            if (pegItem.isFocused) return "#5ADCCB"
+                                return pegItem.isLegalTarget ? uiTheme.success : uiTheme.danger
+                            if (pegItem.isFocused) return uiTheme.primary
                             return "#4A3320"
                         }
                     }
@@ -331,7 +323,7 @@ Item {
                     Text {
                         x: pegItem.cx - 10; y: 452
                         text: root.pegLabels[pegItem.index]
-                        color: pegItem.isFocused ? "#5ADCCB" : "#7F95A3"
+                        color: pegItem.isFocused ? uiTheme.primary : uiTheme.secondaryText
                         font.pixelSize: 22; font.bold: true
                     }
                     Rectangle {
@@ -342,14 +334,15 @@ Item {
                         color: "transparent"
                         border.width: 3
                         border.color: root.heldDisc >= 0
-                                       ? (pegItem.isLegalTarget ? "#68D5B5" : "#FB7777")
-                                       : "#5ADCCB"
+                                       ? (pegItem.isLegalTarget ? uiTheme.success : uiTheme.danger)
+                                       : uiTheme.primary
                         opacity: 0.9
                     }
 
-                    // 鼠标点击整个柱区域
+                    // 鼠标点击整个柱区域 → 同一个 tryConfirm 业务入口
                     MouseArea {
                         anchors.fill: parent
+                        enabled: root.phase === "select" || root.phase === "place"
                         onClicked: root.selectPoleAndConfirm(pegItem.index, "mouse")
                     }
                 }
@@ -371,30 +364,81 @@ Item {
                             x: root.pegCenterX[outerIndex] - dw / 2
                             y: 428 - 18 - (index + 1) * 36 + root.settleAnim
                             color: root.discColors[(discSize - 1) % root.discColors.length]
-                            border.width: 2; border.color: "#0B1422"
+                            border.width: 2; border.color: uiTheme.panelBorder
                             Text {
                                 anchors.centerIn: parent
                                 text: parent.discSize
-                                color: "#0B1422"; font.pixelSize: 15; font.bold: true
+                                color: uiTheme.primaryText; font.pixelSize: 15; font.bold: true
                             }
                         }
                     }
                 }
             }
 
-            // 手持盘
+            // 手持盘（抬起 + 高亮）
             Rectangle {
                 visible: root.heldDisc >= 0
                 readonly property real dw: root.discWidth(Math.max(1, root.heldDisc))
                 width: dw; height: 34; radius: 9
                 x: root.pegCenterX[root.focusPole] - dw / 2
-                y: 200
+                y: 190
                 color: "#FFF3B0"
                 border.width: 3; border.color: "#E7BC84"
                 Text {
                     anchors.centerIn: parent
                     text: qsTr("手持 %1").arg(root.heldDisc)
-                    color: "#0B1422"; font.pixelSize: 14; font.bold: true
+                    color: uiTheme.primaryText; font.pixelSize: 14; font.bold: true
+                }
+            }
+
+            // 会话进度（第 n/5）
+            Row {
+                x: 30; y: 24
+                spacing: 10
+                Repeater {
+                    model: root.roundPlan.length
+                    Rectangle {
+                        required property int index
+                        width: 46; height: 8; radius: 4
+                        color: index < root.roundResults.length ? uiTheme.primary
+                             : index === root.roundIndex ? uiTheme.success : uiTheme.panelBorder
+                    }
+                }
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: qsTr("第 %1/5 局").arg(root.roundIndex + 1)
+                    color: uiTheme.secondaryText; font.pixelSize: 14
+                }
+            }
+
+            // 局间结算（自动推进，不需任何输入）
+            Rectangle {
+                visible: root.phase === "round_feedback"
+                anchors.centerIn: parent
+                width: 380; height: 150
+                radius: 14
+                color: uiTheme.panel
+                border.width: 2; border.color: uiTheme.primary
+                Column {
+                    anchors.centerIn: parent
+                    spacing: 8
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("第 %1 局完成").arg(root.roundIndex + 1)
+                        color: uiTheme.primaryText; font.pixelSize: 24; font.bold: true
+                    }
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("用步 %1（最优 %2）").arg(root.moves).arg(root.optimalMoves)
+                        color: uiTheme.secondaryText; font.pixelSize: 16
+                    }
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: root.roundIndex < root.roundPlan.length - 1
+                              ? qsTr("即将进入第 %1 局…").arg(root.roundIndex + 2)
+                              : qsTr("五局完成…")
+                        color: uiTheme.success; font.pixelSize: 14
+                    }
                 }
             }
         }
@@ -414,10 +458,11 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 keyboardHint: root.phase === "select" ? qsTr("←→ 选择柱子，确认取盘")
                               : root.phase === "place" ? qsTr("←→ 选择放置柱，确认放下（同柱=取消）")
-                              : qsTr("←→ 选择难度，确认开始")
+                              : root.phase === "round_feedback" ? qsTr("本局完成，即将自动进入下一局")
+                              : qsTr("五局已完成")
                 mouseHint: root.phase === "select" ? qsTr("点击柱取起顶部盘")
                            : root.phase === "place" ? qsTr("点击目标柱放下（点原柱=取消）")
-                           : qsTr("点击选择难度")
+                           : qsTr("本局完成，自动进入下一局")
             }
 
             Item { width: Math.max(24, parent.width - hintText.width - 240) }
@@ -427,32 +472,6 @@ Item {
                 text: qsTr("步数 %1 / 最优 %2").arg(root.moves).arg(root.optimalMoves)
                 color: uiTheme.secondaryText
                 font.pixelSize: uiTheme.captionPx
-            }
-        }
-
-        // 关卡选择器
-        Item {
-            parent: frame.overlayItem
-            anchors.fill: parent
-            visible: root.phase === "select_level"
-
-            SharedUI.LevelSelector {
-                id: levelSelector
-                anchors.centerIn: parent
-                theme: uiTheme
-                title: qsTr("选择难度")
-                levels: root.levelOptions
-                currentIndex: root.discCount - 2
-            }
-
-            SharedUI.GameButton {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: levelSelector.bottom
-                anchors.topMargin: 16
-                theme: uiTheme
-                text: qsTr("开始")
-                highlighted: true
-                onClicked: root.selectLevel(levelSelector.currentIndex)
             }
         }
 

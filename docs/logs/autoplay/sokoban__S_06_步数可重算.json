@@ -1,0 +1,130 @@
+{
+  "game": "sokoban",
+  "scenario": "S-06 步数可重算",
+  "ok": true,
+  "passed": 6,
+  "total": 6,
+  "error": null,
+  "checks": [
+    {
+      "check": "S-06a 第一关已通关",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "S-06b 重新计算步数 == moves",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "S-06c 重算步数 == BFS 最优",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "S-06d 重算推箱次数 == pushes",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "S-06e 无假失败事件",
+      "ok": true,
+      "detail": "wall=0 push=0"
+    },
+    {
+      "check": "S-06f 每条 success 都带步数",
+      "ok": true,
+      "detail": "实际=True 期望=True"
+    }
+  ],
+  "simSeconds": 0.36,
+  "finished": false,
+  "eventCount": 5,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "sokoban.attempt_started",
+      "data": {
+        "gameVersion": "0.3.0",
+        "inputSource": "local",
+        "levelPlan": [
+          {
+            "id": "S01",
+            "version": 1
+          },
+          {
+            "id": "S02",
+            "version": 1
+          },
+          {
+            "id": "S03",
+            "version": 1
+          },
+          {
+            "id": "S04",
+            "version": 1
+          },
+          {
+            "id": "S05",
+            "version": 1
+          }
+        ],
+        "taskMode": "multi_level"
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "sokoban.level_started",
+      "data": {
+        "boxes": 1,
+        "cols": 8,
+        "elapsed": 0.0,
+        "goals": 1,
+        "levelCount": 5,
+        "levelId": "S01",
+        "levelIndex": 1,
+        "levelVersion": 1,
+        "name": "Guide",
+        "rows": 5
+      }
+    },
+    {
+      "t": 0.192,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "right",
+        "elapsed": 0.19200000000000012,
+        "inputSource": "local",
+        "levelId": "S01",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 0.192,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "right",
+        "elapsed": 0.19200000000000012,
+        "from": "2,3",
+        "levelId": "S01",
+        "pushes": 1,
+        "result": "success",
+        "to": "2,4",
+        "wasPush": true
+      }
+    },
+    {
+      "t": 0.192,
+      "name": "sokoban.level_completed",
+      "data": {
+        "elapsed": 0.19200000000000012,
+        "levelId": "S01",
+        "levelVersion": 1,
+        "moves": 1,
+        "pushes": 1,
+        "undosUsed": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "game": "sokoban",
+  "scenario": "S-02 撞墙不入栈",
+  "ok": true,
+  "passed": 6,
+  "total": 6,
+  "error": null,
+  "checks": [
+    {
+      "check": "S-02a 起始 undo 栈为空",
+      "ok": true,
+      "detail": "实际=0 期望=0"
+    },
+    {
+      "check": "S-02b 有效移动后栈=1",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "S-02c 撞墙产生 blocked_wall",
+      "ok": true,
+      "detail": "最后一条={'action': 'up', 'elapsed': 0.20800000000000013, 'from': '1,2', 'levelId': 'S01', 'result': 'blocked_wall', 'to': '0,2'}"
+    },
+    {
+      "check": "S-02d 撞墙不入栈",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "S-02e 撞墙不计步",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "S-02f blockedWall 计数 +1",
+      "ok": true,
+      "detail": "blockedWall=1"
+    }
+  ],
+  "simSeconds": 0.224,
+  "finished": false,
+  "eventCount": 6,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "sokoban.attempt_started",
+      "data": {
+        "gameVersion": "0.3.0",
+        "inputSource": "local",
+        "levelPlan": [
+          {
+            "id": "S01",
+            "version": 1
+          },
+          {
+            "id": "S02",
+            "version": 1
+          },
+          {
+            "id": "S03",
+            "version": 1
+          },
+          {
+            "id": "S04",
+            "version": 1
+          },
+          {
+            "id": "S05",
+            "version": 1
+          }
+        ],
+        "taskMode": "multi_level"
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "sokoban.level_started",
+      "data": {
+        "boxes": 1,
+        "cols": 8,
+        "elapsed": 0.0,
+        "goals": 1,
+        "levelCount": 5,
+        "levelId": "S01",
+        "levelIndex": 1,
+        "levelVersion": 1,
+        "name": "Guide",
+        "rows": 5
+      }
+    },
+    {
+      "t": 0.192,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "up",
+        "elapsed": 0.19200000000000012,
+        "inputSource": "local",
+        "levelId": "S01",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 0.192,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "up",
+        "elapsed": 0.19200000000000012,
+        "from": "2,2",
+        "levelId": "S01",
+        "moves": 1,
+        "result": "success",
+        "to": "1,2",
+        "wasPush": false
+      }
+    },
+    {
+      "t": 0.208,
+      "name": "sokoban.action_received",
+      "data": {
+        "action": "up",
+        "elapsed": 0.20800000000000013,
+        "inputSource": "local",
+        "levelId": "S01",
+        "phase": "playing",
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 0.208,
+      "name": "sokoban.action_applied",
+      "data": {
+        "action": "up",
+        "elapsed": 0.20800000000000013,
+        "from": "1,2",
+        "levelId": "S01",
+        "result": "blocked_wall",
+        "to": "0,2"
+      }
+    }
+  ]
+}

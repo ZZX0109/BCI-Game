@@ -1,0 +1,167 @@
+{
+  "game": "claw",
+  "scenario": "C-07 失败进入下一次",
+  "ok": true,
+  "passed": 9,
+  "total": 9,
+  "error": null,
+  "checks": [
+    {
+      "check": "C-07a 产生 attempt_result",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "C-07b 判为失败",
+      "ok": true,
+      "detail": "实际=False 期望=False"
+    },
+    {
+      "check": "C-07c 失败原因是偏离",
+      "ok": true,
+      "detail": "normalizedError=1.62"
+    },
+    {
+      "check": "C-07d 产生 grasp_fail 事件",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "C-07e 会话没有结束",
+      "ok": true,
+      "detail": "实际=False 期望=False"
+    },
+    {
+      "check": "C-07f attempts 累加到 1",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "C-07g 进入了第二次尝试",
+      "ok": true,
+      "detail": "实际='aligning' 期望='aligning'"
+    },
+    {
+      "check": "C-07h 第二次试次事件已记录",
+      "ok": true,
+      "detail": "实际=2 期望=2"
+    },
+    {
+      "check": "C-07i 玩具重新回到地面",
+      "ok": true,
+      "detail": "toyState=floor"
+    }
+  ],
+  "simSeconds": 6.784,
+  "finished": false,
+  "eventCount": 6,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "claw.attempt_started",
+      "data": {
+        "assistEnabled": false,
+        "attemptsTotal": 5,
+        "difficulty": "standard",
+        "gameVersion": "0.3.0",
+        "inputMode": "held",
+        "inputSource": "local",
+        "seed": 42,
+        "taskMode": "precision_grasp_2d",
+        "tolerance": 40.0,
+        "toyPlan": [
+          {
+            "x": 130.0,
+            "z": 165.0
+          },
+          {
+            "x": 508.0,
+            "z": 114.0
+          },
+          {
+            "x": 404.0,
+            "z": 85.0
+          },
+          {
+            "x": 193.0,
+            "z": 78.0
+          },
+          {
+            "x": 264.0,
+            "z": 215.0
+          }
+        ]
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "claw.trial_started",
+      "data": {
+        "attempt": 1,
+        "clawX": 350.0,
+        "clawZ": 140.0,
+        "elapsed": 0.0,
+        "toyX": 130.0,
+        "toyZ": 165.0
+      }
+    },
+    {
+      "t": 2.016,
+      "name": "claw.grasp_trigger",
+      "data": {
+        "assisted": false,
+        "attempt": 1,
+        "clawX": 70.0,
+        "clawZ": 140.0,
+        "elapsed": 2.0160000000000013,
+        "offsetAtTriggerX": -60.0,
+        "offsetAtTriggerZ": -25.0,
+        "tolerance": 40.0,
+        "toyX": 130.0,
+        "toyZ": 165.0
+      }
+    },
+    {
+      "t": 2.912,
+      "name": "claw.grasp_fail",
+      "data": {
+        "assisted": false,
+        "attempt": 1,
+        "dx": -60.0,
+        "dz": -25.0,
+        "elapsed": 2.912000000000002,
+        "normalizedError": 1.625,
+        "offsetAtTriggerX": -60.0,
+        "offsetAtTriggerZ": -25.0,
+        "reason": "misaligned",
+        "triggerToContactMs": 896.0
+      }
+    },
+    {
+      "t": 5.968,
+      "name": "claw.attempt_result",
+      "data": {
+        "assisted": false,
+        "attempt": 1,
+        "attemptMs": 5968.0,
+        "elapsed": 5.968000000000004,
+        "normalizedError": 1.625,
+        "offsetAtTriggerX": -60.0,
+        "offsetAtTriggerZ": -25.0,
+        "success": false
+      }
+    },
+    {
+      "t": 6.768,
+      "name": "claw.trial_started",
+      "data": {
+        "attempt": 2,
+        "clawX": 350.0,
+        "clawZ": 140.0,
+        "elapsed": 6.768000000000005,
+        "toyX": 508.0,
+        "toyZ": 114.0
+      }
+    }
+  ]
+}

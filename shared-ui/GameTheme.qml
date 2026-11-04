@@ -1,7 +1,9 @@
 import QtQuick
 
-// Neuralife V3 统一主题令牌（候选值，待旧六款游戏截图锁定后定稿）
+// Neuralife V3 统一主题令牌
 // themeIndex: 0=Light, 1=Mint, 2=Dark
+// 宿主当前未暴露主题信号（game 对象仅含 elapsedSeconds/finish/inputSource/record/width/height），
+// 故默认固定 Light。待宿主提供 themeIndex 或 colorScheme 后，在此处接入即可。
 QtObject {
     id: tokens
 

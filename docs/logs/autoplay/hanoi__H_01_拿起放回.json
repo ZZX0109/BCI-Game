@@ -1,0 +1,91 @@
+{
+  "game": "hanoi",
+  "scenario": "H-01 拿起放回",
+  "ok": true,
+  "passed": 6,
+  "total": 6,
+  "error": null,
+  "checks": [
+    {
+      "check": "H-01a 拿起后 heldDisc 有值",
+      "ok": true,
+      "detail": "heldDisc=1"
+    },
+    {
+      "check": "H-01b 产生了 pick_cancelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "H-01c 取消不计步",
+      "ok": true,
+      "detail": "实际=0 期望=0"
+    },
+    {
+      "check": "H-01d 取消计数 +1",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "H-01e 没有 place 事件",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "H-01f 木盘回到原柱顶",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    }
+  ],
+  "simSeconds": 0.128,
+  "finished": false,
+  "eventCount": 4,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "hanoi.attempt_started",
+      "data": {
+        "elapsed": 0.0,
+        "gameVersion": "0.4.0",
+        "inputSource": "local",
+        "roundPlan": [
+          3,
+          3,
+          4,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "hanoi.round_started",
+      "data": {
+        "discCount": 3,
+        "optimalMoves": 7.0,
+        "round": 1,
+        "totalRounds": 5
+      }
+    },
+    {
+      "t": 0.096,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.09600000000000003,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 0.112,
+      "name": "hanoi.pick_cancelled",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.11200000000000004,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    }
+  ]
+}

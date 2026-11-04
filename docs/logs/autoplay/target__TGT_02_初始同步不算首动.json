@@ -1,0 +1,145 @@
+{
+  "game": "target",
+  "scenario": "TGT-02 初始同步不算首动",
+  "ok": true,
+  "passed": 7,
+  "total": 7,
+  "error": null,
+  "checks": [
+    {
+      "check": "TGT-02a 会话已开始",
+      "ok": true,
+      "detail": "实际='target_visible' 期望='target_visible'"
+    },
+    {
+      "check": "TGT-02b 首动延迟初始为 -1",
+      "ok": true,
+      "detail": "实际=-1.0 期望=-1"
+    },
+    {
+      "check": "TGT-02c 基线未建立",
+      "ok": true,
+      "detail": "实际=False 期望=False"
+    },
+    {
+      "check": "TGT-02d 首次同步建立了基线",
+      "ok": true,
+      "detail": "实际=True 期望=True"
+    },
+    {
+      "check": "TGT-02e 首次同步没有被算成首动",
+      "ok": true,
+      "detail": "实际=-1.0 期望=-1"
+    },
+    {
+      "check": "TGT-02f 微小抖动仍不算首动",
+      "ok": true,
+      "detail": "实际=-1.0 期望=-1"
+    },
+    {
+      "check": "TGT-02g 超过阈值才记首动",
+      "ok": true,
+      "detail": "firstActionLatency=1.8240000000000014"
+    }
+  ],
+  "simSeconds": 1.84,
+  "finished": false,
+  "eventCount": 2,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "target.attempt_started",
+      "data": {
+        "gameVersion": "0.4.0",
+        "inputSource": "local",
+        "seed": 42,
+        "taskMode": "static_accuracy",
+        "totalTrials": 8,
+        "trialPlan": [
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 136.0,
+            "y": 412.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 550.0,
+            "y": 317.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 436.0,
+            "y": 263.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 205.0,
+            "y": 250.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 283.0,
+            "y": 505.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 546.0,
+            "y": 245.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 153.0,
+            "y": 458.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 354.0,
+            "y": 217.0
+          }
+        ]
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "target.trial_started",
+      "data": {
+        "condition": {
+          "distance": "free",
+          "group": "",
+          "size": "standard"
+        },
+        "elapsed": 0.0,
+        "occlusion": null,
+        "targetR": 46.0,
+        "targetX": 136.0,
+        "targetY": 412.0,
+        "totalTrials": 8,
+        "trial": 1
+      }
+    }
+  ]
+}

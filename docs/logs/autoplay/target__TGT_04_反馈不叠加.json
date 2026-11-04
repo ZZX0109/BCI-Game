@@ -1,0 +1,248 @@
+{
+  "game": "target",
+  "scenario": "TGT-04 反馈不叠加",
+  "ok": true,
+  "passed": 8,
+  "total": 8,
+  "error": null,
+  "checks": [
+    {
+      "check": "TGT-04a 第一靶只算一枪",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "TGT-04b 反馈期连点不叠枪",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "TGT-04c hits 只 +1",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "TGT-04d 反馈结束进入下一靶",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TGT-04e 试次只前进 1",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "TGT-04f 下一靶没有残留射击",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "TGT-04g 新靶阶段干净",
+      "ok": true,
+      "detail": "实际='target_visible' 期望='target_visible'"
+    },
+    {
+      "check": "TGT-04h 同靶双击只算一枪",
+      "ok": true,
+      "detail": "实际=2 期望=2"
+    }
+  ],
+  "simSeconds": 0.752,
+  "finished": false,
+  "eventCount": 7,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "target.attempt_started",
+      "data": {
+        "gameVersion": "0.4.0",
+        "inputSource": "local",
+        "seed": 42,
+        "taskMode": "static_accuracy",
+        "totalTrials": 8,
+        "trialPlan": [
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 136.0,
+            "y": 412.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 550.0,
+            "y": 317.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 436.0,
+            "y": 263.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 205.0,
+            "y": 250.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 283.0,
+            "y": 505.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 546.0,
+            "y": 245.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 153.0,
+            "y": 458.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 354.0,
+            "y": 217.0
+          }
+        ]
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "target.trial_started",
+      "data": {
+        "condition": {
+          "distance": "free",
+          "group": "",
+          "size": "standard"
+        },
+        "elapsed": 0.0,
+        "occlusion": null,
+        "targetR": 46.0,
+        "targetX": 136.0,
+        "targetY": 412.0,
+        "totalTrials": 8,
+        "trial": 1
+      }
+    },
+    {
+      "t": 0.112,
+      "name": "target.shot_debug",
+      "data": {
+        "aimX": 112.0,
+        "aimY": 296.0,
+        "blocked": false,
+        "condition": "standard",
+        "distance": 0.0,
+        "elapsed": 0.11200000000000004,
+        "firstActionLatency": -1.0,
+        "hit": true,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 46.0,
+        "targetX": 112.0,
+        "targetY": 296.0,
+        "trial": 1
+      }
+    },
+    {
+      "t": 0.112,
+      "name": "target.hit",
+      "data": {
+        "aimX": 112.0,
+        "aimY": 296.0,
+        "blocked": false,
+        "condition": "standard",
+        "distance": 0.0,
+        "elapsed": 0.11200000000000004,
+        "firstActionLatency": -1.0,
+        "hit": true,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 46.0,
+        "targetX": 112.0,
+        "targetY": 296.0,
+        "trial": 1
+      }
+    },
+    {
+      "t": 0.616,
+      "name": "target.trial_started",
+      "data": {
+        "condition": {
+          "distance": "free",
+          "group": "",
+          "size": "standard"
+        },
+        "elapsed": 0.6160000000000004,
+        "occlusion": null,
+        "targetR": 46.0,
+        "targetX": 550.0,
+        "targetY": 317.0,
+        "totalTrials": 8,
+        "trial": 2
+      }
+    },
+    {
+      "t": 0.64,
+      "name": "target.shot_debug",
+      "data": {
+        "aimX": 526.0,
+        "aimY": 201.0,
+        "blocked": false,
+        "condition": "standard",
+        "distance": 0.0,
+        "elapsed": 0.6400000000000005,
+        "firstActionLatency": -1.0,
+        "hit": true,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 46.0,
+        "targetX": 526.0,
+        "targetY": 201.0,
+        "trial": 2
+      }
+    },
+    {
+      "t": 0.64,
+      "name": "target.hit",
+      "data": {
+        "aimX": 526.0,
+        "aimY": 201.0,
+        "blocked": false,
+        "condition": "standard",
+        "distance": 0.0,
+        "elapsed": 0.6400000000000005,
+        "firstActionLatency": -1.0,
+        "hit": true,
+        "occludedAtShot": null,
+        "source": "host_action",
+        "targetR": 46.0,
+        "targetX": 526.0,
+        "targetY": 201.0,
+        "trial": 2
+      }
+    }
+  ]
+}

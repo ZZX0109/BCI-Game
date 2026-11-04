@@ -338,7 +338,7 @@ Item {
         Rectangle {
             parent: frame.contentItem
             anchors.fill: parent
-            color: "#0F1B2C"
+            color: uiTheme.panel
             radius: 16
             clip: true
 
@@ -355,8 +355,8 @@ Item {
                 id: topView
                 x: 24; y: 44
                 width: 420; height: 340
-                color: "#162638"
-                border.color: "#3E5064"
+                color: uiTheme.background
+                border.color: uiTheme.panelBorder
                 border.width: 2
                 radius: 8
 
@@ -375,8 +375,8 @@ Item {
                     x: parent.mapX(root.toyFloorX) - 14
                     y: parent.mapZ(root.toyFloorZ) - 14
                     width: 28; height: 28; radius: 14
-                    color: root.toyState === "binned" ? "#68D5B5" : "#E8B44F"
-                    border.width: 2; border.color: "#0B1422"
+                    color: root.toyState === "binned" ? uiTheme.success : "#E8B44F"
+                    border.width: 2; border.color: uiTheme.panelBorder
                     visible: root.toyState !== "attached"
                 }
 
@@ -385,8 +385,8 @@ Item {
                     x: parent.mapX(root.clawX) - 10
                     y: parent.mapZ(root.clawZ) - 10
                     width: 20; height: 20; radius: 10
-                    color: "#C9CFD6"
-                    border.width: 2; border.color: "#5ADCCB"
+                    color: "#6E7A85"
+                    border.width: 2; border.color: uiTheme.primary
                 }
 
                 // 容差椭圆（仅在接触后显示，或作为辅助模式选项）
@@ -397,7 +397,7 @@ Item {
                     width: (parent.mapX(root.toyFloorX + root.tolerance) - parent.mapX(root.toyFloorX)) * 2
                     height: 12
                     radius: 6
-                    color: root.lastJudgedSuccess ? "#68D5B5" : "#FB7777"
+                    color: root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger
                     opacity: 0.4
                 }
             }
@@ -407,8 +407,8 @@ Item {
                 id: sideView
                 x: 468; y: 44
                 width: 220; height: 340
-                color: "#162638"
-                border.color: "#3E5064"
+                color: uiTheme.background
+                border.color: uiTheme.panelBorder
                 border.width: 2
                 radius: 8
 
@@ -435,8 +435,8 @@ Item {
                     y: parent.mapY(root.clawY) - 20
                     width: 28; height: 40
                     radius: 6
-                    color: "#C9CFD6"
-                    border.width: 2; border.color: "#0B1422"
+                    color: "#6E7A85"
+                    border.width: 2; border.color: uiTheme.primary
                 }
 
                 // 缆绳
@@ -455,8 +455,8 @@ Item {
                     y: parent.mapY(root.floorY) - 24
                     width: 24; height: 24
                     radius: 12
-                    color: root.toyState === "attached" ? "#68D5B5" : "#E8B44F"
-                    border.width: 2; border.color: "#0B1422"
+                    color: root.toyState === "attached" ? uiTheme.success : "#E8B44F"
+                    border.width: 2; border.color: uiTheme.panelBorder
                 }
             }
 
@@ -465,18 +465,13 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 y: 400
                 width: 640; height: 44; radius: 8
-                color: "#0B1422"; opacity: 0.85
+                color: uiTheme.panel; border.color: uiTheme.panelBorder; border.width: 1
                 Text {
                     anchors.centerIn: parent
                     text: {
                         if (root.phase === "aligning") {
-                            var hint = []
-                            if (root.clawX < root.toyFloorX - root.tolerance) hint.push(qsTr("向右"))
-                            else if (root.clawX > root.toyFloorX + root.tolerance) hint.push(qsTr("向左"))
-                            if (root.clawZ < root.toyFloorZ - root.tolerance) hint.push(qsTr("向后"))
-                            else if (root.clawZ > root.toyFloorZ + root.tolerance) hint.push(qsTr("向前"))
-                            if (hint.length === 0) return qsTr("位置合适，按确认抓取")
-                            return qsTr("请继续调整：") + hint.join(" / ")
+                            // V4：定位阶段不泄露方向/误差，不提前告知"已对准"
+                            return qsTr("凭视觉对准目标（左右/前后调整），按确认抓取")
                         }
                         if (root.phase === "lowering") return qsTr("下降中…")
                         if (root.phase === "lifting") return root.lastJudgedSuccess ? qsTr("已夹住，升起…") : qsTr("未夹住，升起…")
@@ -486,8 +481,8 @@ Item {
                         return ""
                     }
                     color: root.phase === "aligning"
-                           ? ((Math.abs(root.clawX - root.toyFloorX) <= root.tolerance && Math.abs(root.clawZ - root.toyFloorZ) <= root.tolerance) ? "#68D5B5" : "#E7BC84")
-                           : (root.lastJudgedSuccess ? "#68D5B5" : "#FB7777")
+                           ? uiTheme.secondaryText
+                           : (root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger)
                     font.pixelSize: 17; font.bold: true
                 }
             }
@@ -506,7 +501,7 @@ Item {
                         .arg(Math.round(root.offsetAtTriggerZ))
                         .arg(root.lastNormalizedError.toFixed(2))
                         .arg(root.lastJudgedSuccess ? qsTr("成功") : qsTr("失败"))
-                    color: root.lastJudgedSuccess ? "#68D5B5" : "#FB7777"
+                    color: root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger
                     font.pixelSize: 15
                 }
             }

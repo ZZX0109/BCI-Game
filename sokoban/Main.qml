@@ -439,7 +439,7 @@ Item {
         Rectangle {
             parent: frame.contentItem
             anchors.fill: parent
-            color: "#101C2C"
+            color: uiTheme.panel
             radius: 16
             clip: true
 
@@ -462,20 +462,20 @@ Item {
 
                     Rectangle {
                         anchors.fill: parent
-                        color: ((r + c) % 2 === 0) ? "#1B2A3C" : "#182638"
+                        color: ((r + c) % 2 === 0) ? uiTheme.background : uiTheme.panel
                         Rectangle {
                             visible: root.goals[k] === true
                             width: parent.width * 0.52; height: parent.height * 0.52; radius: width / 2
                             color: "transparent"
-                            border.width: 3; border.color: "#68D5B5"
+                            border.width: 3; border.color: uiTheme.success
                             anchors.centerIn: parent
                         }
                         Rectangle {
                             visible: wall
                             anchors.fill: parent
-                            color: "#3E5064"
-                            Rectangle { anchors.top: parent.top; width: parent.width; height: 5; color: "#5C748C" }
-                            Rectangle { anchors.bottom: parent.bottom; width: parent.width; height: 5; color: "#2A3848" }
+                            color: uiTheme.primaryText
+                            Rectangle { anchors.top: parent.top; width: parent.width; height: 5; color: uiTheme.primaryHover }
+                            Rectangle { anchors.bottom: parent.bottom; width: parent.width; height: 5; color: uiTheme.secondaryText }
                         }
                     }
                 }
@@ -497,11 +497,11 @@ Item {
                     radius: 6
                     color: deadlocked ? "#8A4A4A" : (onGoal ? "#3E8A6E" : "#B5814E")
                     border.width: justPushed ? 4 : 2
-                    border.color: deadlocked ? "#FB7777" : (justPushed ? "#E7BC84" : "#0B1422")
+                    border.color: deadlocked ? uiTheme.danger : (justPushed ? uiTheme.warning : uiTheme.panelBorder)
                     Rectangle {
                         anchors.centerIn: parent
                         width: parent.width * 0.5; height: parent.height * 0.5; radius: 4
-                        color: "transparent"; border.width: 2; border.color: "#0B1422"; opacity: 0.55
+                        color: "transparent"; border.width: 2; border.color: uiTheme.panelBorder; opacity: 0.55
                     }
                 }
             }
@@ -515,12 +515,12 @@ Item {
                 width: parent.cell * 0.64; height: parent.cell * 0.64
                 Rectangle {
                     anchors.fill: parent; radius: width / 2
-                    color: "#E8ECF0"; border.width: 2; border.color: "#0B1422"
+                    color: "#FFFFFF"; border.width: 2; border.color: uiTheme.panelBorder
                 }
                 Rectangle {
                     width: parent.width * 0.34; height: parent.width * 0.34; radius: 2
                     anchors.centerIn: parent
-                    color: "#5ADCCB"
+                    color: uiTheme.primary
                 }
             }
 
@@ -529,17 +529,17 @@ Item {
                 visible: root.deadlockCountdown
                 anchors.centerIn: parent
                 width: 320; height: 100; radius: 12
-                color: "#3A1C1C"; border.color: "#FB7777"; border.width: 2
+                color: uiTheme.panel; border.color: uiTheme.danger; border.width: 2
                 Column {
                     anchors.centerIn: parent
                     spacing: 6
                     Text {
                         text: qsTr("检测到死锁，%1 秒后自动重开").arg(root.deadlockSecondsLeft.toFixed(1))
-                        color: "#FB7777"; font.pixelSize: 18; font.bold: true
+                        color: uiTheme.danger; font.pixelSize: 18; font.bold: true
                     }
                     Text {
                         text: qsTr("点击“撤销”或“重开”可取消倒计时")
-                        color: "#F5F8F8"; font.pixelSize: 14
+                        color: uiTheme.secondaryText; font.pixelSize: 14
                     }
                 }
             }

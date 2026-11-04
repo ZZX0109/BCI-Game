@@ -1,0 +1,29 @@
+{
+  "game": "luban",
+  "scenario": "L-06b 脑控全流程",
+  "ok": true,
+  "passed": 3,
+  "total": 3,
+  "error": null,
+  "checks": [
+    {
+      "check": "L-06j 脑控会话启动",
+      "ok": true,
+      "detail": "关卡=L1"
+    },
+    {
+      "check": "L-06k 脑控完成一次抽取",
+      "ok": true,
+      "detail": "已拆 1 件"
+    },
+    {
+      "check": "L-06l 脑控会话 inputSource 记为 bci",
+      "ok": true,
+      "detail": "bci"
+    }
+  ],
+  "simSeconds": 0.0,
+  "finished": false,
+  "eventCount": 0,
+  "events": []
+}

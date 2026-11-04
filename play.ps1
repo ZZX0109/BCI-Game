@@ -25,5 +25,9 @@ if (-not $games.Contains($Game)) {
     exit 1
 }
 
+# luban 使用真实 Qt Quick 3D；宿主默认软件渲染后端下 View3D 无法出图，
+# 因此只对 luban 指定 RHI（D3D11/OpenGL）后端，其余游戏行为不变。
+if ($Game -eq "luban") { $env:QT_QUICK_BACKEND = "rhi" }
+
 Write-Host "Launching $Game ..."
 & "$EXE" --game-dev $Game --games-dev-root "$DEVROOT"
