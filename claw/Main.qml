@@ -524,6 +524,7 @@ Item {
                 color: root.phase === "aligning"
                        ? uiTheme.secondaryText
                        : (root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger)
+                style: Text.Raised; styleColor: "#050505"
                 font.pixelSize: 18; font.bold: true; font.family: uiTheme.fontFamily
             }
 
@@ -539,6 +540,7 @@ Item {
                     .arg(root.lastNormalizedError.toFixed(2))
                     .arg(root.lastJudgedSuccess ? qsTr("成功") : qsTr("失败"))
                 color: root.lastJudgedSuccess ? uiTheme.success : uiTheme.danger
+                style: Text.Raised; styleColor: "#050505"
                 font.pixelSize: 14
                 font.family: uiTheme.fontFamily
             }
@@ -548,8 +550,9 @@ Item {
         Row {
             parent: frame.bottomBar
             anchors.fill: parent
-            anchors.leftMargin: 16
-            anchors.rightMargin: 16
+            anchors.leftMargin: 32
+            anchors.rightMargin: 32
+            anchors.topMargin: 8
             spacing: 16
 
             // 方向键

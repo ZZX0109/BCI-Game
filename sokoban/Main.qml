@@ -437,14 +437,15 @@ Item {
 
         // 主场景
         Rectangle {
+            id: boardScene
             parent: frame.contentItem
             anchors.fill: parent
             color: "transparent"
             clip: true
 
             readonly property real cell: Math.min(620 / Math.max(1, root.cols), 420 / Math.max(1, root.rows))
-            readonly property real gridX: (700 - cell * root.cols) / 2
-            readonly property real gridY: 40 + (420 - cell * root.rows) / 2
+            readonly property real gridX: (boardScene.width - cell * root.cols) / 2
+            readonly property real gridY: 60 + (boardScene.height - 60 - cell * root.rows) / 2
 
             // 地板与墙体
             Repeater {

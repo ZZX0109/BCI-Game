@@ -278,6 +278,13 @@ Item {
             color: "transparent"
             clip: true
 
+            // 固定 700 宽的舞台，水平居中：全出血后内容不偏左
+            Item {
+                id: stage
+                width: 700
+                height: parent.height
+                anchors.horizontalCenter: parent.horizontalCenter
+
             // 中央平台
             Rectangle {
                 x: 30; y: 300; width: 640; height: 180
@@ -301,9 +308,11 @@ Item {
                     readonly property bool isFocused: index === root.focusPole
                     readonly property bool isLegalTarget: root.heldDisc >= 0 && (root.topOf(index) === 0 || root.heldDisc < root.topOf(index))
                     readonly property real cx: root.pegCenterX[index]
+                    x: cx - 90; y: 176
+                    width: 180; height: 300
 
                     Rectangle {
-                        x: pegItem.cx - 90; y: 428
+                        x: 0; y: 252
                         width: 180; height: 18; radius: 6
                         color: pegItem.isFocused ? uiTheme.panelBorder : Qt.darker(uiTheme.panel, 1.2)
                         border.width: 2
@@ -315,20 +324,20 @@ Item {
                         }
                     }
                     Rectangle {
-                        x: pegItem.cx - 6; y: 190
+                        x: 84; y: 14
                         width: 12; height: 240
                         color: uiTheme.secondaryText
                         Rectangle { x: 0; y: 0; width: 4; height: 240; color: uiTheme.primaryText }
                     }
                     Text {
-                        x: pegItem.cx - 10; y: 452
+                        x: 80; y: 276
                         text: root.pegLabels[pegItem.index]
                         color: pegItem.isFocused ? uiTheme.primary : uiTheme.secondaryText
                         font.pixelSize: 22; font.family: uiTheme.fontFamily; font.bold: true
                     }
                     Rectangle {
                         visible: pegItem.isFocused
-                        x: pegItem.cx - 118; y: 176
+                        x: -28; y: 0
                         width: 236; height: 272
                         radius: 12
                         color: "transparent"
@@ -440,6 +449,7 @@ Item {
                         color: uiTheme.success; font.pixelSize: 14; font.family: uiTheme.fontFamily
                     }
                 }
+            }
             }
         }
 

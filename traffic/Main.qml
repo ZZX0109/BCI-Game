@@ -1017,7 +1017,7 @@ Item {
                         visible: root.phase === "level_intro"
                         anchors.centerIn: parent
                         width: 400; height: 116
-                        radius: 12
+                        radius: 4
                         color: uiTheme.panel
                         opacity: 0.96
                         border.width: 2
@@ -1044,7 +1044,7 @@ Item {
                         visible: root.phase === "hit"
                         anchors.centerIn: parent
                         width: 360; height: 104
-                        radius: 12
+                        radius: 4
                         color: uiTheme.panel
                         border.width: 2
                         border.color: uiTheme.danger
@@ -1069,7 +1069,7 @@ Item {
                         visible: root.phase === "level_clear"
                         anchors.centerIn: parent
                         width: 360; height: 104
-                        radius: 12
+                        radius: 4
                         color: uiTheme.panel
                         border.width: 2
                         border.color: uiTheme.success
@@ -1094,8 +1094,7 @@ Item {
                 Rectangle {
                     x: 740; y: 104
                     width: 236; height: root.sceneH
-                    radius: 12
-                    color: uiTheme.panel
+                    color: "transparent"
                     border.color: uiTheme.panelBorder; border.width: 1
 
                     Column {
