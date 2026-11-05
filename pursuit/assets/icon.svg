@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 追光球：大目标圈 + 追踪小球 + 轨迹弧 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="24" fill="#15222c"/>
+  <!-- 目标容差圈 -->
+  <circle cx="78" cy="50" r="26" fill="none" stroke="#e8eeee" stroke-width="5" stroke-dasharray="2 10" stroke-linecap="round"/>
+  <!-- 目标球（琥珀） -->
+  <circle cx="78" cy="50" r="12" fill="#ffdf70"/>
+  <!-- 玩家追踪球 -->
+  <circle cx="40" cy="84" r="10" fill="#e8eeee"/>
+  <!-- 轨迹弧 -->
+  <path d="M46 74 Q52 62 66 58" fill="none" stroke="#e8eeee" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+</svg>

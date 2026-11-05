@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 红绿灯过马路：大斑马线 + 侧面车 + 行人 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="24" fill="#15222c"/>
+  <!-- 路缘石 -->
+  <line x1="16" y1="96" x2="112" y2="96" stroke="#e8eeee" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+  <!-- 斑马线（透视梯形） -->
+  <rect x="26" y="60" width="12" height="34" rx="3" fill="#e8eeee"/>
+  <rect x="44" y="60" width="12" height="34" rx="3" fill="#e8eeee" opacity="0.85"/>
+  <rect x="62" y="60" width="12" height="34" rx="3" fill="#e8eeee" opacity="0.7"/>
+  <!-- 车辆侧影（大而清晰） -->
+  <rect x="82" y="64" width="30" height="16" rx="6" fill="#e8eeee"/>
+  <rect x="87" y="56" width="16" height="10" rx="4" fill="#e8eeee" opacity="0.65"/>
+  <circle cx="89" cy="82" r="4" fill="#15222c" stroke="#e8eeee" stroke-width="3"/>
+  <circle cx="105" cy="82" r="4" fill="#15222c" stroke="#e8eeee" stroke-width="3"/>
+  <!-- 车灯（琥珀点缀） -->
+  <rect x="108" y="68" width="4" height="5" rx="1.5" fill="#ffdf70"/>
+  <!-- 行人（过街中） -->
+  <circle cx="32" cy="26" r="7" fill="#e8eeee"/>
+  <rect x="26" y="36" width="12" height="16" rx="5" fill="#e8eeee"/>
+  <rect x="28" y="54" width="3.5" height="10" fill="#e8eeee"/>
+  <rect x="32.5" y="54" width="3.5" height="10" fill="#e8eeee"/>
+</svg>

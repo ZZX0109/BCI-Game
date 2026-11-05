@@ -5,10 +5,11 @@ QtObject {
     readonly property int gameApi: 1
     readonly property string moduleKind: "games"
     readonly property string moduleId: "traffic"
-    readonly property string version: "0.4.0"
+    readonly property string version: "0.5.0"
     readonly property string title: qsTr("红绿灯过马路")
-    readonly property string description: qsTr("侧视/斜侧视街道躲车 V4。世界坐标真值 + 投影渲染：玩家按住左右持续前进/后退，多车道持续车流按各自方向与速度驶过，采用真实几何碰撞（不再以灯色判断通关），五关 C01–C05 难度递增（2→5 车道、车速与密度提升、C04 大车遮挡）。种子化车流可复现，失败同关快速重试。effector=2。")
+    readonly property string description: qsTr("信号路口观察与过街。红灯车辆通行，清场后行人绿灯亮起，车辆在停止线外排队；按住前进/后退，松开停止，独立脑控半车道步进。五关逐步增加车道、车速和大车，种子车流与世界坐标碰撞可追溯。")
     readonly property string entryPoint: "Main.qml"
+    readonly property string icon: "assets/icon.svg"
     readonly property int effector: 2
     readonly property int designWidth: 1000
     readonly property int designHeight: 700
