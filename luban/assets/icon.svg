@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 鲁班锁：三向互锁榫卯（两纵一横） -->
+<!-- 鲁班锁：木棕底，米白三向互锁榫卯 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <rect width="128" height="128" rx="24" fill="#15222c"/>
-  <!-- 纵梁（竖） -->
-  <rect x="44" y="22" width="16" height="84" rx="4" fill="#e8eeee"/>
-  <rect x="68" y="30" width="16" height="84" rx="4" fill="#8f938e"/>
-  <!-- 横梁（锁住两纵，琥珀点缀） -->
-  <rect x="30" y="52" width="68" height="14" rx="4" fill="#ffdf70"/>
-  <!-- 榫头缺口暗示 -->
-  <rect x="44" y="52" width="16" height="14" fill="#15222c" opacity="0.35"/>
-  <rect x="68" y="52" width="16" height="14" fill="#15222c" opacity="0.35"/>
+  <rect width="128" height="128" rx="24" fill="#8B5E34"/>
+  <!-- 两根纵梁 -->
+  <rect x="44" y="22" width="16" height="84" rx="4" fill="#F5EFE0"/>
+  <rect x="68" y="30" width="16" height="84" rx="4" fill="#D9C9A8"/>
+  <!-- 横梁锁芯 -->
+  <rect x="30" y="52" width="68" height="14" rx="4" fill="#FFDF70"/>
+  <!-- 榫口阴影 -->
+  <rect x="44" y="52" width="16" height="14" fill="#8B5E34" opacity="0.4"/>
+  <rect x="68" y="52" width="16" height="14" fill="#8B5E34" opacity="0.4"/>
+  <!-- 木纹细节 -->
+  <line x1="48" y1="30" x2="48" y2="48" stroke="#8B5E34" stroke-width="2" opacity="0.35"/>
+  <line x1="56" y1="70" x2="56" y2="98" stroke="#8B5E34" stroke-width="2" opacity="0.35"/>
 </svg>

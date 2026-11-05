@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 汉诺塔：三柱 + 递减塔盘 -->
+<!-- 汉诺塔：靛蓝底，三柱彩盘 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <rect width="128" height="128" rx="24" fill="#15222c"/>
-  <!-- 底座 -->
-  <rect x="18" y="98" width="92" height="8" rx="4" fill="#e8eeee"/>
-  <!-- 三根柱 -->
-  <rect x="36" y="46" width="8" height="52" rx="3" fill="#e8eeee"/>
-  <rect x="60" y="46" width="8" height="52" rx="3" fill="#e8eeee"/>
-  <rect x="84" y="46" width="8" height="52" rx="3" fill="#e8eeee"/>
-  <!-- A 柱塔盘（琥珀点缀顶盘） -->
-  <rect x="24" y="88" width="32" height="8" rx="3" fill="#e8eeee"/>
-  <rect x="28" y="78" width="24" height="8" rx="3" fill="#e8eeee"/>
-  <rect x="32" y="68" width="16" height="8" rx="3" fill="#ffdf70"/>
+  <rect width="128" height="128" rx="24" fill="#2C4A6E"/>
+  <rect x="18" y="98" width="92" height="8" rx="4" fill="#FFFFFF"/>
+  <rect x="36" y="46" width="8" height="52" rx="3" fill="#FFFFFF"/>
+  <rect x="60" y="46" width="8" height="52" rx="3" fill="#FFFFFF"/>
+  <rect x="84" y="46" width="8" height="52" rx="3" fill="#FFFFFF"/>
+  <rect x="24" y="88" width="32" height="9" rx="3" fill="#E86A6A"/>
+  <rect x="28" y="77" width="24" height="9" rx="3" fill="#FFDF70"/>
+  <rect x="32" y="66" width="16" height="9" rx="3" fill="#7BE0D4"/>
 </svg>

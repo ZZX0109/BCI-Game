@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 抓娃娃机：玻璃柜 + 悬垂抓爪 + 玩具点缀 -->
+<!-- 抓娃娃机：糖果粉底，白玻璃柜 + 粉爪 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <rect width="128" height="128" rx="24" fill="#15222c"/>
-  <!-- 玻璃柜 -->
-  <rect x="26" y="24" width="76" height="86" rx="8" fill="none" stroke="#e8eeee" stroke-width="5"/>
-  <!-- 导轨 -->
-  <line x1="34" y1="38" x2="94" y2="38" stroke="#e8eeee" stroke-width="5" stroke-linecap="round"/>
-  <!-- 缆绳 + 爪体 -->
-  <line x1="64" y1="38" x2="64" y2="58" stroke="#e8eeee" stroke-width="4"/>
-  <path d="M54 58 h20 v8 h-6 m-8 0 h-6 z" fill="#e8eeee"/>
-  <path d="M56 66 l-4 12" stroke="#e8eeee" stroke-width="4" stroke-linecap="round"/>
-  <path d="M72 66 l4 12" stroke="#e8eeee" stroke-width="4" stroke-linecap="round"/>
-  <!-- 玩具（琥珀点缀） -->
-  <circle cx="46" cy="94" r="7" fill="#ffdf70"/>
-  <!-- 投放口 -->
-  <rect x="80" y="88" width="16" height="14" rx="3" fill="none" stroke="#e8eeee" stroke-width="3"/>
+  <rect width="128" height="128" rx="24" fill="#E8608A"/>
+  <rect x="26" y="24" width="76" height="86" rx="8" fill="none" stroke="#FFFFFF" stroke-width="6"/>
+  <line x1="34" y1="38" x2="94" y2="38" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+  <line x1="64" y1="38" x2="64" y2="58" stroke="#FFFFFF" stroke-width="4"/>
+  <path d="M54 58 h20 v8 h-6 m-8 0 h-6 z" fill="#FFFFFF"/>
+  <path d="M56 66 l-4 12" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+  <path d="M72 66 l4 12" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="46" cy="94" r="7" fill="#FFDF70"/>
+  <circle cx="62" cy="96" r="6" fill="#7BE0D4"/>
+  <rect x="80" y="88" width="16" height="14" rx="3" fill="none" stroke="#FFFFFF" stroke-width="3"/>
 </svg>
