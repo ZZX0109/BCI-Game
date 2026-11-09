@@ -27,7 +27,7 @@ import shutil
 import sys
 from pathlib import Path
 
-GAMES = ("hanoi", "sokoban", "target", "pursuit", "claw", "traffic", "luban")
+GAMES = ("hanoi", "sokoban", "target", "pursuit", "claw", "traffic", "luban", "rhythm")
 SHARED = "shared-ui"
 
 
