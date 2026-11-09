@@ -1,60 +1,15 @@
 {
   "game": "hanoi",
   "scenario": "H-06 finish后不重开",
-  "ok": false,
-  "passed": 1,
-  "total": 12,
+  "ok": true,
+  "passed": 3,
+  "total": 3,
   "error": null,
   "checks": [
     {
-      "check": "等待条件超时: 结算",
-      "ok": false,
-      "detail": "4.0s 内未满足"
-    },
-    {
-      "check": "等待条件超时: 结算",
-      "ok": false,
-      "detail": "4.0s 内未满足"
-    },
-    {
-      "check": "等待条件超时: 第 3 局",
-      "ok": false,
-      "detail": "6.0s 内未满足"
-    },
-    {
-      "check": "等待条件超时: 结算",
-      "ok": false,
-      "detail": "4.0s 内未满足"
-    },
-    {
-      "check": "等待条件超时: 第 4 局",
-      "ok": false,
-      "detail": "6.0s 内未满足"
-    },
-    {
-      "check": "等待条件超时: 结算",
-      "ok": false,
-      "detail": "4.0s 内未满足"
-    },
-    {
-      "check": "等待条件超时: 第 5 局",
-      "ok": false,
-      "detail": "6.0s 内未满足"
-    },
-    {
-      "check": "等待条件超时: 结算",
-      "ok": false,
-      "detail": "4.0s 内未满足"
-    },
-    {
-      "check": "等待条件超时: 会话结束",
-      "ok": false,
-      "detail": "6.0s 内未满足"
-    },
-    {
       "check": "H-06a phase 停在 complete",
-      "ok": false,
-      "detail": "实际='select' 期望='complete'"
+      "ok": true,
+      "detail": "实际='complete' 期望='complete'"
     },
     {
       "check": "H-06b 没有新的 attempt_started",
@@ -63,27 +18,78 @@
     },
     {
       "check": "H-06c 结束后无任何新事件",
-      "ok": false,
-      "detail": "实际=153 期望=151"
+      "ok": true,
+      "detail": "实际=251 期望=251"
     }
   ],
-  "simSeconds": 48.096,
-  "finished": false,
-  "eventCount": 153,
+  "simSeconds": 11.568,
+  "finished": true,
+  "eventCount": 251,
   "events": [
     {
       "t": 0.0,
       "name": "hanoi.attempt_started",
       "data": {
         "elapsed": 0.0,
-        "gameVersion": "0.6.0",
+        "gameVersion": "1.0.0",
         "inputSource": "local",
         "roundPlan": [
-          3,
-          3,
-          4,
-          4,
-          5
+          {
+            "discs": 3,
+            "kind": "hanoi",
+            "name": "汉诺塔 · 三盘"
+          },
+          {
+            "discs": 4,
+            "kind": "hanoi",
+            "name": "汉诺塔 · 四盘"
+          },
+          {
+            "discs": 5,
+            "kind": "hanoi",
+            "name": "汉诺塔 · 五盘"
+          },
+          {
+            "capacities": [
+              3,
+              2,
+              1
+            ],
+            "discs": 3,
+            "kind": "london",
+            "name": "伦敦塔 · 初级",
+            "target": [
+              [],
+              [
+                1,
+                2
+              ],
+              [
+                3
+              ]
+            ]
+          },
+          {
+            "capacities": [
+              3,
+              2,
+              1
+            ],
+            "discs": 3,
+            "kind": "london",
+            "name": "伦敦塔 · 进阶",
+            "target": [
+              [
+                1
+              ],
+              [
+                2
+              ],
+              [
+                3
+              ]
+            ]
+          }
         ]
       }
     },
@@ -91,10 +97,32 @@
       "t": 0.0,
       "name": "hanoi.round_started",
       "data": {
+        "capacity": null,
         "discCount": 3,
         "optimalMoves": 7.0,
+        "pieceLabels": null,
+        "puzzleType": "hanoi",
         "round": 1,
+        "targetState": [
+          [],
+          [],
+          [
+            3,
+            2,
+            1
+          ]
+        ],
         "totalRounds": 5
+      }
+    },
+    {
+      "t": 0.112,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.11200000000000004,
+        "pole": 0,
+        "source": "keyboard"
       }
     },
     {
@@ -103,9 +131,21 @@
       "data": {
         "elapsed": 0.12800000000000006,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
+      }
+    },
+    {
+      "t": 0.144,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.14400000000000007,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 1
       }
     },
     {
@@ -120,14 +160,36 @@
       }
     },
     {
+      "t": 0.176,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 0.1760000000000001,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
       "t": 0.192,
       "name": "hanoi.focus_changed",
       "data": {
         "elapsed": 0.19200000000000012,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 1
+      }
+    },
+    {
+      "t": 0.208,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
+        "elapsed": 0.20800000000000013,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 2
       }
     },
     {
@@ -142,14 +204,36 @@
       }
     },
     {
+      "t": 0.24,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.24000000000000016,
+        "pole": 2,
+        "source": "keyboard"
+      }
+    },
+    {
       "t": 0.256,
       "name": "hanoi.focus_changed",
       "data": {
         "elapsed": 0.25600000000000017,
         "fromPole": 2,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 1
+      }
+    },
+    {
+      "t": 0.272,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.2720000000000002,
+        "fromPole": 2,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 3
       }
     },
     {
@@ -164,14 +248,36 @@
       }
     },
     {
+      "t": 0.304,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 3,
+        "elapsed": 0.3040000000000002,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
       "t": 0.32,
       "name": "hanoi.focus_changed",
       "data": {
         "elapsed": 0.32000000000000023,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
+      }
+    },
+    {
+      "t": 0.336,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 3,
+        "elapsed": 0.33600000000000024,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 4
       }
     },
     {
@@ -186,14 +292,36 @@
       }
     },
     {
+      "t": 0.368,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.36800000000000027,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
       "t": 0.384,
       "name": "hanoi.focus_changed",
       "data": {
         "elapsed": 0.3840000000000003,
         "fromPole": 1,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 0
+      }
+    },
+    {
+      "t": 0.4,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.4000000000000003,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 0,
+        "validMoveIndex": 5
       }
     },
     {
@@ -208,14 +336,36 @@
       }
     },
     {
+      "t": 0.432,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 0.43200000000000033,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
       "t": 0.448,
       "name": "hanoi.focus_changed",
       "data": {
         "elapsed": 0.44800000000000034,
         "fromPole": 1,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
+      }
+    },
+    {
+      "t": 0.464,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
+        "elapsed": 0.46400000000000036,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 6
       }
     },
     {
@@ -230,21 +380,204 @@
       }
     },
     {
+      "t": 0.496,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.4960000000000004,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
       "t": 0.512,
       "name": "hanoi.focus_changed",
       "data": {
         "elapsed": 0.5120000000000003,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
-      "t": 4.432,
+      "t": 0.528,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.5280000000000004,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 7
+      }
+    },
+    {
+      "t": 0.528,
+      "name": "hanoi.round_finished",
+      "data": {
+        "cancelledPicks": 0,
+        "discCount": 3,
+        "elapsed": 0.5280000000000004,
+        "emptyPicks": 0,
+        "extraMoves": 0,
+        "illegal": 0,
+        "moves": 7,
+        "optimalMoves": 7,
+        "puzzleName": "汉诺塔 · 三盘",
+        "puzzleType": "hanoi",
+        "round": 1
+      }
+    },
+    {
+      "t": 2.032,
+      "name": "hanoi.round_started",
+      "data": {
+        "capacity": null,
+        "discCount": 4,
+        "optimalMoves": 15.0,
+        "pieceLabels": null,
+        "puzzleType": "hanoi",
+        "round": 2,
+        "targetState": [
+          [],
+          [],
+          [
+            4,
+            3,
+            2,
+            1
+          ]
+        ],
+        "totalRounds": 5
+      }
+    },
+    {
+      "t": 2.08,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.0800000000000014,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.096,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 4.432000000000003,
+        "elapsed": 2.0960000000000014,
+        "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 2.112,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.1120000000000014,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 1
+      }
+    },
+    {
+      "t": 2.128,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.1280000000000014,
+        "fromPole": 1,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 2.144,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 2.1440000000000015,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.16,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.1600000000000015,
+        "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 2.176,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
+        "elapsed": 2.1760000000000015,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 2
+      }
+    },
+    {
+      "t": 2.192,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.1920000000000015,
+        "fromPole": 2,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 2.208,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.2080000000000015,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.224,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.2240000000000015,
+        "fromPole": 1,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 2.24,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.2400000000000015,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 3
+      }
+    },
+    {
+      "t": 2.256,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.2560000000000016,
         "fromPole": 2,
         "holding": false,
         "source": "keyboard",
@@ -252,10 +585,87 @@
       }
     },
     {
-      "t": 4.464,
+      "t": 2.272,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 3,
+        "elapsed": 2.2720000000000016,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.288,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 4.464000000000003,
+        "elapsed": 2.2880000000000016,
+        "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 2.304,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 3,
+        "elapsed": 2.3040000000000016,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 4
+      }
+    },
+    {
+      "t": 2.32,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.3200000000000016,
+        "fromPole": 1,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 2.336,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.3360000000000016,
+        "pole": 2,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.352,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.3520000000000016,
+        "fromPole": 2,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 2.368,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.3680000000000017,
+        "fromPole": 2,
+        "source": "keyboard",
+        "toPole": 0,
+        "validMoveIndex": 5
+      }
+    },
+    {
+      "t": 2.384,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.3840000000000017,
         "fromPole": 0,
         "holding": false,
         "source": "keyboard",
@@ -263,21 +673,263 @@
       }
     },
     {
-      "t": 4.496,
+      "t": 2.4,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 2.4000000000000017,
+        "pole": 2,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.416,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 4.496000000000003,
+        "elapsed": 2.4160000000000017,
         "fromPole": 2,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 2.432,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
+        "elapsed": 2.4320000000000017,
+        "fromPole": 2,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 6
+      }
+    },
+    {
+      "t": 2.448,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.4480000000000017,
+        "fromPole": 1,
         "holding": false,
         "source": "keyboard",
         "toPole": 0
       }
     },
     {
-      "t": 4.528,
+      "t": 2.464,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.4640000000000017,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.48,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 4.528000000000003,
+        "elapsed": 2.4800000000000018,
+        "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 2.496,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.4960000000000018,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 7
+      }
+    },
+    {
+      "t": 2.512,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.512000000000002,
+        "fromPole": 1,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 2.528,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 4,
+        "elapsed": 2.528000000000002,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.544,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.544000000000002,
+        "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 2.56,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 4,
+        "elapsed": 2.560000000000002,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 8
+      }
+    },
+    {
+      "t": 2.576,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.576000000000002,
+        "fromPole": 2,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 2.592,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.592000000000002,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.608,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.608000000000002,
+        "fromPole": 1,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 2.624,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.624000000000002,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 9
+      }
+    },
+    {
+      "t": 2.64,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.640000000000002,
+        "fromPole": 2,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 2.656,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 2.656000000000002,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.672,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.672000000000002,
+        "fromPole": 1,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 2.688,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
+        "elapsed": 2.688000000000002,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 0,
+        "validMoveIndex": 10
+      }
+    },
+    {
+      "t": 2.704,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.704000000000002,
+        "fromPole": 0,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 2.72,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.720000000000002,
+        "pole": 2,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.736,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.736000000000002,
+        "fromPole": 2,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 2.752,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.752000000000002,
+        "fromPole": 2,
+        "source": "keyboard",
+        "toPole": 0,
+        "validMoveIndex": 11
+      }
+    },
+    {
+      "t": 2.768,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.768000000000002,
         "fromPole": 0,
         "holding": false,
         "source": "keyboard",
@@ -285,44 +937,294 @@
       }
     },
     {
-      "t": 4.56,
+      "t": 2.784,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 3,
+        "elapsed": 2.784000000000002,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.8,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 4.560000000000003,
+        "elapsed": 2.800000000000002,
+        "fromPole": 1,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 2.816,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 3,
+        "elapsed": 2.816000000000002,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 12
+      }
+    },
+    {
+      "t": 2.832,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.832000000000002,
+        "fromPole": 2,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 2.848,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.848000000000002,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.864,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.864000000000002,
+        "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 2.88,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.880000000000002,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 13
+      }
+    },
+    {
+      "t": 2.896,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.896000000000002,
         "fromPole": 1,
         "holding": false,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 2.912,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 2.912000000000002,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.928,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.928000000000002,
+        "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 2.944,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
+        "elapsed": 2.944000000000002,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 14
+      }
+    },
+    {
+      "t": 2.96,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.960000000000002,
+        "fromPole": 2,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 2.976,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 2.976000000000002,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 2.992,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 2.992000000000002,
+        "fromPole": 1,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 3.008,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 3.0080000000000022,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 15
+      }
+    },
+    {
+      "t": 3.008,
+      "name": "hanoi.round_finished",
+      "data": {
+        "cancelledPicks": 0,
+        "discCount": 4,
+        "elapsed": 0.9760000000000008,
+        "emptyPicks": 0,
+        "extraMoves": 0,
+        "illegal": 0,
+        "moves": 15,
+        "optimalMoves": 15,
+        "puzzleName": "汉诺塔 · 四盘",
+        "puzzleType": "hanoi",
+        "round": 2
+      }
+    },
+    {
+      "t": 4.512,
+      "name": "hanoi.round_started",
+      "data": {
+        "capacity": null,
+        "discCount": 5,
+        "optimalMoves": 31.0,
+        "pieceLabels": null,
+        "puzzleType": "hanoi",
+        "round": 3,
+        "targetState": [
+          [],
+          [],
+          [
+            5,
+            4,
+            3,
+            2,
+            1
+          ]
+        ],
+        "totalRounds": 5
+      }
+    },
+    {
+      "t": 4.56,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 4.560000000000003,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 4.576,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 4.576000000000003,
+        "fromPole": 0,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
       "t": 4.592,
-      "name": "hanoi.focus_changed",
+      "name": "hanoi.place",
       "data": {
+        "disc": 1,
         "elapsed": 4.592000000000003,
-        "fromPole": 2,
-        "holding": false,
+        "fromPole": 0,
         "source": "keyboard",
-        "toPole": 1
+        "toPole": 2,
+        "validMoveIndex": 1
       }
     },
     {
-      "t": 4.624,
+      "t": 4.608,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 4.624000000000003,
-        "fromPole": 1,
+        "elapsed": 4.608000000000003,
+        "fromPole": 2,
         "holding": false,
         "source": "keyboard",
         "toPole": 0
       }
     },
     {
-      "t": 4.656,
+      "t": 4.624,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 4.624000000000003,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 4.64,
       "name": "hanoi.focus_changed",
       "data": {
+        "elapsed": 4.640000000000003,
+        "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 4.656,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
         "elapsed": 4.656000000000003,
         "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 2
+      }
+    },
+    {
+      "t": 4.672,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 4.672000000000003,
+        "fromPole": 1,
         "holding": false,
         "source": "keyboard",
         "toPole": 2
@@ -330,20 +1232,42 @@
     },
     {
       "t": 4.688,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 4.688000000000003,
+        "pole": 2,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 4.704,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 4.688000000000003,
+        "elapsed": 4.704000000000003,
         "fromPole": 2,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 1
       }
     },
     {
       "t": 4.72,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 4.720000000000003,
+        "fromPole": 2,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 3
+      }
+    },
+    {
+      "t": 4.736,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 4.720000000000003,
+        "elapsed": 4.736000000000003,
         "fromPole": 1,
         "holding": false,
         "source": "keyboard",
@@ -352,64 +1276,86 @@
     },
     {
       "t": 4.752,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 3,
+        "elapsed": 4.752000000000003,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 4.768,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 4.752000000000003,
+        "elapsed": 4.768000000000003,
         "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 4.784,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 3,
+        "elapsed": 4.784000000000003,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 4
+      }
+    },
+    {
+      "t": 4.8,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 4.800000000000003,
+        "fromPole": 2,
         "holding": false,
         "source": "keyboard",
         "toPole": 1
       }
     },
     {
-      "t": 4.784,
-      "name": "hanoi.focus_changed",
+      "t": 4.816,
+      "name": "hanoi.pick",
       "data": {
-        "elapsed": 4.784000000000003,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
+        "disc": 1,
+        "elapsed": 4.816000000000003,
+        "pole": 1,
+        "source": "keyboard"
       }
     },
     {
-      "t": 4.816,
+      "t": 4.832,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 4.816000000000003,
-        "fromPole": 2,
-        "holding": false,
+        "elapsed": 4.832000000000003,
+        "fromPole": 1,
+        "holding": true,
         "source": "keyboard",
         "toPole": 0
       }
     },
     {
       "t": 4.848,
-      "name": "hanoi.focus_changed",
+      "name": "hanoi.place",
       "data": {
+        "disc": 1,
         "elapsed": 4.848000000000003,
-        "fromPole": 0,
-        "holding": false,
+        "fromPole": 1,
         "source": "keyboard",
-        "toPole": 2
+        "toPole": 0,
+        "validMoveIndex": 5
       }
     },
     {
-      "t": 14.576,
+      "t": 4.864,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 14.575999999999281,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 14.608,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 14.607999999999278,
+        "elapsed": 4.864000000000003,
         "fromPole": 0,
         "holding": false,
         "source": "keyboard",
@@ -417,54 +1363,43 @@
       }
     },
     {
-      "t": 14.64,
-      "name": "hanoi.focus_changed",
+      "t": 4.88,
+      "name": "hanoi.pick",
       "data": {
-        "elapsed": 14.639999999999274,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
+        "disc": 2,
+        "elapsed": 4.8800000000000034,
+        "pole": 1,
+        "source": "keyboard"
       }
     },
     {
-      "t": 14.672,
+      "t": 4.896,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 14.67199999999927,
-        "fromPole": 0,
-        "holding": false,
+        "elapsed": 4.8960000000000035,
+        "fromPole": 1,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
-      "t": 14.704,
-      "name": "hanoi.focus_changed",
+      "t": 4.912,
+      "name": "hanoi.place",
       "data": {
-        "elapsed": 14.703999999999267,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 14.736,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 14.735999999999263,
+        "disc": 2,
+        "elapsed": 4.9120000000000035,
         "fromPole": 1,
-        "holding": false,
         "source": "keyboard",
-        "toPole": 2
+        "toPole": 2,
+        "validMoveIndex": 6
       }
     },
     {
-      "t": 14.768,
+      "t": 4.928,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 14.76799999999926,
+        "elapsed": 4.9280000000000035,
         "fromPole": 2,
         "holding": false,
         "source": "keyboard",
@@ -472,32 +1407,43 @@
       }
     },
     {
-      "t": 14.8,
-      "name": "hanoi.focus_changed",
+      "t": 4.944,
+      "name": "hanoi.pick",
       "data": {
-        "elapsed": 14.799999999999256,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
+        "disc": 1,
+        "elapsed": 4.9440000000000035,
+        "pole": 0,
+        "source": "keyboard"
       }
     },
     {
-      "t": 14.832,
+      "t": 4.96,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 14.831999999999253,
-        "fromPole": 1,
-        "holding": false,
+        "elapsed": 4.9600000000000035,
+        "fromPole": 0,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
-      "t": 14.864,
+      "t": 4.976,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 4.9760000000000035,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 7
+      }
+    },
+    {
+      "t": 4.992,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 14.86399999999925,
+        "elapsed": 4.9920000000000035,
         "fromPole": 2,
         "holding": false,
         "source": "keyboard",
@@ -505,10 +1451,175 @@
       }
     },
     {
-      "t": 14.896,
+      "t": 5.008,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 4,
+        "elapsed": 5.008000000000004,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.024,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 14.895999999999246,
+        "elapsed": 5.024000000000004,
+        "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 5.04,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 4,
+        "elapsed": 5.040000000000004,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 8
+      }
+    },
+    {
+      "t": 5.056,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.056000000000004,
+        "fromPole": 1,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 5.072,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 5.072000000000004,
+        "pole": 2,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.088,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.088000000000004,
+        "fromPole": 2,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 5.104,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 5.104000000000004,
+        "fromPole": 2,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 9
+      }
+    },
+    {
+      "t": 5.12,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.120000000000004,
+        "fromPole": 1,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 5.136,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 5.136000000000004,
+        "pole": 2,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.152,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.152000000000004,
+        "fromPole": 2,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 5.168,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
+        "elapsed": 5.168000000000004,
+        "fromPole": 2,
+        "source": "keyboard",
+        "toPole": 0,
+        "validMoveIndex": 10
+      }
+    },
+    {
+      "t": 5.184,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.184000000000004,
+        "fromPole": 0,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 5.2,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 5.200000000000004,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.216,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.216000000000004,
+        "fromPole": 1,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 5.232,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 5.232000000000004,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 0,
+        "validMoveIndex": 11
+      }
+    },
+    {
+      "t": 5.248,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.248000000000004,
         "fromPole": 0,
         "holding": false,
         "source": "keyboard",
@@ -516,21 +1627,43 @@
       }
     },
     {
-      "t": 14.928,
+      "t": 5.264,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 3,
+        "elapsed": 5.264000000000004,
+        "pole": 2,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.28,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 14.927999999999242,
+        "elapsed": 5.280000000000004,
         "fromPole": 2,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 1
       }
     },
     {
-      "t": 14.96,
+      "t": 5.296,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 3,
+        "elapsed": 5.296000000000004,
+        "fromPole": 2,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 12
+      }
+    },
+    {
+      "t": 5.312,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 14.959999999999239,
+        "elapsed": 5.312000000000004,
         "fromPole": 1,
         "holding": false,
         "source": "keyboard",
@@ -538,98 +1671,43 @@
       }
     },
     {
-      "t": 14.992,
-      "name": "hanoi.focus_changed",
+      "t": 5.328,
+      "name": "hanoi.pick",
       "data": {
-        "elapsed": 14.991999999999235,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
+        "disc": 1,
+        "elapsed": 5.328000000000004,
+        "pole": 0,
+        "source": "keyboard"
       }
     },
     {
-      "t": 15.024,
+      "t": 5.344,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 15.023999999999232,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 15.056,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 15.055999999999228,
+        "elapsed": 5.344000000000004,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
-      "t": 15.088,
-      "name": "hanoi.focus_changed",
+      "t": 5.36,
+      "name": "hanoi.place",
       "data": {
-        "elapsed": 15.087999999999225,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 15.12,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 15.119999999999221,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 15.152,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 15.151999999999218,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 15.184,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 15.183999999999214,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 15.216,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 15.21599999999921,
+        "disc": 1,
+        "elapsed": 5.360000000000004,
         "fromPole": 0,
-        "holding": false,
         "source": "keyboard",
-        "toPole": 2
+        "toPole": 2,
+        "validMoveIndex": 13
       }
     },
     {
-      "t": 15.248,
+      "t": 5.376,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 15.247999999999207,
+        "elapsed": 5.376000000000004,
         "fromPole": 2,
         "holding": false,
         "source": "keyboard",
@@ -637,21 +1715,43 @@
       }
     },
     {
-      "t": 15.28,
+      "t": 5.392,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 5.392000000000004,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.408,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 15.279999999999204,
+        "elapsed": 5.408000000000004,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 1
       }
     },
     {
-      "t": 15.312,
+      "t": 5.424,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
+        "elapsed": 5.424000000000004,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 14
+      }
+    },
+    {
+      "t": 5.44,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 15.3119999999992,
+        "elapsed": 5.440000000000004,
         "fromPole": 1,
         "holding": false,
         "source": "keyboard",
@@ -659,98 +1759,43 @@
       }
     },
     {
-      "t": 15.344,
-      "name": "hanoi.focus_changed",
+      "t": 5.456,
+      "name": "hanoi.pick",
       "data": {
-        "elapsed": 15.343999999999197,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
+        "disc": 1,
+        "elapsed": 5.456000000000004,
+        "pole": 2,
+        "source": "keyboard"
       }
     },
     {
-      "t": 15.376,
+      "t": 5.472,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 15.375999999999193,
-        "fromPole": 0,
-        "holding": false,
+        "elapsed": 5.472000000000004,
+        "fromPole": 2,
+        "holding": true,
         "source": "keyboard",
         "toPole": 1
       }
     },
     {
-      "t": 15.408,
-      "name": "hanoi.focus_changed",
+      "t": 5.488,
+      "name": "hanoi.place",
       "data": {
-        "elapsed": 15.40799999999919,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 15.44,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 15.439999999999186,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 15.472,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 15.471999999999182,
+        "disc": 1,
+        "elapsed": 5.488000000000004,
         "fromPole": 2,
-        "holding": false,
         "source": "keyboard",
-        "toPole": 1
+        "toPole": 1,
+        "validMoveIndex": 15
       }
     },
     {
-      "t": 15.504,
+      "t": 5.504,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 15.503999999999179,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 25.232,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 25.23199999999811,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 25.264,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 25.263999999998106,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 25.296,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 25.295999999998102,
+        "elapsed": 5.504000000000004,
         "fromPole": 1,
         "holding": false,
         "source": "keyboard",
@@ -758,21 +1803,43 @@
       }
     },
     {
-      "t": 25.328,
+      "t": 5.52,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 5,
+        "elapsed": 5.520000000000004,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.536,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 25.3279999999981,
+        "elapsed": 5.536000000000004,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
-      "t": 25.36,
+      "t": 5.552,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 5,
+        "elapsed": 5.552000000000004,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 16
+      }
+    },
+    {
+      "t": 5.568,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 25.359999999998095,
+        "elapsed": 5.568000000000004,
         "fromPole": 2,
         "holding": false,
         "source": "keyboard",
@@ -780,21 +1847,87 @@
       }
     },
     {
-      "t": 25.392,
+      "t": 5.584,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 5.584000000000004,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.6,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 25.39199999999809,
+        "elapsed": 5.600000000000004,
         "fromPole": 1,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 5.616,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 5.616000000000004,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 0,
+        "validMoveIndex": 17
+      }
+    },
+    {
+      "t": 5.632,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.632000000000004,
+        "fromPole": 0,
         "holding": false,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 5.648,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 5.648000000000004,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.664,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.664000000000004,
+        "fromPole": 1,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
-      "t": 25.424,
+      "t": 5.68,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
+        "elapsed": 5.680000000000004,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 18
+      }
+    },
+    {
+      "t": 5.696,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 25.423999999998088,
+        "elapsed": 5.696000000000004,
         "fromPole": 2,
         "holding": false,
         "source": "keyboard",
@@ -802,21 +1935,131 @@
       }
     },
     {
-      "t": 25.456,
+      "t": 5.712,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 5.712000000000004,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.728,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 25.455999999998085,
+        "elapsed": 5.728000000000004,
         "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 5.744,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 5.744000000000004,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 19
+      }
+    },
+    {
+      "t": 5.76,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.760000000000004,
+        "fromPole": 2,
         "holding": false,
         "source": "keyboard",
         "toPole": 1
       }
     },
     {
-      "t": 25.488,
+      "t": 5.776,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 3,
+        "elapsed": 5.776000000000004,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.792,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 25.48799999999808,
+        "elapsed": 5.792000000000004,
+        "fromPole": 1,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 5.808,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 3,
+        "elapsed": 5.808000000000004,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 0,
+        "validMoveIndex": 20
+      }
+    },
+    {
+      "t": 5.824,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.824000000000004,
+        "fromPole": 0,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 5.84,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 5.840000000000004,
+        "pole": 2,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.856,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.856000000000004,
+        "fromPole": 2,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 5.872,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 5.872000000000004,
+        "fromPole": 2,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 21
+      }
+    },
+    {
+      "t": 5.888,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.888000000000004,
         "fromPole": 1,
         "holding": false,
         "source": "keyboard",
@@ -824,10 +2067,131 @@
       }
     },
     {
-      "t": 25.52,
+      "t": 5.904,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 5.904000000000004,
+        "pole": 2,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.92,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 25.519999999998078,
+        "elapsed": 5.920000000000004,
+        "fromPole": 2,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 5.936,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
+        "elapsed": 5.936000000000004,
+        "fromPole": 2,
+        "source": "keyboard",
+        "toPole": 0,
+        "validMoveIndex": 22
+      }
+    },
+    {
+      "t": 5.952,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.952000000000004,
+        "fromPole": 0,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 5.968,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 5.968000000000004,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 5.984,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 5.984000000000004,
+        "fromPole": 1,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 0
+      }
+    },
+    {
+      "t": 6.0,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 6.000000000000004,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 0,
+        "validMoveIndex": 23
+      }
+    },
+    {
+      "t": 6.016,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 6.0160000000000045,
+        "fromPole": 0,
+        "holding": false,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 6.032,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 4,
+        "elapsed": 6.0320000000000045,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 6.048,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 6.0480000000000045,
+        "fromPole": 1,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 6.064,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 4,
+        "elapsed": 6.0640000000000045,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 24
+      }
+    },
+    {
+      "t": 6.08,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 6.0800000000000045,
         "fromPole": 2,
         "holding": false,
         "source": "keyboard",
@@ -835,131 +2199,43 @@
       }
     },
     {
-      "t": 25.552,
+      "t": 6.096,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 6.0960000000000045,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 6.112,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 25.551999999998074,
+        "elapsed": 6.1120000000000045,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
-      "t": 25.584,
-      "name": "hanoi.focus_changed",
+      "t": 6.128,
+      "name": "hanoi.place",
       "data": {
-        "elapsed": 25.58399999999807,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 25.616,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 25.615999999998067,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 25.648,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 25.647999999998063,
+        "disc": 1,
+        "elapsed": 6.1280000000000046,
         "fromPole": 0,
-        "holding": false,
         "source": "keyboard",
-        "toPole": 1
+        "toPole": 2,
+        "validMoveIndex": 25
       }
     },
     {
-      "t": 25.68,
+      "t": 6.144,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 25.67999999999806,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 25.712,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 25.711999999998056,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 25.744,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 25.743999999998053,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 25.776,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 25.77599999999805,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 25.808,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 25.807999999998046,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 25.84,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 25.839999999998042,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 25.872,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 25.87199999999804,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 25.904,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 25.903999999998035,
+        "elapsed": 6.144000000000005,
         "fromPole": 2,
         "holding": false,
         "source": "keyboard",
@@ -967,21 +2243,43 @@
       }
     },
     {
-      "t": 25.936,
+      "t": 6.16,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 6.160000000000005,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 6.176,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 25.93599999999803,
+        "elapsed": 6.176000000000005,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 1
       }
     },
     {
-      "t": 25.968,
+      "t": 6.192,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
+        "elapsed": 6.192000000000005,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 26
+      }
+    },
+    {
+      "t": 6.208,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 25.967999999998028,
+        "elapsed": 6.208000000000005,
         "fromPole": 1,
         "holding": false,
         "source": "keyboard",
@@ -989,142 +2287,43 @@
       }
     },
     {
-      "t": 26.0,
-      "name": "hanoi.focus_changed",
+      "t": 6.224,
+      "name": "hanoi.pick",
       "data": {
-        "elapsed": 25.999999999998025,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
+        "disc": 1,
+        "elapsed": 6.224000000000005,
+        "pole": 2,
+        "source": "keyboard"
       }
     },
     {
-      "t": 26.032,
+      "t": 6.24,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 26.03199999999802,
-        "fromPole": 0,
-        "holding": false,
+        "elapsed": 6.240000000000005,
+        "fromPole": 2,
+        "holding": true,
         "source": "keyboard",
         "toPole": 1
       }
     },
     {
-      "t": 26.064,
-      "name": "hanoi.focus_changed",
+      "t": 6.256,
+      "name": "hanoi.place",
       "data": {
-        "elapsed": 26.063999999998018,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 26.096,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 26.095999999998014,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 26.128,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 26.12799999999801,
+        "disc": 1,
+        "elapsed": 6.256000000000005,
         "fromPole": 2,
-        "holding": false,
         "source": "keyboard",
-        "toPole": 1
+        "toPole": 1,
+        "validMoveIndex": 27
       }
     },
     {
-      "t": 26.16,
+      "t": 6.272,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 26.159999999998007,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 35.888,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 35.88799999999866,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 35.92,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 35.91999999999867,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 35.952,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 35.951999999998684,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 35.984,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 35.983999999998694,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 36.016,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 36.015999999998705,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 36.048,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 36.047999999998716,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 36.08,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 36.079999999998726,
+        "elapsed": 6.272000000000005,
         "fromPole": 1,
         "holding": false,
         "source": "keyboard",
@@ -1132,21 +2331,43 @@
       }
     },
     {
-      "t": 36.112,
+      "t": 6.288,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 3,
+        "elapsed": 6.288000000000005,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 6.304,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.11199999999874,
+        "elapsed": 6.304000000000005,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
-      "t": 36.144,
+      "t": 6.32,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 3,
+        "elapsed": 6.320000000000005,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 28
+      }
+    },
+    {
+      "t": 6.336,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.14399999999875,
+        "elapsed": 6.336000000000005,
         "fromPole": 2,
         "holding": false,
         "source": "keyboard",
@@ -1154,21 +2375,43 @@
       }
     },
     {
-      "t": 36.176,
+      "t": 6.352,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 6.352000000000005,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 6.368,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.17599999999876,
+        "elapsed": 6.368000000000005,
         "fromPole": 1,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 0
       }
     },
     {
-      "t": 36.208,
+      "t": 6.384,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 6.384000000000005,
+        "fromPole": 1,
+        "source": "keyboard",
+        "toPole": 0,
+        "validMoveIndex": 29
+      }
+    },
+    {
+      "t": 6.4,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.20799999999877,
+        "elapsed": 6.400000000000005,
         "fromPole": 0,
         "holding": false,
         "source": "keyboard",
@@ -1176,98 +2419,43 @@
       }
     },
     {
-      "t": 36.24,
+      "t": 6.416,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 6.416000000000005,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 6.432,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.23999999999878,
+        "elapsed": 6.432000000000005,
         "fromPole": 1,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
-      "t": 36.272,
-      "name": "hanoi.focus_changed",
+      "t": 6.448,
+      "name": "hanoi.place",
       "data": {
-        "elapsed": 36.27199999999879,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 36.304,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 36.3039999999988,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 36.336,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 36.33599999999881,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 36.368,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 36.36799999999882,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 36.4,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 36.39999999999883,
+        "disc": 2,
+        "elapsed": 6.448000000000005,
         "fromPole": 1,
-        "holding": false,
         "source": "keyboard",
-        "toPole": 2
+        "toPole": 2,
+        "validMoveIndex": 30
       }
     },
     {
-      "t": 36.432,
+      "t": 6.464,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.431999999998844,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 36.464,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 36.463999999998855,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 36.496,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 36.495999999998865,
+        "elapsed": 6.464000000000005,
         "fromPole": 2,
         "holding": false,
         "source": "keyboard",
@@ -1275,21 +2463,124 @@
       }
     },
     {
-      "t": 36.528,
+      "t": 6.48,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 6.480000000000005,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 6.496,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.527999999998876,
+        "elapsed": 6.496000000000005,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 6.512,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 6.512000000000005,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 31
+      }
+    },
+    {
+      "t": 6.512,
+      "name": "hanoi.round_finished",
+      "data": {
+        "cancelledPicks": 0,
+        "discCount": 5,
+        "elapsed": 2.0000000000000013,
+        "emptyPicks": 0,
+        "extraMoves": 0,
+        "illegal": 0,
+        "moves": 31,
+        "optimalMoves": 31,
+        "puzzleName": "汉诺塔 · 五盘",
+        "puzzleType": "hanoi",
+        "round": 3
+      }
+    },
+    {
+      "t": 8.016,
+      "name": "hanoi.round_started",
+      "data": {
+        "capacity": [
+          3,
+          2,
+          1
+        ],
+        "discCount": 3,
+        "optimalMoves": 3,
+        "pieceLabels": {
+          "1": "B",
+          "2": "G",
+          "3": "R"
+        },
+        "puzzleType": "london",
+        "round": 4,
+        "targetState": [
+          [],
+          [
+            1,
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        "totalRounds": 5
+      }
+    },
+    {
+      "t": 8.064,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 8.063999999999998,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 8.08,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 8.079999999999997,
+        "fromPole": 0,
+        "holding": true,
         "source": "keyboard",
         "toPole": 1
       }
     },
     {
-      "t": 36.56,
+      "t": 8.096,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 8.095999999999995,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 1
+      }
+    },
+    {
+      "t": 8.112,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.55999999999889,
+        "elapsed": 8.111999999999993,
         "fromPole": 1,
         "holding": false,
         "source": "keyboard",
@@ -1297,32 +2588,43 @@
       }
     },
     {
-      "t": 36.592,
-      "name": "hanoi.focus_changed",
+      "t": 8.128,
+      "name": "hanoi.pick",
       "data": {
-        "elapsed": 36.5919999999989,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
+        "disc": 2,
+        "elapsed": 8.127999999999991,
+        "pole": 0,
+        "source": "keyboard"
       }
     },
     {
-      "t": 36.624,
+      "t": 8.144,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.62399999999891,
-        "fromPole": 2,
-        "holding": false,
+        "elapsed": 8.14399999999999,
+        "fromPole": 0,
+        "holding": true,
         "source": "keyboard",
         "toPole": 1
       }
     },
     {
-      "t": 36.656,
+      "t": 8.16,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 2,
+        "elapsed": 8.159999999999988,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 2
+      }
+    },
+    {
+      "t": 8.176,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.65599999999892,
+        "elapsed": 8.175999999999986,
         "fromPole": 1,
         "holding": false,
         "source": "keyboard",
@@ -1330,21 +2632,125 @@
       }
     },
     {
-      "t": 36.688,
+      "t": 8.192,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 3,
+        "elapsed": 8.191999999999984,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 8.208,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.68799999999893,
+        "elapsed": 8.207999999999982,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
-      "t": 36.72,
+      "t": 8.224,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 3,
+        "elapsed": 8.22399999999998,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 3
+      }
+    },
+    {
+      "t": 8.224,
+      "name": "hanoi.round_finished",
+      "data": {
+        "cancelledPicks": 0,
+        "discCount": 3,
+        "elapsed": 0.20800000000000013,
+        "emptyPicks": 0,
+        "extraMoves": 0,
+        "illegal": 0,
+        "moves": 3,
+        "optimalMoves": 3,
+        "puzzleName": "伦敦塔 · 初级",
+        "puzzleType": "london",
+        "round": 4
+      }
+    },
+    {
+      "t": 9.728,
+      "name": "hanoi.round_started",
+      "data": {
+        "capacity": [
+          3,
+          2,
+          1
+        ],
+        "discCount": 3,
+        "optimalMoves": 5,
+        "pieceLabels": {
+          "1": "B",
+          "2": "G",
+          "3": "R"
+        },
+        "puzzleType": "london",
+        "round": 5,
+        "targetState": [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        "totalRounds": 5
+      }
+    },
+    {
+      "t": 9.776,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 9.77599999999981,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 9.792,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.71999999999894,
+        "elapsed": 9.791999999999808,
+        "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 9.808,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 9.807999999999806,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 1
+      }
+    },
+    {
+      "t": 9.824,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 9.823999999999804,
         "fromPole": 2,
         "holding": false,
         "source": "keyboard",
@@ -1352,43 +2758,43 @@
       }
     },
     {
-      "t": 36.752,
+      "t": 9.84,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 9.839999999999803,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 9.856,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.75199999999895,
+        "elapsed": 9.855999999999801,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 1
       }
     },
     {
-      "t": 36.784,
-      "name": "hanoi.focus_changed",
+      "t": 9.872,
+      "name": "hanoi.place",
       "data": {
-        "elapsed": 36.78399999999896,
-        "fromPole": 1,
-        "holding": false,
+        "disc": 2,
+        "elapsed": 9.8719999999998,
+        "fromPole": 0,
         "source": "keyboard",
-        "toPole": 2
+        "toPole": 1,
+        "validMoveIndex": 2
       }
     },
     {
-      "t": 36.816,
+      "t": 9.888,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.81599999999897,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 36.848,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 36.84799999999898,
+        "elapsed": 9.887999999999797,
         "fromPole": 1,
         "holding": false,
         "source": "keyboard",
@@ -1396,43 +2802,87 @@
       }
     },
     {
-      "t": 36.88,
+      "t": 9.904,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 3,
+        "elapsed": 9.903999999999796,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 9.92,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.879999999998994,
+        "elapsed": 9.919999999999794,
         "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 1
+      }
+    },
+    {
+      "t": 9.936,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 3,
+        "elapsed": 9.935999999999792,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 1,
+        "validMoveIndex": 3
+      }
+    },
+    {
+      "t": 9.952,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 9.95199999999979,
+        "fromPole": 1,
         "holding": false,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
-      "t": 36.912,
-      "name": "hanoi.focus_changed",
+      "t": 9.968,
+      "name": "hanoi.pick",
       "data": {
-        "elapsed": 36.911999999999004,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
+        "disc": 1,
+        "elapsed": 9.967999999999789,
+        "pole": 2,
+        "source": "keyboard"
       }
     },
     {
-      "t": 36.944,
+      "t": 9.984,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.943999999999015,
-        "fromPole": 1,
-        "holding": false,
+        "elapsed": 9.983999999999787,
+        "fromPole": 2,
+        "holding": true,
         "source": "keyboard",
         "toPole": 0
       }
     },
     {
-      "t": 36.976,
+      "t": 10.0,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 9.999999999999785,
+        "fromPole": 2,
+        "source": "keyboard",
+        "toPole": 0,
+        "validMoveIndex": 4
+      }
+    },
+    {
+      "t": 10.016,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 36.975999999999026,
+        "elapsed": 10.015999999999783,
         "fromPole": 0,
         "holding": false,
         "source": "keyboard",
@@ -1440,322 +2890,130 @@
       }
     },
     {
-      "t": 37.008,
+      "t": 10.032,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 3,
+        "elapsed": 10.031999999999782,
+        "pole": 1,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 10.048,
       "name": "hanoi.focus_changed",
       "data": {
-        "elapsed": 37.007999999999036,
+        "elapsed": 10.04799999999978,
         "fromPole": 1,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
       }
     },
     {
-      "t": 37.04,
-      "name": "hanoi.focus_changed",
+      "t": 10.064,
+      "name": "hanoi.place",
       "data": {
-        "elapsed": 37.03999999999905,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 37.072,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.07199999999906,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 37.104,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.10399999999907,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 37.136,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.13599999999908,
+        "disc": 3,
+        "elapsed": 10.063999999999778,
         "fromPole": 1,
-        "holding": false,
         "source": "keyboard",
-        "toPole": 0
+        "toPole": 2,
+        "validMoveIndex": 5
       }
     },
     {
-      "t": 37.168,
-      "name": "hanoi.focus_changed",
+      "t": 10.064,
+      "name": "hanoi.round_finished",
       "data": {
-        "elapsed": 37.16799999999909,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
+        "cancelledPicks": 0,
+        "discCount": 3,
+        "elapsed": 0.33600000000000024,
+        "emptyPicks": 0,
+        "extraMoves": 0,
+        "illegal": 0,
+        "moves": 5,
+        "optimalMoves": 5,
+        "puzzleName": "伦敦塔 · 进阶",
+        "puzzleType": "london",
+        "round": 5
       }
     },
     {
-      "t": 37.2,
-      "name": "hanoi.focus_changed",
+      "t": 11.568,
+      "name": "hanoi.attempt_finished",
       "data": {
-        "elapsed": 37.1999999999991,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 37.232,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.23199999999911,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 37.264,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.26399999999912,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 37.296,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.29599999999913,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 37.328,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.32799999999914,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 37.36,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.359999999999154,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 37.392,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.391999999999165,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 37.424,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.423999999999175,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 37.456,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.455999999999186,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 37.488,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.4879999999992,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 37.52,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.51999999999921,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 37.552,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.55199999999922,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 37.584,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.58399999999923,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 37.616,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.61599999999924,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 37.648,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.64799999999925,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 37.68,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.67999999999926,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 37.712,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.71199999999927,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 37.744,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.74399999999928,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 37.776,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.77599999999929,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 37.808,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.8079999999993,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 0
-      }
-    },
-    {
-      "t": 37.84,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 37.839999999999314,
-        "fromPole": 0,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
-      }
-    },
-    {
-      "t": 47.568,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 47.56800000000256,
-        "fromPole": 2,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 1
-      }
-    },
-    {
-      "t": 47.584,
-      "name": "hanoi.focus_changed",
-      "data": {
-        "elapsed": 47.58400000000257,
-        "fromPole": 1,
-        "holding": false,
-        "source": "keyboard",
-        "toPole": 2
+        "elapsed": 11.567999999999612,
+        "gameVersion": "1.0.0",
+        "rounds": [
+          {
+            "cancelledPicks": 0,
+            "discCount": 3,
+            "elapsed": 0.5280000000000004,
+            "emptyPicks": 0,
+            "extraMoves": 0,
+            "illegal": 0,
+            "moves": 7,
+            "optimalMoves": 7,
+            "puzzleName": "汉诺塔 · 三盘",
+            "puzzleType": "hanoi",
+            "round": 1
+          },
+          {
+            "cancelledPicks": 0,
+            "discCount": 4,
+            "elapsed": 0.9760000000000008,
+            "emptyPicks": 0,
+            "extraMoves": 0,
+            "illegal": 0,
+            "moves": 15,
+            "optimalMoves": 15,
+            "puzzleName": "汉诺塔 · 四盘",
+            "puzzleType": "hanoi",
+            "round": 2
+          },
+          {
+            "cancelledPicks": 0,
+            "discCount": 5,
+            "elapsed": 2.0000000000000013,
+            "emptyPicks": 0,
+            "extraMoves": 0,
+            "illegal": 0,
+            "moves": 31,
+            "optimalMoves": 31,
+            "puzzleName": "汉诺塔 · 五盘",
+            "puzzleType": "hanoi",
+            "round": 3
+          },
+          {
+            "cancelledPicks": 0,
+            "discCount": 3,
+            "elapsed": 0.20800000000000013,
+            "emptyPicks": 0,
+            "extraMoves": 0,
+            "illegal": 0,
+            "moves": 3,
+            "optimalMoves": 3,
+            "puzzleName": "伦敦塔 · 初级",
+            "puzzleType": "london",
+            "round": 4
+          },
+          {
+            "cancelledPicks": 0,
+            "discCount": 3,
+            "elapsed": 0.33600000000000024,
+            "emptyPicks": 0,
+            "extraMoves": 0,
+            "illegal": 0,
+            "moves": 5,
+            "optimalMoves": 5,
+            "puzzleName": "伦敦塔 · 进阶",
+            "puzzleType": "london",
+            "round": 5
+          }
+        ],
+        "summary": "五局解谜完成：3/4/5盘汉诺塔与两局伦敦塔",
+        "totalRounds": 5
       }
     }
   ]

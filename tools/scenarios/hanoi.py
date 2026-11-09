@@ -1,12 +1,15 @@
 """hanoi 的自动取证场景：用宿主同款 action 信号走真实交互入口。
 
-覆盖验收矩阵里原来的 5 条 NOT_TESTED：
+对应 hanoi 1.0.0「汉诺塔与伦敦塔」五局计划：
+  1-3 局  汉诺塔 3/4/5 盘（递归最优解）
+  4-5 届  伦敦塔彩球（BFS 最优解，容量 3/2/1）
+覆盖验收矩阵：
   H-01 拿起后放回不计步
   H-02 大压小拒绝
   H-03 三盘 7 步通关（最优）
-  H-04 四盘最优 15 步
+  H-04 四盘最优 15 步（第二局）
+  H-05 五局全流程（会话完整性）
   H-06 finish 后无游戏内重开
-顺带把五局 3/3/4/4/5 全流程跑通（H-05 的会话完整性）。
 """
 
 
@@ -16,6 +19,48 @@ def hanoi_moves(n, src, dst, via):
     return (hanoi_moves(n - 1, src, via, dst)
             + [(src, dst)]
             + hanoi_moves(n - 1, via, dst, src))
+
+
+def london_moves(target):
+    """与游戏 londonOptimalDistance 同规则的 BFS 最优移动序列。
+
+    起始恒为 A 柱 [3,2,1]（底→顶），容量 [3,2,1]，目标为底→顶堆叠列表。
+    返回 [(src, dst), ...]。
+    """
+    caps = (3, 2, 1)
+    goal = tuple(tuple(s) for s in target)
+    start = ((3, 2, 1), (), ())
+    seen = {start}
+    queue = [(start, [])]
+    while queue:
+        state, path = queue.pop(0)
+        if state == goal:
+            return path
+        for a in range(3):
+            if not state[a]:
+                continue
+            ball = state[a][-1]
+            for b in range(3):
+                if b == a or len(state[b]) >= caps[b]:
+                    continue
+                stacks = [list(s) for s in state]
+                stacks[a].pop()
+                stacks[b].append(ball)
+                ns = tuple(tuple(s) for s in stacks)
+                if ns not in seen:
+                    seen.add(ns)
+                    queue.append((ns, path + [(a, b)]))
+    raise AssertionError("伦敦塔目标不可达: %r" % (target,))
+
+
+# 五局计划：(玩法, 参数)——汉诺塔参数为盘数，伦敦塔参数为目标构型
+ROUND_PLAN = [
+    ("hanoi", 3),
+    ("hanoi", 4),
+    ("hanoi", 5),
+    ("london", [[], [1, 2], [3]]),   # 伦敦塔 · 初级
+    ("london", [[1], [2], [3]]),     # 伦敦塔 · 进阶
+]
 
 
 def focus_to(r, pole):
@@ -29,18 +74,35 @@ def focus_to(r, pole):
 
 def pick(r, pole):
     focus_to(r, pole)
-    r.action("confirm")
+    # hanoi 1.0.0 键盘协议：空手时 ↑ 取盘（confirm 仅脑控通道有效）
+    r.action("up")
     return r.get("heldDisc")
 
 
 def place(r, pole):
     focus_to(r, pole)
-    r.action("confirm")
+    # 持盘时 ↓ 放盘（放回原柱为取消）
+    r.action("down")
 
 
 def do_move(r, src, dst):
     pick(r, src)
     place(r, dst)
+
+
+def play_round(r, idx):
+    """按 ROUND_PLAN 打完第 idx 局（0 基）。"""
+    kind, arg = ROUND_PLAN[idx]
+    moves = london_moves(arg) if kind == "london" else hanoi_moves(arg, 0, 2, 1)
+    for src, dst in moves:
+        do_move(r, src, dst)
+
+
+def wait_round(r, idx, timeout, what):
+    kind, arg = ROUND_PLAN[idx]
+    discs = 3 if kind == "london" else arg
+    r.pump_until(lambda: _phase(r) == "select" and r.get("roundIndex") == idx
+                 and r.get("discCount") == discs, timeout, what)
 
 
 def _phase(r):
@@ -97,37 +159,37 @@ def scen_h03_three_optimal(r):
 
 
 def scen_h04_four_optimal(r):
-    """连过两局三盘后，第三局四盘用 15 步最优解。"""
+    """首局三盘后，第二局四盘用 15 步最优解。"""
     r.start()
-    for idx in range(2):                      # 前两局都是 3 盘
-        for src, dst in hanoi_moves(3, 0, 2, 1):
-            do_move(r, src, dst)
-        r.pump_until(lambda: _phase(r) == "select", 4.0, "第 %d 局结算" % (idx + 1))
-    r.check_eq("H-04a 进入第三局 4 盘", r.get("discCount"), 4)
+    for src, dst in hanoi_moves(3, 0, 2, 1):
+        do_move(r, src, dst)
+    r.pump_until(lambda: _phase(r) == "select" and r.get("roundIndex") == 1, 4.0, "第一局结算")
+    r.check_eq("H-04a 进入第二局 4 盘", r.get("discCount"), 4)
     for src, dst in hanoi_moves(4, 0, 2, 1):
         do_move(r, src, dst)
     payloads = r.game.payloads("hanoi.round_finished")
-    r.check("H-04b 第三局结算", len(payloads) >= 3)
-    if len(payloads) >= 3:
-        p = payloads[2]
+    r.check("H-04b 第二局结算", len(payloads) >= 2)
+    if len(payloads) >= 2:
+        p = payloads[1]
         r.check_eq("H-04c 四盘步数 15", p.get("moves"), 15)
         r.check_eq("H-04d 四盘最优 15", p.get("optimalMoves"), 15)
         r.check_eq("H-04e 多余步数 0", p.get("extraMoves"), 0)
 
 
 def scen_h05_full_session(r):
-    """五局 3/3/4/4/5 全自动跑完，只结束一次。"""
+    """五局（3/4/5 盘汉诺塔 + 两局伦敦塔）全自动跑完，只结束一次。"""
     r.start()
-    for idx, n in enumerate([3, 3, 4, 4, 5]):
-        r.pump_until(lambda: _phase(r) == "select" and r.get("discCount") == n, 6.0, "第 %d 局开始" % (idx + 1))
-        for src, dst in hanoi_moves(n, 0, 2, 1):
-            do_move(r, src, dst)
-        r.pump_until(lambda: _phase(r) == "round_feedback" or _phase(r) == "complete", 4.0, "第 %d 局结算" % (idx + 1))
+    for idx in range(5):
+        wait_round(r, idx, 6.0, "第 %d 局开始" % (idx + 1))
+        play_round(r, idx)
+        r.pump_until(lambda: _phase(r) in ("round_feedback", "complete"), 4.0, "第 %d 局结算" % (idx + 1))
     r.pump_until(lambda: r.game.finished is not None, 6.0, "会话结束")
     r.check("H-05a 会话结束", r.game.finished is not None)
     detail = r.jsv("roundResults") or []
     r.check_eq("H-05b 五局结果齐全", len(detail), 5)
-    r.check_eq("H-05c 盘数序列 3/3/4/4/5", [d.get("discCount") for d in detail], [3, 3, 4, 4, 5])
+    r.check_eq("H-05c 盘数序列 3/4/5/3/3", [d.get("discCount") for d in detail], [3, 4, 5, 3, 3])
+    r.check_eq("H-05c2 玩法序列", [d.get("puzzleType") for d in detail],
+               ["hanoi", "hanoi", "hanoi", "london", "london"])
     r.check_eq("H-05d 每局都是最优步", [d.get("extraMoves") for d in detail], [0, 0, 0, 0, 0])
     r.check_eq("H-05e 只结束一次", r.game.names().count("hanoi.attempt_finished"), 1)
 
@@ -135,15 +197,14 @@ def scen_h05_full_session(r):
 def scen_h06_no_restart(r):
     """finish 之后任何输入都不该重开一局。"""
     r.start()
-    for idx, n in enumerate([3, 3, 4, 4, 5]):
-        r.pump_until(lambda: _phase(r) == "select" and r.get("discCount") == n, 6.0, "第 %d 局" % (idx + 1))
-        for src, dst in hanoi_moves(n, 0, 2, 1):
-            do_move(r, src, dst)
+    for idx in range(5):
+        wait_round(r, idx, 6.0, "第 %d 局" % (idx + 1))
+        play_round(r, idx)
         r.pump_until(lambda: _phase(r) in ("round_feedback", "complete"), 4.0, "结算")
     r.pump_until(lambda: r.game.finished is not None, 6.0, "会话结束")
     count_before = len(r.game.names())
     started_before = r.game.names().count("hanoi.attempt_started")
-    for key in ("left", "right", "confirm"):
+    for key in ("left", "right", "confirm", "up", "down"):
         r.action(key)
     r.pump(0.5)
     r.check_eq("H-06a phase 停在 complete", r.get("phase"), "complete")

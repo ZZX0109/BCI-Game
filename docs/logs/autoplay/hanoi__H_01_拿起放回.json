@@ -1,19 +1,19 @@
 {
   "game": "hanoi",
   "scenario": "H-01 拿起放回",
-  "ok": false,
-  "passed": 3,
+  "ok": true,
+  "passed": 6,
   "total": 6,
   "error": null,
   "checks": [
     {
       "check": "H-01a 拿起后 heldDisc 有值",
-      "ok": false,
-      "detail": "heldDisc=-1"
+      "ok": true,
+      "detail": "heldDisc=1"
     },
     {
       "check": "H-01b 产生了 pick_cancelled",
-      "ok": false,
+      "ok": true,
       "detail": ""
     },
     {
@@ -23,8 +23,8 @@
     },
     {
       "check": "H-01d 取消计数 +1",
-      "ok": false,
-      "detail": "实际=0 期望=1"
+      "ok": true,
+      "detail": "实际=1 期望=1"
     },
     {
       "check": "H-01e 没有 place 事件",
@@ -39,21 +39,72 @@
   ],
   "simSeconds": 0.128,
   "finished": false,
-  "eventCount": 2,
+  "eventCount": 4,
   "events": [
     {
       "t": 0.0,
       "name": "hanoi.attempt_started",
       "data": {
         "elapsed": 0.0,
-        "gameVersion": "0.6.0",
+        "gameVersion": "1.0.0",
         "inputSource": "local",
         "roundPlan": [
-          3,
-          3,
-          4,
-          4,
-          5
+          {
+            "discs": 3,
+            "kind": "hanoi",
+            "name": "汉诺塔 · 三盘"
+          },
+          {
+            "discs": 4,
+            "kind": "hanoi",
+            "name": "汉诺塔 · 四盘"
+          },
+          {
+            "discs": 5,
+            "kind": "hanoi",
+            "name": "汉诺塔 · 五盘"
+          },
+          {
+            "capacities": [
+              3,
+              2,
+              1
+            ],
+            "discs": 3,
+            "kind": "london",
+            "name": "伦敦塔 · 初级",
+            "target": [
+              [],
+              [
+                1,
+                2
+              ],
+              [
+                3
+              ]
+            ]
+          },
+          {
+            "capacities": [
+              3,
+              2,
+              1
+            ],
+            "discs": 3,
+            "kind": "london",
+            "name": "伦敦塔 · 进阶",
+            "target": [
+              [
+                1
+              ],
+              [
+                2
+              ],
+              [
+                3
+              ]
+            ]
+          }
         ]
       }
     },
@@ -61,10 +112,42 @@
       "t": 0.0,
       "name": "hanoi.round_started",
       "data": {
+        "capacity": null,
         "discCount": 3,
         "optimalMoves": 7.0,
+        "pieceLabels": null,
+        "puzzleType": "hanoi",
         "round": 1,
+        "targetState": [
+          [],
+          [],
+          [
+            3,
+            2,
+            1
+          ]
+        ],
         "totalRounds": 5
+      }
+    },
+    {
+      "t": 0.112,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.11200000000000004,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 0.128,
+      "name": "hanoi.pick_cancelled",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.12800000000000006,
+        "pole": 0,
+        "source": "keyboard"
       }
     }
   ]

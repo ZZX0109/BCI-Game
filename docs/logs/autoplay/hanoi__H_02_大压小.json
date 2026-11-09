@@ -1,28 +1,105 @@
 {
   "game": "hanoi",
   "scenario": "H-02 大压小",
-  "ok": false,
-  "passed": 0,
-  "total": 0,
-  "error": "Traceback (most recent call last):\n  File \"C:\\Users\\Ait\\Desktop\\Neuralife\\tools\\run_scenarios.py\", line 56, in run_one\n    func(runner)\n    ~~~~^^^^^^^^\n  File \"C:\\Users\\Ait\\Desktop\\Neuralife\\tools\\scenarios\\hanoi.py\", line 71, in scen_h02_illegal\n    top_before = r.jsv(\"poles\")[2][-1]\n                 ~~~~~~~~~~~~~~~~~^^^^\nIndexError: list index out of range\n",
-  "checks": [],
-  "simSeconds": 0.176,
+  "ok": true,
+  "passed": 5,
+  "total": 5,
+  "error": null,
+  "checks": [
+    {
+      "check": "H-02a 产生 illegal_move",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "H-02b 理由为 larger_on_smaller",
+      "ok": true,
+      "detail": "payload={'disc': 2, 'elapsed': 0.20800000000000013, 'fromPole': 0, 'reason': 'larger_on_smaller', 'source': 'keyboard', 'toPole': 2, 'top': 1}"
+    },
+    {
+      "check": "H-02c 目标柱没有被压",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "H-02d 仍握在手里",
+      "ok": true,
+      "detail": "实际=2 期望=2"
+    },
+    {
+      "check": "H-02e illegal 计数 +1",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    }
+  ],
+  "simSeconds": 0.208,
   "finished": false,
-  "eventCount": 4,
+  "eventCount": 9,
   "events": [
     {
       "t": 0.0,
       "name": "hanoi.attempt_started",
       "data": {
         "elapsed": 0.0,
-        "gameVersion": "0.6.0",
+        "gameVersion": "1.0.0",
         "inputSource": "local",
         "roundPlan": [
-          3,
-          3,
-          4,
-          4,
-          5
+          {
+            "discs": 3,
+            "kind": "hanoi",
+            "name": "汉诺塔 · 三盘"
+          },
+          {
+            "discs": 4,
+            "kind": "hanoi",
+            "name": "汉诺塔 · 四盘"
+          },
+          {
+            "discs": 5,
+            "kind": "hanoi",
+            "name": "汉诺塔 · 五盘"
+          },
+          {
+            "capacities": [
+              3,
+              2,
+              1
+            ],
+            "discs": 3,
+            "kind": "london",
+            "name": "伦敦塔 · 初级",
+            "target": [
+              [],
+              [
+                1,
+                2
+              ],
+              [
+                3
+              ]
+            ]
+          },
+          {
+            "capacities": [
+              3,
+              2,
+              1
+            ],
+            "discs": 3,
+            "kind": "london",
+            "name": "伦敦塔 · 进阶",
+            "target": [
+              [
+                1
+              ],
+              [
+                2
+              ],
+              [
+                3
+              ]
+            ]
+          }
         ]
       }
     },
@@ -30,10 +107,32 @@
       "t": 0.0,
       "name": "hanoi.round_started",
       "data": {
+        "capacity": null,
         "discCount": 3,
         "optimalMoves": 7.0,
+        "pieceLabels": null,
+        "puzzleType": "hanoi",
         "round": 1,
+        "targetState": [
+          [],
+          [],
+          [
+            3,
+            2,
+            1
+          ]
+        ],
         "totalRounds": 5
+      }
+    },
+    {
+      "t": 0.112,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.11200000000000004,
+        "pole": 0,
+        "source": "keyboard"
       }
     },
     {
@@ -42,9 +141,21 @@
       "data": {
         "elapsed": 0.12800000000000006,
         "fromPole": 0,
-        "holding": false,
+        "holding": true,
         "source": "keyboard",
         "toPole": 2
+      }
+    },
+    {
+      "t": 0.144,
+      "name": "hanoi.place",
+      "data": {
+        "disc": 1,
+        "elapsed": 0.14400000000000007,
+        "fromPole": 0,
+        "source": "keyboard",
+        "toPole": 2,
+        "validMoveIndex": 1
       }
     },
     {
@@ -56,6 +167,40 @@
         "holding": false,
         "source": "keyboard",
         "toPole": 0
+      }
+    },
+    {
+      "t": 0.176,
+      "name": "hanoi.pick",
+      "data": {
+        "disc": 2,
+        "elapsed": 0.1760000000000001,
+        "pole": 0,
+        "source": "keyboard"
+      }
+    },
+    {
+      "t": 0.192,
+      "name": "hanoi.focus_changed",
+      "data": {
+        "elapsed": 0.19200000000000012,
+        "fromPole": 0,
+        "holding": true,
+        "source": "keyboard",
+        "toPole": 2
+      }
+    },
+    {
+      "t": 0.208,
+      "name": "hanoi.illegal_move",
+      "data": {
+        "disc": 2,
+        "elapsed": 0.20800000000000013,
+        "fromPole": 0,
+        "reason": "larger_on_smaller",
+        "source": "keyboard",
+        "toPole": 2,
+        "top": 1
       }
     }
   ]

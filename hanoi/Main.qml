@@ -601,7 +601,6 @@ Item {
                 tint: root.pieceTint(Math.max(1, root.heldDisc))
                 number: root.heldDisc
                 label: root.pieceLabel(Math.max(1, root.heldDisc))
-                label: root.pieceLabel(Math.max(1, root.heldDisc))
                 lifted: true
             }
 
