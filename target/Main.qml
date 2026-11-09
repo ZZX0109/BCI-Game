@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Window
 import "../shared-ui" as SharedUI
 
 // Precision Target V4：统一"场景局部坐标"为唯一真值
@@ -44,24 +45,80 @@ Item {
 
     readonly property real barrierW: 90
     readonly property real sweepLeft: 24
-    readonly property real sweepWidth: 700
+    readonly property real sweepWidth: sceneW
     readonly property real sceneOX: 24
     readonly property real sceneOY: 116
 
     // 场景矩形逻辑尺寸（designView 内、局部坐标 0..sceneW × 0..sceneH）
-    readonly property real sceneW: 700
-    readonly property real sceneH: 483
+    readonly property real sceneW: sceneRect.width
+    readonly property real sceneH: sceneRect.height
 
-    readonly property real spawnLeft: 90
-    readonly property real spawnRight: 664
-    readonly property real spawnTop: 170
-    readonly property real spawnBottom: 560
+    readonly property real spawnLeft: sceneOX + 36
+    readonly property real spawnRight: sceneOX + sceneW - 36
+    readonly property real spawnTop: sceneOY + 52
+    readonly property real spawnBottom: sceneOY + sceneH - 24
+
+    readonly property real sceneInset: frame.contentInset === undefined ? 28 : frame.contentInset
+    readonly property real sceneTop: frame.sceneTop === undefined ? 104 : frame.sceneTop
+    readonly property real sceneBottom: frame.sceneBottom === undefined ? 88 : frame.sceneBottom
+    readonly property real availableW: Math.max(1, width - 2 * sceneInset)
+    readonly property real availableH: Math.max(1, height - sceneTop - sceneBottom)
+    // One isotropic logical unit; full available rectangle, never a letterboxed input field.
+    readonly property real logicalScale: Math.max(0.001, Math.min(availableW / 700, availableH / 483))
+    property real pointerRootX: 0
+    property real pointerRootY: 0
+    property bool pointerKnown: false
+    property bool mouseGlobalKnown: false
+    property point latestMouseGlobal: Qt.point(0, 0)
+    property point lastMouseWindowPoint: Qt.point(0, 0)
+    property point lastMouseWindowOrigin: Qt.point(0, 0)
+    property int geometryRevision: 0
+    property int trialGeometryRevision: 0
+    function viewportGeometry() {
+        return { rootWidth: width, rootHeight: height, x: sceneInset, y: sceneTop,
+            width: availableW, height: availableH, logicalWidth: sceneW,
+            logicalHeight: sceneH, pixelsPerLogicalUnit: logicalScale, revision: geometryRevision }
+    }
+    property bool destroying: false
+    function resizeGeometry() {
+        if (destroying) return
+        if (sceneW <= 0 || sceneH <= 0) return
+        geometryRevision++
+        if (trialPlan.length && !sessionFinished) {
+            trialPlan = buildTrialPlan()
+            var t = currentTrial
+            if (t) { targetBaseX = t.x; targetBaseY = t.y; updateTrialGeometry() }
+            game.record("target.viewport_changed", { geometry: viewportGeometry(), trial: trialIndex + 1,
+                trialPlan: trialPlan.slice(), measurementInterrupted: phase === "target_visible" && !awaitingStart })
+        }
+        if (pointerKnown) {
+            var p = mouseOwnsInput && mouseGlobalKnown
+                    ? sceneRect.mapFromGlobal(latestMouseGlobal.x, latestMouseGlobal.y)
+                    : sceneRect.mapFromItem(root, pointerRootX, pointerRootY)
+            aimX = Math.max(0, Math.min(sceneW, p.x)); aimY = Math.max(0, Math.min(sceneH, p.y))
+            baselineSet = false
+        }
+    }
+    onAvailableWChanged: if (!destroying && geometryTimer) geometryTimer.restart()
+    onAvailableHChanged: if (!destroying && geometryTimer) geometryTimer.restart()
+    // Owned timer is cancelled with this game; no queued callLater survives Loader unload.
+    Timer { id: geometryTimer; interval: 1; repeat: false; onTriggered: root.resizeGeometry() }
+    Component.onCompleted: geometryTimer.restart()
+    Timer { id: mouseSyncTimer; interval: 1; repeat: false; onTriggered: root.syncLocalMouse() }
+    Connections {
+        target: root.Window.window
+        function onXChanged() { if (!root.destroying) mouseSyncTimer.restart() }
+        function onYChanged() { if (!root.destroying) mouseSyncTimer.restart() }
+    }
+    Component.onDestruction: { destroying = true; geometryTimer.stop(); mouseSyncTimer.stop() }
 
     // ------------------------------------------------------------------
     // 运行状态
     // ------------------------------------------------------------------
     property string phase: "idle"
     property bool sessionFinished: false
+    property bool sessionStopped: false
+    property bool inputReady: false
     property bool isPaused: false
     property real localElapsed: 0.0
     property int trialIndex: 0
@@ -88,7 +145,18 @@ Item {
     property real previousY: 240
     property bool baselineSet: false
     property real firstActionLatency: -1
-    property real lastMouseAt: -999
+    property bool mouseOwnsInput: false
+    readonly property bool brainInput: /bci|brain/i.test(inputSource)
+    onBrainInputChanged: {
+        // Ownership belongs to the current input mode, not the entire object's lifetime.
+        mouseOwnsInput = false
+        baselineSet = false
+        inputReady = !brainInput
+        syncLocalMouse()
+    }
+    property bool awaitingStart: false
+    property real movementStartX: 0
+    property real movementStartY: 0
     property real lastShotAt: -999
 
     property real shotAimX: 0
@@ -104,7 +172,7 @@ Item {
     readonly property real targetSceneX: targetNowX - sceneOX
     readonly property real targetSceneY: targetNowY - sceneOY
     readonly property real distToTarget: Math.sqrt(Math.pow(aimX - targetSceneX, 2) + Math.pow(aimY - targetSceneY, 2))
-    readonly property bool onTarget: phase === "target_visible" && !occludedNow && distToTarget <= targetR
+    readonly property bool onTarget: inputReady && phase === "target_visible" && !occludedNow && distToTarget <= targetR
 
     function loadConfig() {
         try {
@@ -152,20 +220,15 @@ Item {
                 var j = rng.pickInt(0, k)
                 var tmp = combos[k]; combos[k] = combos[j]; combos[j] = tmp
             }
-            var prevX = (spawnLeft + spawnRight) / 2, prevY = (spawnTop + spawnBottom) / 2
+            // Independent, feasible start/target pairs; start pad establishes actual movement origin.
             for (var n = 0; n < combos.length; ++n) {
-                var placed = null
-                for (var attempt = 0; attempt < 24; ++attempt) {
-                    var ang = rng.pickReal(0, Math.PI * 2)
-                    var cx = prevX + Math.cos(ang) * combos[n].dist
-                    var cy = prevY + Math.sin(ang) * combos[n].dist
-                    var cp = clampSpawn(cx, cy, combos[n].size)
-                    if (Math.abs(cp.x - cx) < 1 && Math.abs(cp.y - cy) < 1) { placed = cp; break }
-                    if (attempt === 23) placed = cp
-                }
-                plan.push({ kind: "static", x: Math.round(placed.x), y: Math.round(placed.y), r: combos[n].size,
-                            size: String(combos[n].size), distance: String(combos[n].dist) })
-                prevX = placed.x; prevY = placed.y
+                var d = combos[n].dist, r = combos[n].size
+                var direction = rng.next() < 0.5 ? -1 : 1
+                var centerX = (spawnLeft + spawnRight) / 2
+                var cy = rng.pickReal(spawnTop + r, spawnBottom - r)
+                plan.push({ kind: "static", x: centerX + direction * d / 2, y: cy, r: r,
+                            startX: centerX - direction * d / 2, startY: cy,
+                            actualDistance: d, size: String(r), distance: String(d) })
             }
         } else if (taskMode === "occluded_target") {
             for (var o = 0; o < 8; ++o) {
@@ -201,6 +264,8 @@ Item {
     }
 
     function startSession() {
+        sessionStopped = false
+        inputReady = !brainInput
         loadConfig()
         trialPlan = buildTrialPlan()
         sessionFinished = false
@@ -209,10 +274,12 @@ Item {
         trialIndex = 0
         hits = 0; misses = 0; timeouts = 0
         feedbackTimer = 0.0
+        mouseOwnsInput = false
+        lastShotAt = -999
         phase = "idle"
 
         game.record("target.attempt_started", {
-            gameVersion: "0.4.0",
+            gameVersion: "0.5.1",
             taskMode: taskMode,
             inputSource: inputSource,
             seed: seed,
@@ -220,6 +287,7 @@ Item {
             trialPlan: trialPlan.slice()
         })
         spawnTrial()
+        syncLocalMouse()
     }
 
     function spawnTrial() {
@@ -231,17 +299,24 @@ Item {
         targetNowX = t.x; targetNowY = t.y
         trialStartedAt = hostElapsed()
         trialTimer = 0.0
+        trialGeometryRevision = geometryRevision
         baselineSet = false
         firstActionLatency = -1
         previousX = aimX; previousY = aimY
         barrierX = -barrierW - 1
         occludedNow = false
         phase = "target_visible"
+        awaitingStart = taskMode === "fitts_targets"
+        updateTrialGeometry()
 
         game.record("target.trial_started", {
             trial: trialIndex + 1,
             totalTrials: trialPlan.length,
+            geometry: viewportGeometry(),
             targetX: t.x, targetY: t.y, targetR: t.r,
+            plannedDistance: t.actualDistance === undefined ? null : t.actualDistance,
+            startX: t.startX === undefined ? null : t.startX,
+            startY: t.startY === undefined ? null : t.startY,
             condition: { size: t.size || "", distance: t.distance || "", group: t.group || "" },
             occlusion: t.kind === "occluded" ? {
                 sweepSpeed: t.sweepSpeed, phase0: t.phase0,
@@ -251,10 +326,51 @@ Item {
         })
     }
 
+    function rememberMouse(sx, sy, force) {
+        var win = root.Window.window
+        var windowItem = win ? win.contentItem : root
+        var point = sceneRect.mapToItem(windowItem, sx, sy)
+        var origin = windowItem.mapToGlobal(0, 0)
+        // Qt can replay its old window-local hover point after moving/resizing a window.
+        // Keep the known screen point for that geometry-only event; clicks always win.
+        if (!force && mouseGlobalKnown
+                && Math.abs(point.x - lastMouseWindowPoint.x) <= 0.5
+                && Math.abs(point.y - lastMouseWindowPoint.y) <= 0.5
+                && (Math.abs(origin.x - lastMouseWindowOrigin.x) > 0.5
+                    || Math.abs(origin.y - lastMouseWindowOrigin.y) > 0.5)) {
+            syncLocalMouse()
+            return false
+        }
+        latestMouseGlobal = sceneRect.mapToGlobal(sx, sy)
+        lastMouseWindowPoint = point
+        lastMouseWindowOrigin = origin
+        mouseGlobalKnown = true
+        return true
+    }
+    function syncLocalMouse() {
+        if (brainInput || isPaused || sessionStopped || sessionFinished || destroying || !aimMouse) return
+        var p = mouseGlobalKnown ? sceneRect.mapFromGlobal(latestMouseGlobal.x, latestMouseGlobal.y)
+                                 : Qt.point(aimMouse.mouseX, aimMouse.mouseY)
+        if (!mouseGlobalKnown && !aimMouse.containsMouse) return
+        // Resume/window/source synchronization is not a measured first movement.
+        baselineSet = false
+        setAimSceneLocal(p.x, p.y, "mouse")
+    }
+
     // 把任意来源换算成场景局部坐标（唯一入口）
     function setAimSceneLocal(sx, sy, source) {
+        if (isPaused || sessionStopped || sessionFinished || (phase !== "target_visible" && phase !== "shot_feedback")) return
+        if (source === "mouse") { if (brainInput) return; mouseOwnsInput = true }
+        else if (mouseOwnsInput) return
+        var pointer = sceneRect.mapToItem(root, sx, sy)
+        pointerRootX = pointer.x; pointerRootY = pointer.y; pointerKnown = true
         var nx = Math.max(0, Math.min(sceneW, sx))
         var ny = Math.max(0, Math.min(sceneH, sy))
+        if (phase === "shot_feedback") {
+            // Keep the live cursor responsive; shot/target feedback remains a separate snapshot.
+            aimX = nx; aimY = ny
+            return
+        }
         if (!baselineSet) {
             baselineSet = true
             previousX = nx; previousY = ny
@@ -266,12 +382,29 @@ Item {
             if (Math.sqrt(dx * dx + dy * dy) >= firstMoveThreshold)
                 firstActionLatency = hostElapsed() - trialStartedAt
         }
-        previousX = nx; previousY = ny
         aimX = nx; aimY = ny
     }
 
     function requestShot(source) {
-        if (phase !== "target_visible" || isPaused) return
+        // Once a physical mouse owns the pointer, its clicked event owns the shot
+        // coordinate too. A forwarded host confirm may arrive before that event.
+        if (source === "host_action" && mouseOwnsInput && !brainInput) return
+        if (source === "mouse" && brainInput) return
+        if (phase !== "target_visible" || isPaused || sessionStopped || !inputReady) return
+        if (awaitingStart) {
+            var sx = currentTrial.startX - sceneOX, sy = currentTrial.startY - sceneOY
+            if (Math.hypot(aimX - sx, aimY - sy) > 22) return
+            awaitingStart = false
+            lastShotAt = localElapsed
+            movementStartX = aimX; movementStartY = aimY
+            trialTimer = 0; trialStartedAt = hostElapsed()
+            baselineSet = false; firstActionLatency = -1
+            game.record("target.movement_started", { trial: trialIndex + 1,
+                startX: aimX, startY: aimY,
+                actualDistance: Math.hypot(aimX - targetSceneX, aimY - targetSceneY),
+                elapsed: hostElapsed() })
+            return
+        }
         // 去重：同一物理点击若同时被 MouseArea 与宿主 confirm 转发，只算一枪
         if (localElapsed - lastShotAt < 0.15) return
         lastShotAt = localElapsed
@@ -279,8 +412,9 @@ Item {
     }
 
     function submitShot(source) {
-        if (phase !== "target_visible" || isPaused) return
+        if (phase !== "target_visible" || isPaused || sessionStopped || !inputReady) return
 
+        updateTrialGeometry()
         var tx = targetSceneX, ty = targetSceneY
         var dx = aimX - tx, dy = aimY - ty
         var dist = Math.sqrt(dx * dx + dy * dy)
@@ -290,6 +424,8 @@ Item {
         var shot = {
             trial: trialIndex + 1,
             source: source,
+            geometry: viewportGeometry(),
+            geometryChangedDuringTrial: geometryRevision !== trialGeometryRevision,
             aimX: Math.round(aimX), aimY: Math.round(aimY),
             targetX: Math.round(tx), targetY: Math.round(ty),
             targetR: targetR,
@@ -297,6 +433,8 @@ Item {
             blocked: blocked,
             hit: hit,
             firstActionLatency: firstActionLatency,
+            actualDistance: taskMode === "fitts_targets" ? Math.hypot(movementStartX - tx, movementStartY - ty) : null,
+            plannedDistance: currentTrial && currentTrial.actualDistance !== undefined ? currentTrial.actualDistance : null,
             condition: currentTrial ? (currentTrial.size || currentTrial.group || "") : "",
             occludedAtShot: currentTrial && currentTrial.kind === "occluded" ? occludedNow : null,
             elapsed: hostElapsed()
@@ -343,7 +481,7 @@ Item {
         var total = trialPlan.length
         var acc = total > 0 ? hits / total : 0
         var result = {
-            gameVersion: "0.4.0",
+            gameVersion: "0.5.1",
             taskMode: taskMode,
             reason: reason,
             totalTrials: total,
@@ -356,12 +494,41 @@ Item {
         game.finish(result)
     }
 
-    // 宿主 onPointer（脑控 Cursor）：假定为设计画布坐标(1000×700)，换算为场景局部
-    // 本地鼠标有 MouseArea 时优先使用其精确局部坐标
+    // Host pointer spans game.width/height over the entire root canvas.
     function handlePointer(x, y) {
-        if (phase !== "target_visible" || isPaused) return
-        if (localElapsed - lastMouseAt < 0.8) return
-        setAimSceneLocal(x - sceneOX, y - sceneOY, "host_pointer")
+        if (isPaused || sessionStopped || sessionFinished || phase === "idle") return
+        if (typeof x !== "number" || typeof y !== "number" || !isFinite(x) || !isFinite(y)) return
+        // Brain readiness requires the host's explicit full-canvas dimensions.
+        if (brainInput && (typeof game.width !== "number" || typeof game.height !== "number"
+                           || !isFinite(game.width) || !isFinite(game.height)
+                           || game.width <= 0 || game.height <= 0)) return
+        var w = game.width > 0 ? game.width : root.width
+        var h = game.height > 0 ? game.height : root.height
+        if (w <= 0 || h <= 0 || !isFinite(x) || !isFinite(y)) return
+        var p = sceneRect.mapFromItem(root, x / w * root.width, y / h * root.height)
+        if (!inputReady) {
+            inputReady = true
+            trialStartedAt = hostElapsed(); baselineSet = false
+            game.record("target.input_ready", { elapsed: hostElapsed(), inputSource: inputSource,
+                hostWidth: w, hostHeight: h, geometry: viewportGeometry() })
+        }
+        setAimSceneLocal(p.x, p.y, "host_pointer")
+    }
+
+    function updateTrialGeometry() {
+        if (!currentTrial) return
+        targetNowX = targetBaseX; targetNowY = targetBaseY
+        occludedNow = false; barrierX = -barrierW - 1
+        if (currentTrial.kind === "moving") {
+            var a = trialTimer * currentTrial.speed
+            targetNowX += Math.cos(a) * currentTrial.orbit
+            targetNowY += Math.sin(a) * currentTrial.orbit
+        }
+        if (currentTrial.kind === "occluded") {
+            var travel = (trialTimer * currentTrial.sweepSpeed + currentTrial.phase0) % (sweepWidth + barrierW)
+            barrierX = sweepLeft + travel - barrierW
+            occludedNow = barrierX < targetNowX + targetR && barrierX + barrierW > targetNowX - targetR
+        }
     }
 
     Connections {
@@ -373,29 +540,18 @@ Item {
             if (name === "confirm" && pressed === true) root.requestShot("host_action")
         }
         function onPaused() { root.isPaused = true }
-        function onResumed() { root.isPaused = false }
-        function onStopping() { root.isPaused = true }
+        function onResumed() { if (!root.sessionStopped) { root.isPaused = false; root.syncLocalMouse() } }
+        function onStopping() { root.sessionStopped = true; root.isPaused = true }
     }
 
     function advance(seconds) {
-        if (isPaused || sessionFinished) return
+        if (isPaused || sessionStopped || sessionFinished || !inputReady) return
         localElapsed += seconds
 
         if (phase === "target_visible") {
-            trialTimer += seconds
+            if (!awaitingStart) trialTimer += seconds
             if (trialTimer >= trialTimeout) { trialTimeoutCheck(); return }
-
-            if (currentTrial && currentTrial.kind === "moving") {
-                var a = localElapsed * currentTrial.speed
-                targetNowX = targetBaseX + Math.cos(a) * currentTrial.orbit
-                targetNowY = targetBaseY + Math.sin(a) * currentTrial.orbit
-            }
-
-            if (currentTrial && currentTrial.kind === "occluded") {
-                var travel = (trialTimer * currentTrial.sweepSpeed + currentTrial.phase0) % (sweepWidth + barrierW)
-                barrierX = sweepLeft + travel - barrierW
-                occludedNow = (barrierX < targetNowX + targetR) && (barrierX + barrierW > targetNowX - targetR)
-            }
+            updateTrialGeometry()
         } else if (phase === "shot_feedback") {
             feedbackTimer += seconds
             if (feedbackTimer >= feedbackSeconds) endFeedback()
@@ -410,7 +566,7 @@ Item {
         anchors.fill: parent
         theme: uiTheme
         title: qsTr("精准打靶")
-        subtitle: qsTr("移动准星对准环形靶后射击　模式：%1　种子：%2").arg(root.taskMode).arg(root.seed)
+        subtitle: qsTr("移动 · 瞄准 · 射击　/　%1").arg(({static_accuracy:"固定靶",fitts_targets:"定点移靶",moving_target:"移动靶",occluded_target:"遮挡靶"})[root.taskMode] || root.taskMode)
         mode: qsTr("试次 %1 / %2").arg(Math.min(root.trialIndex + 1, root.trialPlan.length)).arg(root.trialPlan.length)
         inputSource: root.inputSource
 
@@ -421,26 +577,26 @@ Item {
             // 设计坐标缩放视图
             Item {
                 id: designView
-                width: 1000
-                height: 700
-                anchors.centerIn: parent
-                scale: Math.min(parent.width / 1000, parent.height / 700)
-                transformOrigin: Item.Center
+                anchors.fill: parent
 
                 // 主场景（局部坐标 0..700 × 0..483）
                 Rectangle {
                     id: sceneRect
-                    x: 24; y: 116; width: 700; height: 483
-                    color: uiTheme.background; clip: true
+                    x: root.sceneInset; y: root.sceneTop
+                    width: root.availableW / root.logicalScale; height: root.availableH / root.logicalScale
+                    scale: root.logicalScale; transformOrigin: Item.TopLeft
+                    color: "transparent"; clip: false
 
-                    // 地面网格
+                    // A few quiet registration marks retain orientation without a boxed field.
                     Repeater {
-                        model: 8
-                        Rectangle { x: 24 + index * 88; y: 130; width: 1; height: 450; color: uiTheme.panelBorder }
-                    }
-                    Repeater {
-                        model: 6
-                        Rectangle { x: 24; y: 130 + index * 88; width: 676; height: 1; color: uiTheme.panelBorder }
+                        model: 4
+                        Item {
+                            required property int index
+                            x: index % 2 === 0 ? 10 : sceneRect.width - 10
+                            y: index < 2 ? 50 : sceneRect.height - 10
+                            Rectangle { x: -3; y: 0; width: 6; height: 1; color: "#34383A" }
+                            Rectangle { x: 0; y: -3; width: 1; height: 6; color: "#34383A" }
+                        }
                     }
 
                     // 移动挡板
@@ -450,7 +606,7 @@ Item {
                         x: root.barrierX - root.sceneOX
                         y: 0
                         width: root.barrierW
-                        height: 483
+                        height: sceneRect.height
                         radius: 8
                         color: uiTheme.panel
                         border.width: 2
@@ -471,16 +627,25 @@ Item {
                         readonly property real cy: root.phase === "shot_feedback" ? root.shotTargetY : root.targetSceneY
                         x: cx; y: cy
 
-                        Rectangle { x: -root.targetR; y: -root.targetR; width: root.targetR * 2; height: root.targetR * 2; radius: root.targetR; color: uiTheme.background; border.width: 4; border.color: root.onTarget ? uiTheme.success : uiTheme.panelBorder }
-                        Rectangle { x: -root.targetR * 0.62; y: -root.targetR * 0.62; width: root.targetR * 1.24; height: root.targetR * 1.24; radius: root.targetR * 0.62; color: "transparent"; border.width: 2; border.color: uiTheme.panelBorder }
-                        Rectangle { x: -root.targetR * 0.28; y: -root.targetR * 0.28; width: root.targetR * 0.56; height: root.targetR * 0.56; radius: root.targetR * 0.28; color: uiTheme.success; opacity: root.onTarget ? 1.0 : 0.45 }
-                        Text {
+                        Rectangle { x: -root.targetR; y: -root.targetR; width: root.targetR * 2; height: root.targetR * 2; radius: root.targetR; color: "#111819"; border.width: 2; border.color: root.onTarget ? uiTheme.success : "#F4F1E8" }
+                        Rectangle { x: -root.targetR * 0.62; y: -root.targetR * 0.62; width: root.targetR * 1.24; height: root.targetR * 1.24; radius: root.targetR * 0.62; color: "transparent"; border.width: 1; border.color: "#61706D" }
+                        Rectangle { x: -root.targetR * 0.28; y: -root.targetR * 0.28; width: root.targetR * 0.56; height: root.targetR * 0.56; radius: root.targetR * 0.28; color: root.onTarget ? "#B4D8C4" : "#DAE3DC"; opacity: 1 }
+                        Text { font.family: uiTheme.fontFamily;
                             visible: root.moveGroup !== ""
                             y: root.targetR + 6
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: root.moveGroup === "slow" ? qsTr("低速") : (root.moveGroup === "medium" ? qsTr("中速") : "")
-                            color: uiTheme.secondaryText; font.pixelSize: 12
+                            color: uiTheme.secondaryText; font.pixelSize: 14
                         }
+                    }
+
+                    Rectangle {
+                        visible: root.awaitingStart
+                        x: (root.currentTrial ? root.currentTrial.startX : 0) - root.sceneOX - 22
+                        y: (root.currentTrial ? root.currentTrial.startY : 0) - root.sceneOY - 22
+                        width: 44; height: 44; radius: 22
+                        color: "#146F99"; border.color: "#FFFFFF"; border.width: 3
+                        Text { font.family: uiTheme.fontFamily; anchors.centerIn: parent; text: qsTr("起点"); color: "white"; font.pixelSize: 14 }
                     }
 
                     // 射击反馈（锚定实际 aim 坐标）
@@ -491,7 +656,7 @@ Item {
                         color: "transparent"
                         border.width: 5
                         border.color: root.lastWasHit ? uiTheme.success : (root.lastWasBlocked ? uiTheme.warning : uiTheme.danger)
-                        Text {
+                        Text { font.family: uiTheme.fontFamily;
                             anchors.centerIn: parent
                             text: root.lastWasHit ? qsTr("命中") : (root.lastWasBlocked ? qsTr("被遮挡") : qsTr("脱靶"))
                             color: parent.border.color
@@ -501,9 +666,12 @@ Item {
 
                     // 准星（场景局部坐标）
                     Item {
+                        id: liveAimCursor
                         visible: root.phase === "target_visible" || root.phase === "shot_feedback"
-                        x: root.phase === "shot_feedback" ? root.shotAimX : root.aimX
-                        y: root.phase === "shot_feedback" ? root.shotAimY : root.aimY
+                        x: root.aimX
+                        y: root.aimY
+                        Rectangle { width: 6; height: 32; color: "#101820"; x: -3; y: -16 }
+                        Rectangle { width: 32; height: 6; color: "#101820"; x: -16; y: -3 }
                         Rectangle { width: 2; height: 28; color: uiTheme.warning; x: -1; y: -14 }
                         Rectangle { width: 28; height: 2; color: uiTheme.warning; x: -14; y: -1 }
                         Rectangle { width: 10; height: 10; radius: 5; color: "transparent"; border.width: 2; border.color: uiTheme.warning; x: -5; y: -5 }
@@ -512,13 +680,13 @@ Item {
 
                     // 场景内状态提示
                     Text {
-                        x: 40; y: 130
+                        x: 16; y: 12
                         visible: root.phase === "target_visible"
-                        text: root.currentTrial && root.currentTrial.kind === "occluded" && root.occludedNow
+                        text: !root.inputReady ? qsTr("等待脑控输入…") : root.awaitingStart ? (root.brainInput ? qsTr("移到蓝色起点并确认") : qsTr("先点击蓝色起点，再移动到靶心射击")) : root.currentTrial && root.currentTrial.kind === "occluded" && root.occludedNow
                               ? qsTr("靶体被挡板遮挡：等待露出窗口再射击")
                               : (root.onTarget
-                                 ? qsTr("已在靶内：按确认/左键射击")
-                                 : qsTr("移动准星对准环形靶（距离 %1px / 半径 %2px）").arg(Math.round(root.distToTarget)).arg(root.targetR))
+                                 ? qsTr("已瞄准 · 点击射击")
+                                 : qsTr("移动准星，瞄准靶心"))
                         color: root.occludedNow ? uiTheme.warning : (root.onTarget ? uiTheme.success : uiTheme.secondaryText)
                         font.pixelSize: 15; font.family: uiTheme.fontFamily; font.bold: root.onTarget
                     }
@@ -530,13 +698,14 @@ Item {
                         hoverEnabled: true
                         acceptedButtons: Qt.LeftButton
                         onPositionChanged: function(mouse) {
-                            root.lastMouseAt = root.localElapsed
-                            if (root.phase === "target_visible")
-                                root.setAimSceneLocal(mouse.x, mouse.y, "mouse")
+                            if (!root.rememberMouse(mouse.x, mouse.y, false)) return
+                            // Local input ownership is held until session restart.
+                            root.setAimSceneLocal(mouse.x, mouse.y, "mouse")
                         }
                         onClicked: function(mouse) {
+                            root.rememberMouse(mouse.x, mouse.y, true)
                             if (root.phase !== "target_visible") return
-                            root.lastMouseAt = root.localElapsed
+                            // Local input ownership is held until session restart.
                             // 先更新最新准星坐标，再判定射击（不用上一帧缓存）
                             root.setAimSceneLocal(mouse.x, mouse.y, "mouse")
                             root.requestShot("mouse")
@@ -544,34 +713,23 @@ Item {
                     }
                 }
 
-                // 右侧指标
-                Rectangle {
-                    x: 743; y: 116; width: 233; height: 483
-                    color: "transparent"
-                    border.color: uiTheme.panelBorder; border.width: 1
-                    Column {
-                        x: 16; y: 14; spacing: 8; width: 201
-
-                        Text { text: qsTr("已射击"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
-                        Text { text: qsTr("%1 / %2").arg(Math.min(root.trialIndex + (root.phase === "shot_feedback" ? 1 : 0), root.trialPlan.length)).arg(root.trialPlan.length); color: uiTheme.primaryText; font.pixelSize: 24; font.family: uiTheme.fontFamily; font.bold: true }
-
-                        Text { text: qsTr("命中率"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
-                        Text { text: (root.trialIndex > 0 ? Math.round(root.hits / Math.max(1, root.hits + root.misses) * 100) : 0) + "%"; color: uiTheme.success; font.pixelSize: 22; font.family: uiTheme.fontFamily; font.bold: true }
-
-                        Text { text: qsTr("命中 / 脱靶 / 超时"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
-                        Text { text: qsTr("%1 / %2 / %3").arg(root.hits).arg(root.misses).arg(root.timeouts); color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true }
-
-                        Text { text: qsTr("最近误差"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
-                        Text { text: root.phase === "shot_feedback" ? Math.round(root.lastDistance) + " px" : "—"; color: root.lastWasHit ? uiTheme.success : uiTheme.danger; font.pixelSize: 20; font.family: uiTheme.fontFamily; font.bold: true }
-
-                        Text { text: qsTr("最近首动延迟"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
-                        Text { text: root.firstActionLatency >= 0 ? root.firstActionLatency.toFixed(3) + " s" : qsTr("未动"); color: uiTheme.warning; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true }
-
-                        Text { text: qsTr("目标半径"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
-                        Text { text: root.targetR + " px"; color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true }
-
-                        Text { text: qsTr("本试次用时"); color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily }
-                        Text { text: root.phase === "target_visible" ? (root.hostElapsed() - root.trialStartedAt).toFixed(1) + " s" : "—"; color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true }
+                // Floating summary: no card or enclosing game field.
+                Row {
+                    x: root.sceneInset; y: root.height - root.sceneBottom + 12; spacing: Math.min(48, root.width * 0.04)
+                    Row {
+                        spacing: 12
+                        Text { font.family: uiTheme.fontFamily; text: qsTr("命中"); color: "#929B98"; font.pixelSize: 14; anchors.baseline: hitCount.baseline }
+                        Text { font.family: uiTheme.fontFamily; id: hitCount; text: root.hits.toString().padStart(2, "0"); color: "#E9EEE9"; font.pixelSize: 26; font.bold: true }
+                    }
+                    Row {
+                        spacing: 12
+                        Text { font.family: uiTheme.fontFamily; text: qsTr("准确率"); color: "#929B98"; font.pixelSize: 14; anchors.baseline: accuracy.baseline }
+                        Text { font.family: uiTheme.fontFamily; id: accuracy; text: Math.round(root.hits / Math.max(1, root.hits + root.misses) * 100) + "%"; color: "#B4D8C4"; font.pixelSize: 26 }
+                    }
+                    Text { font.family: uiTheme.fontFamily;
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: root.phase === "shot_feedback" ? (root.lastWasHit ? qsTr("漂亮的一击") : qsTr("调整一下，再试下一靶")) : qsTr("%1 / %2 已完成").arg(root.trialIndex).arg(root.trialPlan.length)
+                        color: "#929B98"; font.pixelSize: 14
                     }
                 }
             }
@@ -591,14 +749,14 @@ Item {
                 source: root.inputSource
                 keyboardHint: qsTr("方向键/WASD 移动准星，确认/空格射击")
                 mouseHint: qsTr("鼠标移动准星，左键射击")
-                bciHint: qsTr("Cursor 定位 + Trigger/Confirm 射击")
+                bciHint: qsTr("脑控移动准星，确认射击")
             }
 
             Item { width: Math.max(24, parent.width - 360) }
 
             Text {
                 anchors.verticalCenter: parent.verticalCenter
-                text: root.phase === "complete" ? qsTr("会话结束") : (root.phase === "shot_feedback" ? qsTr("反馈中…") : qsTr("准备射击"))
+                text: root.phase === "complete" ? qsTr("会话结束") : (!root.inputReady ? qsTr("等待脑控输入…") : (root.phase === "shot_feedback" ? qsTr("反馈中…") : qsTr("准备射击")))
                 color: uiTheme.secondaryText
                 font.pixelSize: uiTheme.captionPx
                 font.family: uiTheme.fontFamily
@@ -612,9 +770,9 @@ Item {
             color: uiTheme.background
             opacity: 0.75
             visible: root.isPaused
-            Text {
+            Text { font.family: uiTheme.fontFamily;
                 anchors.centerIn: parent
-                text: qsTr("已暂停")
+                text: root.sessionStopped ? qsTr("训练已停止") : qsTr("已暂停")
                 color: uiTheme.warning
                 font.pixelSize: 36
                 font.bold: true

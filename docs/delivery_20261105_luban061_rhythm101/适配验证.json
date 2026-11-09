@@ -1,0 +1,902 @@
+{
+  "version": "1.0.1",
+  "responsive_offscreen": {
+    "passed": true,
+    "platform": "offscreen",
+    "scope": "Actual Qt QTest input, mock host; not Windows Neuralife or EEG",
+    "checks": [
+      {
+        "requested": [
+          800,
+          640
+        ],
+        "actual": [
+          800,
+          640
+        ],
+        "layout": {
+          "w": 800,
+          "h": 578,
+          "boardX": 20,
+          "boardY": 106,
+          "boardW": 506,
+          "boardH": 380,
+          "scale": 1,
+          "pps": 62.75,
+          "sideX": 550,
+          "sideY": 106,
+          "sideW": 230,
+          "sideBottom": 502.6,
+          "footer": 486,
+          "stacked": false
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "requested": [
+          1000,
+          700
+        ],
+        "actual": [
+          1000,
+          700
+        ],
+        "layout": {
+          "w": 1000,
+          "h": 638,
+          "boardX": 32,
+          "boardY": 106,
+          "boardW": 682,
+          "boardH": 440,
+          "scale": 1,
+          "pps": 77.75,
+          "sideX": 738,
+          "sideY": 106,
+          "sideW": 230,
+          "sideBottom": 502.6,
+          "footer": 546,
+          "stacked": false
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "requested": [
+          1920,
+          1080
+        ],
+        "actual": [
+          1920,
+          1080
+        ],
+        "layout": {
+          "w": 1920,
+          "h": 1018,
+          "boardX": 32,
+          "boardY": 106,
+          "boardW": 1544,
+          "boardH": 820,
+          "scale": 1,
+          "pps": 172.75,
+          "sideX": 1600,
+          "sideY": 106,
+          "sideW": 288,
+          "sideBottom": 590.6,
+          "footer": 926,
+          "stacked": false
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "requested": [
+          2560,
+          1080
+        ],
+        "actual": [
+          2560,
+          1080
+        ],
+        "layout": {
+          "w": 2560,
+          "h": 1018,
+          "boardX": 32,
+          "boardY": 106,
+          "boardW": 2184,
+          "boardH": 820,
+          "scale": 1,
+          "pps": 172.75,
+          "sideX": 2240,
+          "sideY": 106,
+          "sideW": 288,
+          "sideBottom": 590.6,
+          "footer": 926,
+          "stacked": false
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "requested": [
+          600,
+          1100
+        ],
+        "actual": [
+          600,
+          1100
+        ],
+        "layout": {
+          "w": 600,
+          "h": 1038,
+          "boardX": 20,
+          "boardY": 122,
+          "boardW": 560,
+          "boardH": 474,
+          "scale": 1,
+          "pps": 86.25,
+          "sideX": 20,
+          "sideY": 612,
+          "sideW": 560,
+          "sideBottom": 870.3,
+          "footer": 926,
+          "stacked": true
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "requested": [
+          480,
+          1000
+        ],
+        "actual": [
+          480,
+          1000
+        ],
+        "layout": {
+          "w": 480,
+          "h": 888,
+          "boardX": 20,
+          "boardY": 122,
+          "boardW": 440,
+          "boardH": 324,
+          "scale": 1,
+          "pps": 48.75,
+          "sideX": 20,
+          "sideY": 462,
+          "sideW": 440,
+          "sideBottom": 720.3,
+          "footer": 776,
+          "stacked": true
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "requested": [
+          480,
+          640
+        ],
+        "actual": [
+          480,
+          640
+        ],
+        "layout": {
+          "w": 480,
+          "h": 528,
+          "boardX": 20,
+          "boardY": 122,
+          "boardW": 440,
+          "boardH": 180,
+          "scale": 1,
+          "pps": 12.75,
+          "sideX": 20,
+          "sideY": 318,
+          "sideW": 440,
+          "sideBottom": 388,
+          "footer": 416,
+          "stacked": true
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "fullscreen_actual": [
+          800,
+          800
+        ],
+        "visibility": 5,
+        "layout": {
+          "w": 800,
+          "h": 738,
+          "boardX": 20,
+          "boardY": 106,
+          "boardW": 506,
+          "boardH": 540,
+          "scale": 1,
+          "pps": 102.75,
+          "sideX": 550,
+          "sideY": 106,
+          "sideW": 230,
+          "sideBottom": 502.6,
+          "footer": 646,
+          "stacked": false
+        }
+      },
+      {
+        "minimum_results_submit_reachable": true
+      },
+      {
+        "legacy_fill": true,
+        "native_mouse_after_resize": true,
+        "unload_restores_original_binding": true
+      },
+      {
+        "embedded_toolbar_not_expanded": true
+      }
+    ],
+    "messages": [
+      "Populating font family aliases took 27 ms. Replace uses of missing font family \"Sans Serif\" with one that exists to avoid this cost. ",
+      "Using Qt multimedia with FFmpeg version 9.0.1 LGPL version 2.1 or later",
+      "Unable to read property \"kAudioDevicePropertyPreferredChannelsForStereo\" for object 1 , scope \"kAudioObjectPropertyScopeGlobal\" ; Err: 1852797029 \n  If the warning is unexpected use test_audio_config to get comprehensive audio info and report a bug",
+      "Unable to read property \"kAudioDevicePropertyPreferredChannelsForStereo\" for object 1 , scope \"kAudioObjectPropertyScopeGlobal\" ; Err: 1852797029 \n  If the warning is unexpected use test_audio_config to get comprehensive audio info and report a bug",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device",
+      "QSoundEffect: playback of this format is not supported on the selected audio device"
+    ]
+  },
+  "responsive_native": {
+    "passed": true,
+    "platform": "cocoa",
+    "scope": "Actual Qt QTest input, mock host; not Windows Neuralife or EEG",
+    "checks": [
+      {
+        "requested": [
+          800,
+          640
+        ],
+        "actual": [
+          800,
+          640
+        ],
+        "layout": {
+          "w": 800,
+          "h": 578,
+          "boardX": 20,
+          "boardY": 106,
+          "boardW": 506,
+          "boardH": 380,
+          "scale": 1,
+          "pps": 62.75,
+          "sideX": 550,
+          "sideY": 106,
+          "sideW": 230,
+          "sideBottom": 502.6,
+          "footer": 486,
+          "stacked": false
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "requested": [
+          1000,
+          700
+        ],
+        "actual": [
+          1000,
+          700
+        ],
+        "layout": {
+          "w": 1000,
+          "h": 638,
+          "boardX": 32,
+          "boardY": 106,
+          "boardW": 682,
+          "boardH": 440,
+          "scale": 1,
+          "pps": 77.75,
+          "sideX": 738,
+          "sideY": 106,
+          "sideW": 230,
+          "sideBottom": 502.6,
+          "footer": 546,
+          "stacked": false
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "requested": [
+          1920,
+          1080
+        ],
+        "actual": [
+          1920,
+          826
+        ],
+        "layout": {
+          "w": 1920,
+          "h": 764,
+          "boardX": 32,
+          "boardY": 106,
+          "boardW": 1544,
+          "boardH": 566,
+          "scale": 1,
+          "pps": 109.25,
+          "sideX": 1600,
+          "sideY": 106,
+          "sideW": 288,
+          "sideBottom": 590.6,
+          "footer": 672,
+          "stacked": false
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "requested": [
+          2560,
+          1080
+        ],
+        "actual": [
+          2560,
+          826
+        ],
+        "layout": {
+          "w": 2560,
+          "h": 764,
+          "boardX": 32,
+          "boardY": 106,
+          "boardW": 2184,
+          "boardH": 566,
+          "scale": 1,
+          "pps": 109.25,
+          "sideX": 2240,
+          "sideY": 106,
+          "sideW": 288,
+          "sideBottom": 590.6,
+          "footer": 672,
+          "stacked": false
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "requested": [
+          600,
+          1100
+        ],
+        "actual": [
+          600,
+          826
+        ],
+        "layout": {
+          "w": 600,
+          "h": 764,
+          "boardX": 20,
+          "boardY": 122,
+          "boardW": 560,
+          "boardH": 200,
+          "scale": 1,
+          "pps": 17.75,
+          "sideX": 20,
+          "sideY": 338,
+          "sideW": 560,
+          "sideBottom": 596.3,
+          "footer": 652,
+          "stacked": true
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "requested": [
+          480,
+          1000
+        ],
+        "actual": [
+          480,
+          826
+        ],
+        "layout": {
+          "w": 480,
+          "h": 714,
+          "boardX": 20,
+          "boardY": 122,
+          "boardW": 440,
+          "boardH": 180,
+          "scale": 1,
+          "pps": 12.75,
+          "sideX": 20,
+          "sideY": 318,
+          "sideW": 440,
+          "sideBottom": 576.3,
+          "footer": 602,
+          "stacked": true
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "requested": [
+          480,
+          640
+        ],
+        "actual": [
+          480,
+          640
+        ],
+        "layout": {
+          "w": 480,
+          "h": 528,
+          "boardX": 20,
+          "boardY": 122,
+          "boardW": 440,
+          "boardH": 180,
+          "scale": 1,
+          "pps": 12.75,
+          "sideX": 20,
+          "sideY": 318,
+          "sideW": 440,
+          "sideBottom": 388,
+          "footer": 416,
+          "stacked": true
+        },
+        "timeline_unchanged": true
+      },
+      {
+        "fullscreen_actual": [
+          1470,
+          919
+        ],
+        "visibility": 5,
+        "layout": {
+          "w": 1470,
+          "h": 857,
+          "boardX": 32,
+          "boardY": 106,
+          "boardW": 1094,
+          "boardH": 659,
+          "scale": 1,
+          "pps": 132.5,
+          "sideX": 1150,
+          "sideY": 106,
+          "sideW": 288,
+          "sideBottom": 590.6,
+          "footer": 765,
+          "stacked": false
+        }
+      },
+      {
+        "minimum_results_submit_reachable": true
+      },
+      {
+        "legacy_fill": true,
+        "native_mouse_after_resize": true,
+        "unload_restores_original_binding": true
+      },
+      {
+        "embedded_toolbar_not_expanded": true
+      }
+    ],
+    "messages": [
+      "Using Qt multimedia with FFmpeg version 9.0.1 LGPL version 2.1 or later"
+    ]
+  },
+  "original_engine": {
+    "engine": "Node VM independent checks",
+    "passed": 30,
+    "total": 30,
+    "checks": [
+      {
+        "name": "deterministic chart from seed",
+        "passed": true
+      },
+      {
+        "name": "five curricula and balanced directions",
+        "passed": true
+      },
+      {
+        "name": "config clamps invalid numeric and input aliases",
+        "passed": true
+      },
+      {
+        "name": "exact early and late boundary allowed",
+        "passed": true
+      },
+      {
+        "name": "outside early does not consume note",
+        "passed": true
+      },
+      {
+        "name": "outside late produces one miss and one stray",
+        "passed": true
+      },
+      {
+        "name": "wrong direction can be corrected inside same window",
+        "passed": true
+      },
+      {
+        "name": "duplicate held true cannot score twice",
+        "passed": true
+      },
+      {
+        "name": "held must be released for next same-direction note",
+        "passed": true
+      },
+      {
+        "name": "pulse treats every true as command, no duplicate reward",
+        "passed": true
+      },
+      {
+        "name": "full held note coverage is one",
+        "passed": true
+      },
+      {
+        "name": "released hold cannot recover past coverage",
+        "passed": true
+      },
+      {
+        "name": "pulse single command expires, not held forever",
+        "passed": true
+      },
+      {
+        "name": "pulse gap contributes no coverage",
+        "passed": true
+      },
+      {
+        "name": "pulse frequent renewal covers entire duration",
+        "passed": true
+      },
+      {
+        "name": "held wrong simultaneous direction excludes its overlap only",
+        "passed": true
+      },
+      {
+        "name": "pulse wrong direction immediately invalidates prior renewal",
+        "passed": true
+      },
+      {
+        "name": "early hold does not count pretarget time",
+        "passed": true
+      },
+      {
+        "name": "late hold does not backfill uncovered beginning",
+        "passed": true
+      },
+      {
+        "name": "pause freezes clock and expires held/pulse intent",
+        "passed": true
+      },
+      {
+        "name": "stop freezes and finish refuses incomplete session",
+        "passed": true
+      },
+      {
+        "name": "large step crosses all five rounds without lost misses",
+        "passed": true
+      },
+      {
+        "name": "bad dt values ignored safely",
+        "passed": true
+      },
+      {
+        "name": "direction confusion and outcome metrics recompute from logs",
+        "passed": true
+      },
+      {
+        "name": "miss without attempts has null direction and timing sample",
+        "passed": true
+      },
+      {
+        "name": "sequence and switching denominators explicit",
+        "passed": true
+      },
+      {
+        "name": "all note target times coincide with beat plan",
+        "passed": true
+      },
+      {
+        "name": "all output events carry consistent active time",
+        "passed": true
+      },
+      {
+        "name": "miss wrong direction and incomplete hold never show success",
+        "passed": true
+      },
+      {
+        "name": "intentActive follows pulse validity and clears on wrong direction",
+        "passed": true
+      }
+    ]
+  },
+  "original_native": {
+    "environment": "macOS PySide6 6.12.0 actual QQuickView; simulated host/BCI, native keyboard and clicks",
+    "checks": [
+      {
+        "name": "qml_loaded",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "five_audio_assets_ready",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "countdown_updates",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_pause_button",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pause_clock_frozen",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_resume_button",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "round1_auto_started",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "resize_preserves_timeline_800",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "layout_no_footer_overlap_800",
+        "passed": true,
+        "detail": {
+          "bottom": 502.6,
+          "footer": 511,
+          "boardW": 506
+        }
+      },
+      {
+        "name": "resize_preserves_timeline_1100",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "layout_no_footer_overlap_1100",
+        "passed": true,
+        "detail": {
+          "bottom": 502.6,
+          "footer": 691,
+          "boardW": 782
+        }
+      },
+      {
+        "name": "resize_preserves_timeline_1440",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "layout_no_footer_overlap_1440",
+        "passed": true,
+        "detail": {
+          "bottom": 590.6,
+          "footer": 697,
+          "boardW": 1064
+        }
+      },
+      {
+        "name": "round_1_entered",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r1n1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r1n2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r1n3",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r1n4",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "round_1_rest",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "round_2_entered",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r2n1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r2n2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r2n3",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r2n4",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "round_2_rest",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "round_3_entered",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r3n1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r3n2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r3n3",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r3n4",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "round_3_rest",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "round_4_entered",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r4n1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r4n2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r4n3",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r4n4",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "round_4_rest",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "round_5_entered",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r5n1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r5n2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r5n3",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_key_r5n4",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "five_rounds_auto_results",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "perfect_native_session",
+        "passed": true,
+        "detail": 20
+      },
+      {
+        "name": "finish_once",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "finish_button_updates",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pulse_mode_round4",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "single_pulse_not_permanent",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pulse_renewal_completes",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pulse_pause_frozen",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "stop_is_interruption",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "stopped_no_finish",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "no_qml_runtime_errors",
+        "passed": true,
+        "detail": []
+      }
+    ],
+    "passed": 53,
+    "total": 53,
+    "messages": [
+      "Using Qt multimedia with FFmpeg version 9.0.1 LGPL version 2.1 or later"
+    ]
+  },
+  "scope": "Actual macOS Qt software/Metal and simulated host; Windows Neuralife and EEG devices NOT TESTED"
+}

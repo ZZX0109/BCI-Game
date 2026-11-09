@@ -175,7 +175,9 @@ def scen_tr03_collision(r):
 def scen_tr03_safe_crossing(r):
     """等到真实安全间隙：碰撞 0 次到达对岸。"""
     start_playing(r)
-    spent = cross_cautiously(r, timeout=45.0)
+    # 0.5.0 C01 车流下，第一个覆盖全程的安全空档约在 43.4s 才出现
+    # （实测 60s 内仅 7 帧满足 dash_safe）。45s 会在冲刺途中超时，给到 90s。
+    spent = cross_cautiously(r, timeout=90.0)
     cleared = r.game.payloads("traffic.level_cleared")
     r.check("TR-03j 安全过街成功", bool(cleared), f"用了 {spent:.1f}s 模拟时间")
     r.check_eq("TR-03k 全程 0 碰撞", r.get("collisionsThisLevel"), 0)
@@ -197,9 +199,12 @@ def scen_tr06_three_inputs(r):
     kb_x = r.get("crossingX")
     r.check("TR-06a 键盘能前进", kb_x > x0, f"{x0:.3f} -> {kb_x:.3f}")
     segs = r.game.payloads("traffic.move_segment")
-    r.check("TR-06b 键盘移动段来源记为 keyboard",
-            any(s.get("source") == "keyboard" for s in segs),
-            f"来源={[s.get('source') for s in segs]}")
+    # 0.5.0 有意变更：落盘的 move_segment.source 归并为 local|bci，
+    # 键盘/鼠标的区分改由运行时 activeSource 承载（pressDirection 里赋值）。
+    r.check("TR-06b 键盘通道仍可辨识（activeSource=keyboard，落盘归并 local）",
+            r.get("activeSource") == "keyboard"
+            and bool(segs) and all(s.get("source") == "local" for s in segs),
+            f"activeSource={r.get('activeSource')} 来源={[s.get('source') for s in segs]}")
 
     # --- 真实鼠标点击（QTest 打在 MouseArea 上）---
     r.pump(0.2)
@@ -212,9 +217,10 @@ def scen_tr06_three_inputs(r):
     r.check("TR-06c 鼠标按住能前进", mouse_x > before + 0.05,
             f"{before:.3f} -> {mouse_x:.3f}（点在 {pt.x()},{pt.y()}）")
     segs = r.game.payloads("traffic.move_segment")
-    r.check("TR-06d 鼠标移动段来源记为 mouse",
-            any(s.get("source") == "mouse" for s in segs),
-            f"来源={[s.get('source') for s in segs]}")
+    r.check("TR-06d 鼠标通道仍可辨识（activeSource=mouse，落盘归并 local）",
+            r.get("activeSource") == "mouse"
+            and len(segs) >= 2 and all(s.get("source") == "local" for s in segs),
+            f"activeSource={r.get('activeSource')} 来源={[s.get('source') for s in segs]}")
 
     # --- 模拟脑控（另起一个 bci 会话）---
     bci = fake_host.Runner("traffic", ROOT, input_source="bci").boot()
@@ -241,6 +247,10 @@ def scen_tr06_three_inputs(r):
                 f"比值={[round(x, 3) for x in ratio]}（键盘车流 {len(kb_speeds)} 车道）")
         r.check_eq("TR-06h 脑控会话 inputSource 记为 bci",
                    bci.game.payloads("traffic.attempt_started")[0].get("inputSource"), "bci")
+        bsegs = bci.game.payloads("traffic.move_segment")
+        r.check("TR-06i 脑控移动段落盘为 bci（与 local 可区分）",
+                bool(bsegs) and all(s.get("source") == "bci" for s in bsegs),
+                f"来源={[s.get('source') for s in bsegs]}")
     finally:
         bci.view.close()
 

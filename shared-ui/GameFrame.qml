@@ -1,18 +1,21 @@
 import QtQuick
 
-// 统一外框：对齐宿主样例 pong/balance 的视觉语言——
-// 全出血暗色场景 + 米白粗边框 + 悬浮文字 HUD，不使用面板条。
+// 开放场景：所有游戏共享留白与悬浮 HUD，不绘制游戏外框。
 Rectangle {
     id: root
     color: theme.background
-    border.width: 4
-    border.color: theme.primaryText
+    border.width: 0
 
     required property var theme
     property string title: ""
     property string subtitle: ""
     property string mode: ""
     property string inputSource: "LOCAL"
+    property bool legacyWindowFillEnabled: true
+    readonly property real hudScale: Math.min(1.4, Math.max(1, Math.min(width, height) / 700))
+    readonly property real contentInset: Math.max(20, Math.min(40, width * 0.025))
+    readonly property real sceneTop: 104
+    readonly property real sceneBottom: 88
     property alias contentItem: contentItem
     property alias overlayItem: overlayItem
     // 兼容旧接口：游戏仍可把提示行 parent 到 bottomBar；
@@ -25,59 +28,70 @@ Rectangle {
         anchors.fill: parent
     }
 
-    // 顶部悬浮 HUD（透明，仅文字，pong 式大标题居中）
+    // HUD 不占据场景坐标；布局变化不会改变指针到场景的映射。
     Item {
         id: topHud
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        height: 72
+        height: root.sceneTop
         z: 50
 
         Text {
             id: titleText
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: root.contentInset
             anchors.top: parent.top
-            anchors.topMargin: 10
+            anchors.topMargin: 18
+            width: Math.max(1, root.width * 0.58 - root.contentInset)
+            elide: Text.ElideRight
             text: root.title
-            color: "#dddddd"
-            font.pixelSize: 28
+            color: theme.primaryText
+            font.pixelSize: Math.min(26 * root.hudScale, root.width * 0.038)
             font.family: theme.fontFamily
-            font.bold: true
+            font.weight: Font.DemiBold
         }
 
         Text {
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.left: titleText.left
             anchors.top: titleText.bottom
-            anchors.topMargin: 2
+            anchors.topMargin: 5
             visible: root.subtitle !== ""
             text: root.subtitle
+            width: titleText.width
+            horizontalAlignment: Text.AlignLeft
+            elide: Text.ElideRight
             color: theme.secondaryText
-            font.pixelSize: theme.captionPx
+            font.pixelSize: Math.round(theme.captionPx * root.hudScale)
             font.family: theme.fontFamily
         }
 
         Text {
             id: inputBadge
             anchors.right: parent.right
-            anchors.rightMargin: 24
-            anchors.top: parent.top
-            anchors.topMargin: 14
-            text: "[" + root.inputSource.toUpperCase() + "]"
-            color: theme.primary
-            font.pixelSize: theme.captionPx
+            anchors.rightMargin: root.contentInset
+            anchors.top: titleText.bottom
+            anchors.topMargin: 5
+            width: Math.max(1, root.width * 0.36 - root.contentInset)
+            horizontalAlignment: Text.AlignRight
+            elide: Text.ElideRight
+            text: /bci|brain/i.test(root.inputSource) ? "脑控" : "鼠标 / 键盘"
+            color: theme.secondaryText
+            font.pixelSize: Math.round(theme.captionPx * root.hudScale)
             font.family: theme.fontFamily
-            font.bold: true
         }
 
         Text {
-            anchors.right: inputBadge.left
-            anchors.rightMargin: 16
+            anchors.right: parent.right
+            anchors.rightMargin: root.contentInset
             anchors.top: parent.top
-            anchors.topMargin: 14
+            anchors.topMargin: 18
             text: root.mode
-            color: theme.secondaryText
-            font.pixelSize: theme.bodyPx
+            width: Math.max(1, root.width * 0.36 - root.contentInset)
+            horizontalAlignment: Text.AlignRight
+            elide: Text.ElideRight
+            color: theme.primaryText
+            font.pixelSize: Math.round(theme.bodyPx * root.hudScale)
             font.family: theme.fontFamily
         }
     }
@@ -97,5 +111,19 @@ Rectangle {
         id: overlayItem
         anchors.fill: parent
         z: 100
+    }
+    LegacyWindowFill {
+        id: windowFill
+        objectName: "legacyWindowFill"
+        gameRoot: root.parent
+        autoFillEnabled: root.legacyWindowFillEnabled
+    }
+    LayoutProbe {
+        objectName: "runtimeLayoutProbe"
+        anchors.fill: parent
+        theme: root.theme
+        gameRoot: root.parent
+        adaptationStatus: windowFill.statusText
+        z: 5000
     }
 }

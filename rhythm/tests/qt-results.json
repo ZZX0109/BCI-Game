@@ -1,0 +1,287 @@
+{
+  "environment": "macOS PySide6 6.12.0 actual QQuickView; simulated host/BCI, native keyboard and clicks",
+  "checks": [
+    {
+      "name": "qml_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "five_audio_assets_ready",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "countdown_updates",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_pause_button",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause_clock_frozen",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_resume_button",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "round1_auto_started",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resize_preserves_timeline_800",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "layout_no_footer_overlap_800",
+      "passed": true,
+      "detail": {
+        "bottom": 502.6,
+        "footer": 511,
+        "boardW": 506
+      }
+    },
+    {
+      "name": "resize_preserves_timeline_1100",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "layout_no_footer_overlap_1100",
+      "passed": true,
+      "detail": {
+        "bottom": 502.6,
+        "footer": 691,
+        "boardW": 782
+      }
+    },
+    {
+      "name": "resize_preserves_timeline_1440",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "layout_no_footer_overlap_1440",
+      "passed": true,
+      "detail": {
+        "bottom": 590.6,
+        "footer": 697,
+        "boardW": 1064
+      }
+    },
+    {
+      "name": "round_1_entered",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r1n1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r1n2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r1n3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r1n4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "round_1_rest",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "round_2_entered",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r2n1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r2n2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r2n3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r2n4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "round_2_rest",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "round_3_entered",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r3n1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r3n2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r3n3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r3n4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "round_3_rest",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "round_4_entered",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r4n1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r4n2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r4n3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r4n4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "round_4_rest",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "round_5_entered",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r5n1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r5n2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r5n3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_key_r5n4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "five_rounds_auto_results",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "perfect_native_session",
+      "passed": true,
+      "detail": 20
+    },
+    {
+      "name": "finish_once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "finish_button_updates",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pulse_mode_round4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "single_pulse_not_permanent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pulse_renewal_completes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pulse_pause_frozen",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stop_is_interruption",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stopped_no_finish",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no_qml_runtime_errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "passed": 53,
+  "total": 53,
+  "messages": [
+    "Using Qt multimedia with FFmpeg version 9.0.1 LGPL version 2.1 or later"
+  ]
+}

@@ -1,0 +1,13 @@
+# 论文与个人资料（非游戏源码）
+*.pdf
+_paper_text.txt
+_paper2_text.txt
+知识图谱_InternalModels.html
+
+# 交付包存档（体积大，不属于源码）
+游戏截图/
+游戏源码包/
+游戏源码包.zip
+
+# Python 运行产物
+__pycache__/

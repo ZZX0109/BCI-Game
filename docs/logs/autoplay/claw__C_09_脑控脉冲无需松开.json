@@ -1,0 +1,79 @@
+{
+  "game": "claw",
+  "scenario": "C-09 脑控脉冲无需松开",
+  "ok": true,
+  "passed": 3,
+  "total": 3,
+  "error": null,
+  "checks": [
+    {
+      "check": "C-09a 脑控默认离散脉冲",
+      "ok": true,
+      "detail": "实际='pulse' 期望='pulse'"
+    },
+    {
+      "check": "C-09b 单次指令无需松开即移动一步",
+      "ok": true,
+      "detail": "Δ=26.0 pulseStep=26.0"
+    },
+    {
+      "check": "C-09c 不松开也不会持续漂移",
+      "ok": true,
+      "detail": "Δ 26.0 -> 26.0"
+    }
+  ],
+  "simSeconds": 0.456,
+  "finished": false,
+  "eventCount": 2,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "claw.attempt_started",
+      "data": {
+        "assistEnabled": false,
+        "attemptsTotal": 5,
+        "difficulty": "standard",
+        "gameVersion": "0.4.0",
+        "inputMode": "pulse",
+        "inputSource": "bci",
+        "seed": 42,
+        "taskMode": "precision_grasp_2d",
+        "tolerance": 40.0,
+        "toyPlan": [
+          {
+            "x": 130.0,
+            "z": 165.0
+          },
+          {
+            "x": 508.0,
+            "z": 114.0
+          },
+          {
+            "x": 404.0,
+            "z": 85.0
+          },
+          {
+            "x": 193.0,
+            "z": 78.0
+          },
+          {
+            "x": 264.0,
+            "z": 215.0
+          }
+        ]
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "claw.trial_started",
+      "data": {
+        "attempt": 1,
+        "clawX": 350.0,
+        "clawZ": 140.0,
+        "elapsed": 0.0,
+        "toyX": 130.0,
+        "toyZ": 165.0
+      }
+    }
+  ]
+}

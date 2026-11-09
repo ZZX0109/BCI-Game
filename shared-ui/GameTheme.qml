@@ -2,7 +2,8 @@ import QtQuick
 
 // Neuralife 共享主题令牌
 // 依据宿主真实样例 balance/Main.qml 与 pong/Main.qml 的实代码取色：
-//   场景背景 #050505、前景 #f5f5ef、成功 #80ff9b、警告 #ffdf70、字体 Segoe UI。
+//   场景背景 #050505、前景 #f5f5ef、成功 #80ff9b、警告 #ffdf70。
+// 中英文共用同一字体家族；按平台选择已安装的中文字体，避免单独依赖系统补字。
 // themeIndex: 0=Dark（默认，对齐官方样例）, 1=Mint, 2=Light（占位，待宿主暴露后接入）
 // 宿主当前未暴露主题信号（game 对象仅含 elapsedSeconds/finish/inputSource/record/width/height），
 // 故默认固定 Dark。待宿主提供 themeIndex 或 colorScheme 后，在此处接入即可。
@@ -17,7 +18,7 @@ QtObject {
     readonly property color background: "#050505"
     readonly property color sceneBackground: "#050505"
     readonly property color panel: "#121212"
-    readonly property color panelBorder: "#333333"
+    readonly property color panelBorder: "#3b4a49"
 
     readonly property color primary: "#80ff9b"          // 成功/目标/进度
     readonly property color primaryHover: "#9dffb3"
@@ -34,13 +35,25 @@ QtObject {
     readonly property color info: "#80ff9b"             // 与 success 共用
 
     readonly property color primaryText: "#f5f5ef"      // 主文字
-    readonly property color secondaryText: "#8f938e"    // 次要文字
-    readonly property color disabledText: "#505450"     // 禁用文字
+    readonly property color secondaryText: "#b0bbb8"    // 次要文字
+    readonly property color disabledText: "#7b8983"     // 禁用文字
 
     readonly property color success: primary
     readonly property color failure: danger
 
-    readonly property string fontFamily: "Segoe UI"
+    readonly property string fontFamily: resolveFontFamily()
+    function resolveFontFamily() {
+        var available = Qt.fontFamilies()
+        var preferred = Qt.platform.os === "osx"
+            ? ["PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei UI", "Microsoft YaHei"]
+            : ["Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC"]
+        for (var i = 0; i < preferred.length; ++i)
+            if (available.indexOf(preferred[i]) >= 0) return preferred[i]
+        return Qt.application.font.family
+    }
+    function canvasFont(pixelSize, bold) {
+        return (bold ? "bold " : "") + pixelSize + 'px "' + fontFamily + '"'
+    }
 
     readonly property int titlePx: 28
     readonly property int headingPx: 22
@@ -50,5 +63,5 @@ QtObject {
     readonly property int frameTopHeight: 72
     readonly property int frameBottomHeight: 64
     readonly property int dialogRadius: 8
-    readonly property int buttonRadius: 4
+    readonly property int buttonRadius: 8
 }

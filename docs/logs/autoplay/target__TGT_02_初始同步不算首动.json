@@ -2,8 +2,8 @@
   "game": "target",
   "scenario": "TGT-02 初始同步不算首动",
   "ok": true,
-  "passed": 7,
-  "total": 7,
+  "passed": 8,
+  "total": 8,
   "error": null,
   "checks": [
     {
@@ -40,9 +40,14 @@
       "check": "TGT-02g 超过阈值才记首动",
       "ok": true,
       "detail": "firstActionLatency=1.8240000000000014"
+    },
+    {
+      "check": "TGT-02h 指针→场景映射与运行时布局一致",
+      "ok": true,
+      "detail": "p1=(260.0, 179.99999999999994) p2=(360.0, 230.0) logicalScale=1.05176"
     }
   ],
-  "simSeconds": 1.84,
+  "simSeconds": 1.872,
   "finished": false,
   "eventCount": 2,
   "events": [
@@ -50,7 +55,7 @@
       "t": 0.0,
       "name": "target.attempt_started",
       "data": {
-        "gameVersion": "0.4.0",
+        "gameVersion": "0.5.1",
         "inputSource": "local",
         "seed": 42,
         "taskMode": "static_accuracy",
@@ -61,23 +66,23 @@
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 136.0,
-            "y": 412.0
+            "x": 107.0,
+            "y": 421.0
           },
           {
             "distance": "free",
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 550.0,
-            "y": 317.0
+            "x": 740.0,
+            "y": 321.0
           },
           {
             "distance": "free",
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 436.0,
+            "x": 566.0,
             "y": 263.0
           },
           {
@@ -85,7 +90,7 @@
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 205.0,
+            "x": 212.0,
             "y": 250.0
           },
           {
@@ -93,32 +98,32 @@
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 283.0,
-            "y": 505.0
+            "x": 331.0,
+            "y": 520.0
           },
           {
             "distance": "free",
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 546.0,
-            "y": 245.0
+            "x": 735.0,
+            "y": 244.0
           },
           {
             "distance": "free",
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 153.0,
-            "y": 458.0
+            "x": 133.0,
+            "y": 470.0
           },
           {
             "distance": "free",
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 354.0,
-            "y": 217.0
+            "x": 441.0,
+            "y": 215.0
           }
         ]
       }
@@ -133,10 +138,25 @@
           "size": "standard"
         },
         "elapsed": 0.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
         "occlusion": null,
+        "plannedDistance": null,
+        "startX": null,
+        "startY": null,
         "targetR": 46.0,
-        "targetX": 136.0,
-        "targetY": 412.0,
+        "targetX": 107.0,
+        "targetY": 421.0,
         "totalTrials": 8,
         "trial": 1
       }

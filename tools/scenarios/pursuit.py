@@ -128,8 +128,45 @@ def scen_p06_mae_recount(r):
     r.check("P-06f 误差非零（有说服力）", f["mae2d"] > 0.01, f"mae={f['mae2d']:.4f}")
 
 
+def scen_p07_session_stop_guard(r):
+    """2026-11-05 版：停止后的旧会话不被继续信号复活，只有新 started 能重置。"""
+    r.start()
+    r.pump(1.0)
+    r.check_eq("P-08a 未给指针前停在倒计时", r.get("phase"), "countdown")
+    r.check_eq("P-08b 未给指针前不就绪", r.get("inputReady"), False)
+    r.check_eq("P-08c 训练计时未推进", r.get("roundElapsed"), 0.0)
+
+    r.pointer(500.0, 350.0)
+    r.pump(0.1)
+    r.check("P-08d 有效二维指针使输入就绪", r.get("inputReady") is True)
+    r.pump_until(lambda: r.get("phase") == "playing", 8.0, "进入训练")
+    r.check_eq("P-08e 就绪后进入训练", r.get("phase"), "playing")
+
+    r.game.stopping.emit()
+    r.pump(0.05)
+    r.check_eq("P-08f 停止标记已置位", r.get("sessionStopped"), True)
+    a = r.get("roundElapsed")
+    r.pump(1.0)
+    b = r.get("roundElapsed")
+    r.check("P-08g 停止期间训练计时冻结", abs(b - a) < 1e-6, f"Δ={b - a}")
+
+    r.resume()
+    r.pump(0.5)
+    c = r.get("roundElapsed")
+    r.check("P-08h 继续信号不能复活旧会话",
+            r.get("sessionStopped") is True and r.get("isPaused") is True
+            and abs(c - b) < 1e-6,
+            f"stopped={r.get('sessionStopped')} paused={r.get('isPaused')} Δ={c - b}")
+
+    r.start()                       # 新的 started 信号
+    r.check("P-08i 只有新 started 能重置",
+            r.get("sessionStopped") is False and r.get("isPaused") is False,
+            f"stopped={r.get('sessionStopped')} paused={r.get('isPaused')}")
+
+
 SCENARIOS = {
     "P-02 累计比例": scen_p02_inzone_ratio,
     "P-04 暂停不改相位": scen_p04_pause_frozen,
     "P-06 MAE可由样本重算": scen_p06_mae_recount,
+    "P-08 停止后会话不复活": (scen_p07_session_stop_guard, {"input_source": "bci"}),
 }

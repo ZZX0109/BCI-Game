@@ -14,7 +14,7 @@
     {
       "check": "TGT-03b 用的是当帧指针坐标",
       "ok": true,
-      "detail": "aim=(112.0,296.0) target=(112.0,296.0)"
+      "detail": "aim=(83.0,305.0) target=(83.0,305.0)"
     },
     {
       "check": "TGT-03c 距离在半径内",
@@ -45,7 +45,7 @@
       "t": 0.0,
       "name": "target.attempt_started",
       "data": {
-        "gameVersion": "0.4.0",
+        "gameVersion": "0.5.1",
         "inputSource": "local",
         "seed": 42,
         "taskMode": "static_accuracy",
@@ -56,23 +56,23 @@
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 136.0,
-            "y": 412.0
+            "x": 107.0,
+            "y": 421.0
           },
           {
             "distance": "free",
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 550.0,
-            "y": 317.0
+            "x": 740.0,
+            "y": 321.0
           },
           {
             "distance": "free",
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 436.0,
+            "x": 566.0,
             "y": 263.0
           },
           {
@@ -80,7 +80,7 @@
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 205.0,
+            "x": 212.0,
             "y": 250.0
           },
           {
@@ -88,32 +88,32 @@
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 283.0,
-            "y": 505.0
+            "x": 331.0,
+            "y": 520.0
           },
           {
             "distance": "free",
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 546.0,
-            "y": 245.0
+            "x": 735.0,
+            "y": 244.0
           },
           {
             "distance": "free",
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 153.0,
-            "y": 458.0
+            "x": 133.0,
+            "y": 470.0
           },
           {
             "distance": "free",
             "kind": "static",
             "r": 46.0,
             "size": "standard",
-            "x": 354.0,
-            "y": 217.0
+            "x": 441.0,
+            "y": 215.0
           }
         ]
       }
@@ -128,10 +128,25 @@
           "size": "standard"
         },
         "elapsed": 0.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
         "occlusion": null,
+        "plannedDistance": null,
+        "startX": null,
+        "startY": null,
         "targetR": 46.0,
-        "targetX": 136.0,
-        "targetY": 412.0,
+        "targetX": 107.0,
+        "targetY": 421.0,
         "totalTrials": 8,
         "trial": 1
       }
@@ -140,19 +155,34 @@
       "t": 0.976,
       "name": "target.shot_debug",
       "data": {
-        "aimX": 112.0,
-        "aimY": 296.0,
+        "actualDistance": null,
+        "aimX": 83.0,
+        "aimY": 305.0,
         "blocked": false,
         "condition": "standard",
         "distance": 0.0,
         "elapsed": 0.9760000000000008,
         "firstActionLatency": 0.9600000000000007,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": true,
         "occludedAtShot": null,
+        "plannedDistance": null,
         "source": "host_action",
         "targetR": 46.0,
-        "targetX": 112.0,
-        "targetY": 296.0,
+        "targetX": 83.0,
+        "targetY": 305.0,
         "trial": 1
       }
     },
@@ -160,19 +190,34 @@
       "t": 0.976,
       "name": "target.hit",
       "data": {
-        "aimX": 112.0,
-        "aimY": 296.0,
+        "actualDistance": null,
+        "aimX": 83.0,
+        "aimY": 305.0,
         "blocked": false,
         "condition": "standard",
         "distance": 0.0,
         "elapsed": 0.9760000000000008,
         "firstActionLatency": 0.9600000000000007,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": true,
         "occludedAtShot": null,
+        "plannedDistance": null,
         "source": "host_action",
         "targetR": 46.0,
-        "targetX": 112.0,
-        "targetY": 296.0,
+        "targetX": 83.0,
+        "targetY": 305.0,
         "trial": 1
       }
     }

@@ -135,8 +135,27 @@ def scen_c08_finish_consistent(r):
     r.check_eq("C-08j 试次号连续 1..5", [x.get("attempt") for x in results], [1, 2, 3, 4, 5])
 
 
+def scen_c09_bci_pulse(r):
+    """2026-11-05 版：脑控默认离散脉冲，单次指令无需松开事件即可移动一步。"""
+    r.start()
+    r.pump(0.1)
+    r.check_eq("C-09a 脑控默认离散脉冲", r.get("inputMode"), "pulse")
+    step = float(r.get("pulseStep"))
+    x0 = r.get("clawX")
+    r.action("right")               # 只发按下，刻意不发松开
+    r.pump(0.05)
+    d1 = r.get("clawX") - x0
+    r.check("C-09b 单次指令无需松开即移动一步", abs(d1 - step) < 1e-6,
+            f"Δ={d1} pulseStep={step}")
+    r.pump(0.2)
+    d2 = r.get("clawX") - x0
+    r.check("C-09c 不松开也不会持续漂移", abs(d2 - d1) < 1e-6,
+            f"Δ {d1} -> {d2}")
+
+
 SCENARIOS = {
     "C-06 暂停冻结动画": scen_c06_pause_frozen,
     "C-07 失败进入下一次": scen_c07_fail_next_attempt,
     "C-08 完成页计数一致": scen_c08_finish_consistent,
+    "C-09 脑控脉冲无需松开": (scen_c09_bci_pulse, {"input_source": "bci"}),
 }

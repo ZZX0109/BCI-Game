@@ -7,10 +7,14 @@
   TGT-05 条件改变半径距离
   TGT-07 最后一试次只结束一次
 
-坐标说明：指针走宿主画布坐标，游戏内部换算到场景局部（sceneOX=24, sceneOY=116）。
-试次目标本来就记在画布坐标上，所以「把指针放到 (t.x, t.y)」= 正中心。
+坐标说明（2026-11-05 响应式版）：试次计划里的 (x, y) 仍是设计画布坐标，
+目标在场景局部是 (x - sceneOX, y - sceneOY)。但 sceneRect 会随宿主内容区缩放
+（designView + logicalScale），原点与比例都不再是常量。因此 aim_scene() 改为向
+游戏自己求 sceneRect.mapToItem(root, sx, sy)，把场景局部坐标换成宿主画布坐标后
+再走真实 onPointer 通道 —— 不硬编码任何布局常量，任意窗口尺寸都成立。
+TGT-02h 会自检 round-trip 精度与缩放确实生效。
 """
-POINTER_GAP = 0.85          # handlePointer 有 0.8s 节流，必须隔着推
+POINTER_GAP = 0.85          # 保留试次间隔；只为跨反馈期
 FEEDBACK = 0.55             # feedbackSeconds = 0.5
 
 
@@ -20,9 +24,15 @@ def cur_trial(r):
     return plan[idx] if 0 <= idx < len(plan) else None
 
 
+def aim_scene(r, sx, sy):
+    """按场景局部坐标发真实 onPointer；画布坐标由游戏自己的 mapToItem 给出。"""
+    p = r.eval_js("sceneRect.mapToItem(root, %f, %f)" % (sx, sy))
+    r.pointer(p.x(), p.y())
+
+
 def aim_at(r, canvas_x, canvas_y):
-    """指针移到画布坐标（会受 0.8s 节流限制，调用方保证间隔）。"""
-    r.pointer(canvas_x, canvas_y)
+    """指针移到试次计划中的设计画布坐标；(= 目标场景局部坐标 + sceneRect 原点)。"""
+    aim_scene(r, canvas_x - r.get("sceneOX"), canvas_y - r.get("sceneOY"))
 
 
 def aim_center(r, offset=(0.0, 0.0)):
@@ -73,6 +83,21 @@ def scen_tgt02_first_move(r):
     aim_at(r, t["x"] + 6, t["y"] + 3)              # 位移 ~6.7px >= 4
     lat = r.get("firstActionLatency")
     r.check("TGT-02g 超过阈值才记首动", lat >= 0, f"firstActionLatency={lat}")
+
+    # 布局自检：响应式缩放生效，且 mapToItem 换算 round-trip 无偏。
+    # 若游戏改回 scale=1 固定画布，这条会先炸，避免后面产出假证据。
+    p1 = r.eval_js("sceneRect.mapToItem(root, 260, 180)")
+    p2 = r.eval_js("sceneRect.mapToItem(root, 360, 230)")
+    scale = float(r.get("logicalScale"))
+    r.pointer(p1.x(), p1.y())
+    a1 = (r.get("aimX"), r.get("aimY"))
+    r.pointer(p2.x(), p2.y())
+    a2 = (r.get("aimX"), r.get("aimY"))
+    r.check("TGT-02h 指针→场景映射与运行时布局一致",
+            abs(a1[0] - 260) <= 0.5 and abs(a1[1] - 180) <= 0.5
+            and abs(a2[0] - 360) <= 0.5 and abs(a2[1] - 230) <= 0.5
+            and abs(scale - 1.0) > 1e-6,
+            f"p1={a1} p2={a2} logicalScale={scale:.5f}")
 
 
 def scen_tgt03_same_frame(r):
@@ -144,10 +169,31 @@ def scen_tgt05_condition_radius(r):
         t = cur_trial(r)
         if t is None:
             break
+        label = f"TGT-05 试次 {r.get('trialIndex') + 1}"
         observed.append((int(r.get("targetR")), int(t["r"])))
-        # 打在半径外 2px：必然 miss，用来验证半径真的在判
-        aim_at(r, t["x"] + t["r"] + 2, t["y"])
+
+        # fitts 每个试次先要「起点确认」：指针放到 startX/startY 再按一次 confirm，
+        # 这一步只启动本试次计时、不计射击；未启动时 confirm 会被静默忽略。
+        aim_at(r, t["startX"], t["startY"])
+        r.action("confirm")
+        r.pump(0.02)
+        started = not r.get("awaitingStart")
+        r.check(f"{label} 起点确认生效", started)
+        if not started:
+            break
+        r.pump(0.18)                    # 跨过 requestShot 的 0.15s 去重窗口
+
+        # 打在半径外 2px 必然 miss；靠近右边界时改往左偏，避免被裁剪成误命中
+        rad = float(t["r"])
+        sx, sy = r.get("targetSceneX"), r.get("targetSceneY")
+        off = rad + 2
+        out_x = sx + off if sx + off <= r.get("sceneW") - 2 else sx - off
+        aim_scene(r, out_x, sy)
+        before = len(shots(r))
         shoot(r)
+        if len(shots(r)) == before:
+            r.check(f"{label} 产生射击记录", False)
+            break
         s = shots(r)[-1]
         results.append((int(t["r"]), s["distance"], s["hit"]))
         prev = r.get("trialIndex")
@@ -201,10 +247,46 @@ def scen_tgt07_finish_once(r):
     r.check_eq("TGT-07h 结束后仍是 complete", r.get("phase"), "complete")
 
 
+def scen_tgt08_bci_input_guard(r):
+    """2026-11-05 版：脑控通道等首个有效二维指针才启动；拒绝 NaN/Inf 与无效宿主尺寸。"""
+    r.start()
+    r.check_eq("TGT-09a 脑控来源记为 bci", r.get("inputSource"), "bci")
+    r.check_eq("TGT-09b 脑控标志生效", r.get("brainInput"), True)
+    r.check_eq("TGT-09c 未给有效指针前不就绪", r.get("inputReady"), False)
+
+    before = (r.get("aimX"), r.get("aimY"))
+    for label, x, y in [("NaN", float("nan"), 200.0),
+                        ("+Inf", float("inf"), 200.0),
+                        ("-Inf", 200.0, float("-inf"))]:
+        r.pointer(x, y)
+        r.pump(0.03)
+        r.check(f"TGT-09d {label} 指针被拒绝",
+                r.get("inputReady") is False
+                and (r.get("aimX"), r.get("aimY")) == before,
+                f"inputReady={r.get('inputReady')} aim={(r.get('aimX'), r.get('aimY'))}")
+
+    r.game._width = 0.0
+    r.pointer(300.0, 300.0)
+    r.pump(0.03)
+    r.check("TGT-09e 宿主宽度无效时指针被拒绝", r.get("inputReady") is False)
+    r.game._width = 1000.0
+
+    r.pointer(300.0, 300.0)
+    r.pump(0.05)
+    r.check("TGT-09f 首个有效指针使输入就绪", r.get("inputReady") is True)
+    r.check("TGT-09g 就绪事件记录宿主尺寸",
+            any(p.get("hostWidth", 0) > 0 and p.get("hostHeight", 0) > 0
+                for p in r.game.payloads("target.input_ready")))
+    r.check("TGT-09h 有效指针确实改变了准星",
+            (r.get("aimX"), r.get("aimY")) != before,
+            f"aim={(r.get('aimX'), r.get('aimY'))}")
+
+
 SCENARIOS = {
     "TGT-02 初始同步不算首动": scen_tgt02_first_move,
     "TGT-03 点击当帧判定": scen_tgt03_same_frame,
     "TGT-04 反馈不叠加": scen_tgt04_no_carryover,
     "TGT-05 条件改变半径": scen_tgt05_condition_radius,
     "TGT-07 最后一试次只结束一次": scen_tgt07_finish_once,
+    "TGT-09 脑控输入门控": (scen_tgt08_bci_input_guard, {"input_source": "bci"}),
 }

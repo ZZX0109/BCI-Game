@@ -22,7 +22,7 @@ Rectangle {
 
     Rectangle {
         anchors.centerIn: parent
-        width: 440
+        width: Math.min(480, root.width - 32)
         height: dialogColumn.height + 48
         radius: theme.dialogRadius
         color: theme.panel
@@ -78,6 +78,7 @@ Rectangle {
     }
 
     function open() {
+        closeTimer.stop()
         visible = true
         opacity = 1
     }

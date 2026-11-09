@@ -1,35 +1,27 @@
 import QtQuick
 import "../shared-ui" as SharedUI
 
-// 红绿灯过马路 V4 —— 侧视/斜侧视街道躲车（Frogger 式）
-//
-// 设计要点（V4 §8）：
-//  1. 权威真值只存在于世界坐标：crossX = 玩家横穿进度，travelY = 车流纵向位置。
-//     屏幕像素只由 projectToScreen 投影，绝不参与碰撞判定。
-//  2. 玩家用方向键按住前进/后退，松开停止；不再按确认自动播放过街动画。
-//  3. 车流由种子预先生成（每车道独立 RNG），按固定 8ms 子步推进，
-//     碰撞在每个子步用"车道横向重叠 + 纵向实体重叠"判定，不会高速穿模。
-//  4. 生成后做最小安全间隙校验，保证每关都存在可通关窗口（不生成必死车流）。
+// Signal-controlled crossing. Host simulation advances all world-coordinate physics.
 Item {
     id: root
     required property var taskContext
     required property var game
 
-    readonly property string gameVersion: "0.4.0"
+    readonly property string gameVersion: "0.5.0"
     readonly property string inputSource: (game && game.inputSource) ? String(game.inputSource) : "local"
-    readonly property bool isBci: inputSource.toLowerCase() === "bci"
+    readonly property bool isBci: /bci|brain/i.test(inputSource)
 
     // ------------------------------------------------------------------
     // 世界尺度与投影基向量（像素/世界单位）
     //   横穿方向 u：每车道右移 UX、上移 UY  → 前进在屏幕上向右上，符合 §8.2
     //   车流方向 v：近似水平，仅轻微下倾，保证车头方向可读
     // ------------------------------------------------------------------
-    readonly property real crossDx: 58.0
-    readonly property real crossDy: 52.0
-    readonly property real carDx: 42.0
+    readonly property real crossDx: 38.0
+    readonly property real crossDy: 265.0 / (laneCount + 1)
+    readonly property real carDx: 43.0
     readonly property real carDy: 1.5
-    readonly property real originX: 66.0
-    readonly property real originY: 392.0
+    readonly property real originX: 292.0
+    readonly property real originY: 402.0
     readonly property real sceneW: 700
     readonly property real sceneH: 470
 
@@ -39,9 +31,19 @@ Item {
     readonly property real crossSpeed: 1.55     // 世界单位/秒
     readonly property real bciStepUnit: 0.5     // 脑控离散步长
     readonly property real bciCarSpeedScale: 0.62
-    readonly property real holdGrace: 1.5       // 未收到 release 时的保险按住时长
-    readonly property real vCull: 12.0
-    readonly property int maxCars: 24
+    readonly property real passMinClear: 1.05
+    readonly property real sceneScale: Math.max(0.55, Math.min((height - 170) / 470, width / 800, 2.4))
+    readonly property real sceneOffsetX: width / 2 - (originX + laneCount * crossDx / 2) * sceneScale
+    readonly property real sceneOffsetY: height - 125 - (originY + crossDy * 0.65) * sceneScale
+    readonly property real visibleVRadius: width / (2 * sceneScale * carDx) + laneCount * crossDx / (2 * carDx) + 3
+    // Boundary only grows within a loaded instance: resizing narrower never culls existing cars.
+    property real trafficBoundary: 12
+    readonly property real vCull: trafficBoundary
+    onVisibleVRadiusChanged: trafficBoundary = Math.max(trafficBoundary, visibleVRadius + 4)
+    function viewportChanged() { trafficBoundary = Math.max(trafficBoundary, visibleVRadius + 4); roadCanvas.requestPaint() }
+    onWidthChanged: viewportChanged()
+    onHeightChanged: viewportChanged()
+    readonly property int maxCars: 0 // Renderer draws every active physical vehicle; no fixed pool
     readonly property real substep: 0.008
 
     function projX(u, v) { return originX + u * crossDx + v * carDx }
@@ -63,6 +65,14 @@ Item {
     property var levelPlans: []
     property int levelIndex: 0
     property int attemptNo: 1
+    property int sessionAttempts: 0
+    property real signalTime: 0
+    property string signalState: "drive"
+    readonly property real driveDuration: 5 + levelIndex * 1.5
+    readonly property real walkDuration: (finishX + 0.9) / crossSpeed + (isBci ? 12 : 5)
+    readonly property bool walkGreen: signalState === "walk"
+    readonly property real signalRemaining: Math.max(0, (walkGreen ? walkDuration : driveDuration) - signalTime)
+    property int segmentDir: 0
     // idle | level_intro | playing | hit | level_clear | session_complete
     property string phase: "idle"
     property real phaseTimer: 0
@@ -80,6 +90,7 @@ Item {
     property var levelResults: []
     property bool isPaused: false
     property bool sessionFinished: false
+    property bool sessionStopped: false
     property real walkPhase: 0
     property string hitKind: ""
     property real hitFlash: 0
@@ -87,8 +98,6 @@ Item {
     // 输入（按住状态）
     property bool rightHeld: false
     property bool leftHeld: false
-    property real holdRightUntil: -1
-    property real holdLeftUntil: -1
     property bool mouseRightHeld: false
     property bool mouseLeftHeld: false
     property real bciTargetX: -0.6
@@ -165,10 +174,10 @@ Item {
         seedRng(st, levelSeed * 977 + laneIdx * 131 + 17)
 
         var evs = []
-        var horizon = 240.0
+        var horizon = 40.0
         var t = rngRange(st, 0.6, laneCfg.g0)
         var guard = 0
-        while (t < horizon && guard < 400) {
+        while (t < horizon && guard < 1000) {
             guard++
             var isTruck = rngNext(st) < laneCfg.truckRatio
             var len = isTruck ? 2.5 : (1.55 + rngNext(st) * 0.35)
@@ -184,8 +193,8 @@ Item {
             var a = evs[i - 1]
             var b = evs[i]
             var clear = (b.tc - passHalfWidth(b)) - (a.tc + passHalfWidth(a))
-            if (clear < 1.05) {
-                b.tc += (1.05 - clear)
+            if (clear < passMinClear) {
+                b.tc += (passMinClear - clear)
                 fixed++
             }
         }
@@ -196,7 +205,7 @@ Item {
             events: evs,
             next: 0,
             minClear: minClearWindow(evs),
-            fairnessFix: fixed
+            fairnessFix: fixed, rng: st, cfg: laneCfg, nextTime: t
         }
     }
 
@@ -228,8 +237,10 @@ Item {
         loadConfig()
         levelPlans = buildLevels()
         sessionFinished = false
+        sessionStopped = false
         isPaused = false
         sessionTime = 0
+        sessionAttempts = 0
         levelIndex = 0
         attemptNo = 1
         collisionsTotal = 0
@@ -253,13 +264,16 @@ Item {
     }
 
     function startLevel(idx) {
+        closeMoveSegment()
+        if (idx !== levelIndex || sessionAttempts === 0) collisionsThisLevel = 0
+        sessionAttempts++
+        signalState = "drive"; signalTime = 0
         levelIndex = idx
         var lv = levelPlans[idx]
         laneCount = lv.lanes.length
         finishX = laneCount + 0.45
         crossingX = -0.6
         bciTargetX = -0.6
-        collisionsThisLevel = 0
         simTime = 0
         phaseTimer = 0
         lastSampleT = -1
@@ -306,17 +320,20 @@ Item {
             startX: -0.6,
             lanes: laneDesc,
             inputSource: inputSource,
+            signalConfig: {driveDuration: driveDuration, walkDuration: walkDuration, clearance: "occupancy", stopLine: 1.1},
             elapsed: hostElapsed()
         })
     }
 
     function beginPlaying() {
+        if (isPaused || sessionStopped || sessionFinished) return
         if (phase !== "level_intro") return
         phase = "playing"
         phaseTimer = 0
     }
 
     function retryLevel(reason) {
+        if (isPaused || sessionStopped || sessionFinished) return
         attemptNo++
         game.record("traffic.level_retry", {
             levelId: levelId,
@@ -336,7 +353,6 @@ Item {
         hitFlash = 1.0
         collisionsThisLevel++
         collisionsTotal++
-        movingNow = false
         closeMoveSegment()
         game.record("traffic.collision", {
             levelId: levelId,
@@ -358,7 +374,6 @@ Item {
         if (phase !== "playing") return
         phase = "level_clear"
         phaseTimer = 0
-        movingNow = false
         closeMoveSegment()
         clearedCount++
         var res = {
@@ -367,6 +382,7 @@ Item {
             attempt: attemptNo,
             crossingTime: r2(simTime),
             collisions: collisionsThisLevel,
+            attempts: attemptNo,
             inputSource: inputSource
         }
         var next = levelResults.slice()
@@ -385,12 +401,12 @@ Item {
             totalLevels: levelPlans.length,
             clearedLevels: clearedCount,
             collisions: collisionsTotal,
-            attempts: attemptNo,
+            attempts: sessionAttempts,
             levels: levelResults,
             inputSource: inputSource,
             elapsed: hostElapsed(),
             summary: qsTr("过街任务完成：%1/%2 关，碰撞 %3 次，共 %4 次尝试")
-                     .arg(clearedCount).arg(levelPlans.length).arg(collisionsTotal).arg(attemptNo)
+                     .arg(clearedCount).arg(levelPlans.length).arg(collisionsTotal).arg(sessionAttempts)
         }
         game.record("traffic.attempt_finished", result)
         game.finish(result)
@@ -405,13 +421,13 @@ Item {
     // 输入：键盘 / 鼠标按住 / 脑控离散步进，全部落到同一套世界坐标推进
     // ------------------------------------------------------------------
     function pressDirection(dir, source) {
-        if (isPaused || sessionFinished) return
+        if (isPaused || sessionStopped || sessionFinished) return
         if (phase === "level_intro") beginPlaying()
         if (phase === "hit") { retryLevel("hit_skip"); return }
         if (phase === "level_clear") { advanceLevel(); return }
         if (phase !== "playing") return
 
-        if (isBci) {
+        if (source === "bci" || (isBci && source === "keyboard")) {
             bciTargetX = clampNum(bciTargetX + dir * bciStepUnit, -0.9, finishX + 0.3)
             activeSource = "bci"
             game.record("traffic.bci_step", {
@@ -423,8 +439,8 @@ Item {
         if (source === "mouse") {
             if (dir > 0) mouseRightHeld = true; else mouseLeftHeld = true
         } else {
-            if (dir > 0) { rightHeld = true; holdRightUntil = simTime + holdGrace }
-            else { leftHeld = true; holdLeftUntil = simTime + holdGrace }
+            if (dir > 0) { rightHeld = true }
+            else { leftHeld = true }
         }
         activeSource = source
     }
@@ -440,10 +456,11 @@ Item {
     function releaseAll() {
         rightHeld = false; leftHeld = false
         mouseRightHeld = false; mouseLeftHeld = false
-        holdRightUntil = -1; holdLeftUntil = -1
+        bciTargetX = crossingX
     }
 
     function advanceLevel() {
+        if (isPaused || sessionStopped || sessionFinished) return
         if (levelIndex < levelPlans.length - 1) {
             attemptNo = 1
             startLevel(levelIndex + 1)
@@ -455,7 +472,7 @@ Item {
     function closeMoveSegment() {
         if (!movingNow) return
         movingNow = false
-        if (Math.abs(crossingX - segFrom) < 0.01) return
+        if (Math.abs(crossingX - segFrom) < 0.000001) return
         game.record("traffic.move_segment", {
             levelId: levelId,
             fromX: r2(segFrom),
@@ -472,8 +489,8 @@ Item {
     // 固定子步仿真：车辆推进 + 玩家推进 + 碰撞
     // ------------------------------------------------------------------
     function axisInput() {
-        var rightOn = mouseRightHeld || (rightHeld && simTime <= holdRightUntil)
-        var leftOn = mouseLeftHeld || (leftHeld && simTime <= holdLeftUntil)
+        var rightOn = mouseRightHeld || rightHeld
+        var leftOn = mouseLeftHeld || leftHeld
         return (rightOn ? 1 : 0) - (leftOn ? 1 : 0)
     }
 
@@ -482,37 +499,35 @@ Item {
         phaseTimer += dt
 
         var axis = axisInput()
-        if (phase === "playing" && axis !== 0 && !movingNow) {
-            movingNow = true
-            segFrom = crossingX
-            segT0 = simTime
-            segSource = (mouseRightHeld || mouseLeftHeld) ? "mouse" : (isBci ? "bci" : "keyboard")
-        } else if (phase === "playing" && axis === 0 && !isBci && movingNow) {
-            closeMoveSegment()
-        }
-
-        // 玩家推进（脑控为向步进目标的连续逼近）
-        if (phase === "playing") {
+        var pulse = Math.abs(bciTargetX - crossingX) > 0.00001
+        if (axis === 0 && pulse) axis = bciTargetX > crossingX ? 1 : -1
+        var source = (mouseRightHeld || mouseLeftHeld || rightHeld || leftHeld) ? "local" : "bci"
+        if (movingNow && (axis !== segmentDir || source !== segSource || phase !== "playing")) closeMoveSegment()
+        if (phase === "playing" && axis !== 0) {
+            if (!movingNow) { movingNow = true; segFrom = crossingX; segT0 = simTime - dt; segSource = source; segmentDir = axis }
             var before = crossingX
-            var desired = crossingX
-            if (isBci) {
-                desired = bciTargetX
-            } else if (axis !== 0) {
-                desired = crossingX + axis * crossSpeed * dt
-            }
-            if (desired > crossingX) crossingX = Math.min(desired, crossingX + crossSpeed * dt)
-            else if (desired < crossingX) crossingX = Math.max(desired, crossingX - crossSpeed * dt)
-            crossingX = clampNum(crossingX, -0.9, finishX + 0.3)
-            if (Math.abs(crossingX - before) > 0.0001) walkPhase += Math.abs(crossingX - before) * 9.0
-            if (isBci && movingNow && Math.abs(crossingX - bciTargetX) < 0.005) closeMoveSegment()
+            var delta = axis * crossSpeed * dt
+            if (source === "bci") delta = axis * Math.min(Math.abs(delta), Math.abs(bciTargetX - crossingX))
+            crossingX = clampNum(crossingX + delta, -0.9, finishX + 0.3)
+            if (source === "local") bciTargetX = crossingX
+            walkPhase += Math.abs(crossingX - before) * 9
+            if (Math.abs(crossingX - before) < 0.000001 || (source === "bci" && Math.abs(crossingX-bciTargetX) < 0.00001)) closeMoveSegment()
         }
+        updateSignals(dt)
 
         // 车流推进（所有非结束阶段都持续运动 → TR-01）
         if (phase !== "session_complete") {
             spawnDueCars()
+            // Front-to-back processing keeps a visible queue behind each stop line.
+            cars.sort(function(a,b) { return a.lane !== b.lane ? a.lane-b.lane : b.v*b.dir-a.v*a.dir })
+            var leaders = {}
             for (var i = 0; i < cars.length; ++i) {
-                var c = cars[i]
-                c.v += c.dir * c.speed * dt
+                var c = cars[i], ahead = c.v*c.dir, target = ahead+c.speed*dt
+                if (signalState !== "drive" && ahead+c.len/2 <= -1.09999) target = Math.min(target, -1.1-c.len/2)
+                var leader = leaders[c.lane]
+                if (leader) target = Math.min(target, leader.v*leader.dir-leader.len/2-c.len/2-0.35)
+                c.v = Math.max(ahead,target)*c.dir
+                leaders[c.lane] = c
             }
             cullCars()
         }
@@ -533,10 +548,26 @@ Item {
     function spawnDueCars() {
         for (var i = 0; i < lanes.length; ++i) {
             var ln = lanes[i]
+            // Deterministic rolling extension; retain RNG and the previous event for gap validation.
+            while (ln.events[ln.events.length-1].tc < simTime+40) {
+                var prev = ln.events[ln.events.length-1], cfg=ln.cfg, st=ln.rng
+                var truck=rngNext(st)<cfg.truckRatio
+                var len=truck?2.5:1.55+rngNext(st)*0.35
+                var speed=rngRange(st,cfg.s0,cfg.s1)*(isBci?bciCarSpeedScale:1)
+                var kind=truck?"truck":(rngNext(st)<0.3?"van":"sedan")
+                var evNew={tc:ln.nextTime,speed:speed,len:len,kind:kind}
+                ln.nextTime += rngRange(st,cfg.g0,cfg.g1)
+                evNew.tc=Math.max(evNew.tc,prev.tc+passHalfWidth(prev)+passHalfWidth(evNew)+passMinClear)
+                ln.events.push(evNew)
+            }
             while (ln.next < ln.events.length) {
                 var ev = ln.events[ln.next]
                 if (simTime < ev.tc - vCull / ev.speed) break
-                var v0 = ln.dir * ev.speed * (simTime - ev.tc)
+                // Do not overlap an existing queue at the incoming boundary.
+                var blocked=false
+                for (var j=0;j<cars.length;j++) if(cars[j].lane===ln.lane && cars[j].v*ln.dir < -vCull+ev.len+0.5) blocked=true
+                if(blocked) break
+                var v0 = simTime <= substep + 0.00001 ? ln.dir * Math.max(-vCull, ev.speed*(simTime-ev.tc)) : -ln.dir*vCull
                 cars.push({
                     id: ln.lane + "-" + ln.next,
                     lane: ln.lane,
@@ -580,7 +611,7 @@ Item {
 
     function syncCarSlots() {
         var slots = []
-        for (var i = 0; i < maxCars; ++i) slots.push(i < cars.length ? cars[i] : null)
+        for (var i = 0; i < cars.length; ++i) slots.push(cars[i])
         carSlots = slots
     }
 
@@ -608,9 +639,15 @@ Item {
         function onStarted() { root.startSession() }
         function onStep(seconds) { root.advance(seconds) }
         function onAction(name, pressed) {
-            if (root.sessionFinished) return
-            if (name === "right") pressed ? root.pressDirection(1, "keyboard") : root.releaseDirection(1, "keyboard")
-            else if (name === "left") pressed ? root.pressDirection(-1, "keyboard") : root.releaseDirection(-1, "keyboard")
+            // Releases remain safe even after pause/stop/finish; only new presses are gated.
+            if (pressed === false) {
+                if (name === "right") root.releaseDirection(1, "keyboard")
+                else if (name === "left") root.releaseDirection(-1, "keyboard")
+                return
+            }
+            if (root.isPaused || root.sessionStopped || root.sessionFinished) return
+            if (name === "right") root.pressDirection(1, "keyboard")
+            else if (name === "left") root.pressDirection(-1, "keyboard")
             else if (name === "confirm" && pressed === true) {
                 if (root.phase === "level_intro") root.beginPlaying()
                 else if (root.phase === "hit") root.retryLevel("confirm")
@@ -619,12 +656,12 @@ Item {
         }
         function onPointer(x, y) { /* GamepadLite 游戏不需要指针 */ }
         function onPaused() { root.isPaused = true; root.releaseAll(); root.closeMoveSegment() }
-        function onResumed() { root.isPaused = false }
-        function onStopping() { root.isPaused = true; root.releaseAll() }
+        function onResumed() { if (!root.sessionStopped && !root.sessionFinished) root.isPaused = false }
+        function onStopping() { root.closeMoveSegment(); root.sessionStopped = true; root.isPaused = true; root.releaseAll() }
     }
 
     function advance(seconds) {
-        if (isPaused || sessionFinished) return
+        if (isPaused || sessionStopped || sessionFinished) return
         sessionTime += seconds
         if (phase === "session_complete" || phase === "idle") return
         var remaining = Math.min(seconds, 0.25)
@@ -639,6 +676,7 @@ Item {
         if (hitFlash > 0) hitFlash = Math.max(0, hitFlash - seconds * 1.6)
         syncCarSlots()
         sampleTraffic()
+        roadCanvas.requestPaint()
     }
 
     Component.onCompleted: {
@@ -646,649 +684,194 @@ Item {
         for (var i = 0; i < maxCars; ++i) carSlots.push(null)
     }
 
-    // ------------------------------------------------------------------
-    // 静态道路绘制（Canvas，与投影同一套函数）
-    // ------------------------------------------------------------------
-    function quadPath(ctx, u0, u1, v0, v1) {
-        ctx.beginPath()
-        ctx.moveTo(projX(u0, v0), projY(u0, v0))
-        ctx.lineTo(projX(u1, v0), projY(u1, v0))
-        ctx.lineTo(projX(u1, v1), projY(u1, v1))
-        ctx.lineTo(projX(u0, v1), projY(u0, v1))
-        ctx.closePath()
-    }
 
+    function updateSignals(dt) {
+        signalTime += dt
+        if(signalState === "drive" && signalTime >= driveDuration) {
+            signalState="clear"; signalTime=0
+        } else if(signalState === "clear") {
+            var occupied=false
+            for(var i=0;i<cars.length;i++) {
+                var c=cars[i], front=c.v*c.dir+c.len/2, rear=c.v*c.dir-c.len/2
+                if(front > -1.09999 && rear < 1.1) occupied=true
+            }
+            if(!occupied) { signalState="walk"; signalTime=0; game.record("traffic.signal",{state:"walk",t:simTime,levelId:levelId}) }
+        } else if(signalState === "walk" && signalTime >= walkDuration) {
+            // A pedestrian already on the crossing retains clearance, including paused pulse input.
+            if(crossingX+pedHalfWidth<=0 || crossingX-pedHalfWidth>=laneCount) {
+                signalState="drive"; signalTime=0; game.record("traffic.signal",{state:"drive",t:simTime,levelId:levelId})
+            }
+        }
+    }
+    function brainPulse(dir) { pressDirection(dir,"bci") }
+    onActiveFocusChanged: if(!activeFocus) { closeMoveSegment(); releaseAll() }
+    function quad(ctx,u0,u1,v0,v1,color) {
+        ctx.fillStyle=color; ctx.beginPath(); ctx.moveTo(projX(u0,v0),projY(u0,v0));
+        ctx.lineTo(projX(u1,v0),projY(u1,v0));ctx.lineTo(projX(u1,v1),projY(u1,v1));ctx.lineTo(projX(u0,v1),projY(u0,v1));ctx.closePath();ctx.fill()
+    }
     function paintRoad(ctx) {
-        var W = sceneW
-        var H = sceneH
-        var N = laneCount
-        var farEdgeU = N + 1.55
-        var parkU = farEdgeU + 1.25
-        var baseY = projY(farEdgeU, 0)
-        var V0 = -18
-        var V1 = 18
-
-        ctx.clearRect(0, 0, W, H)
-
-        // ---------- 天空 ----------
-        var sky = ctx.createLinearGradient(0, 0, 0, H)
-        sky.addColorStop(0, "#16273A")
-        sky.addColorStop(0.45, "#2B4660")
-        sky.addColorStop(1, "#3E5B74")
-        ctx.fillStyle = sky
-        ctx.fillRect(0, 0, W, H)
-
-        // ---------- 天际线（楼群基底沿对岸外缘的对角线）----------
-        var bi = 0
-        for (var vv = V0; vv < V1; vv += 1.15) {
-            var bw = 42 + ((bi * 37) % 52)
-            var bh = 42 + ((bi * 61) % 120)
-            var bxp = projX(parkU, vv)
-            var byp = projY(parkU, vv)
-            ctx.fillStyle = (bi % 2 === 0) ? "#1E2E3E" : "#243546"
-            ctx.fillRect(bxp - bw * 0.35, byp - bh, bw, bh + 10)
-            ctx.fillStyle = "rgba(231,188,132,0.30)"
-            for (var wy = 0; wy < Math.floor(bh / 16); ++wy) {
-                for (var wx = 0; wx < Math.floor(bw / 14); ++wx) {
-                    if (((bi * 3 + wx * 2 + wy) % 5) === 0)
-                        ctx.fillRect(bxp - bw * 0.35 + 6 + wx * 14, byp - bh + 8 + wy * 16, 5, 7)
-                }
+        ctx.reset();ctx.fillStyle="#050505";ctx.fillRect(0,0,width,height)
+        ctx.translate(sceneOffsetX,sceneOffsetY);ctx.scale(sceneScale,sceneScale)
+        var worldLeft=-sceneOffsetX/sceneScale,worldRight=(width-sceneOffsetX)/sceneScale
+        var extent=visibleVRadius+5
+        // Calm architectural backdrop, storefronts and a planted destination promenade.
+        var top=projY(laneCount+1,0)
+        for(var b=Math.floor(worldLeft/85)-1;b<Math.ceil(worldRight/85)+1;b++) {
+            var bx=b*85-25, bh=52+(Math.abs(b)*31)%55
+            ctx.fillStyle=b%2?"#141a1a":"#101616";ctx.fillRect(bx,top-bh-20,77,bh)
+            for(var w=0;w<3;w++) for(var h=0;h<3;h++) {
+                ctx.fillStyle=(b+w+h)%4===0?"#605d43":"#242e2b"
+                ctx.fillRect(bx+10+w*21,top-bh-10+h*17,9,13)
             }
-            bi++
+            ctx.fillStyle="#364039";ctx.fillRect(bx,top-bh-21,77,1)
+            ctx.fillStyle="#202e28";ctx.fillRect(bx+3,top-31,70,9)
         }
-
-        // ---------- 对岸绿化带 ----------
-        ctx.fillStyle = "#2A3A38"
-        quadPath(ctx, farEdgeU, parkU, V0, V1)
-        ctx.fill()
-
-        // 绿化带上的树
-        for (var tv = V0 + 0.6; tv < V1; tv += 1.55) {
-            var tx = projX(farEdgeU + 0.62, tv)
-            var ty = projY(farEdgeU + 0.62, tv)
-            var ts = projScale(farEdgeU + 0.62)
-            ctx.fillStyle = "#3C2C1E"
-            ctx.fillRect(tx - 2 * ts, ty - 16 * ts, 4 * ts, 16 * ts)
-            ctx.fillStyle = "#33513F"
-            ctx.beginPath()
-            ctx.arc(tx, ty - 22 * ts, 11 * ts, 0, Math.PI * 2)
-            ctx.fill()
-            ctx.fillStyle = "#3E5C48"
-            ctx.beginPath()
-            ctx.arc(tx - 5 * ts, ty - 26 * ts, 7 * ts, 0, Math.PI * 2)
-            ctx.fill()
+        quad(ctx,-2,0,-extent,extent,"#242927");quad(ctx,laneCount,laneCount+1.7,-extent,extent,"#292e2a")
+        for(var p=-extent;p<extent;p+=0.65){quad(ctx,-1.6,-0.03,p,p+0.018,"#353c36");quad(ctx,laneCount+0.05,laneCount+1.5,p,p+0.018,"#353c36")}
+        quad(ctx,0,laneCount,-extent,extent,"#101719")
+        for(var lane=0;lane<laneCount;lane++) {
+            quad(ctx,lane+0.06,lane+0.94,-extent,extent,lane%2?"#171e20":"#1a2122")
+            if(lane>0)for(var v=-extent;v<extent;v+=1.4)quad(ctx,lane-.012,lane+.012,v,v+.7,"#58625f")
+            // Broad zebra stripes span the entire road, each projected from world coordinates.
+            for(var u=lane+.07;u<lane+.96;u+=.25)quad(ctx,u,u+.14,-.73,.73,"#d6d7c9")
+            var dir=lanes.length>lane?lanes[lane].dir:1
+            quad(ctx,lane+.06,lane+.94,-dir*1.06-.035,-dir*1.06+.035,"#a4ad9e")
+            ctx.fillStyle="#717e77";ctx.font=uiTheme.canvasFont(21,false);ctx.fillText(dir>0?"→":"←",projX(lane+.5,3),projY(lane+.5,3)+5)
         }
-
-        // ---------- 对岸人行道 ----------
-        ctx.fillStyle = "#4B5867"
-        quadPath(ctx, N, farEdgeU, V0, V1)
-        ctx.fill()
-        ctx.fillStyle = "rgba(255,255,255,0.05)"
-        for (var pv = V0; pv < V1; pv += 0.9) {
-            quadPath(ctx, N, farEdgeU, pv, pv + 0.05)
-            ctx.fill()
+        quad(ctx,-.055,0,-extent,extent,"#7c877c");quad(ctx,laneCount,laneCount+.055,-extent,extent,"#7c877c")
+        quad(ctx,-.9,-.16,-.9,.9,"#35483d");quad(ctx,laneCount+.16,laneCount+.9,-.9,.9,"#3b5746")
+        ctx.fillStyle="#c6d9bf";ctx.font=uiTheme.canvasFont(14,true);ctx.fillText("安全等候",projX(-.65,-.65),projY(-.65,-.65)+4)
+        ctx.fillText("到岸目标",projX(laneCount+.65,-.65),projY(laneCount+.65,-.65)+4)
+        for(var tree=Math.floor(worldLeft/112)-1;tree<Math.ceil(worldRight/112)+1;tree++) {
+            var tx=tree*112+15,ty=top-9
+            ctx.fillStyle="#404b3a";ctx.fillRect(tx-3,ty-12,6,27)
+            ctx.fillStyle="#263c2c";ctx.beginPath();ctx.arc(tx,ty-21,19,0,Math.PI*2);ctx.fill()
+            ctx.fillStyle="#354d38";ctx.beginPath();ctx.arc(tx-6,ty-27,12,0,Math.PI*2);ctx.fill()
         }
-
-        // ---------- 路面 ----------
-        ctx.fillStyle = "#2F353D"
-        quadPath(ctx, 0, N, V0, V1)
-        ctx.fill()
-        for (var i = 0; i < N; ++i) {
-            ctx.fillStyle = (i % 2 === 0) ? "#333A43" : "#2C323A"
-            quadPath(ctx, i, i + 1, V0, V1)
-            ctx.fill()
+        // Quiet pavement furniture, drainage and road-surface grain, all deterministic.
+        for(var g=0;g<190;g++) {
+            var gu=((g*137)%997)/997*laneCount,gv=((g*73)%911)/911*extent*2-extent
+            quad(ctx,gu,gu+.008,gv,gv+.05,g%2?"#242c2b":"#141b1d")
         }
-
-        // 分道虚线
-        ctx.fillStyle = "rgba(232,238,244,0.55)"
-        for (var d = 1; d < N; ++d) {
-            for (var dv = V0; dv < V1; dv += 1.7) {
-                quadPath(ctx, d - 0.025, d + 0.025, dv, dv + 0.85)
-                ctx.fill()
+        for(var gr=-extent;gr<extent;gr+=4) {
+            quad(ctx,-.08,-.02,gr,gr+.4,"#0b1111")
+            for(var slit=0;slit<4;slit++)quad(ctx,-.08,-.02,gr+.04+slit*.09,gr+.06+slit*.09,"#46514a")
+        }
+        // Depth-sort pedestrians and cars by road coordinate.
+        var objects=cars.slice();objects.push({ped:true,lane:crossingX-.5})
+        objects.sort(function(a,b){return b.lane-a.lane})
+        for(var i=0;i<objects.length;i++) {
+            var c=objects[i]
+            if(c.ped){ paintPerson(ctx);continue }
+            var x=projX(c.lane+.5,c.v),y=projY(c.lane+.5,c.v),len=c.len*carDx, hh=25
+            ctx.fillStyle="rgba(17,30,38,.25)";ctx.beginPath();ctx.ellipse(x+4,y+7,len*.55,13,0,0,Math.PI*2);ctx.fill()
+            // Tires, curved bodywork, cabin glass and directional lamps.
+            ctx.fillStyle="#202c33"
+            for(var wheel=0;wheel<2;wheel++) {
+                var wx=x+(wheel?1:-1)*len*.31
+                ctx.beginPath();ctx.arc(wx,y+1,7,0,Math.PI*2);ctx.fill()
+                ctx.fillStyle="#91a1a6";ctx.beginPath();ctx.arc(wx,y+1,3,0,Math.PI*2);ctx.fill();ctx.fillStyle="#202c33"
+            }
+            var colors=["#c4b384","#83998f","#7c9293","#bfc4b5","#788785"]
+            var colorIndex=(parseInt(String(c.id).split("-")[1]) || c.lane)%5
+            var body=ctx.createLinearGradient(0,y-26,0,y+1);body.addColorStop(0,colors[colorIndex]);body.addColorStop(1,Qt.darker(colors[colorIndex],1.25))
+            ctx.fillStyle=body
+            ctx.beginPath();ctx.moveTo(x-len/2+5,y-25);ctx.lineTo(x+len/2-8,y-25);ctx.quadraticCurveTo(x+len/2,y-23,x+len/2,y-14);ctx.lineTo(x+len/2,y-4);ctx.lineTo(x-len/2,y-4);ctx.lineTo(x-len/2,y-18);ctx.quadraticCurveTo(x-len/2,y-25,x-len/2+5,y-25);ctx.fill()
+            ctx.fillStyle=c.kind==="truck"?"#ece7da":colors[colorIndex]
+            ctx.beginPath();ctx.moveTo(x-len*.31,y-25);ctx.lineTo(x-len*.21,y-39);ctx.quadraticCurveTo(x,y-43,x+len*.21,y-38);ctx.lineTo(x+len*.33,y-25);ctx.closePath();ctx.fill()
+            ctx.fillStyle="#2d4b5d"
+            ctx.beginPath();ctx.moveTo(x-len*.25,y-27);ctx.lineTo(x-len*.17,y-36);ctx.lineTo(x-2,y-37);ctx.lineTo(x-2,y-27);ctx.closePath();ctx.fill()
+            ctx.beginPath();ctx.moveTo(x+2,y-27);ctx.lineTo(x+2,y-37);ctx.lineTo(x+len*.17,y-35);ctx.lineTo(x+len*.25,y-27);ctx.closePath();ctx.fill()
+            ctx.strokeStyle="rgba(234,249,251,.55)";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x-len*.16,y-34);ctx.lineTo(x-5,y-35);ctx.stroke()
+            ctx.fillStyle="rgba(255,255,255,.35)";ctx.fillRect(x-len/2+6,y-23,len-14,2)
+            ctx.fillStyle="#fff1c1";ctx.fillRect(x+c.dir*(len/2-5)-2,y-19,4,7)
+            ctx.fillStyle="#a94e45";ctx.fillRect(x-c.dir*(len/2-4)-2,y-18,3,6)
+            ctx.strokeStyle="rgba(36,61,72,.4)";ctx.beginPath();ctx.moveTo(x,y-24);ctx.lineTo(x,y-7);ctx.stroke()
+            ctx.fillStyle="#40565d";ctx.fillRect(x+3,y-20,6,2)
+            if(c.kind==="truck") {
+                var cargoX=c.dir>0?x-len*.46:x-len*.04
+                var cargo=ctx.createLinearGradient(0,y-49,0,y-7);cargo.addColorStop(0,"#a9b2a2");cargo.addColorStop(1,"#66776d")
+                ctx.fillStyle=cargo;ctx.fillRect(cargoX,y-49,len*.5,38)
+                ctx.strokeStyle="#c2c7b7";ctx.lineWidth=.7;ctx.strokeRect(cargoX+.5,y-48.5,len*.5-1,37)
+                for(var rib=1;rib<5;rib++){ctx.strokeStyle="#56695f";ctx.beginPath();ctx.moveTo(cargoX+rib*len*.1,y-46);ctx.lineTo(cargoX+rib*len*.1,y-13);ctx.stroke()}
             }
         }
-
-        // 斑马线：玩家正走在上面
-        ctx.fillStyle = "rgba(236,242,248,0.80)"
-        for (var cw = 0; cw < N; ++cw) {
-            quadPath(ctx, cw + 0.15, cw + 0.85, -0.55, 0.55)
-            ctx.fill()
+        // Vehicle signals are distinct from the pedestrian signals at the zebra crossing.
+        for(var vs=0;vs<2;vs++) {
+            var vx=projX(vs?laneCount+.12:-.15,vs?-3.2:3.2),vy=projY(vs?laneCount+.12:-.15,vs?-3.2:3.2)
+            ctx.fillStyle="#6d7b70";ctx.fillRect(vx-2,vy-58,4,58)
+            ctx.fillStyle="#141f1d";ctx.fillRect(vx-13,vy-89,26,65)
+            var lampColors=["#ff7f70","#f4cc71","#6bdc9f"]
+            var lamp=signalState==="drive"?2:signalState==="clear"?1:0
+            for(var l=0;l<3;l++){ctx.fillStyle=l===lamp?lampColors[l]:"#2e3931";ctx.beginPath();ctx.arc(vx,vy-77+l*17,5.5,0,Math.PI*2);ctx.fill()}
         }
-
-        // 路缘石
-        ctx.fillStyle = "#6B7C90"
-        quadPath(ctx, -0.06, 0.0, V0, V1)
-        ctx.fill()
-        quadPath(ctx, N, N + 0.06, V0, V1)
-        ctx.fill()
-
-        // ---------- 起点人行道 ----------
-        ctx.fillStyle = "#485565"
-        quadPath(ctx, -1.75, 0, V0, V1)
-        ctx.fill()
-        ctx.fillStyle = "rgba(255,255,255,0.05)"
-        for (var sv = V0; sv < V1; sv += 0.9) {
-            quadPath(ctx, -1.75, 0, sv, sv + 0.05)
-            ctx.fill()
+        for(var side=0;side<2;side++) {
+            var su=side?laneCount+.19:-.22,sv=side?1.55:-1.55,sx=projX(su,sv),sy=projY(su,sv)
+            ctx.fillStyle="#6d7b70";ctx.fillRect(sx-3,sy-58,6,58)
+            ctx.fillStyle="#141f1d";ctx.fillRect(sx-13,sy-78,26,41)
+            ctx.fillStyle=walkGreen?"#59e7a8":"#f7766d";ctx.beginPath();ctx.arc(sx,sy-64,7,0,Math.PI*2);ctx.fill()
+            ctx.fillStyle="#e9f2ef";ctx.font=uiTheme.canvasFont(14,true);ctx.fillText(walkGreen?"行":"停",sx-7,sy-43)
         }
-
-        // 起点标识线
-        ctx.fillStyle = "rgba(90,220,203,0.55)"
-        quadPath(ctx, -0.10, -0.04, V0, V1)
-        ctx.fill()
-
-        // ---------- 对岸路灯 ----------
-        var lampV = [-10.5, -5.2, 0.0, 5.2, 10.5]
-        for (var l = 0; l < lampV.length; ++l) {
-            var lx = projX(N + 0.95, lampV[l])
-            var ly = projY(N + 0.95, lampV[l])
-            var ls = projScale(N + 0.95)
-            ctx.fillStyle = "#5A6B7C"
-            ctx.fillRect(lx - 2 * ls, ly - 58 * ls, 4 * ls, 58 * ls)
-            ctx.fillStyle = "rgba(240,205,150,0.9)"
-            ctx.beginPath()
-            ctx.arc(lx, ly - 60 * ls, 4.5 * ls, 0, Math.PI * 2)
-            ctx.fill()
-            ctx.fillStyle = "rgba(240,205,150,0.10)"
-            ctx.beginPath()
-            ctx.arc(lx, ly - 60 * ls, 16 * ls, 0, Math.PI * 2)
-            ctx.fill()
-        }
+        // Atmosphere dissolves the street into the open black field; no panel boundary.
+        ctx.resetTransform()
+        var skyFade=ctx.createLinearGradient(0,82,0,Math.max(190,sceneOffsetY+137*sceneScale))
+        skyFade.addColorStop(0,"#050505");skyFade.addColorStop(1,"rgba(5,5,5,0)")
+        ctx.fillStyle=skyFade;ctx.fillRect(0,0,width,Math.max(190,sceneOffsetY+137*sceneScale))
+        var foregroundFade=ctx.createLinearGradient(0,height-126,0,height-8)
+        foregroundFade.addColorStop(0,"rgba(5,5,5,0)");foregroundFade.addColorStop(1,"#050505")
+        ctx.fillStyle=foregroundFade;ctx.fillRect(0,height-126,width,126)
     }
-
-    // ------------------------------------------------------------------
-    // 界面
-    // ------------------------------------------------------------------
+    function paintPerson(ctx) {
+        var x=projX(crossingX,0),y=projY(crossingX,0),stride=movingNow?Math.sin(walkPhase)*5:0
+        ctx.fillStyle="rgba(10,37,44,.23)";ctx.beginPath();ctx.ellipse(x+3,y+3,13,6,0,0,Math.PI*2);ctx.fill()
+        ctx.strokeStyle="#b6c1b8";ctx.lineWidth=5;ctx.lineCap="round"
+        ctx.beginPath();ctx.moveTo(x-3,y-16);ctx.lineTo(x-5-stride,y);ctx.moveTo(x+3,y-16);ctx.lineTo(x+5+stride,y);ctx.stroke()
+        ctx.fillStyle=hitFlash>0?"#f88d77":"#dfc48b";ctx.beginPath();ctx.moveTo(x-6,y-34);ctx.quadraticCurveTo(x,y-38,x+6,y-34);ctx.lineTo(x+9,y-15);ctx.lineTo(x-8,y-15);ctx.closePath();ctx.fill();ctx.strokeStyle="#b59a66";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x+1,y-32);ctx.lineTo(x+1,y-17);ctx.stroke()
+        ctx.strokeStyle="#ecc59d";ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(x-8,y-29);ctx.lineTo(x-13,y-17+stride);ctx.moveTo(x+8,y-29);ctx.lineTo(x+12,y-17-stride);ctx.stroke()
+        ctx.fillStyle="#ebc49c";ctx.beginPath();ctx.arc(x,y-41,8,0,Math.PI*2);ctx.fill()
+        ctx.fillStyle="#303c32";ctx.beginPath();ctx.arc(x,y-44,8,Math.PI,Math.PI*2);ctx.fill()
+        ctx.strokeStyle="#fff8d7";ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(x,y+2,17,8,0,0,Math.PI*2);ctx.stroke()
+    }
     SharedUI.GameFrame {
-        id: frame
-        anchors.fill: parent
-        theme: uiTheme
+        id: frame; anchors.fill: parent; theme: uiTheme
         title: qsTr("红绿灯过马路")
-        subtitle: qsTr("观察车流，← 后退 / → 前进，安全到达对岸")
-        mode: root.levelId + " · " + qsTr("第 %1/%2 关").arg(root.levelIndex + 1).arg(root.levelPlans.length)
+        subtitle: root.isBci ? qsTr("观察行人信号 · 每次前进指令移动一步") : qsTr("观察信号 · 按住前进，松开停下")
+        mode: "第 " + (root.levelIndex+1) + " / 5 关"
         inputSource: root.inputSource
-
         Item {
-            parent: frame.contentItem
-            anchors.fill: parent
-
+            parent: frame.contentItem; anchors.fill: parent
             Item {
-                id: designView
-                width: 1000
-                height: 700
-                anchors.centerIn: parent
-                scale: Math.min(parent.width / 1000, parent.height / 700)
-                transformOrigin: Item.Center
-
-                // -------------------- 街道场景 --------------------
-                Rectangle {
-                    x: 24; y: 104
-                    width: root.sceneW; height: root.sceneH
-                    color: uiTheme.background
-                    clip: true
-
-                    Canvas {
-                        id: roadCanvas
-                        anchors.fill: parent
-                        onPaint: {
-                            var ctx = getContext("2d")
-                            root.paintRoad(ctx)
-                        }
-                        Component.onCompleted: requestPaint()
-                    }
-
-                    // 车辆（固定池，避免逐帧重建 delegate）
-                    Repeater {
-                        model: root.maxCars
-                        Item {
-                            id: carItem
-                            required property int index
-                            readonly property var car: root.carSlots[index] !== undefined ? root.carSlots[index] : null
-                            readonly property bool active: car !== null
-                            readonly property real sc: active ? root.projScale(car.lane + 0.5) : 1
-                            readonly property real cw: active ? car.len * root.carDx * sc : 0
-                            readonly property real ch: active ? (car.kind === "truck" ? 46 : 34) * sc : 0
-                            readonly property real cx: active ? root.projX(car.lane + 0.5, car.v) : -999
-                            readonly property real cy: active ? root.projY(car.lane + 0.5, car.v) : -999
-
-                            visible: active
-                            x: cx - cw / 2
-                            y: cy - ch
-                            width: cw
-                            height: ch
-                            z: 500 - (active ? (car.lane + 0.5) * 10 : 0)
-
-                            // 阴影
-                            Rectangle {
-                                x: parent.width * 0.04
-                                y: parent.height - 5
-                                width: parent.width * 0.92
-                                height: 9
-                                radius: 5
-                                color: "#000000"
-                                opacity: 0.28
-                            }
-                            // 车身
-                            Rectangle {
-                                width: parent.width
-                                height: parent.height
-                                radius: Math.min(8, parent.height * 0.3)
-                                color: carItem.active ? (carItem.car.kind === "truck" ? "#6B7C8C"
-                                                        : (carItem.car.kind === "van" ? "#C0632F" : "#3E7FB8")) : "#000000"
-                                border.width: 1
-                                border.color: "#10171F"
-                                opacity: 0.97
-                            }
-                            // 车厢/车顶
-                            Rectangle {
-                                x: parent.width * 0.16
-                                y: -parent.height * 0.34
-                                width: parent.width * 0.68
-                                height: parent.height * 0.56
-                                radius: 4
-                                color: carItem.active ? (carItem.car.kind === "truck" ? "#8A99A6" : "#2E5F8C") : "#000000"
-                                border.width: 1
-                                border.color: "#0E141B"
-                            }
-                            // 前挡风
-                            Rectangle {
-                                x: carItem.car && carItem.car.dir > 0 ? parent.width * 0.66 : parent.width * 0.14
-                                y: -parent.height * 0.22
-                                width: parent.width * 0.2
-                                height: parent.height * 0.34
-                                radius: 3
-                                color: "#9FC6DE"
-                                opacity: 0.75
-                            }
-                            // 车轮
-                            Rectangle {
-                                x: parent.width * 0.14; y: parent.height * 0.62
-                                width: parent.width * 0.16; height: parent.height * 0.34
-                                radius: 3; color: "#11181F"
-                            }
-                            Rectangle {
-                                x: parent.width * 0.7; y: parent.height * 0.62
-                                width: parent.width * 0.16; height: parent.height * 0.34
-                                radius: 3; color: "#11181F"
-                            }
-                            // 车灯（表示车头方向）
-                            Rectangle {
-                                x: carItem.car && carItem.car.dir > 0 ? parent.width - parent.width * 0.06 : 0
-                                y: parent.height * 0.22
-                                width: parent.width * 0.06
-                                height: parent.height * 0.2
-                                radius: 2
-                                color: "#F3D98B"
-                            }
+                id: stage
+                anchors.fill:parent
+                readonly property real gutter: Math.max(20,Math.min(40,width*0.028))
+                Canvas {id:roadCanvas;objectName:"trafficFullCanvas";anchors.fill:parent;onWidthChanged:requestPaint();onHeightChanged:requestPaint();onPaint:root.paintRoad(getContext("2d"));Component.onCompleted:requestPaint()}
+                Row {x:stage.gutter;y:104;spacing:12
+                    Rectangle {width:8;height:8;radius:4;anchors.verticalCenter:parent.verticalCenter;color:root.walkGreen?"#9bd6a5":"#d9bb80"}
+                    Text { font.family: uiTheme.fontFamily;text:root.walkGreen?(root.signalRemaining<=0?"通行保护中":"行人通行"):root.signalState==="clear"?"等待路口清空":"停步观察";color:root.walkGreen?"#b8dbb2":"#d9bb80";font.pixelSize:24;font.bold:true}
+                    Text { font.family: uiTheme.fontFamily;anchors.baseline:parent.children[1].baseline;text:root.signalState==="clear"||root.signalRemaining<=0?"":Math.ceil(root.signalRemaining)+"s";color:"#a3aca0";font.pixelSize:18}
+                }
+                Text { font.family: uiTheme.fontFamily;x:stage.gutter;y:142;text:["从容出发","双向观察","穿越大道","留意大车","完整路口"][root.levelIndex];color:"#767f75";font.pixelSize:13;font.letterSpacing:3}
+                Text { font.family: uiTheme.fontFamily;anchors.right:parent.right;anchors.rightMargin:stage.gutter;y:109;text:Math.round(root.crossProgress*100)+"%  到岸";color:"#b0b8a9";font.pixelSize:18}
+                Text { font.family: uiTheme.fontFamily;anchors.right:parent.right;anchors.rightMargin:stage.gutter;y:142;text:root.laneCount+" 车道   ·   尝试 "+root.attemptNo; color:"#727c72";font.pixelSize:13}
+                // Bottom controls sit directly in the open field, with tactile underlines.
+                Row {id:controls;anchors.horizontalCenter:parent.horizontalCenter;anchors.bottom:parent.bottom;anchors.bottomMargin:12;spacing:Math.max(12,Math.min(26,stage.width*0.02));property real buttonWidth:Math.min(210,(stage.width-2*stage.gutter-3*spacing)/3.3)
+                    Repeater {model:2
+                        Item {required property int index;width:controls.buttonWidth;height:56
+                            Text { font.family: uiTheme.fontFamily;anchors.centerIn:parent;text:root.isBci?(index===0?"↓ 后退":"前进 ↑"):(index===0?"↓ 按住后退":"按住前进 ↑");color:ma.pressed?"#a9d5a5":"#e5e5d7";font.pixelSize:21;font.bold:true}
+                            Rectangle {anchors.bottom:parent.bottom;width:parent.width;height:ma.pressed?3:1;color:ma.pressed?"#a9d5a5":"#535d50"}
+                            MouseArea {id:ma;objectName:index===0?"btnLeft":"btnRight";anchors.fill:parent;onPressed:root.pressDirection(index===0?-1:1,"mouse");onReleased:root.releaseDirection(index===0?-1:1,"mouse");onCanceled:root.releaseDirection(index===0?-1:1,"mouse")}
                         }
                     }
-
-                    // 玩家
-                    Item {
-                        id: playerItem
-                        readonly property real sc: root.projScale(root.crossingX)
-                        readonly property real px: root.projX(root.crossingX, 0)
-                        readonly property real py: root.projY(root.crossingX, 0)
-                        readonly property real pw: 30 * sc
-                        readonly property real ph: 56 * sc
-                        readonly property bool walking: root.movingNow
-                        readonly property real swing: Math.sin(root.walkPhase) * (walking ? 1 : 0)
-
-                        visible: root.phase !== "session_complete"
-                        width: pw; height: ph
-                        x: px - pw / 2
-                        y: py - ph
-                        z: 500 - root.crossingX * 10 + 6
-                        rotation: root.phase === "hit" ? -62 : 0
-                        transformOrigin: Item.Bottom
-
-                        // 影子
-                        Rectangle {
-                            x: -playerItem.pw * 0.25
-                            y: playerItem.ph - 4
-                            width: playerItem.pw * 1.5
-                            height: 8
-                            radius: 4
-                            color: "#000000"
-                            opacity: 0.3
-                        }
-                        // 腿
-                        Rectangle {
-                            x: playerItem.pw * 0.28
-                            y: playerItem.ph * 0.62
-                            width: playerItem.pw * 0.16
-                            height: playerItem.ph * 0.4
-                            color: "#22303F"
-                            rotation: playerItem.swing * 16
-                            transformOrigin: Item.Top
-                        }
-                        Rectangle {
-                            x: playerItem.pw * 0.56
-                            y: playerItem.ph * 0.62
-                            width: playerItem.pw * 0.16
-                            height: playerItem.ph * 0.4
-                            color: "#22303F"
-                            rotation: -playerItem.swing * 16
-                            transformOrigin: Item.Top
-                        }
-                        // 躯干
-                        Rectangle {
-                            x: playerItem.pw * 0.16
-                            y: playerItem.ph * 0.28
-                            width: playerItem.pw * 0.68
-                            height: playerItem.ph * 0.38
-                            radius: playerItem.pw * 0.18
-                            color: "#4FB3A8"
-                            border.width: 1
-                            border.color: "#0E1A20"
-                        }
-                        // 头
-                        Rectangle {
-                            x: playerItem.pw * 0.26
-                            y: playerItem.ph * 0.04
-                            width: playerItem.pw * 0.48
-                            height: playerItem.pw * 0.48
-                            radius: width / 2
-                            color: "#E8C39E"
-                            border.width: 1
-                            border.color: "#0E1A20"
-                        }
-                        // 头发
-                        Rectangle {
-                            x: playerItem.pw * 0.26
-                            y: playerItem.ph * 0.02
-                            width: playerItem.pw * 0.48
-                            height: playerItem.pw * 0.2
-                            radius: width / 2
-                            color: "#2C3A48"
-                        }
+                    Item {width:controls.buttonWidth*.8;height:56
+                        Text { font.family: uiTheme.fontFamily;anchors.centerIn:parent;text:"前进一步 ↑";color:bp.pressed?"#a9d5a5":"#a5ad9f";font.pixelSize:16}
+                        MouseArea {id:bp;objectName:"btnBrainPulse";anchors.fill:parent;onClicked:root.brainPulse(1)}
                     }
-
-                    // 撞击闪红
-                    Rectangle {
-                        anchors.fill: parent
-                        color: "#C45353"
-                        opacity: root.hitFlash * 0.35
-                        visible: root.hitFlash > 0.01
-                    }
-
-                    // 关卡开场横幅
-                    Rectangle {
-                        visible: root.phase === "level_intro"
-                        anchors.centerIn: parent
-                        width: 400; height: 116
-                        radius: 4
-                        color: uiTheme.panel
-                        opacity: 0.96
-                        border.width: 2
-                        border.color: uiTheme.primary
-                        Column {
-                            anchors.centerIn: parent
-                            spacing: 6
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: root.levelId + qsTr(" · %1 车道").arg(root.laneCount)
-                                color: uiTheme.primaryText; font.pixelSize: 26; font.family: uiTheme.fontFamily; font.bold: true
-                            }
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: root.levelIndex === 0 ? qsTr("按住 → 前进，注意车流，必要时按 ← 退回")
-                                                             : qsTr("观察相邻车道反向车流，逐车道穿越")
-                                color: uiTheme.secondaryText; font.pixelSize: 15; font.family: uiTheme.fontFamily
-                            }
-                        }
-                    }
-
-                    // 失败提示
-                    Rectangle {
-                        visible: root.phase === "hit"
-                        anchors.centerIn: parent
-                        width: 360; height: 104
-                        radius: 4
-                        color: uiTheme.panel
-                        border.width: 2
-                        border.color: uiTheme.danger
-                        Column {
-                            anchors.centerIn: parent
-                            spacing: 6
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: qsTr("被撞到了")
-                                color: uiTheme.danger; font.pixelSize: 24; font.family: uiTheme.fontFamily; font.bold: true
-                            }
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: qsTr("本关重试（同种子，车流一致）")
-                                color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily
-                            }
-                        }
-                    }
-
-                    // 通关提示
-                    Rectangle {
-                        visible: root.phase === "level_clear"
-                        anchors.centerIn: parent
-                        width: 360; height: 104
-                        radius: 4
-                        color: uiTheme.panel
-                        border.width: 2
-                        border.color: uiTheme.success
-                        Column {
-                            anchors.centerIn: parent
-                            spacing: 6
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: qsTr("安全到达对岸")
-                                color: uiTheme.success; font.pixelSize: 24; font.family: uiTheme.fontFamily; font.bold: true
-                            }
-                            Text {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                text: qsTr("用时 %1 秒 · 碰撞 %2 次").arg(root.simTime.toFixed(1)).arg(root.collisionsThisLevel)
-                                color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily
-                            }
-                        }
+                    Item {width:controls.buttonWidth*.5;height:56
+                        Text { font.family: uiTheme.fontFamily;anchors.centerIn:parent;text:"重试";color:retry.pressed?"#d9bb80":"#929b8d";font.pixelSize:16}
+                        MouseArea {id:retry;objectName:"btnRetry";anchors.fill:parent;onClicked:if(root.phase==="playing"||root.phase==="hit")root.retryLevel("manual")}
                     }
                 }
-
-                // -------------------- 右侧状态面板 --------------------
-                Rectangle {
-                    x: 740; y: 104
-                    width: 236; height: root.sceneH
-                    color: "transparent"
-                    border.color: uiTheme.panelBorder; border.width: 1
-
-                    Column {
-                        x: 16; y: 16
-                        width: 204
-                        spacing: 10
-
-                        Text { text: qsTr("关卡进度"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
-                        Row {
-                            spacing: 5
-                            Repeater {
-                                model: root.levelPlans.length
-                                Rectangle {
-                                    required property int index
-                                    width: 36; height: 8; radius: 4
-                                    color: index < root.levelResults.length ? uiTheme.primary
-                                         : index === root.levelIndex ? uiTheme.success : uiTheme.panelBorder
-                                }
-                            }
-                        }
-
-                        Text { text: qsTr("横穿进度"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
-                        Rectangle {
-                            width: 204; height: 10; radius: 5
-                            color: uiTheme.panelBorder
-                            Rectangle {
-                                width: 204 * root.crossProgress
-                                height: 10; radius: 5
-                                color: uiTheme.success
-                            }
-                        }
-
-                        Text { text: qsTr("车道数"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
-                        Text { text: root.laneCount; color: uiTheme.primaryText; font.pixelSize: 20; font.family: uiTheme.fontFamily; font.bold: true }
-
-                        Text { text: qsTr("本关碰撞"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
-                        Text {
-                            text: root.collisionsThisLevel
-                            color: root.collisionsThisLevel > 0 ? uiTheme.danger : uiTheme.success
-                            font.pixelSize: 20; font.family: uiTheme.fontFamily; font.bold: true
-                        }
-
-                        Text { text: qsTr("累计碰撞"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
-                        Text { text: root.collisionsTotal; color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true }
-
-                        Text { text: qsTr("尝试次数"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
-                        Text { text: root.attemptNo; color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true }
-
-                        Text { text: qsTr("本关用时"); color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily }
-                        Text {
-                            text: root.simTime.toFixed(1) + qsTr(" 秒")
-                            color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true
-                        }
-
-                        Text {
-                            width: 204
-                            text: qsTr("状态：") + (root.phase === "playing" ? qsTr("可移动")
-                                  : root.phase === "level_intro" ? qsTr("准备")
-                                  : root.phase === "hit" ? qsTr("失误") : qsTr("通关"))
-                            color: uiTheme.secondaryText; font.pixelSize: 13; font.family: uiTheme.fontFamily
-                            wrapMode: Text.WordWrap
-                        }
-                    }
-                }
-
-                // -------------------- 操作区（鼠标全程可玩）--------------------
-                Row {
-                    x: 24; y: 596
-                    spacing: 16
-
-                    Rectangle {
-                        width: 150; height: 56
-                        radius: uiTheme.buttonRadius
-                        color: mouseLeft.pressed ? uiTheme.primaryPressed : uiTheme.panel
-                        border.width: 2
-                        border.color: (root.phase === "playing") ? uiTheme.primary : uiTheme.panelBorder
-                        opacity: (root.phase === "playing") ? 1.0 : 0.5
-                        Text {
-                            anchors.centerIn: parent
-                            text: qsTr("← 后退")
-                            color: uiTheme.primaryText; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true
-                        }
-                        MouseArea {
-                            id: mouseLeft
-                            objectName: "btnLeft"
-                            anchors.fill: parent
-                            enabled: root.phase === "playing"
-                            onPressed: root.pressDirection(-1, "mouse")
-                            onReleased: root.releaseDirection(-1, "mouse")
-                            onCanceled: root.releaseDirection(-1, "mouse")
-                        }
-                    }
-
-                    Rectangle {
-                        width: 150; height: 56
-                        radius: uiTheme.buttonRadius
-                        color: mouseRight.pressed ? uiTheme.primaryPressed : uiTheme.primary
-                        border.width: 2
-                        border.color: uiTheme.primaryHover
-                        opacity: (root.phase === "playing") ? 1.0 : 0.5
-                        Text {
-                            anchors.centerIn: parent
-                            text: qsTr("前进 →")
-                            color: uiTheme.background; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true
-                        }
-                        MouseArea {
-                            id: mouseRight
-                            objectName: "btnRight"
-                            anchors.fill: parent
-                            enabled: root.phase === "playing"
-                            onPressed: root.pressDirection(1, "mouse")
-                            onReleased: root.releaseDirection(1, "mouse")
-                            onCanceled: root.releaseDirection(1, "mouse")
-                        }
-                    }
-
-                    Rectangle {
-                        width: 132; height: 56
-                        anchors.verticalCenter: parent.verticalCenter
-                        radius: uiTheme.buttonRadius
-                        color: retryArea.pressed ? uiTheme.panelBorder : uiTheme.panel
-                        border.width: 2
-                        border.color: uiTheme.panelBorder
-                        Text {
-                            anchors.centerIn: parent
-                            text: qsTr("重开本关")
-                            color: uiTheme.primaryText; font.pixelSize: 16; font.family: uiTheme.fontFamily
-                        }
-                        MouseArea {
-                            id: retryArea
-                            objectName: "btnRetry"
-                            anchors.fill: parent
-                            onClicked: {
-                                if (root.phase === "playing" || root.phase === "hit" || root.phase === "level_clear")
-                                    root.retryLevel("manual")
-                            }
-                        }
-                    }
-
-                    Text {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: 210
-                        text: root.isBci ? qsTr("脑控：左右脉冲按固定步长移动，车速已降速 %1×").arg(root.bciCarSpeedScale)
-                                         : qsTr("按住方向键持续移动，松开即停")
-                        color: uiTheme.secondaryText
-                        font.pixelSize: 13
-                        font.family: uiTheme.fontFamily
-                        wrapMode: Text.WordWrap
-                    }
-                }
-            }
-        }
-
-        // 底栏
-        Row {
-            parent: frame.bottomBar
-            anchors.fill: parent
-            anchors.leftMargin: 24
-            anchors.rightMargin: 24
-            spacing: 20
-
-            SharedUI.InputHint {
-                anchors.verticalCenter: parent.verticalCenter
-                theme: uiTheme
-                source: root.inputSource
-                keyboardHint: qsTr("→ 前进 / ← 后退（可松开停下，随时退回）")
-                mouseHint: qsTr("按住画面中的「前进 / 后退」按钮")
-                bciHint: qsTr("left/right 脉冲离散步进；脑控模式车速已降速")
-            }
-
-            Item { width: Math.max(24, parent.width - 470) }
-
-            Text {
-                anchors.verticalCenter: parent.verticalCenter
-                text: qsTr("碰撞 %1 次 · 已通关 %2/%3").arg(root.collisionsTotal).arg(root.clearedCount).arg(root.levelPlans.length)
-                color: uiTheme.secondaryText
-                font.pixelSize: uiTheme.captionPx
-                font.family: uiTheme.fontFamily
-            }
-        }
-
-        // 暂停浮层
-        Rectangle {
-            parent: frame.overlayItem
-            anchors.fill: parent
-            color: uiTheme.background
-            opacity: 0.75
-            visible: root.isPaused
-            Text {
-                anchors.centerIn: parent
-                text: qsTr("已暂停")
-                color: uiTheme.warning
-                font.pixelSize: 36
-                font.bold: true
+                Text { font.family: uiTheme.fontFamily;anchors.horizontalCenter:parent.horizontalCenter;y:parent.height*.45;text:root.isPaused?"已暂停":root.phase==="hit"?"碰撞 · 稍后重试":root.phase==="session_complete"?"五关完成":root.phase==="level_clear"?"安全到岸":"";color:"#f2f2e6";font.pixelSize:34;font.bold:true;style:Text.Outline;styleColor:"#17231c"}
             }
         }
     }

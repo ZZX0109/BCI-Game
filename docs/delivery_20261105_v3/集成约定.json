@@ -1,0 +1,76 @@
+{
+  "module_api": {
+    "apiMajor": 1,
+    "gameApi": 1
+  },
+  "delivery_scope": "Game modules receiving decoded intents from the existing Neuralife host",
+  "root_geometry": "Main.qml follows actual host content size. LegacyWindowFill adapts strictly matched full-window centered 1000x700 fit wrappers; unfamiliar embedded layouts remain unchanged.",
+  "blank_background": "#050505",
+  "pointer_contract": {
+    "coordinates": "full host canvas coordinates with finite positive game.width/height",
+    "required_axes": [
+      "x",
+      "y"
+    ],
+    "target_requires_confirm": true,
+    "first_valid_input_gate": [
+      "pursuit",
+      "target"
+    ],
+    "stationary_pointer_is_not_disconnect": true,
+    "verified_host_ranges": [
+      "fixed_1000x700",
+      "actual_root_pixels"
+    ],
+    "verification_scope": "target/pursuit, simulated legacy host, offscreen and native Cocoa; actual window dimensions recorded"
+  },
+  "action_contract": {
+    "each_true_is_one_command": true,
+    "event_id_available": false,
+    "claw_bci_default": "pulse",
+    "traffic_bci_default": "pulse",
+    "source_aliases": [
+      "bci",
+      "brain"
+    ],
+    "new_motor_imagery_classes_added": false
+  },
+  "host_responsibilities": [
+    "EEG acquisition and motor imagery decoding",
+    "Verified mapping from available decoded intents to game commands",
+    "Input validity, device disconnect and reconnect reporting",
+    "Accessible session start, pause, rest, stop and restart controls",
+    "Persist all game.record events and session interruption information",
+    "Configure and verify the deployed QtQuick3D backend"
+  ],
+  "verification": {
+    "native_mac_qt_metal": "PASS",
+    "simulated_host_actions_and_pointers": "PASS",
+    "real_windows_neuralife": "NOT TESTED",
+    "real_eeg_device": "NOT TESTED",
+    "patient_usability": "NOT TESTED",
+    "legacy_window_fill_simulated_host": "PASS: 18 cases",
+    "target_pursuit_legacy_pointer_contracts": {
+      "offscreen": "PASS",
+      "cocoa": "PASS",
+      "windows": "NOT TESTED"
+    }
+  },
+  "delivery_revision": "整体窗口适配版 · 2026-11-05",
+  "legacy_window_fill": {
+    "component": "shared-ui/LegacyWindowFill.qml",
+    "scope": "All seven game modules",
+    "recognition": "Strict full-window parent with centered 1000x700 fit-scaled wrapper; refuse unfamiliar transforms or embedded layouts",
+    "applied_bindings": {
+      "width": "actual window parent width",
+      "height": "actual window parent height",
+      "scale": 1
+    },
+    "continuous_resize": true,
+    "unload_restores_host_bindings_or_values": true,
+    "unmatched_layout": "Preserve host layout",
+    "diagnostics": "Optional F12 fallback reports adapter status; not required to apply the fix",
+    "external_seven_game_loading_bridge": "Internal implementation remains unknown"
+  },
+  "luban_revision_scope": "Shared canvas adaptation only; gameplay improvements deferred this revision"
+}

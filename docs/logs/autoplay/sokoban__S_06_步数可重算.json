@@ -45,7 +45,7 @@
       "t": 0.0,
       "name": "sokoban.attempt_started",
       "data": {
-        "gameVersion": "0.3.0",
+        "gameVersion": "0.4.1",
         "inputSource": "local",
         "levelPlan": [
           {
@@ -97,7 +97,7 @@
         "inputSource": "local",
         "levelId": "S01",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
@@ -118,6 +118,28 @@
       "t": 0.192,
       "name": "sokoban.level_completed",
       "data": {
+        "cumulative": {
+          "attempts": 1,
+          "blockedPush": 0,
+          "blockedWall": 0,
+          "completed": true,
+          "levelId": "S01",
+          "levelVersion": 1,
+          "moves": 1,
+          "pushes": 1,
+          "restarts": 0,
+          "solutionMoves": 1,
+          "solutionPushes": 1,
+          "undos": 0
+        },
+        "currentAttempt": {
+          "attempts": 1,
+          "blockedPush": 0,
+          "blockedWall": 0,
+          "moves": 1,
+          "pushes": 1,
+          "undos": 0
+        },
         "elapsed": 0.19200000000000012,
         "levelId": "S01",
         "levelVersion": 1,

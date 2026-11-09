@@ -32,7 +32,7 @@
       "detail": "实际=1 期望=1"
     }
   ],
-  "simSeconds": 2.296,
+  "simSeconds": 3.064,
   "finished": false,
   "eventCount": 45,
   "events": [
@@ -40,7 +40,7 @@
       "t": 0.0,
       "name": "sokoban.attempt_started",
       "data": {
-        "gameVersion": "0.3.0",
+        "gameVersion": "0.4.1",
         "inputSource": "local",
         "levelPlan": [
           {
@@ -92,7 +92,7 @@
         "inputSource": "local",
         "levelId": "S01",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
@@ -113,6 +113,28 @@
       "t": 0.192,
       "name": "sokoban.level_completed",
       "data": {
+        "cumulative": {
+          "attempts": 1,
+          "blockedPush": 0,
+          "blockedWall": 0,
+          "completed": true,
+          "levelId": "S01",
+          "levelVersion": 1,
+          "moves": 1,
+          "pushes": 1,
+          "restarts": 0,
+          "solutionMoves": 1,
+          "solutionPushes": 1,
+          "undos": 0
+        },
+        "currentAttempt": {
+          "attempts": 1,
+          "blockedPush": 0,
+          "blockedWall": 0,
+          "moves": 1,
+          "pushes": 1,
+          "undos": 0
+        },
         "elapsed": 0.19200000000000012,
         "levelId": "S01",
         "levelVersion": 1,
@@ -122,12 +144,12 @@
       }
     },
     {
-      "t": 1.032,
+      "t": 1.392,
       "name": "sokoban.level_started",
       "data": {
         "boxes": 1,
         "cols": 8,
-        "elapsed": 1.0320000000000007,
+        "elapsed": 0.19200000000000012,
         "goals": 1,
         "levelCount": 5,
         "levelId": "S02",
@@ -138,23 +160,23 @@
       }
     },
     {
-      "t": 1.032,
+      "t": 1.416,
       "name": "sokoban.action_received",
       "data": {
         "action": "right",
-        "elapsed": 1.0320000000000007,
+        "elapsed": 0.21600000000000014,
         "inputSource": "local",
         "levelId": "S02",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 1.032,
+      "t": 1.416,
       "name": "sokoban.action_applied",
       "data": {
         "action": "right",
-        "elapsed": 1.0320000000000007,
+        "elapsed": 0.21600000000000014,
         "from": "5,3",
         "levelId": "S02",
         "moves": 1,
@@ -164,23 +186,23 @@
       }
     },
     {
-      "t": 1.048,
+      "t": 1.432,
       "name": "sokoban.action_received",
       "data": {
         "action": "up",
-        "elapsed": 1.0480000000000007,
+        "elapsed": 0.23200000000000015,
         "inputSource": "local",
         "levelId": "S02",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 1.048,
+      "t": 1.432,
       "name": "sokoban.action_applied",
       "data": {
         "action": "up",
-        "elapsed": 1.0480000000000007,
+        "elapsed": 0.23200000000000015,
         "from": "5,4",
         "levelId": "S02",
         "moves": 2,
@@ -190,23 +212,23 @@
       }
     },
     {
-      "t": 1.064,
+      "t": 1.448,
       "name": "sokoban.action_received",
       "data": {
         "action": "up",
-        "elapsed": 1.0640000000000007,
+        "elapsed": 0.24800000000000016,
         "inputSource": "local",
         "levelId": "S02",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 1.064,
+      "t": 1.448,
       "name": "sokoban.action_applied",
       "data": {
         "action": "up",
-        "elapsed": 1.0640000000000007,
+        "elapsed": 0.24800000000000016,
         "from": "4,4",
         "levelId": "S02",
         "moves": 3,
@@ -216,23 +238,23 @@
       }
     },
     {
-      "t": 1.08,
+      "t": 1.464,
       "name": "sokoban.action_received",
       "data": {
         "action": "up",
-        "elapsed": 1.0800000000000007,
+        "elapsed": 0.2640000000000002,
         "inputSource": "local",
         "levelId": "S02",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 1.08,
+      "t": 1.464,
       "name": "sokoban.action_applied",
       "data": {
         "action": "up",
-        "elapsed": 1.0800000000000007,
+        "elapsed": 0.2640000000000002,
         "from": "3,4",
         "levelId": "S02",
         "moves": 4,
@@ -242,23 +264,23 @@
       }
     },
     {
-      "t": 1.096,
+      "t": 1.48,
       "name": "sokoban.action_received",
       "data": {
         "action": "left",
-        "elapsed": 1.0960000000000008,
+        "elapsed": 0.2800000000000002,
         "inputSource": "local",
         "levelId": "S02",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 1.096,
+      "t": 1.48,
       "name": "sokoban.action_applied",
       "data": {
         "action": "left",
-        "elapsed": 1.0960000000000008,
+        "elapsed": 0.2800000000000002,
         "from": "2,4",
         "levelId": "S02",
         "moves": 5,
@@ -268,23 +290,23 @@
       }
     },
     {
-      "t": 1.112,
+      "t": 1.496,
       "name": "sokoban.action_received",
       "data": {
         "action": "left",
-        "elapsed": 1.1120000000000008,
+        "elapsed": 0.2960000000000002,
         "inputSource": "local",
         "levelId": "S02",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 1.112,
+      "t": 1.496,
       "name": "sokoban.action_applied",
       "data": {
         "action": "left",
-        "elapsed": 1.1120000000000008,
+        "elapsed": 0.2960000000000002,
         "from": "2,2",
         "levelId": "S02",
         "pushes": 1,
@@ -294,23 +316,23 @@
       }
     },
     {
-      "t": 1.128,
+      "t": 1.512,
       "name": "sokoban.action_received",
       "data": {
         "action": "up",
-        "elapsed": 1.1280000000000008,
+        "elapsed": 0.3120000000000002,
         "inputSource": "local",
         "levelId": "S02",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 1.128,
+      "t": 1.512,
       "name": "sokoban.action_applied",
       "data": {
         "action": "up",
-        "elapsed": 1.1280000000000008,
+        "elapsed": 0.3120000000000002,
         "from": "2,2",
         "levelId": "S02",
         "moves": 7,
@@ -320,23 +342,23 @@
       }
     },
     {
-      "t": 1.144,
+      "t": 1.528,
       "name": "sokoban.action_received",
       "data": {
         "action": "left",
-        "elapsed": 1.1440000000000008,
+        "elapsed": 0.32800000000000024,
         "inputSource": "local",
         "levelId": "S02",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 1.144,
+      "t": 1.528,
       "name": "sokoban.action_applied",
       "data": {
         "action": "left",
-        "elapsed": 1.1440000000000008,
+        "elapsed": 0.32800000000000024,
         "from": "1,2",
         "levelId": "S02",
         "moves": 8,
@@ -346,23 +368,23 @@
       }
     },
     {
-      "t": 1.16,
+      "t": 1.544,
       "name": "sokoban.action_received",
       "data": {
         "action": "down",
-        "elapsed": 1.1600000000000008,
+        "elapsed": 0.34400000000000025,
         "inputSource": "local",
         "levelId": "S02",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 1.16,
+      "t": 1.544,
       "name": "sokoban.action_applied",
       "data": {
         "action": "down",
-        "elapsed": 1.1600000000000008,
+        "elapsed": 0.34400000000000025,
         "from": "2,1",
         "levelId": "S02",
         "pushes": 2,
@@ -372,23 +394,23 @@
       }
     },
     {
-      "t": 1.176,
+      "t": 1.56,
       "name": "sokoban.action_received",
       "data": {
         "action": "down",
-        "elapsed": 1.1760000000000008,
+        "elapsed": 0.36000000000000026,
         "inputSource": "local",
         "levelId": "S02",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 1.176,
+      "t": 1.56,
       "name": "sokoban.action_applied",
       "data": {
         "action": "down",
-        "elapsed": 1.1760000000000008,
+        "elapsed": 0.36000000000000026,
         "from": "3,1",
         "levelId": "S02",
         "pushes": 3,
@@ -398,10 +420,32 @@
       }
     },
     {
-      "t": 1.176,
+      "t": 1.56,
       "name": "sokoban.level_completed",
       "data": {
-        "elapsed": 1.1760000000000008,
+        "cumulative": {
+          "attempts": 1,
+          "blockedPush": 0,
+          "blockedWall": 0,
+          "completed": true,
+          "levelId": "S02",
+          "levelVersion": 1,
+          "moves": 10,
+          "pushes": 3,
+          "restarts": 0,
+          "solutionMoves": 10,
+          "solutionPushes": 3,
+          "undos": 0
+        },
+        "currentAttempt": {
+          "attempts": 1,
+          "blockedPush": 0,
+          "blockedWall": 0,
+          "moves": 10,
+          "pushes": 3,
+          "undos": 0
+        },
+        "elapsed": 0.36000000000000026,
         "levelId": "S02",
         "levelVersion": 1,
         "moves": 10,
@@ -410,12 +454,12 @@
       }
     },
     {
-      "t": 2.016,
+      "t": 2.76,
       "name": "sokoban.level_started",
       "data": {
         "boxes": 1,
         "cols": 8,
-        "elapsed": 2.0160000000000013,
+        "elapsed": 0.36000000000000026,
         "goals": 1,
         "levelCount": 5,
         "levelId": "S03",
@@ -426,23 +470,23 @@
       }
     },
     {
-      "t": 2.016,
+      "t": 2.784,
       "name": "sokoban.action_received",
       "data": {
         "action": "left",
-        "elapsed": 2.0160000000000013,
+        "elapsed": 0.3840000000000003,
         "inputSource": "local",
         "levelId": "S03",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 2.016,
+      "t": 2.784,
       "name": "sokoban.action_applied",
       "data": {
         "action": "left",
-        "elapsed": 2.0160000000000013,
+        "elapsed": 0.3840000000000003,
         "from": "3,3",
         "levelId": "S03",
         "moves": 1,
@@ -452,23 +496,23 @@
       }
     },
     {
-      "t": 2.032,
+      "t": 2.8,
       "name": "sokoban.action_received",
       "data": {
         "action": "up",
-        "elapsed": 2.0320000000000014,
+        "elapsed": 0.4000000000000003,
         "inputSource": "local",
         "levelId": "S03",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 2.032,
+      "t": 2.8,
       "name": "sokoban.action_applied",
       "data": {
         "action": "up",
-        "elapsed": 2.0320000000000014,
+        "elapsed": 0.4000000000000003,
         "from": "3,2",
         "levelId": "S03",
         "moves": 2,
@@ -478,23 +522,23 @@
       }
     },
     {
-      "t": 2.048,
+      "t": 2.816,
       "name": "sokoban.action_received",
       "data": {
         "action": "right",
-        "elapsed": 2.0480000000000014,
+        "elapsed": 0.4160000000000003,
         "inputSource": "local",
         "levelId": "S03",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 2.048,
+      "t": 2.816,
       "name": "sokoban.action_applied",
       "data": {
         "action": "right",
-        "elapsed": 2.0480000000000014,
+        "elapsed": 0.4160000000000003,
         "from": "2,3",
         "levelId": "S03",
         "pushes": 1,
@@ -504,23 +548,23 @@
       }
     },
     {
-      "t": 2.064,
+      "t": 2.832,
       "name": "sokoban.action_received",
       "data": {
         "action": "right",
-        "elapsed": 2.0640000000000014,
+        "elapsed": 0.43200000000000033,
         "inputSource": "local",
         "levelId": "S03",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 2.064,
+      "t": 2.832,
       "name": "sokoban.action_applied",
       "data": {
         "action": "right",
-        "elapsed": 2.0640000000000014,
+        "elapsed": 0.43200000000000033,
         "from": "2,4",
         "levelId": "S03",
         "pushes": 2,
@@ -530,23 +574,23 @@
       }
     },
     {
-      "t": 2.08,
+      "t": 2.848,
       "name": "sokoban.action_received",
       "data": {
         "action": "right",
-        "elapsed": 2.0800000000000014,
+        "elapsed": 0.44800000000000034,
         "inputSource": "local",
         "levelId": "S03",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 2.08,
+      "t": 2.848,
       "name": "sokoban.action_applied",
       "data": {
         "action": "right",
-        "elapsed": 2.0800000000000014,
+        "elapsed": 0.44800000000000034,
         "from": "2,5",
         "levelId": "S03",
         "pushes": 3,
@@ -556,23 +600,23 @@
       }
     },
     {
-      "t": 2.096,
+      "t": 2.864,
       "name": "sokoban.action_received",
       "data": {
         "action": "up",
-        "elapsed": 2.0960000000000014,
+        "elapsed": 0.46400000000000036,
         "inputSource": "local",
         "levelId": "S03",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 2.096,
+      "t": 2.864,
       "name": "sokoban.action_applied",
       "data": {
         "action": "up",
-        "elapsed": 2.0960000000000014,
+        "elapsed": 0.46400000000000036,
         "from": "2,5",
         "levelId": "S03",
         "moves": 6,
@@ -582,23 +626,23 @@
       }
     },
     {
-      "t": 2.112,
+      "t": 2.88,
       "name": "sokoban.action_received",
       "data": {
         "action": "right",
-        "elapsed": 2.1120000000000014,
+        "elapsed": 0.48000000000000037,
         "inputSource": "local",
         "levelId": "S03",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 2.112,
+      "t": 2.88,
       "name": "sokoban.action_applied",
       "data": {
         "action": "right",
-        "elapsed": 2.1120000000000014,
+        "elapsed": 0.48000000000000037,
         "from": "1,5",
         "levelId": "S03",
         "moves": 7,
@@ -608,23 +652,23 @@
       }
     },
     {
-      "t": 2.128,
+      "t": 2.896,
       "name": "sokoban.action_received",
       "data": {
         "action": "down",
-        "elapsed": 2.1280000000000014,
+        "elapsed": 0.4960000000000004,
         "inputSource": "local",
         "levelId": "S03",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
-      "t": 2.128,
+      "t": 2.896,
       "name": "sokoban.action_applied",
       "data": {
         "action": "down",
-        "elapsed": 2.1280000000000014,
+        "elapsed": 0.4960000000000004,
         "from": "2,6",
         "levelId": "S03",
         "pushes": 4,
@@ -634,10 +678,32 @@
       }
     },
     {
-      "t": 2.128,
+      "t": 2.896,
       "name": "sokoban.level_completed",
       "data": {
-        "elapsed": 2.1280000000000014,
+        "cumulative": {
+          "attempts": 1,
+          "blockedPush": 0,
+          "blockedWall": 0,
+          "completed": true,
+          "levelId": "S03",
+          "levelVersion": 1,
+          "moves": 8,
+          "pushes": 4,
+          "restarts": 0,
+          "solutionMoves": 8,
+          "solutionPushes": 4,
+          "undos": 0
+        },
+        "currentAttempt": {
+          "attempts": 1,
+          "blockedPush": 0,
+          "blockedWall": 0,
+          "moves": 8,
+          "pushes": 4,
+          "undos": 0
+        },
+        "elapsed": 0.4960000000000004,
         "levelId": "S03",
         "levelVersion": 1,
         "moves": 8,

@@ -48,7 +48,7 @@
         "assistEnabled": false,
         "attemptsTotal": 5,
         "difficulty": "standard",
-        "gameVersion": "0.3.0",
+        "gameVersion": "0.4.0",
         "inputMode": "held",
         "inputSource": "local",
         "seed": 42,

@@ -1,0 +1,394 @@
+{
+  "passed": true,
+  "versions": {
+    "target": "0.5.1",
+    "pursuit": "0.5.2",
+    "hanoi": "0.6.0"
+  },
+  "scope": "Real macOS Cocoa/Metal Qt windows and offscreen QTest with simulated Neuralife host; Windows Neuralife.exe and EEG hardware NOT TESTED",
+  "base": "Previously delivered whole-window-adaptation package, Library revision 6; existing shared-ui is retained",
+  "target": {
+    "stage": "after",
+    "cases": [
+      {
+        "source": "local",
+        "feedbackMaxPixelError": 0,
+        "nextTrialStationaryMouseError": 0,
+        "localToBciErrorLogical": 0.0,
+        "clickAfterGeometryUsesLatestPoint": true,
+        "windowMoveThenResizeSync": true,
+        "resumeDoesNotMeasureFirstMotion": true,
+        "pauseStopSourceSwitchProtected": true,
+        "shotSnapshotsUnchanged": true,
+        "renderedCursorMatchesMouse": true,
+        "bciToLocalStationarySync": true,
+        "pauseResumeStationarySync": true,
+        "restartStationarySync": true
+      },
+      {
+        "source": "mouse",
+        "feedbackMaxPixelError": 0,
+        "nextTrialStationaryMouseError": 0,
+        "localToBciErrorLogical": 0.0,
+        "clickAfterGeometryUsesLatestPoint": true,
+        "windowMoveThenResizeSync": true,
+        "resumeDoesNotMeasureFirstMotion": true,
+        "pauseStopSourceSwitchProtected": true,
+        "shotSnapshotsUnchanged": true,
+        "renderedCursorMatchesMouse": true,
+        "bciToLocalStationarySync": true,
+        "pauseResumeStationarySync": true,
+        "restartStationarySync": true
+      },
+      {
+        "source": "keyboard",
+        "feedbackMaxPixelError": 0,
+        "nextTrialStationaryMouseError": 0,
+        "localToBciErrorLogical": 0.0,
+        "clickAfterGeometryUsesLatestPoint": true,
+        "windowMoveThenResizeSync": true,
+        "resumeDoesNotMeasureFirstMotion": true,
+        "pauseStopSourceSwitchProtected": true,
+        "shotSnapshotsUnchanged": true,
+        "renderedCursorMatchesMouse": true,
+        "bciToLocalStationarySync": true,
+        "pauseResumeStationarySync": true,
+        "restartStationarySync": true
+      }
+    ],
+    "platform": "cocoa"
+  },
+  "target_confirm_order": {
+    "stage": "after",
+    "platform": "cocoa",
+    "results": [
+      {
+        "source": "local",
+        "phaseAfterEarlyHostConfirm": "target_visible",
+        "hit": true,
+        "hits": 1,
+        "misses": 0,
+        "shotSource": [
+          "mouse"
+        ]
+      },
+      {
+        "source": "mouse",
+        "phaseAfterEarlyHostConfirm": "target_visible",
+        "hit": true,
+        "hits": 1,
+        "misses": 0,
+        "shotSource": [
+          "mouse"
+        ]
+      },
+      {
+        "source": "keyboard",
+        "phaseAfterEarlyHostConfirm": "target_visible",
+        "hit": true,
+        "hits": 1,
+        "misses": 0,
+        "shotSource": [
+          "mouse"
+        ]
+      },
+      {
+        "source": "keyboard",
+        "pureHostConfirmHit": true
+      },
+      {
+        "source": "bci",
+        "pureHostConfirmHit": true
+      }
+    ]
+  },
+  "pursuit": {
+    "offscreen": {
+      "passed": true,
+      "environment": "PySide6 offscreen QTest + mock host; actual Windows host and hardware not tested",
+      "cases": [
+        {
+          "requested": [
+            1000,
+            700
+          ],
+          "actual": [
+            1000,
+            700
+          ],
+          "resize_requested": [
+            1100,
+            770
+          ],
+          "resize_actual": [
+            1100,
+            770
+          ],
+          "graphics_api": "GraphicsApi.Software",
+          "scaled_ancestor_mouse": true,
+          "continuous_mouse_host_echo": true,
+          "pause_resume_stationary": true,
+          "restart_stationary": true,
+          "window_move_stationary": true,
+          "resize_stationary": true,
+          "resize_failure": null,
+          "fresh_mouse_after_resize": true,
+          "mode_switch_bci_gate_and_isolation": true,
+          "five_round_single_finish": true,
+          "messages": [
+            "Populating font family aliases took 27 ms. Replace uses of missing font family \"Sans Serif\" with one that exists to avoid this cost. "
+          ]
+        },
+        {
+          "requested": [
+            1600,
+            900
+          ],
+          "actual": [
+            1600,
+            900
+          ],
+          "resize_requested": [
+            1700,
+            970
+          ],
+          "resize_actual": [
+            1700,
+            970
+          ],
+          "graphics_api": "GraphicsApi.Software",
+          "scaled_ancestor_mouse": true,
+          "continuous_mouse_host_echo": true,
+          "pause_resume_stationary": true,
+          "restart_stationary": true,
+          "window_move_stationary": true,
+          "resize_stationary": true,
+          "resize_failure": null,
+          "fresh_mouse_after_resize": true,
+          "mode_switch_bci_gate_and_isolation": true,
+          "five_round_single_finish": true,
+          "messages": []
+        },
+        {
+          "requested": [
+            2560,
+            1080
+          ],
+          "actual": [
+            2560,
+            1080
+          ],
+          "resize_requested": [
+            2660,
+            1150
+          ],
+          "resize_actual": [
+            2660,
+            1150
+          ],
+          "graphics_api": "GraphicsApi.Software",
+          "scaled_ancestor_mouse": true,
+          "continuous_mouse_host_echo": true,
+          "pause_resume_stationary": true,
+          "restart_stationary": true,
+          "window_move_stationary": true,
+          "resize_stationary": true,
+          "resize_failure": null,
+          "fresh_mouse_after_resize": true,
+          "mode_switch_bci_gate_and_isolation": true,
+          "five_round_single_finish": true,
+          "messages": []
+        }
+      ]
+    },
+    "cocoa": {
+      "passed": true,
+      "environment": "PySide6 cocoa QTest + mock host; actual Windows host and hardware not tested",
+      "cases": [
+        {
+          "requested": [
+            1000,
+            700
+          ],
+          "actual": [
+            1000,
+            700
+          ],
+          "resize_requested": [
+            1100,
+            770
+          ],
+          "resize_actual": [
+            1100,
+            770
+          ],
+          "graphics_api": "GraphicsApi.Metal",
+          "scaled_ancestor_mouse": true,
+          "continuous_mouse_host_echo": true,
+          "pause_resume_stationary": true,
+          "restart_stationary": true,
+          "window_move_stationary": true,
+          "resize_stationary": true,
+          "resize_failure": null,
+          "fresh_mouse_after_resize": true,
+          "mode_switch_bci_gate_and_isolation": true,
+          "five_round_single_finish": true,
+          "messages": []
+        },
+        {
+          "requested": [
+            1600,
+            900
+          ],
+          "actual": [
+            1470,
+            826
+          ],
+          "resize_requested": [
+            1570,
+            896
+          ],
+          "resize_actual": [
+            1570,
+            826
+          ],
+          "graphics_api": "GraphicsApi.Metal",
+          "scaled_ancestor_mouse": true,
+          "continuous_mouse_host_echo": true,
+          "pause_resume_stationary": true,
+          "restart_stationary": true,
+          "window_move_stationary": true,
+          "resize_stationary": true,
+          "resize_failure": null,
+          "fresh_mouse_after_resize": true,
+          "mode_switch_bci_gate_and_isolation": true,
+          "five_round_single_finish": true,
+          "messages": []
+        },
+        {
+          "requested": [
+            2560,
+            1080
+          ],
+          "actual": [
+            1470,
+            826
+          ],
+          "resize_requested": [
+            1570,
+            896
+          ],
+          "resize_actual": [
+            1570,
+            826
+          ],
+          "graphics_api": "GraphicsApi.Metal",
+          "scaled_ancestor_mouse": true,
+          "continuous_mouse_host_echo": true,
+          "pause_resume_stationary": true,
+          "restart_stationary": true,
+          "window_move_stationary": true,
+          "resize_stationary": true,
+          "resize_failure": null,
+          "fresh_mouse_after_resize": true,
+          "mode_switch_bci_gate_and_isolation": true,
+          "five_round_single_finish": true,
+          "messages": []
+        }
+      ]
+    }
+  },
+  "hanoi": {
+    "passed": true,
+    "platform": "cocoa",
+    "cases": [
+      {
+        "requested": [
+          800,
+          640
+        ],
+        "actualView": [
+          800,
+          640
+        ],
+        "actualGame": [
+          800.0,
+          640.0
+        ],
+        "ancestorScale": 1,
+        "click_no_pick": true,
+        "drag_success_illegal_outside": true,
+        "keyboard_five_rounds": true
+      },
+      {
+        "requested": [
+          1000,
+          700
+        ],
+        "actualView": [
+          1000,
+          700
+        ],
+        "actualGame": [
+          1000.0,
+          700.0
+        ],
+        "ancestorScale": 1,
+        "click_no_pick": true,
+        "drag_success_illegal_outside": true,
+        "keyboard_five_rounds": true
+      },
+      {
+        "requested": [
+          1600,
+          900
+        ],
+        "actualView": [
+          1600,
+          826
+        ],
+        "actualGame": [
+          1600.0,
+          826.0
+        ],
+        "ancestorScale": 1,
+        "click_no_pick": true,
+        "drag_success_illegal_outside": true,
+        "keyboard_five_rounds": true
+      },
+      {
+        "requested": [
+          1920,
+          1080
+        ],
+        "actualView": [
+          1920,
+          826
+        ],
+        "actualGame": [
+          2400.0,
+          1032.5
+        ],
+        "ancestorScale": 0.8,
+        "click_no_pick": true,
+        "drag_success_illegal_outside": true,
+        "keyboard_five_rounds": true
+      }
+    ],
+    "host_echo_dedup": true,
+    "bci_confirm_preserved": true
+  },
+  "known_limits": [
+    "Native desktop constraints can restrict requested window dimensions; see actual sizes in results.",
+    "Window-origin-change events with unchanged window-local pointer position are deduplicated. Qt QML does not supply a distinct native global mouse position for the ambiguous single event. The next local pointer movement responds immediately; target clicks always use their current point.",
+    "This package changes only target, pursuit and hanoi; no Windows executable or EEG decoding is included."
+  ],
+  "changed_from_revision6": [
+    "hanoi/Main.qml",
+    "hanoi/TaskDefinition.qml",
+    "pursuit/Main.qml",
+    "pursuit/TaskDefinition.qml",
+    "target/Main.qml",
+    "target/TaskDefinition.qml"
+  ]
+}

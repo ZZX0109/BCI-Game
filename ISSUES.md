@@ -25,7 +25,7 @@
 | **P2-33** | 系统（待宿主） | 全部 | `GameTheme.themeIndex` 恒为 0(Light)，宿主 `game` 对象未暴露主题信号，`BASE-03`（切换宿主主题表现一致）无法接入 | 已在 `GameTheme.qml` 注释标明；待宿主提供 theme/colorScheme 接口后接入 |
 | 核查项 | 无缺陷 | traffic | 规格书 §8.4「扫掠碰撞/固定时间步长」——`findCollision` 是连续位置判据 + `substep=0.008s` 固定子步（最快车单步位移 0.026 单位 ≪ 碰撞阈值 0.72），穿透风险数值上已规避 | 仅加注释说明，不硬改避免回归 |
 
-> 视觉同源改造证据：`docs/shots/v5_theme_{hanoi,target,sokoban,claw}.png`；回归 7/7 冒烟 + 31 场景自动取证全绿。
+> 视觉同源改造证据：`docs/shots/v5_theme_{hanoi,target,sokoban,claw}.png`；当时回归 7/7 冒烟 + 31 场景自动取证全绿（2026-11-05 现为 34 场景 / 242 断言）。
 
 ## V4 第三次复核新增（2026-11-03 · 自动取证装置上线后）
 

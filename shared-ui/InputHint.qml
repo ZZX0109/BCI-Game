@@ -15,8 +15,8 @@ Text {
     font.pixelSize: theme.captionPx
     font.family: theme.fontFamily
     text: {
-        if (source === "bci" && bciHint !== "") return bciHint
-        if (source === "pointer" && mouseHint !== "") return mouseHint
+        if ((source.toLowerCase().indexOf("bci") >= 0 || source.toLowerCase().indexOf("brain") >= 0) && bciHint !== "") return bciHint
+        if (source !== "keyboard" && mouseHint !== "") return mouseHint
         if (keyboardHint !== "") return keyboardHint
         if (mouseHint !== "") return mouseHint
         return action

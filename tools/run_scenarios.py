@@ -38,6 +38,10 @@ def slug(name):
 
 
 def run_one(game, name, func):
+    # 场景可写成 (函数, {"input_source": "bci"})，用于验证脑控专用通道。
+    opts = {}
+    if isinstance(func, tuple):
+        func, opts = func
     buf = io.StringIO()
     old = sys.stdout
     sys.stdout = buf
@@ -45,7 +49,7 @@ def run_one(game, name, func):
     error = None
     try:
         print(f"\n--- {game} / {name} ---")
-        runner = fake_host.Runner(game, ROOT)
+        runner = fake_host.Runner(game, ROOT, input_source=opts.get("input_source", "local"))
         runner.boot()
         if runner.errors:
             raise RuntimeError("; ".join(runner.errors))

@@ -1,0 +1,4649 @@
+{
+  "version": "0.6.1",
+  "camera": {
+    "stage": "after",
+    "platform": "cocoa",
+    "graphicsApi": "GraphicsApi.Metal",
+    "scope": "Native Qt Quick3D on Metal; simulated host; fixed stationary piece projected extent measures camera scale independently from the moving piece",
+    "cases": [
+      {
+        "level": 1,
+        "requested": [
+          1200,
+          700
+        ],
+        "actual": [
+          1200,
+          700
+        ],
+        "movingPiece": "p2",
+        "stationaryPiece": "p1",
+        "samples": [
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "initial",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "extraction_started",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                5.723200000000001,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "extraction_40pct",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                7.300000000000001,
+                0
+              ]
+            },
+            "removed": {
+              "p2": true
+            },
+            "label": "removed",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "undo_extraction",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "drag_started",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0.5,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "partial_drag",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0.5,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "partial_committed",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "undo_partial",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "reset",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          }
+        ],
+        "resizeCheck": {
+          "requested": [
+            800,
+            780
+          ],
+          "actual": [
+            800,
+            780
+          ],
+          "partial": {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0.5,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "resized_partial"
+          },
+          "restored": {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "resized_after_undo"
+          },
+          "stableAtSameViewport": true
+        },
+        "stable": true
+      },
+      {
+        "level": 1,
+        "requested": [
+          800,
+          780
+        ],
+        "actual": [
+          800,
+          780
+        ],
+        "movingPiece": "p2",
+        "stationaryPiece": "p1",
+        "samples": [
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "initial",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "extraction_started",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                5.723200000000001,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "extraction_40pct",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                7.300000000000001,
+                0
+              ]
+            },
+            "removed": {
+              "p2": true
+            },
+            "label": "removed",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "undo_extraction",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "drag_started",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0.5,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "partial_drag",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0.5,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "partial_committed",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "undo_partial",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "reset",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          }
+        ],
+        "resizeCheck": {
+          "requested": [
+            1200,
+            700
+          ],
+          "actual": [
+            1200,
+            700
+          ],
+          "partial": {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0.5,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "resized_partial"
+          },
+          "restored": {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p2": false
+            },
+            "label": "resized_after_undo"
+          },
+          "stableAtSameViewport": true
+        },
+        "stable": true
+      },
+      {
+        "level": 2,
+        "requested": [
+          1200,
+          700
+        ],
+        "actual": [
+          1200,
+          700
+        ],
+        "movingPiece": "p3",
+        "stationaryPiece": "p1",
+        "samples": [
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "initial",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "extraction_started",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                5.723200000000001
+              ]
+            },
+            "removed": {},
+            "label": "extraction_40pct",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                7.300000000000001
+              ]
+            },
+            "removed": {
+              "p3": true
+            },
+            "label": "removed",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "undo_extraction",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "drag_started",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0.5
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "partial_drag",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0.5
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "partial_committed",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "undo_partial",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "reset",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          }
+        ],
+        "resizeCheck": {
+          "requested": [
+            800,
+            780
+          ],
+          "actual": [
+            800,
+            780
+          ],
+          "partial": {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0.5
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "resized_partial"
+          },
+          "restored": {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "resized_after_undo"
+          },
+          "stableAtSameViewport": true
+        },
+        "stable": true
+      },
+      {
+        "level": 2,
+        "requested": [
+          800,
+          780
+        ],
+        "actual": [
+          800,
+          780
+        ],
+        "movingPiece": "p3",
+        "stationaryPiece": "p1",
+        "samples": [
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "initial",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "extraction_started",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                5.723200000000001
+              ]
+            },
+            "removed": {},
+            "label": "extraction_40pct",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                7.300000000000001
+              ]
+            },
+            "removed": {
+              "p3": true
+            },
+            "label": "removed",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "undo_extraction",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "drag_started",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0.5
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "partial_drag",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0.5
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "partial_committed",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "undo_partial",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 281.6793098360042,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 277.6918182373047,
+            "height": 178.80955505371094,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "reset",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          }
+        ],
+        "resizeCheck": {
+          "requested": [
+            1200,
+            700
+          ],
+          "actual": [
+            1200,
+            700
+          ],
+          "partial": {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0.5
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "resized_partial"
+          },
+          "restored": {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p3": false
+            },
+            "label": "resized_after_undo"
+          },
+          "stableAtSameViewport": true
+        },
+        "stable": true
+      },
+      {
+        "level": 3,
+        "requested": [
+          1200,
+          700
+        ],
+        "actual": [
+          1200,
+          700
+        ],
+        "movingPiece": "p4",
+        "stationaryPiece": "p1",
+        "samples": [
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "initial",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "extraction_started",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                5.723200000000001,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "extraction_40pct",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                7.300000000000001,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": true
+            },
+            "label": "removed",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "undo_extraction",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "drag_started",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0.5,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "partial_drag",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0.5,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "partial_committed",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "undo_partial",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "reset",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          }
+        ],
+        "resizeCheck": {
+          "requested": [
+            800,
+            780
+          ],
+          "actual": [
+            800,
+            780
+          ],
+          "partial": {
+            "distance": 282.9051998940928,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 276.43943786621094,
+            "height": 178.00607299804688,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0.5,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "resized_partial"
+          },
+          "restored": {
+            "distance": 282.9051998940928,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 276.43943786621094,
+            "height": 178.00607299804688,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "resized_after_undo"
+          },
+          "stableAtSameViewport": true
+        },
+        "stable": true
+      },
+      {
+        "level": 3,
+        "requested": [
+          800,
+          780
+        ],
+        "actual": [
+          800,
+          780
+        ],
+        "movingPiece": "p4",
+        "stationaryPiece": "p1",
+        "samples": [
+          {
+            "distance": 282.9051998940928,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 276.43943786621094,
+            "height": 178.00607299804688,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "initial",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 282.9051998940928,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 276.43943786621094,
+            "height": 178.00607299804688,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "extraction_started",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 282.9051998940928,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 276.43943786621094,
+            "height": 178.00607299804688,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                5.723200000000001,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "extraction_40pct",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 282.9051998940928,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 276.43943786621094,
+            "height": 178.00607299804688,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                7.300000000000001,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": true
+            },
+            "label": "removed",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 282.9051998940928,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 276.43943786621094,
+            "height": 178.00607299804688,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "undo_extraction",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 282.9051998940928,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 276.43943786621094,
+            "height": 178.00607299804688,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "drag_started",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 282.9051998940928,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 276.43943786621094,
+            "height": 178.00607299804688,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0.5,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "partial_drag",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 282.9051998940928,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 276.43943786621094,
+            "height": 178.00607299804688,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0.5,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "partial_committed",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 282.9051998940928,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 276.43943786621094,
+            "height": 178.00607299804688,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "undo_partial",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          },
+          {
+            "distance": 282.9051998940928,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              648,
+              429
+            ],
+            "width": 276.43943786621094,
+            "height": 178.00607299804688,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {},
+            "label": "reset",
+            "widthRatio": 1.0,
+            "heightRatio": 1.0
+          }
+        ],
+        "resizeCheck": {
+          "requested": [
+            1200,
+            700
+          ],
+          "actual": [
+            1200,
+            700
+          ],
+          "partial": {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0.5,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "resized_partial"
+          },
+          "restored": {
+            "distance": 305.1116298281883,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "viewport": [
+              1016,
+              346
+            ],
+            "width": 206.1217041015625,
+            "height": 132.77357482910156,
+            "offsets": {
+              "p1": [
+                0,
+                0,
+                0
+              ],
+              "p2": [
+                0,
+                0,
+                0
+              ],
+              "p3": [
+                0,
+                0,
+                0
+              ],
+              "p4": [
+                0,
+                0,
+                0
+              ]
+            },
+            "removed": {
+              "p4": false
+            },
+            "label": "resized_after_undo"
+          },
+          "stableAtSameViewport": true
+        },
+        "stable": true
+      }
+    ],
+    "passed": true,
+    "messages": []
+  },
+  "layout": {
+    "scope": "Actual Qt view, simulated full-window/legacy host; no Windows Neuralife or EEG hardware",
+    "cases": [
+      {
+        "legacy": false,
+        "requested": [
+          800,
+          640
+        ],
+        "actual": [
+          800,
+          640
+        ],
+        "geometry": {
+          "root": [
+            800,
+            640
+          ],
+          "viewport": {
+            "x": 132,
+            "y": 133,
+            "w": 648,
+            "h": 296
+          },
+          "rail": {
+            "x": 20,
+            "y": 133,
+            "w": 96,
+            "h": 104
+          },
+          "grid": {
+            "x": 20,
+            "y": 500,
+            "w": 760,
+            "h": 96
+          },
+          "status": {
+            "x": 20,
+            "y": 445,
+            "w": 760,
+            "h": 48
+          },
+          "title": {
+            "x": 20,
+            "y": 18,
+            "w": 316,
+            "h": 40
+          },
+          "goal": {
+            "x": 20,
+            "y": 91,
+            "w": 760,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 20,
+              "y": 500,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 212,
+              "y": 500,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 404,
+              "y": 500,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 596,
+              "y": 500,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 20,
+              "y": 552,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 212,
+              "y": 552,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 404,
+              "y": 552,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 596,
+              "y": 552,
+              "w": 184,
+              "h": 44
+            }
+          ]
+        },
+        "resize_follows": true
+      },
+      {
+        "legacy": false,
+        "requested": [
+          1000,
+          700
+        ],
+        "actual": [
+          1000,
+          700
+        ],
+        "geometry": {
+          "root": [
+            1000,
+            700
+          ],
+          "viewport": {
+            "x": 149,
+            "y": 133,
+            "w": 826,
+            "h": 351
+          },
+          "rail": {
+            "x": 25,
+            "y": 133,
+            "w": 108,
+            "h": 104
+          },
+          "grid": {
+            "x": 25,
+            "y": 555,
+            "w": 950,
+            "h": 96
+          },
+          "status": {
+            "x": 25,
+            "y": 500,
+            "w": 950,
+            "h": 48
+          },
+          "title": {
+            "x": 25,
+            "y": 18,
+            "w": 395,
+            "h": 40
+          },
+          "goal": {
+            "x": 25,
+            "y": 91,
+            "w": 950,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 25,
+              "y": 555,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 264.5,
+              "y": 555,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 504,
+              "y": 555,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 743.5,
+              "y": 555,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 25,
+              "y": 607,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 264.5,
+              "y": 607,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 504,
+              "y": 607,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 743.5,
+              "y": 607,
+              "w": 231.5,
+              "h": 44
+            }
+          ]
+        },
+        "resize_follows": true
+      },
+      {
+        "legacy": false,
+        "requested": [
+          1920,
+          1080
+        ],
+        "actual": [
+          1920,
+          826
+        ],
+        "geometry": {
+          "root": [
+            1920,
+            826
+          ],
+          "viewport": {
+            "x": 164,
+            "y": 144,
+            "w": 1716,
+            "h": 451
+          },
+          "rail": {
+            "x": 40,
+            "y": 144,
+            "w": 108,
+            "h": 104
+          },
+          "grid": {
+            "x": 480,
+            "y": 666,
+            "w": 960,
+            "h": 96
+          },
+          "status": {
+            "x": 40,
+            "y": 611,
+            "w": 1840,
+            "h": 48
+          },
+          "title": {
+            "x": 40,
+            "y": 18,
+            "w": 766.4,
+            "h": 47
+          },
+          "goal": {
+            "x": 40,
+            "y": 102,
+            "w": 1840,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 480,
+              "y": 666,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 722,
+              "y": 666,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 964,
+              "y": 666,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 1206,
+              "y": 666,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 480,
+              "y": 718,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 722,
+              "y": 718,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 964,
+              "y": 718,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 1206,
+              "y": 718,
+              "w": 234,
+              "h": 44
+            }
+          ]
+        },
+        "resize_follows": true
+      },
+      {
+        "legacy": false,
+        "requested": [
+          2560,
+          1080
+        ],
+        "actual": [
+          2560,
+          826
+        ],
+        "geometry": {
+          "root": [
+            2560,
+            826
+          ],
+          "viewport": {
+            "x": 164,
+            "y": 144,
+            "w": 2356,
+            "h": 451
+          },
+          "rail": {
+            "x": 40,
+            "y": 144,
+            "w": 108,
+            "h": 104
+          },
+          "grid": {
+            "x": 800,
+            "y": 666,
+            "w": 960,
+            "h": 96
+          },
+          "status": {
+            "x": 40,
+            "y": 611,
+            "w": 2480,
+            "h": 48
+          },
+          "title": {
+            "x": 40,
+            "y": 18,
+            "w": 1035.2,
+            "h": 47
+          },
+          "goal": {
+            "x": 40,
+            "y": 102,
+            "w": 2480,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 800,
+              "y": 666,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 1042,
+              "y": 666,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 1284,
+              "y": 666,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 1526,
+              "y": 666,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 800,
+              "y": 718,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 1042,
+              "y": 718,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 1284,
+              "y": 718,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 1526,
+              "y": 718,
+              "w": 234,
+              "h": 44
+            }
+          ]
+        },
+        "resize_follows": true
+      },
+      {
+        "legacy": false,
+        "requested": [
+          600,
+          1000
+        ],
+        "actual": [
+          600,
+          826
+        ],
+        "geometry": {
+          "root": [
+            600,
+            826
+          ],
+          "viewport": {
+            "x": 20,
+            "y": 193,
+            "w": 560,
+            "h": 422
+          },
+          "rail": {
+            "x": 20,
+            "y": 133,
+            "w": 560,
+            "h": 48
+          },
+          "grid": {
+            "x": 20,
+            "y": 686,
+            "w": 560,
+            "h": 96
+          },
+          "status": {
+            "x": 20,
+            "y": 631,
+            "w": 560,
+            "h": 48
+          },
+          "title": {
+            "x": 20,
+            "y": 18,
+            "w": 232,
+            "h": 40
+          },
+          "goal": {
+            "x": 20,
+            "y": 91,
+            "w": 560,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 20,
+              "y": 686,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 162,
+              "y": 686,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 304,
+              "y": 686,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 446,
+              "y": 686,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 20,
+              "y": 738,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 162,
+              "y": 738,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 304,
+              "y": 738,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 446,
+              "y": 738,
+              "w": 134,
+              "h": 44
+            }
+          ]
+        },
+        "resize_follows": true
+      },
+      {
+        "legacy": false,
+        "requested": [
+          900,
+          1400
+        ],
+        "actual": [
+          900,
+          826
+        ],
+        "geometry": {
+          "root": [
+            900,
+            826
+          ],
+          "viewport": {
+            "x": 134.5,
+            "y": 144,
+            "w": 743,
+            "h": 468.5
+          },
+          "rail": {
+            "x": 22.5,
+            "y": 144,
+            "w": 96,
+            "h": 104
+          },
+          "grid": {
+            "x": 22.5,
+            "y": 683.5,
+            "w": 855,
+            "h": 96
+          },
+          "status": {
+            "x": 22.5,
+            "y": 628.5,
+            "w": 855,
+            "h": 48
+          },
+          "title": {
+            "x": 22.5,
+            "y": 18,
+            "w": 355.5,
+            "h": 47
+          },
+          "goal": {
+            "x": 22.5,
+            "y": 102,
+            "w": 855,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 22.5,
+              "y": 683.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 238.25,
+              "y": 683.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 454,
+              "y": 683.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 669.75,
+              "y": 683.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 22.5,
+              "y": 735.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 238.25,
+              "y": 735.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 454,
+              "y": 735.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 669.75,
+              "y": 735.5,
+              "w": 207.75,
+              "h": 44
+            }
+          ]
+        },
+        "resize_follows": true
+      },
+      {
+        "legacy": true,
+        "requested": [
+          800,
+          640
+        ],
+        "actual": [
+          800,
+          640
+        ],
+        "geometry": {
+          "root": [
+            800,
+            640
+          ],
+          "viewport": {
+            "x": 132,
+            "y": 133,
+            "w": 648,
+            "h": 296
+          },
+          "rail": {
+            "x": 20,
+            "y": 133,
+            "w": 96,
+            "h": 104
+          },
+          "grid": {
+            "x": 20,
+            "y": 500,
+            "w": 760,
+            "h": 96
+          },
+          "status": {
+            "x": 20,
+            "y": 445,
+            "w": 760,
+            "h": 48
+          },
+          "title": {
+            "x": 20,
+            "y": 18,
+            "w": 316,
+            "h": 40
+          },
+          "goal": {
+            "x": 20,
+            "y": 91,
+            "w": 760,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 20,
+              "y": 500,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 212,
+              "y": 500,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 404,
+              "y": 500,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 596,
+              "y": 500,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 20,
+              "y": 552,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 212,
+              "y": 552,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 404,
+              "y": 552,
+              "w": 184,
+              "h": 44
+            },
+            {
+              "x": 596,
+              "y": 552,
+              "w": 184,
+              "h": 44
+            }
+          ]
+        },
+        "resize_follows": true
+      },
+      {
+        "legacy": true,
+        "requested": [
+          1000,
+          700
+        ],
+        "actual": [
+          1000,
+          700
+        ],
+        "geometry": {
+          "root": [
+            1000,
+            700
+          ],
+          "viewport": {
+            "x": 149,
+            "y": 133,
+            "w": 826,
+            "h": 351
+          },
+          "rail": {
+            "x": 25,
+            "y": 133,
+            "w": 108,
+            "h": 104
+          },
+          "grid": {
+            "x": 25,
+            "y": 555,
+            "w": 950,
+            "h": 96
+          },
+          "status": {
+            "x": 25,
+            "y": 500,
+            "w": 950,
+            "h": 48
+          },
+          "title": {
+            "x": 25,
+            "y": 18,
+            "w": 395,
+            "h": 40
+          },
+          "goal": {
+            "x": 25,
+            "y": 91,
+            "w": 950,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 25,
+              "y": 555,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 264.5,
+              "y": 555,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 504,
+              "y": 555,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 743.5,
+              "y": 555,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 25,
+              "y": 607,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 264.5,
+              "y": 607,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 504,
+              "y": 607,
+              "w": 231.5,
+              "h": 44
+            },
+            {
+              "x": 743.5,
+              "y": 607,
+              "w": 231.5,
+              "h": 44
+            }
+          ]
+        },
+        "resize_follows": true
+      },
+      {
+        "legacy": true,
+        "requested": [
+          1920,
+          1080
+        ],
+        "actual": [
+          1470,
+          919
+        ],
+        "geometry": {
+          "root": [
+            1470,
+            919
+          ],
+          "viewport": {
+            "x": 160.75,
+            "y": 152,
+            "w": 1272.5,
+            "h": 539.25
+          },
+          "rail": {
+            "x": 36.75,
+            "y": 152,
+            "w": 108,
+            "h": 104
+          },
+          "grid": {
+            "x": 255,
+            "y": 762.25,
+            "w": 960,
+            "h": 96
+          },
+          "status": {
+            "x": 36.75,
+            "y": 707.25,
+            "w": 1396.5,
+            "h": 48
+          },
+          "title": {
+            "x": 36.75,
+            "y": 18,
+            "w": 580.65,
+            "h": 52
+          },
+          "goal": {
+            "x": 36.75,
+            "y": 110,
+            "w": 1396.5,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 255,
+              "y": 762.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 497,
+              "y": 762.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 739,
+              "y": 762.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 981,
+              "y": 762.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 255,
+              "y": 814.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 497,
+              "y": 814.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 739,
+              "y": 814.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 981,
+              "y": 814.25,
+              "w": 234,
+              "h": 44
+            }
+          ]
+        },
+        "resize_follows": true
+      },
+      {
+        "legacy": true,
+        "requested": [
+          2560,
+          1080
+        ],
+        "actual": [
+          1470,
+          919
+        ],
+        "geometry": {
+          "root": [
+            1470,
+            919
+          ],
+          "viewport": {
+            "x": 160.75,
+            "y": 152,
+            "w": 1272.5,
+            "h": 539.25
+          },
+          "rail": {
+            "x": 36.75,
+            "y": 152,
+            "w": 108,
+            "h": 104
+          },
+          "grid": {
+            "x": 255,
+            "y": 762.25,
+            "w": 960,
+            "h": 96
+          },
+          "status": {
+            "x": 36.75,
+            "y": 707.25,
+            "w": 1396.5,
+            "h": 48
+          },
+          "title": {
+            "x": 36.75,
+            "y": 18,
+            "w": 580.65,
+            "h": 52
+          },
+          "goal": {
+            "x": 36.75,
+            "y": 110,
+            "w": 1396.5,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 255,
+              "y": 762.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 497,
+              "y": 762.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 739,
+              "y": 762.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 981,
+              "y": 762.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 255,
+              "y": 814.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 497,
+              "y": 814.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 739,
+              "y": 814.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 981,
+              "y": 814.25,
+              "w": 234,
+              "h": 44
+            }
+          ]
+        },
+        "resize_follows": true
+      },
+      {
+        "legacy": true,
+        "requested": [
+          600,
+          1000
+        ],
+        "actual": [
+          600,
+          919
+        ],
+        "geometry": {
+          "root": [
+            600,
+            919
+          ],
+          "viewport": {
+            "x": 20,
+            "y": 193,
+            "w": 560,
+            "h": 515
+          },
+          "rail": {
+            "x": 20,
+            "y": 133,
+            "w": 560,
+            "h": 48
+          },
+          "grid": {
+            "x": 20,
+            "y": 779,
+            "w": 560,
+            "h": 96
+          },
+          "status": {
+            "x": 20,
+            "y": 724,
+            "w": 560,
+            "h": 48
+          },
+          "title": {
+            "x": 20,
+            "y": 18,
+            "w": 232,
+            "h": 40
+          },
+          "goal": {
+            "x": 20,
+            "y": 91,
+            "w": 560,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 20,
+              "y": 779,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 162,
+              "y": 779,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 304,
+              "y": 779,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 446,
+              "y": 779,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 20,
+              "y": 831,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 162,
+              "y": 831,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 304,
+              "y": 831,
+              "w": 134,
+              "h": 44
+            },
+            {
+              "x": 446,
+              "y": 831,
+              "w": 134,
+              "h": 44
+            }
+          ]
+        },
+        "resize_follows": true
+      },
+      {
+        "legacy": true,
+        "requested": [
+          900,
+          1400
+        ],
+        "actual": [
+          900,
+          919
+        ],
+        "geometry": {
+          "root": [
+            900,
+            919
+          ],
+          "viewport": {
+            "x": 134.5,
+            "y": 151,
+            "w": 743,
+            "h": 554.5
+          },
+          "rail": {
+            "x": 22.5,
+            "y": 151,
+            "w": 96,
+            "h": 104
+          },
+          "grid": {
+            "x": 22.5,
+            "y": 776.5,
+            "w": 855,
+            "h": 96
+          },
+          "status": {
+            "x": 22.5,
+            "y": 721.5,
+            "w": 855,
+            "h": 48
+          },
+          "title": {
+            "x": 22.5,
+            "y": 18,
+            "w": 355.5,
+            "h": 51
+          },
+          "goal": {
+            "x": 22.5,
+            "y": 109,
+            "w": 855,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 22.5,
+              "y": 776.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 238.25,
+              "y": 776.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 454,
+              "y": 776.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 669.75,
+              "y": 776.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 22.5,
+              "y": 828.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 238.25,
+              "y": 828.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 454,
+              "y": 828.5,
+              "w": 207.75,
+              "h": 44
+            },
+            {
+              "x": 669.75,
+              "y": 828.5,
+              "w": 207.75,
+              "h": 44
+            }
+          ]
+        },
+        "resize_follows": true
+      }
+    ],
+    "passed": true,
+    "fullscreen": [
+      {
+        "legacy": false,
+        "actual": [
+          1470,
+          919
+        ],
+        "geometry": {
+          "root": [
+            1470,
+            919
+          ],
+          "viewport": {
+            "x": 160.75,
+            "y": 152,
+            "w": 1272.5,
+            "h": 539.25
+          },
+          "rail": {
+            "x": 36.75,
+            "y": 152,
+            "w": 108,
+            "h": 104
+          },
+          "grid": {
+            "x": 255,
+            "y": 762.25,
+            "w": 960,
+            "h": 96
+          },
+          "status": {
+            "x": 36.75,
+            "y": 707.25,
+            "w": 1396.5,
+            "h": 48
+          },
+          "title": {
+            "x": 36.75,
+            "y": 18,
+            "w": 580.65,
+            "h": 52
+          },
+          "goal": {
+            "x": 36.75,
+            "y": 110,
+            "w": 1396.5,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 255,
+              "y": 762.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 497,
+              "y": 762.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 739,
+              "y": 762.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 981,
+              "y": 762.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 255,
+              "y": 814.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 497,
+              "y": 814.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 739,
+              "y": 814.25,
+              "w": 234,
+              "h": 44
+            },
+            {
+              "x": 981,
+              "y": 814.25,
+              "w": 234,
+              "h": 44
+            }
+          ]
+        },
+        "passed": true
+      },
+      {
+        "legacy": true,
+        "actual": [
+          933,
+          919
+        ],
+        "geometry": {
+          "root": [
+            933,
+            919
+          ],
+          "viewport": {
+            "x": 147.325,
+            "y": 152,
+            "w": 762.3499999999999,
+            "h": 552.675
+          },
+          "rail": {
+            "x": 23.325000000000003,
+            "y": 152,
+            "w": 108,
+            "h": 104
+          },
+          "grid": {
+            "x": 23.32499999999999,
+            "y": 775.675,
+            "w": 886.35,
+            "h": 96
+          },
+          "status": {
+            "x": 23.325000000000003,
+            "y": 720.675,
+            "w": 886.35,
+            "h": 48
+          },
+          "title": {
+            "x": 23.325000000000003,
+            "y": 18,
+            "w": 368.535,
+            "h": 52
+          },
+          "goal": {
+            "x": 23.325000000000003,
+            "y": 110,
+            "w": 886.35,
+            "h": 34
+          },
+          "controls": [
+            {
+              "x": 23.32499999999999,
+              "y": 775.675,
+              "w": 215.5875,
+              "h": 44
+            },
+            {
+              "x": 246.9125,
+              "y": 775.675,
+              "w": 215.5875,
+              "h": 44
+            },
+            {
+              "x": 470.5,
+              "y": 775.675,
+              "w": 215.5875,
+              "h": 44
+            },
+            {
+              "x": 694.0875000000001,
+              "y": 775.675,
+              "w": 215.5875,
+              "h": 44
+            },
+            {
+              "x": 23.32499999999999,
+              "y": 827.675,
+              "w": 215.5875,
+              "h": 44
+            },
+            {
+              "x": 246.9125,
+              "y": 827.675,
+              "w": 215.5875,
+              "h": 44
+            },
+            {
+              "x": 470.5,
+              "y": 827.675,
+              "w": 215.5875,
+              "h": 44
+            },
+            {
+              "x": 694.0875000000001,
+              "y": 827.675,
+              "w": 215.5875,
+              "h": 44
+            }
+          ]
+        },
+        "passed": true
+      }
+    ],
+    "graphics_api": "GraphicsApi.Metal",
+    "messages": []
+  },
+  "original_native": {
+    "checks": [
+      {
+        "name": "main_loaded",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "real_quick3d_ready",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "L1_only_key_free",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "L1_blocked_reason",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "L1_blocked_does_not_move",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "inspection_disables_move_0",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pickable_geometry_0",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_mouse_select_0",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pause_freezes_0_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "continuous_no_penetration_0_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "extracted_0_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "undo_restores_key_0",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "opposite_end_valid_0",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pause_freezes_0_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "continuous_no_penetration_0_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "extracted_0_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "level_complete_0",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "L2_only_key_free",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "L2_blocked_reason",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "L2_blocked_does_not_move",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "inspection_disables_move_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pickable_geometry_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_mouse_select_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pause_freezes_1_3",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "continuous_no_penetration_1_3",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "extracted_1_3",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "undo_restores_key_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "opposite_end_valid_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pause_freezes_1_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "continuous_no_penetration_1_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "extracted_1_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pause_freezes_1_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "continuous_no_penetration_1_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "extracted_1_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "level_complete_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "L3_only_key_free",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "L3_blocked_reason",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "L3_blocked_does_not_move",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "inspection_disables_move_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pickable_geometry_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "native_mouse_select_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pause_freezes_2_4",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "continuous_no_penetration_2_4",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "extracted_2_4",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "undo_restores_key_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "opposite_end_valid_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pause_freezes_2_3",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "continuous_no_penetration_2_3",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "extracted_2_3",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pause_freezes_2_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "continuous_no_penetration_2_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "extracted_2_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "pause_freezes_2_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "continuous_no_penetration_2_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "extracted_2_1",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "level_complete_2",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "finish_once",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "half_drag_never_removes",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "view_mode_returns",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "name": "no_qml_errors",
+        "passed": true,
+        "detail": []
+      }
+    ],
+    "messages": [],
+    "environment": "macOS PySide6 6.12 actual QQuickView with mock host; no Windows/BCI hardware"
+  },
+  "geometry": [
+    {
+      "level": 1,
+      "connected": true,
+      "zero_overlap": true,
+      "all_reachable_states_solvable": true,
+      "states": {
+        "(0, 1)": [
+          [
+            "穿榫纵梁",
+            -1
+          ],
+          [
+            "穿榫纵梁",
+            1
+          ]
+        ],
+        "(0,)": [
+          [
+            "承榫横梁",
+            -1
+          ],
+          [
+            "承榫横梁",
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "level": 2,
+      "connected": true,
+      "zero_overlap": true,
+      "all_reachable_states_solvable": true,
+      "states": {
+        "(0, 1, 2)": [
+          [
+            "中心锁销",
+            -1
+          ],
+          [
+            "中心锁销",
+            1
+          ]
+        ],
+        "(0, 1)": [
+          [
+            "穿榫纵梁",
+            -1
+          ],
+          [
+            "穿榫纵梁",
+            1
+          ]
+        ],
+        "(0,)": [
+          [
+            "承榫横梁",
+            -1
+          ],
+          [
+            "承榫横梁",
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "connected": true,
+      "zero_overlap": true,
+      "all_reachable_states_solvable": true,
+      "states": {
+        "(0, 1, 2, 3)": [
+          [
+            "横向止退销",
+            -1
+          ],
+          [
+            "横向止退销",
+            1
+          ]
+        ],
+        "(0, 1, 2)": [
+          [
+            "中心锁销",
+            -1
+          ],
+          [
+            "中心锁销",
+            1
+          ]
+        ],
+        "(0, 1)": [
+          [
+            "穿榫纵梁",
+            -1
+          ],
+          [
+            "穿榫纵梁",
+            1
+          ]
+        ],
+        "(0,)": [
+          [
+            "承榫横梁",
+            -1
+          ],
+          [
+            "承榫横梁",
+            1
+          ]
+        ]
+      }
+    }
+  ],
+  "interaction_redesign": "Proposal only; current interaction/physics and guidance rules retained",
+  "scope": "Actual macOS Qt Quick3D/Metal and simulated host; Windows Neuralife and EEG devices NOT TESTED"
+}

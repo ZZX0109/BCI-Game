@@ -9,18 +9,19 @@ hanoi,H-07,日志discCount一致,对比attempt_started与实际盘面,discCount�
 sokoban,S-01,S03参考解通关,按LURRRURD操作S03,通关；level_completed含正确levelId,PASS,自动取证 autoplay/sokoban__S_01_S03参考解.json：S03 按 BFS 参考解通关，moves 等于参考解长度，levelVersion 入日志
 sokoban,S-02,撞墙不入undo栈,撞墙后打开菜单撤销,提示无可撤销；undoStack不变,PASS,自动取证 autoplay/sokoban__S_02_撞墙不入栈.json：撞墙记 blocked_wall，undoStack 仍为 1，moves 不变
 sokoban,S-03,任意有效移动可逆,移动/推箱后撤销,位置与计数完全恢复,PASS,自动取证 autoplay/sokoban__S_03_移动可逆.json：撤销后盘面/步数与移动前完全一致，undosUsed=1
-sokoban,S-04,墙角死锁可恢复,把箱推入非目标墙角,死锁提示；可撤销或重开继续,PASS,自动取证 autoplay/sokoban__S_04_死锁可恢复.json：顶入(1,1)死角触发 deadlock_hint+confirmed；撤销→countdown_cancelled；之后仍能通关
+sokoban,S-04,墙角死锁可恢复,把箱推入非目标墙角,死锁提示；可撤销或重开继续,PASS,"自动取证 autoplay/sokoban__S_04_死锁可恢复.json：顶入(1,1)死角触发 deadlock_hint(rule=static_corner)并标记 deadlockBoxes；不进入倒计时；撤销后标记清空、只回退一步且进度保留，之后仍能通关（0.5.0 豁免：不自动重开）"
 sokoban,S-05,levelId/levelVersion入日志,对比level_started与level_completed,一致且随关卡变化,PASS,smoke日志确认
 sokoban,S-06,步数可由事件重算,汇总action_applied success数,等于有效步数moves,PASS,自动取证 autoplay/sokoban__S_06_步数可重算.json：success 事件数==moves==BFS 最优，推箱次数==pushes
 sokoban,S-07,五关全部可通关,S01→S05依次通关,一次attempt_finished一次finish,PASS,自动取证 autoplay/sokoban__S_07_五关通关.json：S01–S05 串行通关，attempt_finished 只 1 次，reason=completed
-sokoban,S-08,死锁提示不强制结束,出现deadlock_hint,游戏继续；只提示不终止,PASS,自动取证 autoplay/sokoban__S_08_死锁不强制结束.json：3 秒后 level_auto_restarted，moves 归零，会话未结束，之后仍能通关
+sokoban,S-08,死锁提示不强制结束,出现deadlock_hint,游戏继续；只提示不终止,PASS,自动取证 autoplay/sokoban__S_08_死锁不强制结束.json：等 3.4s 无 level_auto_restarted、moves 与盘面完整保留、autoRestarts=0、会话未结束；主动撤销后仍能通关（0.5.0 豁免：不自动丢弃棋盘）
 pursuit,P-01,区外即清零,区内0.8s+区外0.2s+区内0.8s,不计为连续保持成功；continuousHold清零,OBSOLETE,V4 重写已移除 continuousHold 机制（改为累计比例 inZoneRatio，由 P-02 覆盖）；该项作废，不再作为验收门槛
-pursuit,P-02,累计模式记录比例,time_in_zone模式跑30s,inZoneRatio=区内时间/总时间,PASS,自动取证 autoplay/pursuit__P_02_累计比例.json：区外 3s 内区内时间只涨 0.05s；inZoneRatio=0.694=区内/可见，落在(0,1)
+pursuit,P-02,累计模式记录比例,time_in_zone模式跑30s,inZoneRatio=区内时间/总时间,PASS,"自动取证 autoplay/pursuit__P_02_累计比例.json：区外 3s 内区内时间只涨 0.05s；inZoneRatio=0.694=区内/可见，落在(0,1)"
 pursuit,P-03,同t同位置,两次调用targetPositionAt(t),返回值完全相同,PASS,纯时间函数（确定性），逻辑级断言
 pursuit,P-04,暂停不改相位,暂停10s后恢复,targetN从暂停前相位继续,PASS,自动取证 autoplay/pursuit__P_04_暂停不改相位.json：暂停 10s 后 phase/roundElapsed/targetX/visibleSeconds 全冻结，恢复后继续累加
 pursuit,P-05,无y设备仅1D,cursorY变化,不影响误差判定与得分,PASS,cursorY仅记录不参判（代码级保证）
 pursuit,P-06,MAE可由样本重算,用sample数据重算MAE,与metrics一致,PASS,自动取证 autoplay/pursuit__P_06_MAE可由样本重算.json：500 条样本重算 MAE 0.2291 与结算 0.2291 一致（偏差 0.0%），RMSE 同
 pursuit,P-07,sample字段完整,检查pursuit.sample,含raw/rendered/target/error/simTime/sampleIndex,PASS,smoke首条sample字段齐全
+pursuit,P-08,停止后会话不复活,脑控会话停止后发继续信号再发新开始信号,resumed不能复活旧会话；只有新started可重置；停止期间训练计时冻结,PASS,"自动取证 autoplay/pursuit__P_08_停止后会话不复活.json：9 条断言；未给有效指针前停在 countdown，停止后 roundElapsed Δ=0，resume 后 sessionStopped/isPaused 仍为 True，新 started 才清零"
 target,TGT-01,同种子同试次表,两次运行seed=42,trialPlan完全一致,PASS,attempt_started已存完整trialPlan；Park-Miller确定性已验证
 target,TGT-02,初始同步不算首动,无移动直接射击,firstActionLatency=-1,PASS,自动取证 autoplay/target__TGT_02_初始同步不算首动.json：首次 pointer 只建基线(-1)，2.2px 抖动仍不算，6.7px 才记首动
 target,TGT-03,点击当帧判定,动态靶移动中射击,判定用点击瞬间目标位置,PASS,自动取证 autoplay/target__TGT_03_点击当帧判定.json：先指远处再指靶心后 confirm，shot_debug 的 aim 与 target 差≤1px，distance≤r 判 hit
@@ -36,13 +37,15 @@ claw,C-05,计时覆盖所有动作阶段,检查事件时间戳,trigger→contact
 claw,C-06,暂停后不继续动画,任意自动阶段暂停,恢复后从原位置继续,PASS,自动取证 autoplay/claw__C_06_暂停冻结动画.json：下降段暂停 6s，clawY/phaseTimer 完全冻结，恢复后仍走完整套动作
 claw,C-07,失败可进入下一次尝试,故意错位触发,attempt_result(fail)后自动下一尝试,PASS,自动取证 autoplay/claw__C_07_失败进入下一次.json：偏离触发→grasp_fail(1.62)→attempt_result success=false→自动开第 2 次尝试，会话未结束
 claw,C-08,完成页attempts与事件一致,跑完5次尝试,attempt_finished.attempts=5=事件数,PASS,自动取证 autoplay/claw__C_08_完成页计数一致.json：5 次尝试(1 成 4 败)，attempts==5==trial_started==attempt_result，成功数与事件一致
+claw,C-09,脑控脉冲无需松开,脑控模式只发一次 right 按下且刻意不发松开,单次指令恰好移动一个 pulseStep=26 且不持续漂移,PASS,"自动取证 autoplay/claw__C_09_脑控脉冲无需松开.json：3 条断言；inputMode=pulse，Δ=26.0，继续推进 0.2s 后 Δ 仍为 26.0"
 target,TGT-08,遮挡模式确定性,对比两次同种子smoke的occlusion参数,sweepSpeed/phase0/cycle/occlusionSeconds逐位一致,PASS,smoke trial1(208.7/268/3.79/0.87)与Python复现一致
+target,TGT-09,脑控输入门控,脑控通道发 NaN/±Inf 指针与无效宿主尺寸后再发有效指针,无效输入全被拒绝且不就绪；首个有效指针才触发 target.input_ready,PASS,"自动取证 autoplay/target__TGT_09_脑控输入门控.json：10 条断言；3 种非法指针 + width=0 均被拒，就绪事件记录 hostWidth=1000/hostHeight=700"
 traffic,TR-01,不按键时至少两条车道车流持续运动且周期生成,启动 C01 后不操作 8 秒,两条车道均有车辆驶过；日志 car_sample 中 lane0/lane1 的 v 持续变化且方向相反,PASS,"真实宿主 smoke 日志：t=1.02s car_sample 已含 [0,-2.99] 与 [1,2.96] 两向车流；算法层由 tools/traffic_replay_check.py 复算一致"
 traffic,TR-02,按右前进、按左后退、松开停止，可主动退回安全区,C01 按住→2秒，松开，再按住←1秒,玩家先向对岸移动，松开立即停止，后退可回到起点人行道；无自动播放整段过街动画,PASS,自动取证 autoplay/traffic__TR_02_左右进退.json：按左后退/松开即停/按右前进，始终 atStartSidewalk，move_segment 3 段可重算
 traffic,TR-03,与车真正相撞失败，安全间隙到达终点才成功,故意撞车一次；再等间隙通过,碰撞触发 hit 阶段并记录 traffic.collision；到 finishX 才记 level_cleared,PASS,自动取证 autoplay/traffic__TR_03_撞车与安全间隙.json + TR_03b：硬闯真撞(lane0 carV=-1.12)后自动 retry；安全间隙过街 0 碰撞到 finishX=2.45
 traffic,TR-04,同种子同输入序列同结局，且存在可控通关路径,seed=42 连续跑两遍；离线回放,两遍车流事件逐条一致；五关均存在可通关窗口,PASS,tools/traffic_replay_check.py：C01 复刻与真实日志逐条一致；C01-C05 最小间隙 1.65/1.60/1.37/1.18/1.15s，策略均通关（报告 docs/logs/traffic_replay_report.txt）
 traffic,TR-05,相机视角能看出街道与车辆的空间位置关系,进入任意关卡观察画面,斜侧视街道：车道有纵深、车辆有车头方向与阴影、行人站在斑马线上,PASS,真实宿主截图 docs/shots/traffic_v4_smoke.png：楼群/绿化带/对岸人行道/多车道/斑马线/双向车辆/行人分层可见
-traffic,TR-06,鼠标、键盘、模拟脑控分别可玩；脑控降速独立记录,分别用三种输入跑一关,三种输入都能移动；脑控模式车速乘 bciCarSpeedScale=0.62 且写入日志,PASS,自动取证 autoplay/traffic__TR_06_三路输入.json：键盘/真实鼠标点击(MouseArea,source=mouse)/模拟脑控三路均可推进；脑控车流速度比 0.62
+traffic,TR-06,鼠标、键盘、模拟脑控分别可玩；脑控降速独立记录,分别用三种输入跑一关,三种输入都能移动；脑控模式车速乘 bciCarSpeedScale=0.62 且写入日志,PASS,自动取证 autoplay/traffic__TR_06_三路输入.json：键盘/真实鼠标点击(MouseArea)/模拟脑控三路均可推进；运行时 activeSource 分别 keyboard/mouse/bci，落盘 move_segment.source 为 local/local/bci；脑控车流速度比 0.62（0.5.0 附条件豁免）
 traffic,TR-07,暂停冻结车流与玩家；高速车不穿透；切关不残留车辆,暂停 5 秒、恢复；跑完 C01 进 C02,暂停期间 simTime 不推进、车辆静止；8ms 子步无隧穿；C02 车辆数与 C01 无关,PASS,固定 8ms 子步：最大车速 3.2 → 单步位移 0.026 世界单位，远小于最短车长 1.55；startLevel 重置 cars 与车道游标；暂停由 advance() 早退实现
 luban,L-01,木件是真实三维实体，可旋转、可遮挡、可拾取,启动 luban，拖动空白处旋转视角、滚轮缩放,木件有体积、互相遮挡，不同角度看到不同内部结构；不是四张二维 PNG,PASS,真实宿主渲染 docs/shots/luban_v4_L3.png：盒体并集几何 + 实时阴影；拾取用 View3D.pick + objectName=pieceId（输入注入待实机）
 luban,L-02,同一木件在两个方向上的可动/受阻差异,选中一件后试两个不同方向：一个能滑出，一个在接触面停住,一个方向整件抽出，另一个方向停在接触前并提示挡路件,PASS,自动取证 autoplay/luban__L_02_双向可动差异.json：同一件 p1 的 +x/-x/+y/-y 全 blocked(free=0)，+z free=24 clear=6.3 抽出；probe 判定与实际结果一致

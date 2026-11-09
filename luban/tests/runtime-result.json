@@ -1,0 +1,306 @@
+{
+  "checks": [
+    {
+      "name": "main_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "real_quick3d_ready",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "L1_only_key_free",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "L1_blocked_reason",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "L1_blocked_does_not_move",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "inspection_disables_move_0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pickable_geometry_0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_mouse_select_0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause_freezes_0_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_0_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "extracted_0_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "undo_restores_key_0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "opposite_end_valid_0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause_freezes_0_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_0_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "extracted_0_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "level_complete_0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "L2_only_key_free",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "L2_blocked_reason",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "L2_blocked_does_not_move",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "inspection_disables_move_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pickable_geometry_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_mouse_select_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause_freezes_1_3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_1_3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "extracted_1_3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "undo_restores_key_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "opposite_end_valid_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause_freezes_1_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_1_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "extracted_1_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause_freezes_1_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_1_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "extracted_1_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "level_complete_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "L3_only_key_free",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "L3_blocked_reason",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "L3_blocked_does_not_move",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "inspection_disables_move_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pickable_geometry_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_mouse_select_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause_freezes_2_4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_2_4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "extracted_2_4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "undo_restores_key_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "opposite_end_valid_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause_freezes_2_3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_2_3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "extracted_2_3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause_freezes_2_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_2_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "extracted_2_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause_freezes_2_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_2_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "extracted_2_1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "level_complete_2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "finish_once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "half_drag_never_removes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "view_mode_returns",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no_qml_errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "messages": [],
+  "environment": "macOS PySide6 6.12 actual QQuickView with mock host; no Windows/BCI hardware"
+}

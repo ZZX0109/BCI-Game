@@ -8,3 +8,5 @@ LevelSelector 1.0 LevelSelector.qml
 GameDialog 1.0 GameDialog.qml
 InputHint 1.0 InputHint.qml
 SceneViewport 1.0 SceneViewport.qml
+LayoutProbe 1.0 LayoutProbe.qml
+LegacyWindowFill 1.0 LegacyWindowFill.qml

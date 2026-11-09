@@ -1,0 +1,396 @@
+
+--- hanoi / H-01 拿起放回 ---
+    [FAIL] H-01a 拿起后 heldDisc 有值 — heldDisc=-1
+    [FAIL] H-01b 产生了 pick_cancelled
+    [PASS] H-01c 取消不计步 — 实际=0 期望=0
+    [FAIL] H-01d 取消计数 +1 — 实际=0 期望=1
+    [PASS] H-01e 没有 place 事件
+    [PASS] H-01f 木盘回到原柱顶 — 实际=1 期望=1
+
+
+--- hanoi / H-02 大压小 ---
+Traceback (most recent call last):
+  File "C:\Users\Ait\Desktop\Neuralife\tools\run_scenarios.py", line 56, in run_one
+    func(runner)
+    ~~~~^^^^^^^^
+  File "C:\Users\Ait\Desktop\Neuralife\tools\scenarios\hanoi.py", line 71, in scen_h02_illegal
+    top_before = r.jsv("poles")[2][-1]
+                 ~~~~~~~~~~~~~~~~~^^^^
+IndexError: list index out of range
+
+
+
+--- hanoi / H-03 三盘7步 ---
+    [FAIL] H-03a 进入 round_finished
+    [FAIL] H-03e 目标柱满盘 — 实际=0 期望=3
+
+
+--- hanoi / H-04 四盘15步 ---
+    [FAIL] H-04a 进入第三局 4 盘 — 实际=3 期望=4
+    [FAIL] H-04b 第三局结算
+
+
+--- hanoi / H-05 五局全流程 ---
+    [FAIL] 等待条件超时: 第 1 局结算 — 4.0s 内未满足
+    [FAIL] 等待条件超时: 第 2 局结算 — 4.0s 内未满足
+    [FAIL] 等待条件超时: 第 3 局开始 — 6.0s 内未满足
+    [FAIL] 等待条件超时: 第 3 局结算 — 4.0s 内未满足
+    [FAIL] 等待条件超时: 第 4 局开始 — 6.0s 内未满足
+    [FAIL] 等待条件超时: 第 4 局结算 — 4.0s 内未满足
+    [FAIL] 等待条件超时: 第 5 局开始 — 6.0s 内未满足
+    [FAIL] 等待条件超时: 第 5 局结算 — 4.0s 内未满足
+    [FAIL] 等待条件超时: 会话结束 — 6.0s 内未满足
+    [FAIL] H-05a 会话结束
+    [FAIL] H-05b 五局结果齐全 — 实际=0 期望=5
+    [FAIL] H-05c 盘数序列 3/3/4/4/5 — 实际=[] 期望=[3, 3, 4, 4, 5]
+    [FAIL] H-05d 每局都是最优步 — 实际=[] 期望=[0, 0, 0, 0, 0]
+    [FAIL] H-05e 只结束一次 — 实际=0 期望=1
+
+
+--- hanoi / H-06 finish后不重开 ---
+    [FAIL] 等待条件超时: 结算 — 4.0s 内未满足
+    [FAIL] 等待条件超时: 结算 — 4.0s 内未满足
+    [FAIL] 等待条件超时: 第 3 局 — 6.0s 内未满足
+    [FAIL] 等待条件超时: 结算 — 4.0s 内未满足
+    [FAIL] 等待条件超时: 第 4 局 — 6.0s 内未满足
+    [FAIL] 等待条件超时: 结算 — 4.0s 内未满足
+    [FAIL] 等待条件超时: 第 5 局 — 6.0s 内未满足
+    [FAIL] 等待条件超时: 结算 — 4.0s 内未满足
+    [FAIL] 等待条件超时: 会话结束 — 6.0s 内未满足
+    [FAIL] H-06a phase 停在 complete — 实际='select' 期望='complete'
+    [PASS] H-06b 没有新的 attempt_started — 实际=1 期望=1
+    [FAIL] H-06c 结束后无任何新事件 — 实际=153 期望=151
+
+
+--- sokoban / S-01 S03参考解 ---
+    [PASS] S-01a 进入 S03 Route — 实际='S03' 期望='S03'
+    [PASS] S-01b S03 有参考解 — 路径 LURRRURD
+    [PASS] S-01c S03 完成事件产生
+    [PASS] S-01d 步数等于参考解长度 — 实际=8 期望=8
+    [PASS] S-01e 关卡版本写入日志 — 实际=1 期望=1
+
+
+--- sokoban / S-02 撞墙不入栈 ---
+    [PASS] S-02a 起始 undo 栈为空 — 实际=0 期望=0
+    [PASS] S-02b 有效移动后栈=1 — 实际=1 期望=1
+    [PASS] S-02c 撞墙产生 blocked_wall — 最后一条={'action': 'up', 'elapsed': 0.20800000000000013, 'from': '1,2', 'levelId': 'S01', 'result': 'blocked_wall', 'to': '0,2'}
+    [PASS] S-02d 撞墙不入栈 — 实际=1 期望=1
+    [PASS] S-02e 撞墙不计步 — 实际=1 期望=1
+    [PASS] S-02f blockedWall 计数 +1 — blockedWall=1
+
+
+--- sokoban / S-03 移动可逆 ---
+    [PASS] S-03a 移动真的改变了盘面 — 移动后=(1, 2, ('2,3',))
+    [PASS] S-03b 菜单已打开 — 实际='menu' 期望='menu'
+    [PASS] S-03c 产生 undo 事件
+    [PASS] S-03d 盘面回到移动前 — 实际=(2, 2, ('2,3',)) 期望=(2, 2, ('2,3',))
+    [PASS] S-03e 步数回到移动前 — 实际=0 期望=0
+    [PASS] S-03f undo 栈清空 — 实际=0 期望=0
+    [PASS] S-03g undosUsed 记了 1 次 — 实际=1 期望=1
+
+
+--- sokoban / S-04 死锁可恢复 ---
+    [PASS] S-04a 进入 S02 Corner — 实际='S02' 期望='S02'
+    [PASS] S-04b 触发静态墙角死锁提示 — [{'boxes': ['1,1'], 'elapsed': 0.47200000000000036, 'levelId': 'S02', 'rule': 'static_corner'}]
+    [PASS] S-04c 不进入自动重开倒计时 — deadlockCountdown=False
+    [PASS] S-04d 死锁箱体被标记出来 — deadlockBoxes=['1,1']
+    [PASS] S-04e 会话没有结束 — 实际=False 期望=False
+    [PASS] S-04f 撤销事件已记录
+    [PASS] S-04g 撤销后死锁标记清空 — deadlockBoxes=[]
+    [PASS] S-04h 箱体回到非死角 — 实际={(2, 1)} 期望={(2, 1)}
+    [PASS] S-04i 撤销只回退一步、进度不丢弃 — moves 17 -> 16
+    [PASS] S-04j 死锁恢复后仍能通关 — 恢复后 14 步通关
+
+
+--- sokoban / S-06 步数可重算 ---
+    [PASS] S-06a 第一关已通关
+    [PASS] S-06b 重新计算步数 == moves — 实际=1 期望=1
+    [PASS] S-06c 重算步数 == BFS 最优 — 实际=1 期望=1
+    [PASS] S-06d 重算推箱次数 == pushes — 实际=1 期望=1
+    [PASS] S-06e 无假失败事件 — wall=0 push=0
+    [PASS] S-06f 每条 success 都带步数 — 实际=True 期望=True
+
+
+--- sokoban / S-07 五关通关 ---
+    [PASS] S-07a 五关全部完成 — 实际=['S01', 'S02', 'S03', 'S04', 'S05'] 期望=['S01', 'S02', 'S03', 'S04', 'S05']
+    [PASS] S-07b 会话已结束
+    [PASS] S-07c 只结束一次 — 实际=1 期望=1
+    [PASS] S-07d 结束原因为 completed — 实际='completed' 期望='completed'
+
+
+--- sokoban / S-08 死锁不强制结束 ---
+    [PASS] S-08a 进入 S02 — 实际='S02' 期望='S02'
+    [PASS] S-08b 已触发死锁提示 — [{'boxes': ['1,1'], 'elapsed': 0.47200000000000036, 'levelId': 'S02', 'rule': 'static_corner'}]
+    [PASS] S-08c 没有自动重开事件
+    [PASS] S-08d 步数保留、不归零 — moves 17 -> 17
+    [PASS] S-08e 盘面保留 — {(1, 1)}
+    [PASS] S-08f 会话没有结束 — 实际=False 期望=False
+    [PASS] S-08g 仍在同一关 — 实际='S02' 期望='S02'
+    [PASS] S-08h 没有强制 finish — 实际=False 期望=False
+    [PASS] S-08i autoRestarts 保持 0 — 实际=0 期望=0
+    [PASS] S-08j 主动撤销后仍能通关
+
+
+--- pursuit / P-02 累计比例 ---
+    [PASS] P-02a 追目标时区内时间在涨 — inZone=4.48s
+    [PASS] P-02b 区外期间区内时间基本冻结 — 区外 3s 内只涨了 0.00s
+    [PASS] P-02c 回到区内继续累加 — 4.48 -> 7.84
+    [PASS] P-02d 区内时间 < 总可见时间 — inZone=7.84 visible=10.88
+    [PASS] P-02e 比例与字段一致 — ratio≈0.7206
+    [PASS] P-02f 比例落在 (0,1) — ratio=0.7206
+
+
+--- pursuit / P-04 暂停不改相位 ---
+    [PASS] P-04a 相位没变 — 实际='playing' 期望='playing'
+    [PASS] P-04b 轮内计时冻结 — 2.264 -> 2.264
+    [PASS] P-04c 目标位置冻结 — target=(0.8473,0.5444)
+    [PASS] P-04d 可见累计冻结 — 2.264 -> 2.264
+    [PASS] P-04e 暂停期间没有新采样
+    [PASS] P-04f 恢复后计时继续 — 2.26 -> 3.94
+    [PASS] P-04g 相位仍是 playing — 实际='playing' 期望='playing'
+
+
+--- pursuit / P-06 MAE可由样本重算 ---
+    [PASS] P-06a 第一轮已结算
+    [PASS] P-06b 有可见样本 — 500 条
+    [PASS] P-06c MAE 可由样本重算（±8%） — 重算 0.3414 vs 结算 0.3402（偏差 0.3%）
+    [PASS] P-06d RMSE 可由样本重算（±8%） — 重算 0.5640 vs 结算 0.5628（偏差 0.2%）
+    [PASS] P-06e 样本字段完整 — 字段=['elapsed', 'error2d', 'errorUnit', 'geometry', 'inZone', 'occludedErrorIntegral', 'occludedSeconds', 'occludedSquaredErrorIntegral', 'playerX', 'playerY', 'profile', 'rawError2d', 'rawX', 'rawY', 'renderedX', 'renderedY', 'round', 'sampleIndex', 'simTime', 'source', 'targetX', 'targetY', 'visible', 'visibleErrorIntegral', 'visibleSeconds', 'visibleSquaredErrorIntegral']
+    [PASS] P-06f 误差非零（有说服力） — mae=0.3402
+
+
+--- pursuit / P-08 停止后会话不复活 ---
+    [PASS] P-08a 未给指针前停在倒计时 — 实际='countdown' 期望='countdown'
+    [PASS] P-08b 未给指针前不就绪 — 实际=False 期望=False
+    [PASS] P-08c 训练计时未推进 — 实际=0.0 期望=0.0
+    [PASS] P-08d 有效二维指针使输入就绪
+    [PASS] P-08e 就绪后进入训练 — 实际='playing' 期望='playing'
+    [PASS] P-08f 停止标记已置位 — 实际=True 期望=True
+    [PASS] P-08g 停止期间训练计时冻结 — Δ=0.0
+    [PASS] P-08h 继续信号不能复活旧会话 — stopped=True paused=True Δ=0.0
+    [PASS] P-08i 只有新 started 能重置 — stopped=False paused=False
+
+
+--- target / TGT-02 初始同步不算首动 ---
+    [PASS] TGT-02a 会话已开始 — 实际='target_visible' 期望='target_visible'
+    [PASS] TGT-02b 首动延迟初始为 -1 — 实际=-1.0 期望=-1
+    [PASS] TGT-02c 基线未建立 — 实际=False 期望=False
+    [PASS] TGT-02d 首次同步建立了基线 — 实际=True 期望=True
+    [PASS] TGT-02e 首次同步没有被算成首动 — 实际=-1.0 期望=-1
+    [PASS] TGT-02f 微小抖动仍不算首动 — 实际=-1.0 期望=-1
+    [PASS] TGT-02g 超过阈值才记首动 — firstActionLatency=1.8240000000000014
+    [PASS] TGT-02h 指针→场景映射与运行时布局一致 — p1=(260.0, 179.99999999999994) p2=(360.0, 230.0) logicalScale=1.05176
+
+
+--- target / TGT-03 点击当帧判定 ---
+    [PASS] TGT-03a 产生一次射击记录 — 共 1 次
+    [PASS] TGT-03b 用的是当帧指针坐标 — aim=(83.0,305.0) target=(83.0,305.0)
+    [PASS] TGT-03c 距离在半径内 — distance=0.0 r=46.0
+    [PASS] TGT-03d 判定为命中
+    [PASS] TGT-03e 命中有对应事件 — 实际=True 期望=True
+    [PASS] TGT-03f 进入反馈态 — 实际='shot_feedback' 期望='shot_feedback'
+
+
+--- target / TGT-04 反馈不叠加 ---
+    [PASS] TGT-04a 第一靶只算一枪 — 实际=1 期望=1
+    [PASS] TGT-04b 反馈期连点不叠枪 — 实际=1 期望=1
+    [PASS] TGT-04c hits 只 +1 — 实际=1 期望=1
+    [PASS] TGT-04d 反馈结束进入下一靶
+    [PASS] TGT-04e 试次只前进 1 — 实际=1 期望=1
+    [PASS] TGT-04f 下一靶没有残留射击 — 实际=1 期望=1
+    [PASS] TGT-04g 新靶阶段干净 — 实际='target_visible' 期望='target_visible'
+    [PASS] TGT-04h 同靶双击只算一枪 — 实际=2 期望=2
+
+
+--- target / TGT-05 条件改变半径 ---
+    [PASS] TGT-05a 计划里出现多种半径 — 实际=[30, 46, 62] 期望=[30, 46, 62]
+    [PASS] TGT-05b 条件写在试次里 — 实际=['30', '46', '62'] 期望=['30', '46', '62']
+    [PASS] TGT-05 试次 1 起点确认生效
+    [PASS] TGT-05 试次 2 起点确认生效
+    [PASS] TGT-05 试次 3 起点确认生效
+    [PASS] TGT-05 试次 4 起点确认生效
+    [PASS] TGT-05 试次 5 起点确认生效
+    [PASS] TGT-05 试次 6 起点确认生效
+    [PASS] TGT-05c 运行时半径 == 计划半径 — [(62, 62), (62, 62), (30, 30), (46, 46), (46, 46), (62, 62)]
+    [PASS] TGT-05d 三种半径都实际跑到了 — 实际=[30, 46, 62] 期望=[30, 46, 62]
+    [PASS] TGT-05e 半径外 2px 全部判 miss — 越界却判中=[]
+    [PASS] TGT-05f 越界样本确实越界 — [(62, 64.0, False), (62, 64.0, False), (30, 32.0, False), (46, 48.0, False), (46, 48.0, False), (62, 64.0, False)]
+
+
+--- target / TGT-07 最后一试次只结束一次 ---
+    [PASS] TGT-07a 试次表非空 — 8 个试次
+    [PASS] TGT-07b 会话已结束
+    [PASS] TGT-07c 只 finish 一次 — 实际=1 期望=1
+    [PASS] TGT-07d 射击数 == 试次数 — 实际=8 期望=8
+    [PASS] TGT-07e hits+misses == 试次数 — 实际=8 期望=8
+    [PASS] TGT-07f 命中计数自洽 — 实际=8 期望=8
+    [PASS] TGT-07g 结束后再点不产生事件 — 实际=26 期望=26
+    [PASS] TGT-07h 结束后仍是 complete — 实际='complete' 期望='complete'
+
+
+--- target / TGT-09 脑控输入门控 ---
+    [PASS] TGT-09a 脑控来源记为 bci — 实际='bci' 期望='bci'
+    [PASS] TGT-09b 脑控标志生效 — 实际=True 期望=True
+    [PASS] TGT-09c 未给有效指针前不就绪 — 实际=False 期望=False
+    [PASS] TGT-09d NaN 指针被拒绝 — inputReady=False aim=(350.0, 240.0)
+    [PASS] TGT-09d +Inf 指针被拒绝 — inputReady=False aim=(350.0, 240.0)
+    [PASS] TGT-09d -Inf 指针被拒绝 — inputReady=False aim=(350.0, 240.0)
+    [PASS] TGT-09e 宿主宽度无效时指针被拒绝
+    [PASS] TGT-09f 首个有效指针使输入就绪
+    [PASS] TGT-09g 就绪事件记录宿主尺寸
+    [PASS] TGT-09h 有效指针确实改变了准星 — aim=(261.4665354330709, 186.3543307086614)
+
+
+--- claw / C-06 暂停冻结动画 ---
+    [PASS] C-06a 已进入下降段 — 实际='lowering' 期望='lowering'
+    [PASS] C-06b 暂停期间相位不变 — 实际='lowering' 期望='lowering'
+    [PASS] C-06c 夹爪没有继续下落 — 175.20 -> 175.20
+    [PASS] C-06d 相位计时冻结 — 0.264 -> 0.264
+    [PASS] C-06e 恢复后继续下落 — 175.20 -> 193.60
+    [PASS] C-06f 恢复后仍能走完整套动作 — phase=transport
+
+
+--- claw / C-07 失败进入下一次 ---
+    [PASS] C-07a 产生 attempt_result
+    [PASS] C-07b 判为失败 — 实际=False 期望=False
+    [PASS] C-07c 失败原因是偏离 — normalizedError=1.62
+    [PASS] C-07d 产生 grasp_fail 事件
+    [PASS] C-07e 会话没有结束 — 实际=False 期望=False
+    [PASS] C-07f attempts 累加到 1 — 实际=1 期望=1
+    [PASS] C-07g 进入了第二次尝试 — 实际='aligning' 期望='aligning'
+    [PASS] C-07h 第二次试次事件已记录 — 实际=2 期望=2
+    [PASS] C-07i 玩具重新回到地面 — toyState=floor
+
+
+--- claw / C-08 完成页计数一致 ---
+    [PASS] C-08a 会话已结束
+    [PASS] C-08b 五次都跑完了 — 实际=5 期望=5
+    [PASS] C-08c 只 finish 一次 — 实际=1 期望=1
+    [PASS] C-08d 完成页 attempts == 5 — 实际=5 期望=5
+    [PASS] C-08e attempts == trial_started 条数 — 实际=5 期望=5
+    [PASS] C-08f attempts == attempt_result 条数 — 实际=5 期望=5
+    [PASS] C-08g 完成页成功数 == 事件流成功数 — 实际=1 期望=1
+    [PASS] C-08h 第一次确实成功（对齐后抓） — normalizedError=0.07
+    [PASS] C-08i 未用辅助时辅助计数为 0 — 实际=0 期望=0
+    [PASS] C-08j 试次号连续 1..5 — 实际=[1, 2, 3, 4, 5] 期望=[1, 2, 3, 4, 5]
+
+
+--- claw / C-09 脑控脉冲无需松开 ---
+    [PASS] C-09a 脑控默认离散脉冲 — 实际='pulse' 期望='pulse'
+    [PASS] C-09b 单次指令无需松开即移动一步 — Δ=26.0 pulseStep=26.0
+    [PASS] C-09c 不松开也不会持续漂移 — Δ 26.0 -> 26.0
+
+
+--- traffic / TR-02 左右进退 ---
+    [PASS] TR-02a 起始在人行道 — 实际=True 期望=True
+    [PASS] TR-02b 按左后退 — -0.600 -> -0.900
+    [PASS] TR-02c 仍在人行道内 — 实际=True 期望=True
+    [PASS] TR-02d 松开即停 — -0.900 -> -0.900
+    [PASS] TR-02e 按右前进 — -0.900 -> -0.640
+    [PASS] TR-02f 可以主动退回安全区 — -0.640 -> -0.900
+    [PASS] TR-02g 结果仍是 atStartSidewalk — 实际=True 期望=True
+    [PASS] TR-02h 移动段落在日志里（可重算） — 3 段
+
+
+--- traffic / TR-03 撞车与安全间隙 ---
+    [PASS] TR-03a 撞车会进入 hit 相位 — 实际='hit' 期望='hit'
+    [PASS] TR-03b 产生 collision 事件
+    [PASS] TR-03c 记录被撞车道与车速 — lane=0 carV=-1.12 kind=sedan
+    [PASS] TR-03d 撞点确实在车道上 — playerX=1.0 lane=0
+    [PASS] TR-03e 会话没有结束 — 实际=False 期望=False
+    [PASS] TR-03f 撞后自动重试回 playing — 实际='playing' 期望='playing'
+    [PASS] TR-03g 记录 level_retry
+    [PASS] TR-03h 尝试次数 +1 — 实际=2 期望=2
+    [PASS] TR-03i 玩家回到起点 — 实际=-0.6 期望=-0.6
+
+
+--- traffic / TR-06 三路输入 ---
+    [PASS] TR-06a 键盘能前进 — -0.600 -> -0.340
+    [PASS] TR-06b 键盘通道仍可辨识（activeSource=keyboard，落盘归并 local） — activeSource=keyboard 来源=['local']
+    [PASS] TR-06c 鼠标按住能前进 — -0.340 -> -0.030（点在 458,660）
+    [PASS] TR-06d 鼠标通道仍可辨识（activeSource=mouse，落盘归并 local） — activeSource=mouse 来源=['local', 'local']
+    [PASS] TR-06e 脑控按下即记录离散步 — 1 步，targetX=-0.1
+    [PASS] TR-06f 脑控角色确实前进 — -0.600 -> -0.100
+    [PASS] TR-06g 脑控车流降速约 0.62 — 比值=[0.623, 0.617]（键盘车流 2 车道）
+    [PASS] TR-06h 脑控会话 inputSource 记为 bci — 实际='bci' 期望='bci'
+    [PASS] TR-06i 脑控移动段落盘为 bci（与 local 可区分） — 来源=['bci']
+
+
+--- traffic / TR-03b 安全过街 ---
+    [PASS] TR-03j 安全过街成功 — 用了 45.2s 模拟时间
+    [PASS] TR-03k 全程 0 碰撞 — 实际=0 期望=0
+    [PASS] TR-03l 记录过街耗时与输入源 — crossingTime=49.34s source=local
+    [PASS] TR-03m 确实是走到对岸 — crossingX=2.45 finishX=2.45
+
+
+--- luban / L-02 双向可动差异 ---
+    [FAIL] L-02a 关卡已装载 — 2 件
+
+
+--- luban / L-06 键盘全流程 ---
+    [PASS] L-06 进入观察模式 — mode=view
+    [PASS] L-06 观察模式下方向键旋转视角 — camYaw 34.0 -> 26.0
+    [PASS] L-06 确认后回到交互模式 — mode=interact
+    [PASS] L-06 能选中木件 — selectedId=p1
+    [FAIL] L-06 抽出一件 — 试过 ['-x', '+x']，已拆 0 件
+    [FAIL] L-06a 键盘完成观察→换件→选端→抽出 — 已拆 0 件
+    [PASS] L-06b 抽出后仍停在交互模式（不会卡在选轴态） — mode=interact
+    [FAIL] L-06c 抽出生成了可撤销记录 — history=0
+    [PASS] L-06d 撤销把木件放回 — 已拆 0 件
+    [FAIL] L-06e 撤销事件已记录
+    [FAIL] L-06f 撤销后历史被消费 — 0 -> 0
+    [PASS] L-06g 复位后全部归位 — 已拆 0 件
+    [PASS] L-06h 复位事件已记录
+    [PASS] L-06i 复位后回到交互模式 — mode=interact
+
+
+--- luban / L-06b 脑控全流程 ---
+    [PASS] L-06j 脑控会话启动 — 关卡=L1
+    [PASS] L-06bci 进入观察模式 — mode=view
+    [PASS] L-06bci 观察模式下方向键旋转视角 — camYaw 34.0 -> 26.0
+    [PASS] L-06bci 确认后回到交互模式 — mode=interact
+    [PASS] L-06bci 能选中木件 — selectedId=p1
+    [FAIL] L-06bci 抽出一件 — 试过 ['-x', '+x']，已拆 0 件
+    [FAIL] L-06k 脑控完成一次抽取 — 已拆 0 件
+    [PASS] L-06l 脑控会话 inputSource 记为 bci — bci
+
+
+==============================================================================
+游戏        场景                        断言        结果
+------------------------------------------------------------------------------
+hanoi     H-01 拿起放回                 3/6       FAIL
+hanoi     H-02 大压小                  0/0       FAIL  ← 异常
+hanoi     H-03 三盘7步                 0/2       FAIL
+hanoi     H-04 四盘15步                0/2       FAIL
+hanoi     H-05 五局全流程                0/14      FAIL
+hanoi     H-06 finish后不重开           1/12      FAIL
+sokoban   S-01 S03参考解               5/5       PASS
+sokoban   S-02 撞墙不入栈                6/6       PASS
+sokoban   S-03 移动可逆                 7/7       PASS
+sokoban   S-04 死锁可恢复                10/10      PASS
+sokoban   S-06 步数可重算                6/6       PASS
+sokoban   S-07 五关通关                 4/4       PASS
+sokoban   S-08 死锁不强制结束              10/10      PASS
+pursuit   P-02 累计比例                 6/6       PASS
+pursuit   P-04 暂停不改相位               7/7       PASS
+pursuit   P-06 MAE可由样本重算            6/6       PASS
+pursuit   P-08 停止后会话不复活             9/9       PASS
+target    TGT-02 初始同步不算首动           8/8       PASS
+target    TGT-03 点击当帧判定             6/6       PASS
+target    TGT-04 反馈不叠加              8/8       PASS
+target    TGT-05 条件改变半径             12/12      PASS
+target    TGT-07 最后一试次只结束一次         8/8       PASS
+target    TGT-09 脑控输入门控             10/10      PASS
+claw      C-06 暂停冻结动画               6/6       PASS
+claw      C-07 失败进入下一次              9/9       PASS
+claw      C-08 完成页计数一致              10/10      PASS
+claw      C-09 脑控脉冲无需松开             3/3       PASS
+traffic   TR-02 左右进退                8/8       PASS
+traffic   TR-03 撞车与安全间隙             9/9       PASS
+traffic   TR-06 三路输入                9/9       PASS
+traffic   TR-03b 安全过街               4/4       PASS
+luban     L-02 双向可动差异               0/1       FAIL
+luban     L-06 键盘全流程                9/14      FAIL
+luban     L-06b 脑控全流程               2/3       FAIL
+------------------------------------------------------------------------------
+合计 34 个场景，25 个全绿，9 个有问题

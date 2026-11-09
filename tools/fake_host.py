@@ -45,7 +45,7 @@ class FakeGame(QObject):
     resumed = Signal()
     stopping = Signal()
 
-    def __init__(self):
+    def __init__(self, width=DESIGN_W, height=DESIGN_H):
         super().__init__()
         self.events = []          # [(sim_time, name, payload)]
         self.marks = []
@@ -53,6 +53,10 @@ class FakeGame(QObject):
         self._elapsed = 0.0
         self._paused = False
         self._input = "local"
+        # 2026-11-05 版契约：脑控指针换算要求宿主提供有限正数的 width/height，
+        # 否则 target/pursuit 会拒绝一切指针（真实 Neuralife 会提供，旧假宿主缺失）。
+        self._width = float(width)
+        self._height = float(height)
 
     # ---- 属性 -------------------------------------------------------
     def _get_elapsed(self):
@@ -64,6 +68,15 @@ class FakeGame(QObject):
         return self._input
 
     inputSource = Property(str, _get_input, constant=False)
+
+    def _get_width(self):
+        return self._width
+
+    def _get_height(self):
+        return self._height
+
+    width = Property(float, _get_width, constant=False)
+    height = Property(float, _get_height, constant=False)
 
     def set_input_source(self, value):
         self._input = value
@@ -151,7 +164,7 @@ class Runner:
     def __init__(self, game_id, root_dir, input_source="local", size=(DESIGN_W, DESIGN_H)):
         self.game_id = game_id
         self.root_dir = root_dir
-        self.game = FakeGame()
+        self.game = FakeGame(*size)
         self.game.set_input_source(input_source)
         self.ctx = FakeTaskContext()
         self.app = QGuiApplication.instance() or QGuiApplication(sys.argv[:1])
@@ -251,6 +264,19 @@ class Runner:
         ok = QMetaObject.invokeMethod(self.root, name, Qt.DirectConnection)
         self.pump(0.05)
         return ok
+
+    def eval_js(self, expr):
+        """在 root 的 QML 组件作用域求值表达式（可读组件内 id，如 sceneRect）。
+
+        用于向真实指针通道换算坐标：游戏自己提供 mapToItem / mapFromItem，
+        取证脚本就不必硬编码随窗口尺寸变化的布局常量。
+        """
+        from PySide6.QtQml import QQmlExpression, QQmlEngine
+        e = QQmlExpression(QQmlEngine.contextForObject(self.root), self.root, expr)
+        value, _undefined = e.evaluate()
+        if e.hasError():
+            raise RuntimeError(f"QML 表达式求值失败: {expr}\n{e.errorToString()}")
+        return value
 
     # ---- 真实鼠标事件（走 MouseArea，属于手势层证据）-------------------
     def find_item(self, name):

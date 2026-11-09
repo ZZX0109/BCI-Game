@@ -1,0 +1,36 @@
+{
+  "module_api": {"apiMajor": 1, "gameApi": 1},
+  "delivery_scope": "Game modules receiving decoded intents from the existing Neuralife host",
+  "root_geometry": "Main.qml width/height must be bound to the actual host content area",
+  "blank_background": "#050505",
+  "pointer_contract": {
+    "coordinates": "full host canvas coordinates with finite positive game.width/height",
+    "required_axes": ["x", "y"],
+    "target_requires_confirm": true,
+    "first_valid_input_gate": ["pursuit", "target"],
+    "stationary_pointer_is_not_disconnect": true
+  },
+  "action_contract": {
+    "each_true_is_one_command": true,
+    "event_id_available": false,
+    "claw_bci_default": "pulse",
+    "traffic_bci_default": "pulse",
+    "source_aliases": ["bci", "brain"],
+    "new_motor_imagery_classes_added": false
+  },
+  "host_responsibilities": [
+    "EEG acquisition and motor imagery decoding",
+    "Verified mapping from available decoded intents to game commands",
+    "Input validity, device disconnect and reconnect reporting",
+    "Accessible session start, pause, rest, stop and restart controls",
+    "Persist all game.record events and session interruption information",
+    "Configure and verify the deployed QtQuick3D backend"
+  ],
+  "verification": {
+    "native_mac_qt_metal": "PASS",
+    "simulated_host_actions_and_pointers": "PASS",
+    "real_windows_neuralife": "NOT TESTED",
+    "real_eeg_device": "NOT TESTED",
+    "patient_usability": "NOT TESTED"
+  }
+}

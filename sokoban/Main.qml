@@ -2,7 +2,7 @@ import QtQuick
 import "LevelData.js" as Levels
 import "../shared-ui" as SharedUI
 
-// Sokoban V3：统一框架 + 纯鼠标/键盘/脑控独立完成 + 确证死局3秒自动重开（可撤销取消）
+// Sokoban V4: adjacent-cell mouse control, host actions, stable recovery and step-driven timing.
 Item {
     id: root
     required property var taskContext
@@ -10,12 +10,11 @@ Item {
 
     readonly property string inputSource: (game && game.inputSource) ? game.inputSource : "local"
     function hostElapsed() {
-        if (game && typeof game.elapsedSeconds === "number") return game.elapsedSeconds
         return localElapsed
     }
 
     SharedUI.GameTheme { id: uiTheme }
-    SharedUI.FeedbackToast { id: toast; theme: uiTheme; parent: root }
+    SharedUI.FeedbackToast { id: toast; theme: uiTheme; parent: root; y: Math.max(116, root.height - 158) }
 
     // ------------------------------------------------------------------
     // 关卡与会话状态
@@ -34,6 +33,38 @@ Item {
     property bool sessionFinished: false
     property bool isPaused: false
     property real localElapsed: 0.0
+    property bool stopped: false
+    property real levelAdvanceRemaining: 0
+    property int sessionMoves: 0
+    property int sessionPushes: 0
+    property int sessionBlockedWall: 0
+    property int sessionBlockedPush: 0
+    property int restartsUsed: 0
+    property var levelStats: []
+    property var attemptStats: ({ moves: 0, pushes: 0, blockedWall: 0, blockedPush: 0, undos: 0 })
+
+    function countStat(name) {
+        var all = levelStats.slice()
+        var stat = Object.assign({}, all[levelIndex])
+        stat[name] = (stat[name] || 0) + 1
+        all[levelIndex] = stat
+        levelStats = all
+        var attempt = Object.assign({}, attemptStats)
+        attempt[name] = (attempt[name] || 0) + 1
+        attemptStats = attempt
+    }
+
+    function canMoveTo(r, c) {
+        var dr = r - playerR, dc = c - playerC
+        if (Math.abs(dr) + Math.abs(dc) !== 1 || cellWalled(r, c)) return false
+        return boxIndexAt(r, c) < 0 || (!cellWalled(r + dr, c + dc) && boxIndexAt(r + dr, c + dc) < 0)
+    }
+    function clickCell(r, c) {
+        if (phase !== "playing" || isPaused || stopped || sessionFinished) return
+        var dr = r - playerR, dc = c - playerC
+        if (Math.abs(dr) + Math.abs(dc) !== 1) return
+        tryMove(dr, dc, dr < 0 ? "up" : dr > 0 ? "down" : dc < 0 ? "left" : "right", "mouse_cell")
+    }
 
     // 指标
     property int moves: 0
@@ -48,7 +79,7 @@ Item {
     // 撤销栈
     property var undoStack: []
 
-    // 死局倒计时
+    // Legacy compatibility fields: automatic restarts are disabled.
     property bool deadlockCountdown: false
     property real deadlockSecondsLeft: 0.0
     property string deadlockReason: ""
@@ -61,7 +92,7 @@ Item {
     property string lastPushedKey: ""
 
     function key(r, c) { return r + "," + c }
-    function cellWalled(r, c) { return walls[key(r, c)] === true }
+    function cellWalled(r, c) { return r < 0 || c < 0 || r >= rows || c >= cols || walls[key(r, c)] === true }
     function boxIndexAt(r, c) { return boxes.indexOf(key(r, c)) }
     function boxesOnGoal() {
         var n = 0
@@ -94,6 +125,15 @@ Item {
         cols = cc
         walls = w; goals = g; boxes = b
         moves = 0; pushes = 0
+        attemptStats = { moves: 0, pushes: 0, blockedWall: 0, blockedPush: 0, undos: 0 }
+        if (!levelStats[index]) {
+            var stats = levelStats.slice()
+            stats[index] = { levelId: level.id, levelVersion: level.version, moves: 0, pushes: 0,
+                blockedWall: 0, blockedPush: 0, undos: 0, restarts: 0, attempts: 0, completed: false }
+            levelStats = stats
+        }
+        countStat("attempts")
+        levelAdvanceRemaining = 0
         blockedWall = 0; blockedPush = 0
         undoStack = []
         deadlockBoxes = []
@@ -113,6 +153,10 @@ Item {
 
     function startSession() {
         sessionFinished = false
+        stopped = false
+        sessionMoves = 0; sessionPushes = 0
+        sessionBlockedWall = 0; sessionBlockedPush = 0
+        restartsUsed = 0; levelStats = []
         isPaused = false
         localElapsed = 0.0
         undosUsed = 0
@@ -121,7 +165,7 @@ Item {
         menuIndex = 0
 
         game.record("sokoban.attempt_started", {
-            gameVersion: "0.3.0",
+            gameVersion: "0.4.1",
             taskMode: "multi_level",
             inputSource: inputSource,
             levelPlan: Levels.levels.map(function(l) { return { id: l.id, version: l.version } })
@@ -130,23 +174,26 @@ Item {
     }
 
     function finishSession(reason) {
-        if (sessionFinished) return
+        if (sessionFinished || stopped || isPaused) return
         sessionFinished = true
         phase = "complete"
         cancelDeadlockCountdown("session_end")
 
         var result = {
-            gameVersion: "0.3.0",
+            gameVersion: "0.4.1",
             reason: reason,
-            levelsCompleted: reason === "completed" ? Levels.levels.length : levelIndex,
+            levelsCompleted: levelStats.filter(function(stat) { return stat.completed }).length,
             totalLevels: Levels.levels.length,
-            moves: moves, pushes: pushes,
-            blockedWall: blockedWall, blockedPush: blockedPush,
+            moves: sessionMoves, pushes: sessionPushes,
+            blockedWall: sessionBlockedWall, blockedPush: sessionBlockedPush,
+            currentBoard: snapshotBoard(), currentAttempt: attemptStats,
+            levels: levelStats, restarts: restartsUsed,
+            metricDefinition: "moves/pushes count all successful actions, including undone/restarted actions; currentBoard counts retained solution steps",
             undosUsed: undosUsed, autoRestarts: autoRestarts,
             elapsed: hostElapsed(),
             summary: reason === "completed"
-                ? qsTr("推箱子通关 | 五关完成 | 总步数 %1 | 推动 %2 | 撤销 %3").arg(moves).arg(pushes).arg(undosUsed)
-                : qsTr("推箱子会话结束 | 完成 %1/%2 关 | 总步数 %3").arg(levelIndex).arg(Levels.levels.length).arg(moves)
+                ? qsTr("推箱子通关 | 五关完成 | 总步数 %1 | 推动 %2 | 撤销 %3").arg(sessionMoves).arg(sessionPushes).arg(undosUsed)
+                : qsTr("推箱子会话结束 | 完成 %1/%2 关 | 总步数 %3").arg(levelStats.filter(function(stat) { return stat.completed }).length).arg(Levels.levels.length).arg(sessionMoves)
         }
         game.record("sokoban.attempt_finished", result)
         game.finish(result)
@@ -166,7 +213,7 @@ Item {
         undoStack = next
     }
     function undoMove(source) {
-        if (phase !== "playing") return
+        if (phase !== "playing" || isPaused || stopped || sessionFinished) return
         if (undoStack.length === 0) {
             toast.show(qsTr("没有可撤销的步骤"), "warning")
             return
@@ -179,7 +226,8 @@ Item {
         boxes = prev.boxes.slice()
         moves = prev.moves; pushes = prev.pushes
         undosUsed++
-        deadlockBoxes = []
+        countStat("undos")
+        refreshDeadlock()
         game.record("sokoban.undo", {
             undosUsed: undosUsed,
             player: { r: playerR, c: playerC },
@@ -191,33 +239,24 @@ Item {
     }
 
     function restartLevel(source) {
-        if (phase !== "playing" && phase !== "menu") return
+        if ((phase !== "playing" && phase !== "menu") || isPaused || stopped || sessionFinished) return
         cancelDeadlockCountdown("restart")
+        restartsUsed++
+        countStat("restarts")
+        game.record("sokoban.attempt_restarted", { levelId: level.id, currentBoard: snapshotBoard(),
+            attempt: attemptStats, elapsed: hostElapsed() })
         loadLevel(levelIndex)
         toast.show(qsTr("已重开本关"), "warning")
         game.record("sokoban.level_restarted", { source: source || "keyboard", levelId: level.id, elapsed: hostElapsed() })
     }
 
     // ------------------------------------------------------------------
-    // 死局检测与倒计时
+    // 静态墙角提示与主动恢复
     // ------------------------------------------------------------------
-    function startConfirmedDeadlockCountdown(reason) {
-        if (phase !== "playing" || deadlockCountdown) return
-        deadlockCountdown = true
-        deadlockSecondsLeft = 3.0
-        deadlockReason = reason
-        game.record("sokoban.deadlock_confirmed", {
-            levelId: level.id, reason: reason, elapsed: hostElapsed()
-        })
-    }
-
+    // Kept as a compatibility cleanup helper; recovery never discards a board automatically.
     function cancelDeadlockCountdown(reason) {
-        if (!deadlockCountdown) return
         deadlockCountdown = false
-        deadlockSecondsLeft = 0.0
-        game.record("sokoban.deadlock_countdown_cancelled", {
-            levelId: level.id, reason: reason, elapsed: hostElapsed()
-        })
+        deadlockSecondsLeft = 0
     }
 
     function refreshDeadlock() {
@@ -238,8 +277,7 @@ Item {
         deadlockBoxes = found
         if (changed && found.length > 0) {
             deadlockHints++
-            startConfirmedDeadlockCountdown("static_corner")
-            toast.show(qsTr("检测到死锁：3秒后自动重开（可撤销取消）"), "danger")
+            toast.show(qsTr("箱子卡在墙角：请撤销或重开，进度会保留"), "danger")
             game.record("sokoban.deadlock_hint", {
                 rule: "static_corner", boxes: found.slice(),
                 levelId: level.id, elapsed: hostElapsed()
@@ -260,7 +298,8 @@ Item {
     // 移动与推动
     // ------------------------------------------------------------------
     function tryMove(dr, dc, actionName, source) {
-        if (phase !== "playing" || isPaused) return
+        if (phase !== "playing" || isPaused || stopped || sessionFinished) return
+        if (Math.abs(dr) + Math.abs(dc) !== 1) return
         game.record("sokoban.action_received", {
             action: actionName, phase: phase, inputSource: inputSource,
             source: source || "keyboard", levelId: level.id, elapsed: hostElapsed()
@@ -270,7 +309,7 @@ Item {
         var nk = key(nr, nc)
 
         if (cellWalled(nr, nc)) {
-            blockedWall++
+            blockedWall++; sessionBlockedWall++; countStat("blockedWall")
             toast.show(qsTr("前方是墙"), "danger")
             game.record("sokoban.action_applied", {
                 action: actionName, result: "blocked_wall",
@@ -285,7 +324,7 @@ Item {
         if (wasPush) {
             var br = nr + dr, bc = nc + dc, bk = key(br, bc)
             if (cellWalled(br, bc) || boxIndexAt(br, bc) >= 0) {
-                blockedPush++
+                blockedPush++; sessionBlockedPush++; countStat("blockedPush")
                 toast.show(qsTr("箱子被挡住"), "danger")
                 game.record("sokoban.action_applied", {
                     action: actionName, result: "blocked_push",
@@ -298,7 +337,7 @@ Item {
             var nb = boxes.slice()
             nb[bi] = bk
             boxes = nb
-            pushes++
+            pushes++; sessionPushes++; countStat("pushes")
             lastPushedKey = bk
             pushFlash = 1.0
             game.record("sokoban.action_applied", {
@@ -316,6 +355,7 @@ Item {
         }
 
         playerR = nr; playerC = nc; moves++
+        sessionMoves++; countStat("moves")
 
         if (wasPush) refreshDeadlock()
         if (isGoalAllFilled()) completeLevel()
@@ -323,17 +363,21 @@ Item {
 
     function completeLevel() {
         cancelDeadlockCountdown("level_complete")
+        var stats = levelStats.slice()
+        stats[levelIndex] = Object.assign({}, stats[levelIndex], { completed: true,
+            solutionMoves: moves, solutionPushes: pushes })
+        levelStats = stats
         game.record("sokoban.level_completed", {
             levelId: level.id, levelVersion: level.version,
             moves: moves, pushes: pushes,
-            undosUsed: undosUsed, elapsed: hostElapsed()
+            undosUsed: undosUsed, currentAttempt: attemptStats, cumulative: levelStats[levelIndex], elapsed: hostElapsed()
         })
         if (levelIndex + 1 >= Levels.levels.length) {
             finishSession("completed")
         } else {
             phase = "level_done"
             toast.show(qsTr("第 %1 关完成！").arg(level.id), "success")
-            levelAdvanceTimer.start()
+            levelAdvanceRemaining = 1.2
         }
     }
 
@@ -341,20 +385,20 @@ Item {
     // 恢复菜单
     // ------------------------------------------------------------------
     function openMenu() {
-        if (phase !== "playing") return
+        if (phase !== "playing" || isPaused || stopped || sessionFinished) return
         phase = "menu"
         menuIndex = 0
         game.record("sokoban.menu_opened", { levelId: level.id, elapsed: hostElapsed() })
     }
     function closeMenu() {
-        if (phase !== "menu") return
+        if (phase !== "menu" || isPaused || stopped || sessionFinished) return
         phase = "playing"
     }
     function menuMove(delta) {
         menuIndex = (menuIndex + delta + menuItems.length) % menuItems.length
     }
     function menuConfirm(source) {
-        if (phase !== "menu") return
+        if (phase !== "menu" || isPaused || stopped || sessionFinished) return
         game.record("sokoban.menu_action", {
             choice: menuItems[menuIndex], index: menuIndex,
             source: source || "keyboard",
@@ -375,52 +419,38 @@ Item {
         function onStep(seconds) { root.advance(seconds) }
         function onAction(name, pressed) {
             if (pressed !== true) return
-            if (root.isPaused || root.sessionFinished) return
+            if (root.isPaused || root.stopped || root.sessionFinished) return
 
             if (root.phase === "menu") {
                 if (name === "up") root.menuMove(-1)
                 else if (name === "down") root.menuMove(1)
-                else if (name === "confirm") root.menuConfirm("keyboard")
+                else if (name === "confirm") root.menuConfirm(root.inputSource)
                 return
             }
             if (root.phase !== "playing") return
 
-            if (name === "up") root.tryMove(-1, 0, "up", "keyboard")
-            else if (name === "down") root.tryMove(1, 0, "down", "keyboard")
-            else if (name === "left") root.tryMove(0, -1, "left", "keyboard")
-            else if (name === "right") root.tryMove(0, 1, "right", "keyboard")
+            if (name === "up") root.tryMove(-1, 0, "up", root.inputSource)
+            else if (name === "down") root.tryMove(1, 0, "down", root.inputSource)
+            else if (name === "left") root.tryMove(0, -1, "left", root.inputSource)
+            else if (name === "right") root.tryMove(0, 1, "right", root.inputSource)
             else if (name === "confirm") root.openMenu()
         }
         function onPointer(x, y) { /* GamepadLite 游戏不需要指针 */ }
         function onPaused() { root.isPaused = true }
-        function onResumed() { root.isPaused = false }
-        function onStopping() { root.isPaused = true }
+        function onResumed() { if (!root.stopped) root.isPaused = false }
+        function onStopping() { root.isPaused = true; root.stopped = true }
     }
 
     function advance(seconds) {
-        if (isPaused || sessionFinished) return
+        if (isPaused || stopped || sessionFinished || !isFinite(seconds) || seconds <= 0) return
+        if (phase === "level_done") {
+            levelAdvanceRemaining = Math.max(0, levelAdvanceRemaining - seconds)
+            if (levelAdvanceRemaining === 0) loadLevel(levelIndex + 1)
+            return
+        }
+        if (phase !== "playing") return
         localElapsed += seconds
-        if (pushFlash > 0) { pushFlash -= seconds * 3; if (pushFlash < 0) pushFlash = 0 }
-
-        if (deadlockCountdown) {
-            deadlockSecondsLeft = Math.max(0, deadlockSecondsLeft - seconds)
-            if (deadlockSecondsLeft === 0) {
-                autoRestarts++
-                game.record("sokoban.level_auto_restarted", {
-                    levelId: level.id, reason: deadlockReason, elapsed: hostElapsed()
-                })
-                restartLevel("deadlock_auto")
-            }
-        }
-    }
-
-    Timer {
-        id: levelAdvanceTimer
-        interval: 1200
-        onTriggered: {
-            if (root.sessionFinished) return
-            root.loadLevel(root.levelIndex + 1)
-        }
+        pushFlash = Math.max(0, pushFlash - seconds * 3)
     }
 
     // ------------------------------------------------------------------
@@ -428,10 +458,12 @@ Item {
     // ------------------------------------------------------------------
     SharedUI.GameFrame {
         id: frame
+        color: "#050505"
+        border.width: 0
         anchors.fill: parent
         theme: uiTheme
         title: qsTr("推箱子")
-        subtitle: root.level ? qsTr("目标：把所有箱子推到绿色目标环上　当前：%1 %2").arg(root.level.id).arg(root.level.name) : ""
+        subtitle: /bci|brain/i.test(root.inputSource) ? qsTr("方向指令移动 · 确认打开恢复菜单 · 把木箱送到绿色标记上") : qsTr("点击相邻格，把木箱送到绿色标记上")
         mode: qsTr("关卡 %1 / %2").arg(Math.min(root.levelIndex + 1, Levels.levels.length)).arg(Levels.levels.length)
         inputSource: root.inputSource
 
@@ -443,9 +475,43 @@ Item {
             color: "transparent"
             clip: true
 
-            readonly property real cell: Math.min(620 / Math.max(1, root.cols), 420 / Math.max(1, root.rows))
+            readonly property real playTop: frame.sceneTop + 44
+            readonly property real playBottom: height - Math.max(frame.sceneBottom, controls.height + 96)
+            readonly property real playHeight: Math.max(1, playBottom - playTop)
+            readonly property real cell: Math.max(1, Math.min((width - frame.contentInset * 2) / Math.max(1, root.cols), playHeight / Math.max(1, root.rows)))
             readonly property real gridX: (boardScene.width - cell * root.cols) / 2
-            readonly property real gridY: 60 + (boardScene.height - 60 - cell * root.rows) / 2
+            readonly property real gridY: playTop + Math.max(0, (playHeight - cell * root.rows) / 2)
+            property int hoverR: -1
+            property int hoverC: -1
+            Text {
+                x: boardScene.gridX + 2; y: boardScene.gridY - 42
+                text: root.level ? qsTr("第 %1 关  /  %2").arg(root.levelIndex + 1).arg([qsTr("入门"), qsTr("绕角"), qsTr("路线"), qsTr("双箱"), qsTr("挑战")][root.levelIndex]) : ""
+                color: "#9b9d94"; font.pixelSize: 14; font.family: uiTheme.fontFamily
+            }
+            Text {
+                x: boardScene.gridX + boardScene.cell * root.cols - width - 2; y: boardScene.gridY - 43
+                text: qsTr("%1 / %2  已就位").arg(root.boxesOnGoal()).arg(root.boxes.length)
+                color: "#9db99f"; font.pixelSize: 13; font.family: uiTheme.fontFamily
+            }
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: boardScene.gridY + boardScene.cell * root.rows + 26
+                text: root.phase === "complete" ? qsTr("会话结束  ·  共 %1 步 / %2 推").arg(root.sessionMoves).arg(root.sessionPushes)
+                    : root.phase === "level_done" ? qsTr("完成！准备进入下一关")
+                    : qsTr("%1 步   /   %2 推   ·   累计 %3 步").arg(root.moves).arg(root.pushes).arg(root.sessionMoves)
+                color: "#c7c8bc"; font.pixelSize: 14; font.family: uiTheme.fontFamily
+            }
+            // Low foundation and contact shadow belong to the physical miniature, not a UI frame.
+            Rectangle {
+                x: boardScene.gridX + 6; y: boardScene.gridY + 18
+                width: boardScene.cell * root.cols; height: boardScene.cell * root.rows
+                radius: 8; color: "#020202"
+            }
+            Rectangle {
+                x: boardScene.gridX + 2; y: boardScene.gridY + 10
+                width: boardScene.cell * root.cols - 4; height: boardScene.cell * root.rows - 2
+                radius: 5; color: "#252922"
+            }
 
             // 地板与墙体
             Repeater {
@@ -461,153 +527,193 @@ Item {
                     width: parent.cell; height: parent.cell
 
                     Rectangle {
-                        anchors.fill: parent
-                        color: ((r + c) % 2 === 0) ? uiTheme.background : uiTheme.panel
+                        anchors.fill: parent; anchors.margins: 1
+                        color: ((r + c) % 2 === 0) ? "#292c26" : "#252822"
+                        border.color: "#33372e"; border.width: 1
                         Rectangle {
                             visible: root.goals[k] === true
                             width: parent.width * 0.52; height: parent.height * 0.52; radius: width / 2
-                            color: "transparent"
-                            border.width: 3; border.color: uiTheme.success
+                            color: "#344438"; border.width: 2; border.color: "#a2c6a4"
                             anchors.centerIn: parent
+                            Rectangle { anchors.centerIn: parent; width: 6; height: 6; radius: 3; color: "#bdddb8" }
                         }
+                    }
+                    // Stone blocks: dark lower face, softly lit cap, fine mortar seam.
+                    Rectangle {
+                        visible: wall
+                        x: 1; y: 3; width: parent.width - 2; height: parent.height + 5
+                        radius: 3; color: "#3b4036"
                         Rectangle {
-                            visible: wall
-                            anchors.fill: parent
-                            color: uiTheme.panelBorder
-                            Rectangle { anchors.top: parent.top; width: parent.width; height: 5; color: uiTheme.secondaryText }
-                            Rectangle { anchors.bottom: parent.bottom; width: parent.width; height: 5; color: Qt.darker(uiTheme.panelBorder, 1.5) }
+                            x: 0; y: -10; width: parent.width; height: parent.height - 7
+                            radius: 3
+                            gradient: Gradient {
+                                GradientStop { position: 0; color: "#888d7c" }
+                                GradientStop { position: 1; color: "#686e5e" }
+                            }
+                            border.color: "#9a9f8d"; border.width: 1
+                            Rectangle { x: 5; y: 5; width: parent.width - 10; height: 1; color: "#a7ac98"; opacity: 0.45 }
+                            Rectangle { x: 6; y: parent.height - 7; width: parent.width * 0.27; height: 1; color: "#4f5547"; opacity: 0.6 }
                         }
+                    }
+                    Rectangle {
+                        anchors.fill: parent; anchors.margins: 4; radius: 3
+                        visible: root.phase === "playing" && !root.isPaused && root.canMoveTo(r, c)
+                        color: boardScene.hoverR === r && boardScene.hoverC === c ? "#415544" : "transparent"
+                        border.width: boardScene.hoverR === r && boardScene.hoverC === c ? 2 : 1
+                        border.color: boardScene.hoverR === r && boardScene.hoverC === c ? "#d1e5c5" : "#657e60"
                     }
                 }
             }
 
-            // 箱子
+            // Wooden crates with inset planks, raised braces and steel pins.
             Repeater {
                 model: root.boxes.length
-                Rectangle {
+                Item {
                     required property int index
                     readonly property string k: root.boxes[index]
                     readonly property var parts: k.split(",")
                     readonly property bool onGoal: root.goals[k] === true
                     readonly property bool deadlocked: root.deadlockBoxes.indexOf(k) >= 0
                     readonly property bool justPushed: root.lastPushedKey === k && root.pushFlash > 0
-                    x: parent.gridX + parseInt(parts[1]) * parent.cell + parent.cell * 0.10
-                    y: parent.gridY + parseInt(parts[0]) * parent.cell + parent.cell * 0.10 - (justPushed ? 4 * root.pushFlash : 0)
-                    width: parent.cell * 0.80; height: parent.cell * 0.80
-                    radius: 6
-                    color: deadlocked ? uiTheme.danger : (onGoal ? uiTheme.success : uiTheme.warning)
-                    border.width: justPushed ? 4 : 2
-                    border.color: deadlocked ? uiTheme.danger : (justPushed ? uiTheme.warning : uiTheme.panelBorder)
+                    x: parent.gridX + parseInt(parts[1]) * parent.cell + parent.cell * 0.13
+                    y: parent.gridY + parseInt(parts[0]) * parent.cell + parent.cell * 0.12 - (justPushed ? 3 * root.pushFlash : 0)
+                    width: parent.cell * 0.74; height: parent.cell * 0.74
+                    Rectangle { x: 3; y: 8; width: parent.width; height: parent.height; radius: 4; color: "#171b16"; opacity: 0.8 }
+                    Rectangle { y: 4; width: parent.width; height: parent.height; radius: 4; color: onGoal ? "#47624c" : "#765332" }
                     Rectangle {
-                        anchors.centerIn: parent
-                        width: parent.width * 0.5; height: parent.height * 0.5; radius: 4
-                        color: "transparent"; border.width: 2; border.color: uiTheme.panelBorder; opacity: 0.55
+                        anchors.fill: parent; radius: 4
+                        gradient: Gradient {
+                            GradientStop { position: 0; color: onGoal ? "#9fb995" : "#d5b27e" }
+                            GradientStop { position: 1; color: onGoal ? "#718f70" : "#ad8557" }
+                        }
+                        border.color: deadlocked ? "#dd8870" : onGoal ? "#c6d9b7" : "#e5c999"; border.width: 1
+                        Rectangle {
+                            anchors.fill: parent; anchors.margins: 7; radius: 1
+                            color: onGoal ? "#688168" : "#997344"; border.color: onGoal ? "#4f6b54" : "#775632"
+                            Rectangle { x: parent.width / 3; width: 1; height: parent.height; color: "#705332"; opacity: 0.45 }
+                            Rectangle { x: parent.width * 2 / 3; width: 1; height: parent.height; color: "#705332"; opacity: 0.45 }
+                            Rectangle { anchors.centerIn: parent; width: parent.width * 1.12; height: 5; rotation: 45; color: onGoal ? "#b3c8a5" : "#d9b982"; border.width: 1; border.color: "#85663e" }
+                        }
+                        Repeater {
+                            model: 4
+                            Rectangle {
+                                required property int index
+                                x: index % 2 === 0 ? 3 : parent.width - 6
+                                y: index < 2 ? 3 : parent.height - 6
+                                width: 3; height: 3; radius: 1.5; color: "#665b48"
+                            }
+                        }
+                        Text { font.family: uiTheme.fontFamily; visible: onGoal; anchors.centerIn: parent; text: "✓"; color: "#edf4df"; font.bold: true; font.pixelSize: parent.height * 0.48 }
                     }
                 }
             }
 
-            // 玩家
+            // Player: helmet, face and coat distinguish the worker from crates.
             Item {
-                readonly property real px: parent.gridX + root.playerC * parent.cell
-                readonly property real py: parent.gridY + root.playerR * parent.cell
-                x: px + parent.cell * 0.18
-                y: py + parent.cell * 0.18
-                width: parent.cell * 0.64; height: parent.cell * 0.64
+                x: boardScene.gridX + root.playerC * boardScene.cell
+                y: boardScene.gridY + root.playerR * boardScene.cell
+                width: boardScene.cell; height: boardScene.cell
+                Rectangle { x: parent.width * 0.18; y: parent.height * 0.75; width: parent.width * 0.67; height: parent.height * 0.20; radius: height / 2; color: "#10150f"; opacity: 0.85 }
+                Rectangle { x: parent.width * 0.2; y: parent.height * 0.58; width: parent.width * 0.6; height: parent.height * 0.33; radius: width * 0.25; color: "#668570"; border.color: "#aac2a2"; border.width: 2 }
                 Rectangle {
-                    anchors.fill: parent; radius: width / 2
-                    color: uiTheme.primaryText; border.width: 2; border.color: uiTheme.panelBorder
+                    x: parent.width * 0.27; y: parent.height * 0.22; width: parent.width * 0.46; height: parent.height * 0.43; radius: width / 2; color: "#f4d6b0"
+                    Rectangle { x: parent.width * 0.22; y: parent.height * 0.48; width: 3; height: 4; radius: 1; color: "#283849" }
+                    Rectangle { x: parent.width * 0.68; y: parent.height * 0.48; width: 3; height: 4; radius: 1; color: "#283849" }
                 }
-                Rectangle {
-                    width: parent.width * 0.34; height: parent.width * 0.34; radius: 2
-                    anchors.centerIn: parent
-                    color: uiTheme.primary
-                }
+                Rectangle { x: parent.width * 0.22; y: parent.height * 0.12; width: parent.width * 0.56; height: parent.height * 0.25; radius: height * 0.5; color: "#e1ddc7"; border.color: "#a9a995"; border.width: 1 }
             }
 
-            // 死局倒计时浮层
-            Rectangle {
-                visible: root.deadlockCountdown
-                anchors.centerIn: parent
-                width: 320; height: 100; radius: 12
-                color: uiTheme.panel; border.color: uiTheme.danger; border.width: 2
-                Column {
-                    anchors.centerIn: parent
-                    spacing: 6
-                    Text {
-                        text: qsTr("检测到死锁，%1 秒后自动重开").arg(root.deadlockSecondsLeft.toFixed(1))
-                        color: uiTheme.danger; font.pixelSize: 18; font.family: uiTheme.fontFamily; font.bold: true
-                    }
-                    Text {
-                        text: qsTr("点击“撤销”或“重开”可取消倒计时")
-                        color: uiTheme.secondaryText; font.pixelSize: 14; font.family: uiTheme.fontFamily
-                    }
+            // MouseArea coordinates are already local to boardScene, including any host scaling.
+            MouseArea {
+                anchors.fill: parent
+                enabled: root.phase === "playing" && !root.isPaused && !root.stopped
+                hoverEnabled: true
+                cursorShape: root.canMoveTo(boardScene.hoverR, boardScene.hoverC) ? Qt.PointingHandCursor : Qt.ArrowCursor
+                onPositionChanged: function(mouse) {
+                    boardScene.hoverC = Math.floor((mouse.x - boardScene.gridX) / boardScene.cell)
+                    boardScene.hoverR = Math.floor((mouse.y - boardScene.gridY) / boardScene.cell)
                 }
+                onExited: { boardScene.hoverR = -1; boardScene.hoverC = -1 }
+                onClicked: function(mouse) {
+                    root.clickCell(Math.floor((mouse.y - boardScene.gridY) / boardScene.cell),
+                                   Math.floor((mouse.x - boardScene.gridX) / boardScene.cell))
+                }
+            }
+            Text { font.family: uiTheme.fontFamily;
+                visible: root.deadlockBoxes.length > 0 && root.phase !== "complete"
+                anchors.bottom: parent.bottom; anchors.bottomMargin: controls.height + 44
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("箱子卡在墙角 · 点击撤销或重开 · 不会自动丢失进度")
+                color: uiTheme.warning; font.pixelSize: 16; font.bold: true
             }
         }
 
-        // 底栏：方向键 + 操作按钮（纯鼠标可用）
-        Row {
-            parent: frame.bottomBar
-            anchors.fill: parent
-            anchors.leftMargin: 16
-            anchors.rightMargin: 16
-            spacing: 12
-
-            // 方向键
+        // Spatial direction pad, primary recovery actions, and quiet secondary actions.
+        Item {
+            id: controls
+            objectName: "sokobanControls"
+            parent: frame.contentItem
+            z: 60
+            readonly property bool compact: root.width - frame.contentInset * 2 < 548
+            readonly property int columns: compact ? 4 : 8
+            width: compact ? 312 : 508
+            height: compact ? 156 : 96
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 20
             Item {
-                width: 120; height: parent.height
-                SharedUI.GameButton {
-                    width: 34; height: 34
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.top; anchors.topMargin: 4
-                    theme: uiTheme; text: "↑"; onClicked: root.tryMove(-1, 0, "up", "mouse")
-                }
-                SharedUI.GameButton {
-                    width: 34; height: 34
-                    anchors.left: parent.left; anchors.leftMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
-                    theme: uiTheme; text: "←"; onClicked: root.tryMove(0, -1, "left", "mouse")
-                }
-                SharedUI.GameButton {
-                    width: 34; height: 34
-                    anchors.right: parent.right; anchors.rightMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
-                    theme: uiTheme; text: "→"; onClicked: root.tryMove(0, 1, "right", "mouse")
-                }
-                SharedUI.GameButton {
-                    width: 34; height: 34
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.bottom: parent.bottom; anchors.bottomMargin: 4
-                    theme: uiTheme; text: "↓"; onClicked: root.tryMove(1, 0, "down", "mouse")
+                x: controls.compact ? (controls.width - width) / 2 : 0
+                width: 148; height: 96
+                Repeater {
+                    model: ["↑", "←", "↓", "→"]
+                    SharedUI.GameButton {
+                        required property int index
+                        required property string modelData
+                        x: index === 0 ? 52 : (index - 1) * 52
+                        y: index === 0 ? 0 : 52
+                        width: 44; height: 44
+                        theme: uiTheme; text: modelData
+                        radius: 8
+                        border.color: activeFocus ? uiTheme.warning : "#414a40"
+                        dimmed: root.phase !== "playing" || root.isPaused || root.stopped
+                        onClicked: root.tryMove([-1, 0, 1, 0][index], [0, -1, 0, 1][index], ["up", "left", "down", "right"][index], "mouse")
+                    }
                 }
             }
-
-            Item { width: Math.max(12, parent.width - 520) }
-
-            SharedUI.GameButton {
-                anchors.verticalCenter: parent.verticalCenter
-                theme: uiTheme
-                text: qsTr("撤销")
-                onClicked: root.undoMove("mouse")
-            }
-            SharedUI.GameButton {
-                anchors.verticalCenter: parent.verticalCenter
-                theme: uiTheme
-                text: qsTr("重开")
-                onClicked: root.restartLevel("mouse")
-            }
-            SharedUI.GameButton {
-                anchors.verticalCenter: parent.verticalCenter
-                theme: uiTheme
-                text: qsTr("菜单")
-                highlighted: root.phase === "menu"
-                onClicked: root.phase === "menu" ? root.closeMenu() : root.openMenu()
-            }
-            SharedUI.GameButton {
-                anchors.verticalCenter: parent.verticalCenter
-                theme: uiTheme
-                text: qsTr("结束")
-                onClicked: root.finishSession("user_exit")
+            Row {
+                x: controls.compact ? 0 : 180
+                y: controls.compact ? 112 : 52
+                spacing: 8
+                SharedUI.GameButton {
+                    width: 80; height: 44; theme: uiTheme; text: qsTr("撤销")
+                    radius: 8
+                    border.color: activeFocus ? uiTheme.warning : "#879b80"
+                    dimmed: root.phase !== "playing" || root.isPaused || root.stopped || root.undoStack.length === 0
+                    onClicked: root.undoMove("mouse")
+                }
+                SharedUI.GameButton {
+                    width: 80; height: 44; theme: uiTheme; text: qsTr("菜单")
+                    radius: 8
+                    border.color: activeFocus ? uiTheme.warning : "#515b4d"
+                    dimmed: root.phase !== "playing" || root.isPaused || root.stopped
+                    onClicked: root.openMenu()
+                }
+                SharedUI.GameButton {
+                    width: 64; height: 44; theme: uiTheme; text: qsTr("重开")
+                    border.width: activeFocus ? 2 : 0
+                    color: activeFocus ? "#20271e" : "transparent"
+                    opacity: dimmed ? 0.35 : 0.72
+                    dimmed: root.phase !== "playing" || root.isPaused || root.stopped
+                    onClicked: root.restartLevel("mouse")
+                }
+                SharedUI.GameButton {
+                    width: 64; height: 44; theme: uiTheme; text: qsTr("结束")
+                    border.width: activeFocus ? 2 : 0
+                    color: activeFocus ? "#20271e" : "transparent"
+                    opacity: dimmed ? 0.3 : 0.55
+                    dimmed: root.sessionFinished || root.isPaused || root.stopped || root.phase === "menu"
+                    onClicked: root.finishSession("user_exit")
+                }
             }
         }
 
@@ -616,7 +722,7 @@ Item {
             parent: frame.overlayItem
             visible: root.phase === "menu"
             anchors.centerIn: parent
-            width: 360; height: 280
+            width: 360; height: 340
             color: uiTheme.panel
             radius: uiTheme.dialogRadius
             border.color: uiTheme.panelBorder
@@ -638,6 +744,8 @@ Item {
                         required property int index
                         required property string modelData
                         theme: uiTheme
+                        height: 44
+                        dimmed: root.isPaused || root.stopped
                         text: modelData
                         highlighted: index === root.menuIndex
                         onClicked: {
@@ -656,7 +764,7 @@ Item {
             color: uiTheme.background
             opacity: 0.75
             visible: root.isPaused
-            Text {
+            Text { font.family: uiTheme.fontFamily;
                 anchors.centerIn: parent
                 text: qsTr("已暂停")
                 color: uiTheme.warning

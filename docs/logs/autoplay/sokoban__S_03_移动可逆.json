@@ -50,7 +50,7 @@
       "t": 0.0,
       "name": "sokoban.attempt_started",
       "data": {
-        "gameVersion": "0.3.0",
+        "gameVersion": "0.4.1",
         "inputSource": "local",
         "levelPlan": [
           {
@@ -102,7 +102,7 @@
         "inputSource": "local",
         "levelId": "S01",
         "phase": "playing",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
@@ -132,10 +132,10 @@
       "name": "sokoban.menu_action",
       "data": {
         "choice": "撤销一步",
-        "elapsed": 0.22400000000000014,
+        "elapsed": 0.20800000000000013,
         "index": 0,
         "levelId": "S01",
-        "source": "keyboard"
+        "source": "local"
       }
     },
     {
@@ -145,12 +145,12 @@
         "boxes": [
           "2,3"
         ],
-        "elapsed": 0.22400000000000014,
+        "elapsed": 0.20800000000000013,
         "player": {
           "c": 2,
           "r": 2
         },
-        "source": "keyboard",
+        "source": "local",
         "undosUsed": 1
       }
     }

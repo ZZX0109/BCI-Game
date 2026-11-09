@@ -1,0 +1,14 @@
+{
+  "seed": 42,
+  "notesPerRound": 8,
+  "bpm": 60,
+  "beatsPerNote": 4,
+  "leadSeconds": 4,
+  "windowSeconds": 0.9,
+  "holdSeconds": 2,
+  "inputMode": "auto",
+  "pulseValidity": 0.8,
+  "holdThreshold": 0.75,
+  "restSeconds": 4,
+  "audioEnabled": true
+}

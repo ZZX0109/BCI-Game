@@ -1,0 +1,180 @@
+{
+  "game": "pursuit",
+  "scenario": "P-07 停止后会话不复活",
+  "ok": true,
+  "passed": 9,
+  "total": 9,
+  "error": null,
+  "checks": [
+    {
+      "check": "P-07a 未给指针前停在倒计时",
+      "ok": true,
+      "detail": "实际='countdown' 期望='countdown'"
+    },
+    {
+      "check": "P-07b 未给指针前不就绪",
+      "ok": true,
+      "detail": "实际=False 期望=False"
+    },
+    {
+      "check": "P-07c 训练计时未推进",
+      "ok": true,
+      "detail": "实际=0.0 期望=0.0"
+    },
+    {
+      "check": "P-07d 有效二维指针使输入就绪",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "P-07e 就绪后进入训练",
+      "ok": true,
+      "detail": "实际='playing' 期望='playing'"
+    },
+    {
+      "check": "P-07f 停止标记已置位",
+      "ok": true,
+      "detail": "实际=True 期望=True"
+    },
+    {
+      "check": "P-07g 停止期间训练计时冻结",
+      "ok": true,
+      "detail": "Δ=0.0"
+    },
+    {
+      "check": "P-07h 继续信号不能复活旧会话",
+      "ok": true,
+      "detail": "stopped=True paused=True Δ=0.0"
+    },
+    {
+      "check": "P-07i 只有新 started 能重置",
+      "ok": true,
+      "detail": "stopped=False paused=False"
+    }
+  ],
+  "simSeconds": 5.776,
+  "finished": false,
+  "eventCount": 5,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "pursuit.attempt_started",
+      "data": {
+        "gameVersion": "0.5.0",
+        "geometry": {
+          "errorUnit": "fraction_of_shorter_scene_dimension",
+          "height": 508.0,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "inputSource": "bci",
+        "pathSeed": 12017,
+        "roundDuration": 25.0,
+        "roundPlan": [
+          "line",
+          "ellipse",
+          "figure8",
+          "roam",
+          "roamocc"
+        ]
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "pursuit.round_started",
+      "data": {
+        "geometry": {
+          "errorUnit": "fraction_of_shorter_scene_dimension",
+          "height": 508.0,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "occlusion": 0,
+        "profile": "line",
+        "round": 1,
+        "roundDuration": 25.0,
+        "speed": 0.22,
+        "tolerance": 0.16,
+        "totalRounds": 5
+      }
+    },
+    {
+      "t": 1.096,
+      "name": "pursuit.input_ready",
+      "data": {
+        "elapsed": 1.0960000000000008,
+        "geometry": {
+          "errorUnit": "fraction_of_shorter_scene_dimension",
+          "height": 508.0,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "hostHeight": 700.0,
+        "hostWidth": 1000.0,
+        "inputSource": "bci"
+      }
+    },
+    {
+      "t": 5.68,
+      "name": "pursuit.attempt_started",
+      "data": {
+        "gameVersion": "0.5.0",
+        "geometry": {
+          "errorUnit": "fraction_of_shorter_scene_dimension",
+          "height": 508.0,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "inputSource": "bci",
+        "pathSeed": 12017,
+        "roundDuration": 25.0,
+        "roundPlan": [
+          "line",
+          "ellipse",
+          "figure8",
+          "roam",
+          "roamocc"
+        ]
+      }
+    },
+    {
+      "t": 5.68,
+      "name": "pursuit.round_started",
+      "data": {
+        "geometry": {
+          "errorUnit": "fraction_of_shorter_scene_dimension",
+          "height": 508.0,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "occlusion": 0,
+        "profile": "line",
+        "round": 1,
+        "roundDuration": 25.0,
+        "speed": 0.22,
+        "tolerance": 0.16,
+        "totalRounds": 5
+      }
+    }
+  ]
+}

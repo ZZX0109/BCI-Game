@@ -1,0 +1,197 @@
+{
+  "game": "target",
+  "scenario": "TGT-09 脑控输入门控",
+  "ok": true,
+  "passed": 10,
+  "total": 10,
+  "error": null,
+  "checks": [
+    {
+      "check": "TGT-09a 脑控来源记为 bci",
+      "ok": true,
+      "detail": "实际='bci' 期望='bci'"
+    },
+    {
+      "check": "TGT-09b 脑控标志生效",
+      "ok": true,
+      "detail": "实际=True 期望=True"
+    },
+    {
+      "check": "TGT-09c 未给有效指针前不就绪",
+      "ok": true,
+      "detail": "实际=False 期望=False"
+    },
+    {
+      "check": "TGT-09d NaN 指针被拒绝",
+      "ok": true,
+      "detail": "inputReady=False aim=(350.0, 240.0)"
+    },
+    {
+      "check": "TGT-09d +Inf 指针被拒绝",
+      "ok": true,
+      "detail": "inputReady=False aim=(350.0, 240.0)"
+    },
+    {
+      "check": "TGT-09d -Inf 指针被拒绝",
+      "ok": true,
+      "detail": "inputReady=False aim=(350.0, 240.0)"
+    },
+    {
+      "check": "TGT-09e 宿主宽度无效时指针被拒绝",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TGT-09f 首个有效指针使输入就绪",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TGT-09g 就绪事件记录宿主尺寸",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TGT-09h 有效指针确实改变了准星",
+      "ok": true,
+      "detail": "aim=(261.4665354330709, 186.3543307086614)"
+    }
+  ],
+  "simSeconds": 0.352,
+  "finished": false,
+  "eventCount": 3,
+  "events": [
+    {
+      "t": 0.0,
+      "name": "target.attempt_started",
+      "data": {
+        "gameVersion": "0.5.1",
+        "inputSource": "bci",
+        "seed": 42,
+        "taskMode": "static_accuracy",
+        "totalTrials": 8,
+        "trialPlan": [
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 107.0,
+            "y": 421.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 740.0,
+            "y": 321.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 566.0,
+            "y": 263.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 212.0,
+            "y": 250.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 331.0,
+            "y": 520.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 735.0,
+            "y": 244.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 133.0,
+            "y": 470.0
+          },
+          {
+            "distance": "free",
+            "kind": "static",
+            "r": 46.0,
+            "size": "standard",
+            "x": 441.0,
+            "y": 215.0
+          }
+        ]
+      }
+    },
+    {
+      "t": 0.0,
+      "name": "target.trial_started",
+      "data": {
+        "condition": {
+          "distance": "free",
+          "group": "",
+          "size": "standard"
+        },
+        "elapsed": 0.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "occlusion": null,
+        "plannedDistance": null,
+        "startX": null,
+        "startY": null,
+        "targetR": 46.0,
+        "targetX": 107.0,
+        "targetY": 421.0,
+        "totalTrials": 8,
+        "trial": 1
+      }
+    },
+    {
+      "t": 0.288,
+      "name": "target.input_ready",
+      "data": {
+        "elapsed": 0.2880000000000002,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "hostHeight": 700.0,
+        "hostWidth": 1000.0,
+        "inputSource": "bci"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "target/TaskDefinition.qml": "0e1b6717a1f7980d0957a8e46d8baf3888f8296b0b8b02628a5a0c67632282ec",
+  "target/Main.qml": "e8635cc5a62dae79865280fe1308a1d6c23af669f7f26e854bcac57e3ecab492",
+  "pursuit/TaskDefinition.qml": "06ce285086bc036e5cb6048dac1568b7b47e539f681a854e34611e15bb204f65",
+  "pursuit/Main.qml": "c5f39498a53aa26de1c7d4f32f7155c4a5e81aef06ecb4ad240d7b678979376f",
+  "hanoi/TaskDefinition.qml": "4bad6379adb3bf0bd7dd8f0e1d331073fcf801af0ed666717f9460c2df7a590c",
+  "hanoi/Main.qml": "b0d7577cf5ac3c7402c6650111af20dd1db40ecb4c99cafc20fad3414b69f31e",
+  "hanoi/HanoiDisc.qml": "0f3755a1e1a1e1ca61324c3cb647f9ccf16756ed1f483d7520827b766ead8704"
+}

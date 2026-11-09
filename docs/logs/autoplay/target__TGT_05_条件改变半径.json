@@ -2,8 +2,8 @@
   "game": "target",
   "scenario": "TGT-05 条件改变半径",
   "ok": true,
-  "passed": 6,
-  "total": 6,
+  "passed": 12,
+  "total": 12,
   "error": null,
   "checks": [
     {
@@ -15,6 +15,36 @@
       "check": "TGT-05b 条件写在试次里",
       "ok": true,
       "detail": "实际=['30', '46', '62'] 期望=['30', '46', '62']"
+    },
+    {
+      "check": "TGT-05 试次 1 起点确认生效",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TGT-05 试次 2 起点确认生效",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TGT-05 试次 3 起点确认生效",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TGT-05 试次 4 起点确认生效",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TGT-05 试次 5 起点确认生效",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TGT-05 试次 6 起点确认生效",
+      "ok": true,
+      "detail": ""
     },
     {
       "check": "TGT-05c 运行时半径 == 计划半径",
@@ -37,115 +67,151 @@
       "detail": "[(62, 64.0, False), (62, 64.0, False), (30, 32.0, False), (46, 48.0, False), (46, 48.0, False), (62, 64.0, False)]"
     }
   ],
-  "simSeconds": 8.352,
+  "simSeconds": 9.696,
   "finished": false,
-  "eventCount": 20,
+  "eventCount": 26,
   "events": [
     {
       "t": 0.0,
       "name": "target.attempt_started",
       "data": {
-        "gameVersion": "0.4.0",
+        "gameVersion": "0.5.1",
         "inputSource": "local",
         "seed": 42,
         "taskMode": "fitts_targets",
         "totalTrials": 12,
         "trialPlan": [
           {
+            "actualDistance": 420,
             "distance": "420",
             "kind": "static",
             "r": 62,
             "size": "62",
-            "x": 602.0,
-            "y": 374.0
+            "startX": 685.6240157480315,
+            "startY": 240.15314819670894,
+            "x": 265.6240157480315,
+            "y": 240.15314819670894
           },
           {
+            "actualDistance": 200,
             "distance": "200",
             "kind": "static",
             "r": 62,
             "size": "62",
-            "x": 437.0,
-            "y": 488.0
+            "startX": 375.6240157480315,
+            "startY": 358.05970520715215,
+            "x": 575.6240157480315,
+            "y": 358.05970520715215
           },
           {
+            "actualDistance": 420,
             "distance": "420",
             "kind": "static",
             "r": 30,
             "size": "30",
-            "x": 123.0,
-            "y": 210.0
+            "startX": 685.6240157480315,
+            "startY": 439.254452083844,
+            "x": 265.6240157480315,
+            "y": 439.254452083844
           },
           {
+            "actualDistance": 420,
             "distance": "420",
             "kind": "static",
             "r": 46,
             "size": "46",
-            "x": 488.0,
-            "y": 417.0
+            "startX": 265.6240157480315,
+            "startY": 285.5379368753815,
+            "x": 685.6240157480315,
+            "y": 285.5379368753815
           },
           {
+            "actualDistance": 200,
             "distance": "200",
             "kind": "static",
             "r": 46,
             "size": "46",
-            "x": 391.0,
-            "y": 243.0
+            "startX": 375.6240157480315,
+            "startY": 458.25091376726095,
+            "x": 575.6240157480315,
+            "y": 458.25091376726095
           },
           {
+            "actualDistance": 420,
             "distance": "420",
             "kind": "static",
             "r": 62,
             "size": "62",
-            "x": 152.0,
-            "y": 403.0
+            "startX": 685.6240157480315,
+            "startY": 421.98739080409865,
+            "x": 265.6240157480315,
+            "y": 421.98739080409865
           },
           {
+            "actualDistance": 200,
             "distance": "200",
             "kind": "static",
             "r": 30,
             "size": "30",
-            "x": 161.0,
-            "y": 204.0
+            "startX": 575.6240157480315,
+            "startY": 463.79308561086333,
+            "x": 375.6240157480315,
+            "y": 463.79308561086333
           },
           {
+            "actualDistance": 200,
             "distance": "200",
             "kind": "static",
             "r": 46,
             "size": "46",
-            "x": 353.0,
-            "y": 258.0
+            "startX": 575.6240157480315,
+            "startY": 240.0366770629942,
+            "x": 375.6240157480315,
+            "y": 240.0366770629942
           },
           {
+            "actualDistance": 420,
             "distance": "420",
             "kind": "static",
             "r": 30,
             "size": "30",
-            "x": 427.0,
-            "y": 200.0
+            "startX": 265.6240157480315,
+            "startY": 543.0277633397038,
+            "x": 685.6240157480315,
+            "y": 543.0277633397038
           },
           {
+            "actualDistance": 200,
             "distance": "200",
             "kind": "static",
             "r": 62,
             "size": "62",
-            "x": 231.0,
-            "y": 241.0
+            "startX": 375.6240157480315,
+            "startY": 303.1483252859434,
+            "x": 575.6240157480315,
+            "y": 303.1483252859434
           },
           {
+            "actualDistance": 420,
             "distance": "420",
             "kind": "static",
             "r": 46,
             "size": "46",
-            "x": 595.0,
-            "y": 450.0
+            "startX": 265.6240157480315,
+            "startY": 297.0464300387755,
+            "x": 685.6240157480315,
+            "y": 297.0464300387755
           },
           {
+            "actualDistance": 200,
             "distance": "200",
             "kind": "static",
             "r": 30,
             "size": "30",
-            "x": 529.0,
-            "y": 262.0
+            "startX": 575.6240157480315,
+            "startY": 199.20739937024535,
+            "x": 375.6240157480315,
+            "y": 199.20739937024535
           }
         ]
       }
@@ -160,56 +226,112 @@
           "size": "62"
         },
         "elapsed": 0.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
         "occlusion": null,
+        "plannedDistance": 420,
+        "startX": 685.6240157480315,
+        "startY": 240.15314819670894,
         "targetR": 62,
-        "targetX": 602.0,
-        "targetY": 374.0,
+        "targetX": 265.6240157480315,
+        "targetY": 240.15314819670894,
         "totalTrials": 12,
         "trial": 1
       }
     },
     {
       "t": 0.112,
+      "name": "target.movement_started",
+      "data": {
+        "actualDistance": 420.00000025196846,
+        "elapsed": 0.11200000000000004,
+        "startX": 661.624016,
+        "startY": 124.153148,
+        "trial": 1
+      }
+    },
+    {
+      "t": 0.336,
       "name": "target.shot_debug",
       "data": {
-        "aimX": 642.0,
-        "aimY": 258.0,
+        "actualDistance": 420.00000025196846,
+        "aimX": 306.0,
+        "aimY": 124.0,
         "blocked": false,
         "condition": "62",
         "distance": 64.0,
-        "elapsed": 0.11200000000000004,
+        "elapsed": 0.33600000000000024,
         "firstActionLatency": -1.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": false,
         "occludedAtShot": null,
+        "plannedDistance": 420,
         "source": "host_action",
         "targetR": 62.0,
-        "targetX": 578.0,
-        "targetY": 258.0,
+        "targetX": 242.0,
+        "targetY": 124.0,
         "trial": 1
       }
     },
     {
-      "t": 0.112,
+      "t": 0.336,
       "name": "target.miss",
       "data": {
-        "aimX": 642.0,
-        "aimY": 258.0,
+        "actualDistance": 420.00000025196846,
+        "aimX": 306.0,
+        "aimY": 124.0,
         "blocked": false,
         "condition": "62",
         "distance": 64.0,
-        "elapsed": 0.11200000000000004,
+        "elapsed": 0.33600000000000024,
         "firstActionLatency": -1.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": false,
         "occludedAtShot": null,
+        "plannedDistance": 420,
         "source": "host_action",
         "targetR": 62.0,
-        "targetX": 578.0,
-        "targetY": 258.0,
+        "targetX": 242.0,
+        "targetY": 124.0,
         "trial": 1
       }
     },
     {
-      "t": 0.616,
+      "t": 0.84,
       "name": "target.trial_started",
       "data": {
         "condition": {
@@ -217,57 +339,113 @@
           "group": "",
           "size": "62"
         },
-        "elapsed": 0.6160000000000004,
+        "elapsed": 0.8400000000000006,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
         "occlusion": null,
+        "plannedDistance": 200,
+        "startX": 375.6240157480315,
+        "startY": 358.05970520715215,
         "targetR": 62,
-        "targetX": 437.0,
-        "targetY": 488.0,
+        "targetX": 575.6240157480315,
+        "targetY": 358.05970520715215,
         "totalTrials": 12,
         "trial": 2
       }
     },
     {
-      "t": 1.488,
+      "t": 1.712,
+      "name": "target.movement_started",
+      "data": {
+        "actualDistance": 199.99999974803154,
+        "elapsed": 1.7120000000000013,
+        "startX": 351.624016,
+        "startY": 242.059705,
+        "trial": 2
+      }
+    },
+    {
+      "t": 1.936,
       "name": "target.shot_debug",
       "data": {
-        "aimX": 477.0,
-        "aimY": 372.0,
+        "actualDistance": 199.99999974803154,
+        "aimX": 616.0,
+        "aimY": 242.0,
         "blocked": false,
         "condition": "62",
         "distance": 64.0,
-        "elapsed": 1.488000000000001,
+        "elapsed": 1.9360000000000015,
         "firstActionLatency": -1.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": false,
         "occludedAtShot": null,
+        "plannedDistance": 200,
         "source": "host_action",
         "targetR": 62.0,
-        "targetX": 413.0,
-        "targetY": 372.0,
+        "targetX": 552.0,
+        "targetY": 242.0,
         "trial": 2
       }
     },
     {
-      "t": 1.488,
+      "t": 1.936,
       "name": "target.miss",
       "data": {
-        "aimX": 477.0,
-        "aimY": 372.0,
+        "actualDistance": 199.99999974803154,
+        "aimX": 616.0,
+        "aimY": 242.0,
         "blocked": false,
         "condition": "62",
         "distance": 64.0,
-        "elapsed": 1.488000000000001,
+        "elapsed": 1.9360000000000015,
         "firstActionLatency": -1.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": false,
         "occludedAtShot": null,
+        "plannedDistance": 200,
         "source": "host_action",
         "targetR": 62.0,
-        "targetX": 413.0,
-        "targetY": 372.0,
+        "targetX": 552.0,
+        "targetY": 242.0,
         "trial": 2
       }
     },
     {
-      "t": 1.992,
+      "t": 2.44,
       "name": "target.trial_started",
       "data": {
         "condition": {
@@ -275,57 +453,113 @@
           "group": "",
           "size": "30"
         },
-        "elapsed": 1.9920000000000015,
+        "elapsed": 2.4400000000000017,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
         "occlusion": null,
+        "plannedDistance": 420,
+        "startX": 685.6240157480315,
+        "startY": 439.254452083844,
         "targetR": 30,
-        "targetX": 123.0,
-        "targetY": 210.0,
+        "targetX": 265.6240157480315,
+        "targetY": 439.254452083844,
         "totalTrials": 12,
         "trial": 3
       }
     },
     {
-      "t": 2.864,
+      "t": 3.312,
+      "name": "target.movement_started",
+      "data": {
+        "actualDistance": 420.00000025196846,
+        "elapsed": 3.3120000000000025,
+        "startX": 661.624016,
+        "startY": 323.254452,
+        "trial": 3
+      }
+    },
+    {
+      "t": 3.536,
       "name": "target.shot_debug",
       "data": {
-        "aimX": 131.0,
-        "aimY": 94.0,
+        "actualDistance": 420.00000025196846,
+        "aimX": 274.0,
+        "aimY": 323.0,
         "blocked": false,
         "condition": "30",
         "distance": 32.0,
-        "elapsed": 2.864000000000002,
+        "elapsed": 3.5360000000000027,
         "firstActionLatency": -1.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": false,
         "occludedAtShot": null,
+        "plannedDistance": 420,
         "source": "host_action",
         "targetR": 30.0,
-        "targetX": 99.0,
-        "targetY": 94.0,
+        "targetX": 242.0,
+        "targetY": 323.0,
         "trial": 3
       }
     },
     {
-      "t": 2.864,
+      "t": 3.536,
       "name": "target.miss",
       "data": {
-        "aimX": 131.0,
-        "aimY": 94.0,
+        "actualDistance": 420.00000025196846,
+        "aimX": 274.0,
+        "aimY": 323.0,
         "blocked": false,
         "condition": "30",
         "distance": 32.0,
-        "elapsed": 2.864000000000002,
+        "elapsed": 3.5360000000000027,
         "firstActionLatency": -1.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": false,
         "occludedAtShot": null,
+        "plannedDistance": 420,
         "source": "host_action",
         "targetR": 30.0,
-        "targetX": 99.0,
-        "targetY": 94.0,
+        "targetX": 242.0,
+        "targetY": 323.0,
         "trial": 3
       }
     },
     {
-      "t": 3.368,
+      "t": 4.04,
       "name": "target.trial_started",
       "data": {
         "condition": {
@@ -333,57 +567,113 @@
           "group": "",
           "size": "46"
         },
-        "elapsed": 3.3680000000000025,
+        "elapsed": 4.040000000000003,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
         "occlusion": null,
+        "plannedDistance": 420,
+        "startX": 265.6240157480315,
+        "startY": 285.5379368753815,
         "targetR": 46,
-        "targetX": 488.0,
-        "targetY": 417.0,
+        "targetX": 685.6240157480315,
+        "targetY": 285.5379368753815,
         "totalTrials": 12,
         "trial": 4
       }
     },
     {
-      "t": 4.24,
+      "t": 4.912,
+      "name": "target.movement_started",
+      "data": {
+        "actualDistance": 419.99999974803154,
+        "elapsed": 4.9120000000000035,
+        "startX": 241.62401599999998,
+        "startY": 169.53793699999994,
+        "trial": 4
+      }
+    },
+    {
+      "t": 5.136,
       "name": "target.shot_debug",
       "data": {
-        "aimX": 512.0,
-        "aimY": 301.0,
+        "actualDistance": 419.99999974803154,
+        "aimX": 710.0,
+        "aimY": 170.0,
         "blocked": false,
         "condition": "46",
         "distance": 48.0,
-        "elapsed": 4.240000000000003,
+        "elapsed": 5.136000000000004,
         "firstActionLatency": -1.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": false,
         "occludedAtShot": null,
+        "plannedDistance": 420,
         "source": "host_action",
         "targetR": 46.0,
-        "targetX": 464.0,
-        "targetY": 301.0,
+        "targetX": 662.0,
+        "targetY": 170.0,
         "trial": 4
       }
     },
     {
-      "t": 4.24,
+      "t": 5.136,
       "name": "target.miss",
       "data": {
-        "aimX": 512.0,
-        "aimY": 301.0,
+        "actualDistance": 419.99999974803154,
+        "aimX": 710.0,
+        "aimY": 170.0,
         "blocked": false,
         "condition": "46",
         "distance": 48.0,
-        "elapsed": 4.240000000000003,
+        "elapsed": 5.136000000000004,
         "firstActionLatency": -1.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": false,
         "occludedAtShot": null,
+        "plannedDistance": 420,
         "source": "host_action",
         "targetR": 46.0,
-        "targetX": 464.0,
-        "targetY": 301.0,
+        "targetX": 662.0,
+        "targetY": 170.0,
         "trial": 4
       }
     },
     {
-      "t": 4.744,
+      "t": 5.64,
       "name": "target.trial_started",
       "data": {
         "condition": {
@@ -391,57 +681,113 @@
           "group": "",
           "size": "46"
         },
-        "elapsed": 4.744000000000003,
+        "elapsed": 5.640000000000004,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
         "occlusion": null,
+        "plannedDistance": 200,
+        "startX": 375.6240157480315,
+        "startY": 458.25091376726095,
         "targetR": 46,
-        "targetX": 391.0,
-        "targetY": 243.0,
+        "targetX": 575.6240157480315,
+        "targetY": 458.25091376726095,
         "totalTrials": 12,
         "trial": 5
       }
     },
     {
-      "t": 5.616,
+      "t": 6.512,
+      "name": "target.movement_started",
+      "data": {
+        "actualDistance": 199.99999974803154,
+        "elapsed": 6.512000000000005,
+        "startX": 351.624016,
+        "startY": 342.2509140000001,
+        "trial": 5
+      }
+    },
+    {
+      "t": 6.736,
       "name": "target.shot_debug",
       "data": {
-        "aimX": 415.0,
-        "aimY": 127.0,
+        "actualDistance": 199.99999974803154,
+        "aimX": 600.0,
+        "aimY": 342.0,
         "blocked": false,
         "condition": "46",
         "distance": 48.0,
-        "elapsed": 5.616000000000004,
+        "elapsed": 6.736000000000005,
         "firstActionLatency": -1.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": false,
         "occludedAtShot": null,
+        "plannedDistance": 200,
         "source": "host_action",
         "targetR": 46.0,
-        "targetX": 367.0,
-        "targetY": 127.0,
+        "targetX": 552.0,
+        "targetY": 342.0,
         "trial": 5
       }
     },
     {
-      "t": 5.616,
+      "t": 6.736,
       "name": "target.miss",
       "data": {
-        "aimX": 415.0,
-        "aimY": 127.0,
+        "actualDistance": 199.99999974803154,
+        "aimX": 600.0,
+        "aimY": 342.0,
         "blocked": false,
         "condition": "46",
         "distance": 48.0,
-        "elapsed": 5.616000000000004,
+        "elapsed": 6.736000000000005,
         "firstActionLatency": -1.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": false,
         "occludedAtShot": null,
+        "plannedDistance": 200,
         "source": "host_action",
         "targetR": 46.0,
-        "targetX": 367.0,
-        "targetY": 127.0,
+        "targetX": 552.0,
+        "targetY": 342.0,
         "trial": 5
       }
     },
     {
-      "t": 6.12,
+      "t": 7.24,
       "name": "target.trial_started",
       "data": {
         "condition": {
@@ -449,57 +795,113 @@
           "group": "",
           "size": "62"
         },
-        "elapsed": 6.1200000000000045,
+        "elapsed": 7.2400000000000055,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
         "occlusion": null,
+        "plannedDistance": 420,
+        "startX": 685.6240157480315,
+        "startY": 421.98739080409865,
         "targetR": 62,
-        "targetX": 152.0,
-        "targetY": 403.0,
+        "targetX": 265.6240157480315,
+        "targetY": 421.98739080409865,
         "totalTrials": 12,
         "trial": 6
       }
     },
     {
-      "t": 6.992,
+      "t": 8.112,
+      "name": "target.movement_started",
+      "data": {
+        "actualDistance": 420.00000025196846,
+        "elapsed": 8.111999999999993,
+        "startX": 661.624016,
+        "startY": 305.98739099999995,
+        "trial": 6
+      }
+    },
+    {
+      "t": 8.336,
       "name": "target.shot_debug",
       "data": {
-        "aimX": 192.0,
-        "aimY": 287.0,
+        "actualDistance": 420.00000025196846,
+        "aimX": 306.0,
+        "aimY": 306.0,
         "blocked": false,
         "condition": "62",
         "distance": 64.0,
-        "elapsed": 6.992000000000005,
+        "elapsed": 8.335999999999968,
         "firstActionLatency": -1.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": false,
         "occludedAtShot": null,
+        "plannedDistance": 420,
         "source": "host_action",
         "targetR": 62.0,
-        "targetX": 128.0,
-        "targetY": 287.0,
+        "targetX": 242.0,
+        "targetY": 306.0,
         "trial": 6
       }
     },
     {
-      "t": 6.992,
+      "t": 8.336,
       "name": "target.miss",
       "data": {
-        "aimX": 192.0,
-        "aimY": 287.0,
+        "actualDistance": 420.00000025196846,
+        "aimX": 306.0,
+        "aimY": 306.0,
         "blocked": false,
         "condition": "62",
         "distance": 64.0,
-        "elapsed": 6.992000000000005,
+        "elapsed": 8.335999999999968,
         "firstActionLatency": -1.0,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
+        "geometryChangedDuringTrial": false,
         "hit": false,
         "occludedAtShot": null,
+        "plannedDistance": 420,
         "source": "host_action",
         "targetR": 62.0,
-        "targetX": 128.0,
-        "targetY": 287.0,
+        "targetX": 242.0,
+        "targetY": 306.0,
         "trial": 6
       }
     },
     {
-      "t": 7.496,
+      "t": 8.84,
       "name": "target.trial_started",
       "data": {
         "condition": {
@@ -507,11 +909,26 @@
           "group": "",
           "size": "30"
         },
-        "elapsed": 7.496000000000006,
+        "elapsed": 8.839999999999913,
+        "geometry": {
+          "height": 508.0,
+          "logicalHeight": 483.00000000000006,
+          "logicalWidth": 903.248031496063,
+          "pixelsPerLogicalUnit": 1.05175983436853,
+          "revision": 1,
+          "rootHeight": 700.0,
+          "rootWidth": 1000.0,
+          "width": 950.0,
+          "x": 25.0,
+          "y": 104.0
+        },
         "occlusion": null,
+        "plannedDistance": 200,
+        "startX": 575.6240157480315,
+        "startY": 463.79308561086333,
         "targetR": 30,
-        "targetX": 161.0,
-        "targetY": 204.0,
+        "targetX": 375.6240157480315,
+        "targetY": 463.79308561086333,
         "totalTrials": 12,
         "trial": 7
       }
