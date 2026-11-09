@@ -3,28 +3,44 @@
 var directions = ["left", "down", "up", "right"]
 var roundNames = ["左右起步", "四向辨别", "方向序列", "稳定保持", "节奏适应"]
 var roundHelp = ["先练左与右。箭头进入横线时，输入对应方向。", "加入上与下。提前观察箭头，按提示的方向输入。", "跟随四步序列，练习连续指令的切换。", "箭头带有长尾：按住对应方向，或持续发送同方向脉冲。", "节拍将分段变化，继续跟随箭头到达横线的时刻。"]
+var difficultyPresets = {
+    teaching: {bpm:70, beatsPerNote:2, windowSeconds:.55, leadSeconds:3, directionCount:2, intervalSeconds:1.714, title:"教学"},
+    standard: {bpm:90, beatsPerNote:2, windowSeconds:.40, leadSeconds:3, directionCount:4, intervalSeconds:1.333, title:"标准"},
+    challenge: {bpm:110, beatsPerNote:2, windowSeconds:.30, leadSeconds:3, directionCount:4, intervalSeconds:1.091, title:"挑战（键盘练习）"}
+}
 function num(v,d,lo,hi){v=Number(v);return isFinite(v)?Math.max(lo,Math.min(hi,v)):d}
 function configure(v,source){
     v=v||{}
-    var c={seed:Math.floor(num(v.seed,42,1,2147483646)), notesPerRound:Math.round(num(v.notesPerRound,8,4,24)),
-        bpm:num(v.bpm,60,40,100), beatsPerNote:Math.round(num(v.beatsPerNote,4,2,12)),
-        windowSeconds:num(v.windowSeconds,.9,.25,2), leadSeconds:num(v.leadSeconds,4,2,10),
+    var difficulty=difficultyPresets[v.difficulty]?v.difficulty:"standard"
+    var preset=difficultyPresets[difficulty]
+    var c={difficulty:difficulty, difficultyTitle:preset.title, directionCount:preset.directionCount,
+        seed:Math.floor(num(v.seed,42,1,2147483646)), notesPerRound:Math.round(num(v.notesPerRound,8,4,24)),
+        bpm:num(v.bpm,preset.bpm,40,120), beatsPerNote:Math.round(num(v.beatsPerNote,preset.beatsPerNote,2,12)),
+        windowSeconds:num(v.windowSeconds,preset.windowSeconds,.25,2), leadSeconds:num(v.leadSeconds,preset.leadSeconds,2,10),
         holdSeconds:num(v.holdSeconds,2,1,5), pulseValidity:num(v.pulseValidity,.8,.2,2),
         holdThreshold:num(v.holdThreshold,.75,.3,1), restSeconds:num(v.restSeconds,4,2,30),
-        audioEnabled:v.audioEnabled!==false, inputMode:v.inputMode==="pulse"?"pulse":v.inputMode==="held"?"held":/bci|brain/i.test(source)?"pulse":"held"}
+        musicEnabled:v.musicEnabled!==false, beatCueEnabled:v.beatCueEnabled!==false,
+        sfxEnabled:v.sfxEnabled!==false,
+        audioEnabled:v.beatCueEnabled!==false && v.audioEnabled!==false,
+        inputMode:v.inputMode==="pulse"?"pulse":v.inputMode==="held"?"held":/bci|brain/i.test(source)?"pulse":"held"}
     c.notesPerRound=Math.ceil(c.notesPerRound/4)*4
     c.leadSeconds=Math.max(c.leadSeconds,c.windowSeconds+1.2)
     return c
 }
+function roundHelpFor(s,r){
+    if(s&&s.cfg.directionCount===2&&r>0)return "继续使用左与右，按节拍观察后输入。此难度不加入上下方向。"
+    return roundHelp[r]||""
+}
 function rng(seed){var x=seed;return function(){x=(x*48271)%2147483647;return x/2147483647}}
 function chart(c,r){
     var random=rng((c.seed+r*7919)%2147483646+1),notes=[],t=c.leadSeconds+1
+    var activeDirections=c.directionCount===2?["left","right"]:directions
     for(var i=0;i<c.notesPerRound;i++){
-        var dir=r===0?(i%2?"right":"left"):r===2?directions[[0,3,2,1][i%4]]:directions[(i%4+Math.floor(random()*4))%4]
+        var dir=r===0?(i%2?"right":"left"):r===2?activeDirections[[0,activeDirections.length-1,Math.floor(activeDirections.length/2),1][i%4]%activeDirections.length]:activeDirections[(i%activeDirections.length+Math.floor(random()*activeDirections.length))%activeDirections.length]
         // Balanced shuffled blocks ensure all four categories are presented.
         if(r===1 || r===3 || r===4){
-            if(i%4===0){var bag=directions.slice();for(var k=3;k>0;k--){var j=Math.floor(random()*(k+1)),tmp=bag[k];bag[k]=bag[j];bag[j]=tmp}}
-            dir=bag[i%4]
+            if(i%activeDirections.length===0){var bag=activeDirections.slice();for(var k=bag.length-1;k>0;k--){var j=Math.floor(random()*(k+1)),tmp=bag[k];bag[k]=bag[j];bag[j]=tmp}}
+            dir=bag[i%activeDirections.length]
         }
         var bpm=r===4?c.bpm*[1,.8,1.2][Math.min(2,Math.floor(i*3/c.notesPerRound))]:c.bpm
         var hold=r===3?c.holdSeconds:0
@@ -41,15 +57,17 @@ function create(v,source){
     var s={cfg:configure(v,source),source:source||"local",phase:"countdown",phaseT:0,round:-1,t:0,elapsed:0,
         notes:[],results:[],events:[],raw:[],outcomes:[],down:{},paused:false,stopped:false,finishSent:false,
         feedback:"准备跟随节拍",feedbackKind:"neutral",feedbackDir:"",feedbackUntil:0,correctInputs:0,wrongInputs:0,strayInputs:0,ignoredInputs:0,holdContinuations:0,holdWrongInputs:0}
-    emit(s,"session_started",{version:"1.0.1",config:s.cfg,inputSource:s.source,measurement:"game_commands_only"})
+    emit(s,"session_started",{version:"1.1.0",config:s.cfg,inputSource:s.source,measurement:"game_commands_only"})
     return s
 }
 function beginRound(s,r){
     s.round=r;s.phase="playing";s.phaseT=0;s.t=0;s.down={};s.notes=chart(s.cfg,r)
     s.beats=beatPlan(s.notes,s.cfg.windowSeconds)
     s.roundBaseline={correct:s.correctInputs,wrong:s.wrongInputs,stray:s.strayInputs,continuations:s.holdContinuations,holdWrong:s.holdWrongInputs}
-    s.feedback=roundHelp[r];s.feedbackKind="neutral";s.feedbackDir="";s.feedbackUntil=3
-    emit(s,"round_started",{name:roundNames[r],chart:s.notes.map(function(n){return {id:n.id,dir:n.dir,time:n.time,duration:n.duration,bpm:n.bpm,sequence:n.sequence}})})
+    s.feedback=roundHelpFor(s,r);s.feedbackKind="neutral";s.feedbackDir="";s.feedbackUntil=3
+    emit(s,"round_started",{name:roundNames[r],difficulty:s.cfg.difficulty,bpm:s.notes.length?s.notes[0].bpm:s.cfg.bpm,
+        firstInterval:s.notes.length>1?s.notes[1].time-s.notes[0].time:null,
+        chart:s.notes.map(function(n){return {id:n.id,dir:n.dir,time:n.time,duration:n.duration,bpm:n.bpm,sequence:n.sequence}})})
 }
 function outcome(s,n,status){
     n.status=status

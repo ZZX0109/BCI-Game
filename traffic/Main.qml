@@ -7,7 +7,7 @@ Item {
     required property var taskContext
     required property var game
 
-    readonly property string gameVersion: "0.5.0"
+    readonly property string gameVersion: "0.5.1"
     readonly property string inputSource: (game && game.inputSource) ? String(game.inputSource) : "local"
     readonly property bool isBci: /bci|brain/i.test(inputSource)
 
@@ -92,6 +92,7 @@ Item {
     property bool sessionFinished: false
     property bool sessionStopped: false
     property real walkPhase: 0
+    property bool firstStepObserved: false
     property string hitKind: ""
     property real hitFlash: 0
 
@@ -235,6 +236,7 @@ Item {
 
     function startSession() {
         loadConfig()
+        forceActiveFocus()
         levelPlans = buildLevels()
         sessionFinished = false
         sessionStopped = false
@@ -247,6 +249,7 @@ Item {
         clearedCount = 0
         levelResults = []
         hitFlash = 0
+        firstStepObserved = false
 
         game.record("traffic.attempt_started", {
             gameVersion: gameVersion,
@@ -259,6 +262,10 @@ Item {
             pedHalfDepth: pedHalfDepth,
             substep: substep,
             elapsed: hostElapsed()
+        })
+        game.record("traffic.runtime_probe", {
+            stage: "started", inputSource: inputSource, phase: phase,
+            focus: activeFocus, elapsed: hostElapsed()
         })
         startLevel(0)
     }
@@ -422,6 +429,11 @@ Item {
     // ------------------------------------------------------------------
     function pressDirection(dir, source) {
         if (isPaused || sessionStopped || sessionFinished) return
+        game.record("traffic.input_probe", {
+            source: source, direction: dir > 0 ? "right" : "left",
+            phase: phase, crossingX: r2(crossingX), inputSource: inputSource,
+            elapsed: hostElapsed()
+        })
         if (phase === "level_intro") beginPlaying()
         if (phase === "hit") { retryLevel("hit_skip"); return }
         if (phase === "level_clear") { advanceLevel(); return }
@@ -660,8 +672,40 @@ Item {
         function onStopping() { root.closeMoveSegment(); root.sessionStopped = true; root.isPaused = true; root.releaseAll() }
     }
 
+    // Direct key fallback supports standalone launchers. Host and local routes
+    // both update held flags, so forwarding the same press cannot speed movement.
+    focus: true
+    Keys.onPressed: function(event) {
+        if (event.isAutoRepeat) { event.accepted = true; return }
+        if (root.isBci) { event.accepted = true; return }
+        if (event.key === Qt.Key_Right || event.key === Qt.Key_D) {
+            root.pressDirection(1, "keyboard")
+            event.accepted = true
+        } else if (event.key === Qt.Key_Left || event.key === Qt.Key_A) {
+            root.pressDirection(-1, "keyboard")
+            event.accepted = true
+        }
+    }
+    Keys.onReleased: function(event) {
+        if (event.isAutoRepeat) return
+        if (event.key === Qt.Key_Right || event.key === Qt.Key_D) {
+            root.releaseDirection(1, "keyboard")
+            event.accepted = true
+        } else if (event.key === Qt.Key_Left || event.key === Qt.Key_A) {
+            root.releaseDirection(-1, "keyboard")
+            event.accepted = true
+        }
+    }
+
     function advance(seconds) {
         if (isPaused || sessionStopped || sessionFinished) return
+        if (!firstStepObserved) {
+            firstStepObserved = true
+            game.record("traffic.runtime_probe", {
+                stage: "first_step", seconds: r2(seconds), phase: phase,
+                simTime: r2(simTime), elapsed: hostElapsed()
+            })
+        }
         sessionTime += seconds
         if (phase === "session_complete" || phase === "idle") return
         var remaining = Math.min(seconds, 0.25)

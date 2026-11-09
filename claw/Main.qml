@@ -122,7 +122,7 @@ Item {
     Keys.onPressed: function(event) {
         var dir = keyDirection(event.key)
         if (dir !== "") { if (!event.isAutoRepeat) directionInput(dir, true, true); event.accepted = true }
-        else if (event.key === Qt.Key_Space || event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+        else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
             if (!event.isAutoRepeat) trigger()
             event.accepted = true
         }
@@ -176,7 +176,7 @@ Item {
         phase = "idle"
 
         game.record("claw.attempt_started", {
-            gameVersion: "0.4.0",
+            gameVersion: "0.4.1",
             taskMode: "precision_grasp_2d",
             inputSource: inputSource,
             difficulty: difficulty,
@@ -300,7 +300,7 @@ Item {
         phase = "complete"
 
         var result = {
-            gameVersion: "0.4.0",
+            gameVersion: "0.4.1",
             attempts: attempts,
             successesUnassisted: successesUnassisted,
             successesAssisted: successesAssisted,

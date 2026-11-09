@@ -4,9 +4,9 @@ QtObject {
     readonly property int gameApi: 1
     readonly property string moduleKind: "games"
     readonly property string moduleId: "hanoi"
-    readonly property string version: "0.5.1"
-    readonly property string title: qsTr("汉诺塔")
-    readonly property string description: qsTr("规划与操作序列任务。固定五局 3/3/4/4/5，每局自动推进，仅第五局后结束会话；无选关界面。鼠标直接拖放顶盘或点击两根柱独立取放、键盘/脑控左右+确认各自独立完成；放回原柱计为取消不算步；大盘压小盘被拒绝。BCI 使用 GamepadLite。")
+    readonly property string version: "1.0.0"
+    readonly property string title: qsTr("汉诺塔与伦敦塔")
+    readonly property string description: qsTr("五局序列任务：前三局为3/4/5盘汉诺塔，后两局为容量3/2/1的彩球伦敦塔。伦敦塔按目标排列完成，不使用大盘压小盘规则；鼠标、键盘与GamepadLite输入沿用同一交互状态机。")
     readonly property string entryPoint: "Main.qml"
     readonly property string icon: "assets/icon.svg"
     readonly property int effector: 2

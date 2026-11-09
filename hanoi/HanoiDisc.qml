@@ -7,6 +7,7 @@ Item {
     SharedUI.GameTheme { id: uiTheme }
     property color tint: "#c8aa70"
     property int number: 1
+    property string label: ""
     property bool lifted: false
     height: 34
     Rectangle {
@@ -45,7 +46,7 @@ Item {
     }
     Text { font.family: uiTheme.fontFamily;
         anchors.horizontalCenter: parent.horizontalCenter
-        y: 14; text: disc.number
+        y: 14; text: disc.label !== "" ? disc.label : disc.number
         color: "#f5f5ef"; opacity: 0.95
         font.pixelSize: 12; font.weight: Font.DemiBold
     }

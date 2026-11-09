@@ -7,6 +7,8 @@
 把夹爪横向对准入容差带内的玩具，按确认触发抓取。**成败只由触发瞬间的
 几何误差决定**——没有任何"30% 抓不到"式商业随机机制。
 
+键盘方向键/WASD定位；键盘抓取仅使用主回车或数字小键盘 Enter，Space 不触发抓取。屏幕按钮和宿主 GamepadLite confirm 仍可抓取。
+
 ## 分阶段流程（全自动，用户只控制定位）
 
 `aligning → lowering → contact判定 → lifting → transport → release → attempt_end → 下一尝试`

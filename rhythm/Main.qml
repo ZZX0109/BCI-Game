@@ -28,19 +28,23 @@ Item {
     readonly property bool sustaining: revision>=0 && active && active.status==="holding"
     property int beatIndex: 0
     property real beatGlow: 0
-    property bool muted: false
+    property string difficulty: "standard"
+    property bool musicEnabled: true
+    property bool beatCueEnabled: true
+    property bool sfxEnabled: true
     readonly property bool stacked: width < 720
     readonly property bool tightStack: stacked && height < 650
     readonly property real footerHeight: stacked ? 112 : 92
     readonly property bool compact: width < 1050 || height < 760
     readonly property int inset: width < 900 ? 20 : 32
     readonly property string inputSource: game && game.inputSource ? String(game.inputSource) : "local"
+    readonly property bool isBci: /bci|brain/i.test(inputSource)
     readonly property var laneColors: ["#A4C8EA", "#E7CA8C", "#B7A7DA", "#80FF9B"]
     readonly property bool playing: phase === "playing" && !paused && state && !state.stopped
     UI.GameTheme { id: uiTheme }
     LegacyWindowFill { objectName: "rhythmWindowFill"; gameRoot: root }
     function configValues() {
-        var defaults={seed:42,notesPerRound:8,bpm:60,beatsPerNote:4,windowSeconds:.9,leadSeconds:4,holdSeconds:2,pulseValidity:.8,holdThreshold:.75,restSeconds:4,audioEnabled:true,inputMode:"auto"}
+        var defaults={seed:42,notesPerRound:8,difficulty:"standard",bpm:90,beatsPerNote:2,windowSeconds:.4,leadSeconds:3,holdSeconds:2,pulseValidity:.8,holdThreshold:.75,restSeconds:4,audioEnabled:true,musicEnabled:true,beatCueEnabled:true,sfxEnabled:true,inputMode:"auto"}
         if(taskContext && taskContext.config && typeof taskContext.config.read === "function") {
             try { var r=taskContext.config.read(defaults); if(r && r.ok===false)return defaults;return r && r.values ? r.values : r || defaults } catch(e) { return defaults }
         }
@@ -49,7 +53,10 @@ Item {
     function flush() {
         if(!state)return
         var list=state.events.splice(0)
-        for(var i=0;i<list.length;i++)if(game && typeof game.record === "function")game.record(list[i].name,list[i].data)
+        for(var i=0;i<list.length;i++){
+            if(list[i].name==="rhythm.note_result"&&sfxEnabled)feedbackFx.play()
+            if(game && typeof game.record === "function")game.record(list[i].name,list[i].data)
+        }
     }
     function sync() {
         if(!state)return
@@ -57,16 +64,35 @@ Item {
         clock=state.t;sessionClock=state.elapsed;phase=state.phase;paused=state.paused;phaseClock=state.phaseT;finishSent=state.finishSent
         feedback=state.feedback;feedbackDir=state.feedbackDir;feedbackKind=state.feedbackKind;feedbackTime=state.feedbackUntil
         active=Engine.activeNote(state);revision++
-        if(phase==="results"){resultRows=state.results;stats=Engine.summary(state)}
+        if(phase==="results"){resultRows=state.results;stats=Engine.summary(state);stopAudio();backingTrack.stop()}
         flush()
     }
     function startSession() {
         if(state && !state.stopped && phase!=="results")return
-        state=Engine.create(configValues(),inputSource);roundIndex=-1;notes=[];beatIndex=0;beatGlow=0
-        muted=!state.cfg.audioEnabled
-        sync()
+        var saved=configValues()
+        difficulty=Engine.difficultyPresets[saved.difficulty]?saved.difficulty:"standard"
+        if(isBci&&difficulty==="challenge")difficulty="teaching"
+        musicEnabled=saved.musicEnabled!==false
+        beatCueEnabled=saved.beatCueEnabled!==false&&saved.audioEnabled!==false
+        sfxEnabled=saved.sfxEnabled!==false
+        state=null;roundIndex=-1;notes=[];beatIndex=0;beatGlow=0;paused=false;finishSent=false
+        phase="setup";phaseClock=0;feedback="选择难度与声音设置";forceActiveFocus()
+        if(musicEnabled)backingTrack.play()
+    }
+    function persistSettings() {
+        if(taskContext&&taskContext.config&&typeof taskContext.config.write==="function") {
+            try { taskContext.config.write({difficulty:difficulty,musicEnabled:musicEnabled,beatCueEnabled:beatCueEnabled,sfxEnabled:sfxEnabled}) } catch(e) {}
+        }
+    }
+    function launchConfiguredSession() {
+        var c=configValues(),p=Engine.difficultyPresets[difficulty]||Engine.difficultyPresets.standard
+        c.difficulty=difficulty;c.bpm=p.bpm;c.beatsPerNote=p.beatsPerNote;c.windowSeconds=p.windowSeconds;c.leadSeconds=p.leadSeconds
+        c.musicEnabled=musicEnabled;c.beatCueEnabled=beatCueEnabled;c.sfxEnabled=sfxEnabled;c.audioEnabled=beatCueEnabled
+        persistSettings()
+        state=Engine.create(c,inputSource);roundIndex=-1;notes=[];beatIndex=0;beatGlow=0;sync()
     }
     function input(name,pressed) {
+        if(phase==="setup"){if(name==="confirm"&&pressed)launchConfiguredSession();return}
         if(!state)return
         if(name==="confirm" && pressed && phase==="results"){finishSession();return}
         Engine.input(state,name,pressed);sync()
@@ -77,10 +103,18 @@ Item {
         if(result && game && typeof game.finish === "function")game.finish(result)
         sync()
     }
-    function stopAudio(){bass.stop();soft.stop();chord2.stop();chord3.stop();chord4.stop()}
+    function stopAudio(){bass.stop();soft.stop();chord2.stop();chord3.stop();chord4.stop();feedbackFx.stop()}
+    function recordAudioSetting(kind,enabled) {
+        if(state){Engine.emit(state,"audio_setting_changed",{kind:kind,enabled:enabled,difficulty:state.cfg.difficulty});flush()}
+        else if(game&&typeof game.record==="function")game.record("rhythm.audio_setting_changed",{kind:kind,enabled:enabled,difficulty:difficulty,phase:"setup"})
+        persistSettings()
+    }
+    function toggleMusic(){musicEnabled=!musicEnabled;if(state)state.cfg.musicEnabled=musicEnabled;recordAudioSetting("background_music",musicEnabled);if(musicEnabled&&!paused&&phase!=="results")backingTrack.play()}
+    function toggleBeatCue(){beatCueEnabled=!beatCueEnabled;if(state){state.cfg.beatCueEnabled=beatCueEnabled;state.cfg.audioEnabled=beatCueEnabled}recordAudioSetting("beat_cue",beatCueEnabled);if(!beatCueEnabled)stopAudio()}
+    function toggleSfx(){sfxEnabled=!sfxEnabled;if(state)state.cfg.sfxEnabled=sfxEnabled;if(!sfxEnabled)feedbackFx.stop();recordAudioSetting("sfx",sfxEnabled)}
     function playBeat(index) {
         beatGlow=1
-        if(muted || !state.cfg.audioEnabled)return
+        if(!beatCueEnabled || !state.cfg.audioEnabled)return
         if(index%4!==0){soft.play();return}
         var group=Math.floor(index/4)%4
         if(group===0)bass.play();else if(group===1)chord2.play();else if(group===2)chord3.play();else chord4.play()
@@ -108,15 +142,25 @@ Item {
         function onStarted(){root.startSession()}
         function onStep(seconds){root.advance(seconds)}
         function onAction(name,pressed){root.input(name,pressed)}
-        function onPaused(){if(root.state){Engine.pause(root.state);root.stopAudio();root.sync()}}
-        function onResumed(){if(root.state){Engine.resume(root.state);root.sync()}}
-        function onStopping(){if(root.state){Engine.stop(root.state);root.stopAudio();root.sync()}}
+        function onPaused(){root.paused=true;root.stopAudio();backingTrack.pause();if(root.state){Engine.pause(root.state);root.sync()}}
+        function onResumed(){root.paused=false;if(root.state){Engine.resume(root.state);root.sync()}if(root.musicEnabled&&root.phase!=="results")backingTrack.play()}
+        function onStopping(){root.paused=true;root.stopAudio();backingTrack.stop();if(root.state){Engine.stop(root.state);root.sync()}else root.phase="idle"}
+    }
+    AudioOutput { id:musicOutput;volume:.22;muted:!root.musicEnabled||root.paused||root.phase==="results" }
+    MediaPlayer {
+        id:backingTrack
+        source:"audio/background-90bpm.wav"
+        audioOutput:musicOutput
+        loops:MediaPlayer.Infinite
+        playbackRate:root.state?Engine.currentBpm(root.state)/90:(Engine.difficultyPresets[root.difficulty]||Engine.difficultyPresets.standard).bpm/90
+        onErrorOccurred:function(error,errorString){if(root.game&&typeof root.game.record==="function")root.game.record("rhythm.audio_error",{track:"background",error:String(error),message:errorString})}
     }
     SoundEffect { id:bass; source:"audio/chord-1.wav"; volume:.32 }
     SoundEffect { id:soft; source:"audio/pulse.wav"; volume:.22 }
     SoundEffect { id:chord2; source:"audio/chord-2.wav"; volume:.32 }
     SoundEffect { id:chord3; source:"audio/chord-3.wav"; volume:.32 }
     SoundEffect { id:chord4; source:"audio/chord-4.wav"; volume:.32 }
+    SoundEffect { id:feedbackFx; source:"audio/pulse.wav"; volume:.18 }
     Rectangle { anchors.fill:parent;color:uiTheme.background }
     Text { x:root.inset;y:22;text:"四向律动";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:28;font.bold:true }
     Text { x:root.inset;y:62;text:"运动想象节奏训练";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:14 }
@@ -174,7 +218,7 @@ Item {
     }
     Column {
         id:side;x:root.stacked?root.inset:board.x+board.width+24;y:root.stacked?board.y+board.height+16:106;width:root.stacked?root.width-root.inset*2:root.compact?230:288;spacing:root.compact?8:16
-        Text { visible:!root.tightStack;width:parent.width;text:root.roundIndex>=0?Engine.roundHelp[root.roundIndex]+(root.roundIndex===2?"\n本组：← → ↑ ↓":""):"留意提前出现的箭头，跟随节拍。";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:15;lineHeight:1.3 }
+        Text { visible:!root.tightStack;width:parent.width;text:root.state?Engine.roundHelpFor(root.state,root.roundIndex)+(root.roundIndex===2?(root.state.cfg.directionCount===2?"\n本组：← →":"\n本组：← → ↑ ↓"):""):"留意提前出现的箭头，跟随节拍。";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:15;lineHeight:1.3 }
         Rectangle { visible:!root.tightStack;width:parent.width;height:1;color:uiTheme.panelBorder }
         Text { visible:!root.tightStack;text:"下一步";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
         Row { spacing:12
@@ -220,15 +264,44 @@ Item {
             }
         }
     }
-    Text { x:root.stacked?root.inset:root.inset+248;y:root.stacked?parent.height-96:parent.height-57;width:root.stacked?parent.width-root.inset*2:parent.width-x-150;text:"方向键 / WASD   ·   持续音符需保持输入";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
-    UI.GameButton { theme:uiTheme;x:parent.width-root.inset-width;y:parent.height-67;width:108;height:44;text:root.muted?"开启声音":"静音";onClicked:{root.muted=!root.muted;if(root.muted)root.stopAudio();if(root.state){Engine.emit(root.state,"audio_changed",{enabled:!root.muted});root.flush()}} }
+    Text { visible:!root.stacked;x:root.inset+248;y:parent.height-57;width:Math.max(0,parent.width-root.inset-310-x-12);text:"方向键 / WASD · 持续音符需保持";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
+    Row { x:root.stacked?root.inset:parent.width-root.inset-310;y:root.stacked?parent.height-115:parent.height-67;spacing:6
+        UI.GameButton { theme:uiTheme;width:root.stacked?(parent.width-2*root.inset-12)/3:98;height:44;text:root.musicEnabled?"音乐：开":"音乐：关";onClicked:root.toggleMusic() }
+        UI.GameButton { theme:uiTheme;width:root.stacked?(parent.width-2*root.inset-12)/3:98;height:44;text:root.beatCueEnabled?"节拍：开":"节拍：关";onClicked:root.toggleBeatCue() }
+        UI.GameButton { theme:uiTheme;width:root.stacked?(parent.width-2*root.inset-12)/3:98;height:44;text:root.sfxEnabled?"音效：开":"音效：关";onClicked:root.toggleSfx() }
+    }
+    Rectangle {
+        anchors.fill:parent;z:20;visible:root.phase==="setup";color:"#F0050505"
+        MouseArea { anchors.fill:parent }
+        Column { anchors.centerIn:parent;width:Math.min(parent.width-40,640);spacing:20
+            Text { anchors.horizontalCenter:parent.horizontalCenter;text:"四向律动 · 训练设置";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:28;font.bold:true }
+            Text { width:parent.width;horizontalAlignment:Text.AlignHCenter;wrapMode:Text.Wrap;text:"选择键盘练习难度。脑控模式需结合实际解码延迟校准；这些参数不是临床处方。";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:15 }
+            Row { width:parent.width;anchors.horizontalCenter:parent.horizontalCenter;spacing:10
+                Repeater { model:["teaching","standard","challenge"]
+                    delegate:UI.GameButton {
+                        required property string modelData
+                        theme:uiTheme;width:Math.min(180,(parent.width-20)/3);height:74;highlighted:root.difficulty===modelData;enabled:!root.isBci||modelData==="teaching"
+                        text:Engine.difficultyPresets[modelData].title+"\n"+Engine.difficultyPresets[modelData].bpm+" BPM · "+Engine.difficultyPresets[modelData].intervalSeconds.toFixed(2)+"秒/音 · ±"+Engine.difficultyPresets[modelData].windowSeconds.toFixed(2)+"秒"
+                        onClicked:root.difficulty=modelData
+                    }
+                }
+            }
+            Row { width:parent.width;anchors.horizontalCenter:parent.horizontalCenter;spacing:12
+                UI.GameButton { theme:uiTheme;width:(parent.width-24)/3;height:50;text:root.musicEnabled?"音乐：开":"音乐：关";onClicked:root.toggleMusic() }
+                UI.GameButton { theme:uiTheme;width:(parent.width-24)/3;height:50;text:root.beatCueEnabled?"节拍：开":"节拍：关";onClicked:root.toggleBeatCue() }
+                UI.GameButton { theme:uiTheme;width:(parent.width-24)/3;height:50;text:root.sfxEnabled?"音效：开":"音效：关";onClicked:root.toggleSfx() }
+            }
+            Text { visible:root.isBci;width:parent.width;horizontalAlignment:Text.AlignHCenter;wrapMode:Text.Wrap;text:"当前按教学节奏运行。脑控节奏需先由研究人员按解码窗口和恢复间隔校准。";color:uiTheme.warning;font.family:uiTheme.fontFamily;font.pixelSize:14 }
+            UI.GameButton { anchors.horizontalCenter:parent.horizontalCenter;theme:uiTheme;width:240;height:52;text:"开始训练";highlighted:true;onClicked:root.launchConfiguredSession() }
+        }
+    }
     Rectangle {
         anchors.fill:parent;visible:root.phase==="countdown"||root.phase==="rest";color:"#F0050505"
         MouseArea { anchors.fill:parent }
         Column { anchors.centerIn:parent;width:Math.min(parent.width-80,600);spacing:20
             Text { anchors.horizontalCenter:parent.horizontalCenter;text:root.phase==="countdown"?"跟着节奏，准备出发":"休息一下，进入下一轮";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:26;font.bold:true }
             Text { width:parent.width;horizontalAlignment:Text.AlignHCenter;text:Engine.roundNames[root.roundIndex+1]||"";color:uiTheme.primary;font.family:uiTheme.fontFamily;font.pixelSize:21 }
-            Text { width:parent.width;horizontalAlignment:Text.AlignHCenter;wrapMode:Text.Wrap;text:Engine.roundHelp[root.roundIndex+1]||"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:16 }
+            Text { width:parent.width;horizontalAlignment:Text.AlignHCenter;wrapMode:Text.Wrap;text:root.state?Engine.roundHelpFor(root.state,root.roundIndex+1):"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:16 }
             Text { anchors.horizontalCenter:parent.horizontalCenter;text:root.state?Math.max(1,Math.ceil((root.phase==="countdown"?3:root.state.cfg.restSeconds)-root.phaseClock)):"";color:uiTheme.warning;font.family:uiTheme.fontFamily;font.pixelSize:52 }
         }
     }

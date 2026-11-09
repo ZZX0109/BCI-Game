@@ -1,45 +1,24 @@
-# 汉诺塔（hanoi V2）
+# 汉诺塔与伦敦塔
 
-> 版本 0.2.0｜effector=2（GamepadLite）｜设计画布 1000×700
+moduleId=hanoi，effector=2（GamepadLite），Qt Quick 原生模块。会话固定五局：3、4、5 盘汉诺塔，随后是伦敦塔初级和进阶。
 
-## 玩法
+## 规则与目标
 
-把全部盘从 A 柱移到 C 柱。规则：大盘不能压小盘，一次只动一盘。
-拿起盘后可放到任意合法柱；**放回原柱视为取消，不计有效步数**。
+汉诺塔只允许移动顶盘，且大盘不能压小盘，目标为将所有盘移至 C 柱。伦敦塔使用红、绿、蓝三个球，数组按底到顶排列；只能移动顶球，只检查目标柱容量（A/B/C 为 3/2/1），不检查球的大小。初始状态为 A:[R,G,B]、B:[]、C:[]。
 
-## 操作映射（onAction，pressed=true 边沿触发）
+| 局 | 目标状态（底→顶） | 最短步数 |
+|---|---|---:|
+| 4 · 伦敦塔初级 | A:[]，B:[B,G]，C:[R] | 3 |
+| 5 · 伦敦塔进阶 | A:[B]，B:[G]，C:[R] | 5 |
 
-| 阶段 | 左/右 | 确认 |
-|---|---|---|
-| ① 选择取盘柱 | A/B/C 三柱循环切换 | 取起顶部盘（空柱记录 pick_empty，不惩罚计步） |
-| ② 选择放置柱 | 切换目标柱（绿框=可放，红框=大压小不可放） | 放下：合法→place 计步；原柱→pick_cancelled 不计步；非法→illegal_move 拒绝且状态不变 |
+伦敦塔的最短步数由状态图广度优先搜索计算。每局开始的 hanoi.round_started 记录玩法类型、容量、目标状态、球标签和最短步数。
 
-## 难度配置
+## 操作
 
-`taskContext.config.read({discCount:3})`，仅接受 3/4/5（INI 字符串会转数值校验）。
-默认 3 盘（最优 7 步）、4 盘（15 步）、5 盘（31 步）。第一版不把 5 盘设为默认。
+- 键盘/脑控：左右选择柱，确认取球或放球；将球放回原柱会取消且不计步。
+- 鼠标：点击两根柱完成取放，或拖动顶球。无效目标不会改变棋盘状态。
+- 局间自动前进，第五局完成后只调用一次 game.finish()。
 
-## 数据记录
+## 代码边界
 
-- `hanoi.attempt_started`：版本、taskMode=hanoi_standard、discCount、optimalMoves
-- `hanoi.focus_changed`：{fromPole, toPole, holding}
-- `hanoi.pick` / `hanoi.pick_empty`
-- `hanoi.place`：{fromPole, toPole, disc, validMoveIndex}
-- `hanoi.pick_cancelled`：放回原柱
-- `hanoi.illegal_move`：reason=larger_on_smaller
-- `hanoi.trial_result` + `hanoi.attempt_finished` + 一次 `game.finish()`
-
-## V2 修复对照
-
-| 原问题 | 修复 |
-|---|---|
-| poles 嵌套数组修改不触发绑定 | `setPole()` 整组 slice+重赋值 |
-| 原柱放回误计步 | `focusPole===src` 分支记 pick_cancelled |
-| 手持盘宽 50+disc*40 与堆叠 60+disc*40 不一致 | 统一 `discWidth(d)=60+d*40` |
-| finish 后"确认重开"与宿主冲突 | complete 阶段忽略输入，Enter 归宿主 |
-
-## 验证
-
-- `python ../tools/check_qml.py Main.qml` 通过
-- `--game-smoke` EXIT 0，截图见 `../docs/shots/`
-- 玩法级验收 H-01~H-07 需键鼠输入，见 `../tests/acceptance_matrix.csv`
+共享状态仍由 setPole() 整组重赋值；HanoiDisc 保留统一的盘宽公式，伦敦塔使用等宽彩球。BCI、患者可用性及正式 Neuralife Windows 宿主需要单独验证。

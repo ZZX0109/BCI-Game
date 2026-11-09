@@ -1,7 +1,7 @@
 import QtQuick
 import "../shared-ui" as SharedUI
 
-// 汉诺塔 V4：固定五局 3/3/4/4/5，自动推进；鼠标/键盘/脑控各自独立完成
+// 汉诺塔与伦敦塔：前三局为大小盘汉诺塔，后两局为容量约束彩球目标
 Item {
     id: root
     required property var taskContext
@@ -87,7 +87,13 @@ Item {
     // ------------------------------------------------------------------
     // 逻辑状态（单一线程真值）
     // ------------------------------------------------------------------
-    readonly property var roundPlan: [3, 3, 4, 4, 5]
+    readonly property var roundPlan: [
+        {kind:"hanoi", name:"汉诺塔 · 三盘", discs:3},
+        {kind:"hanoi", name:"汉诺塔 · 四盘", discs:4},
+        {kind:"hanoi", name:"汉诺塔 · 五盘", discs:5},
+        {kind:"london", name:"伦敦塔 · 初级", discs:3, target:[[],[1,2],[3]], capacities:[3,2,1]},
+        {kind:"london", name:"伦敦塔 · 进阶", discs:3, target:[[1],[2],[3]], capacities:[3,2,1]}
+    ]
     property int roundIndex: 0                 // 0..4
     property int discCount: 3                  // 当前局盘数
     property var poles: [[], [], []]
@@ -122,8 +128,15 @@ Item {
             if (Math.abs(x - pegCenterX[i]) <= Math.max(44, 130 * stage.unit)) return i
         return -1
     }
+    readonly property string puzzleType: roundPlan[roundIndex] ? roundPlan[roundIndex].kind : "hanoi"
+    readonly property var currentRound: roundPlan[roundIndex] || roundPlan[0]
+    readonly property var currentCapacities: currentRound.kind === "london" ? currentRound.capacities : [discCount,discCount,discCount]
+    readonly property int optimalMoves: puzzleType === "london" ? londonOptimalDistance(currentRound.target) : Math.pow(2, discCount) - 1
     function canDrop(pole) {
-        return pole >= 0 && heldDisc >= 0 && (topOf(pole) === 0 || heldDisc < topOf(pole))
+        if (pole < 0 || pole > 2 || heldDisc < 0) return false
+        if (pole === selectedPole) return true
+        if (puzzleType === "london") return poles[pole].length < currentCapacities[pole]
+        return topOf(pole) === 0 || heldDisc < topOf(pole)
     }
     function cancelHeld(reason) {
         if (heldDisc >= 0 && selectedPole >= 0) {
@@ -156,12 +169,53 @@ Item {
         }
     }
 
-    readonly property int optimalMoves: Math.pow(2, discCount) - 1
     readonly property var discColors: ["#dec68e", "#c5a165", "#a7804e", "#8c704d", "#75634b"]
     readonly property var pegLabels: ["A", "B", "C"]
     readonly property var pegCenterX: [stage.width / 6, stage.width / 2, stage.width * 5 / 6]
 
-    function discWidth(d) { return 60 + d * 40 }
+    function discWidth(d) { return puzzleType === "london" ? 100 : 60 + d * 40 }
+    function pieceTint(d) {
+        if (puzzleType === "london") return d === 3 ? "#c86d67" : d === 2 ? "#75a987" : "#729fce"
+        return discColors[(d - 1) % discColors.length]
+    }
+    function pieceLabel(d) { return puzzleType === "london" ? (d === 3 ? "R" : d === 2 ? "G" : "B") : "" }
+    function formatBalls(stack) {
+        var labels=[]
+        for(var i=0;i<stack.length;i++)labels.push(pieceLabel(stack[i]))
+        return labels.join(" ")
+    }
+    function goalDescription() {
+        if (puzzleType !== "london") return qsTr("目标：将全部盘移到 C 柱")
+        return qsTr("目标（底→顶）：A [%1]　B [%2]　C [%3]　·　容量 3 / 2 / 1")
+            .arg(formatBalls(currentRound.target[0]))
+            .arg(formatBalls(currentRound.target[1]))
+            .arg(formatBalls(currentRound.target[2]))
+    }
+    function londonOptimalDistance(target) {
+        if (!target) return 0
+        var start=[[3,2,1],[],[]], capacities=[3,2,1]
+        function key(state) { return JSON.stringify(state) }
+        var queue=[{state:start,distance:0}],seen={};seen[key(start)]=true
+        while(queue.length) {
+            var node=queue.shift(),state=node.state
+            if(JSON.stringify(state)===JSON.stringify(target))return node.distance
+            for(var from=0;from<3;from++)if(state[from].length){
+                var ball=state[from][state[from].length-1]
+                for(var to=0;to<3;to++)if(to!==from&&state[to].length<capacities[to]){
+                    var next=state.map(function(stack){return stack.slice()})
+                    next[from].pop();next[to].push(ball)
+                    var k=key(next);if(!seen[k]){seen[k]=true;queue.push({state:next,distance:node.distance+1})}
+                }
+            }
+        }
+        return -1
+    }
+    function isLondonSolved() {
+        return puzzleType === "london" && JSON.stringify(poles) === JSON.stringify(currentRound.target)
+    }
+    function isRoundSolved() {
+        return puzzleType === "london" ? isLondonSolved() : poles[2].length === discCount
+    }
 
     function setPole(pegIndex, stack) {
         var next = poles.slice()
@@ -187,7 +241,7 @@ Item {
         roundResults = []
         settleAnim = 0.0
         game.record("hanoi.attempt_started", {
-            gameVersion: "0.6.0",
+            gameVersion: "1.0.0",
             roundPlan: roundPlan,
             inputSource: inputSource,
             elapsed: hostElapsed()
@@ -198,7 +252,8 @@ Item {
     function startRound(index) {
         dragActive = false; pointerPressed = false; dropPole = -1
         roundIndex = index
-        discCount = roundPlan[index]
+        var plan=roundPlan[index]
+        discCount = plan.discs
         var fresh = [[], [], []]
         for (var d = discCount; d >= 1; --d) fresh[0].push(d)
         poles = fresh
@@ -210,19 +265,27 @@ Item {
         feedbackRemaining = 0.0
         settleAnim = 0.0
         phase = "select"
+        if (plan.kind === "london")
+            toast.show(qsTr("规则变化：移动顶球，柱容量为 3 / 2 / 1"), "warning")
         game.record("hanoi.round_started", {
             round: index + 1,
             totalRounds: roundPlan.length,
             discCount: discCount,
-            optimalMoves: Math.pow(2, discCount) - 1
+            puzzleType: plan.kind,
+            capacity: plan.capacities || null,
+            targetState: plan.kind === "london" ? plan.target : [[],[],fresh[0]],
+            pieceLabels: plan.kind === "london" ? {"1":"B","2":"G","3":"R"} : null,
+            optimalMoves: plan.kind === "london" ? londonOptimalDistance(plan.target) : Math.pow(2, discCount) - 1
         })
     }
 
     function completeRound() {
         if (phase === "round_feedback" || sessionFinished) return
-        var optimal = Math.pow(2, discCount) - 1
+        var optimal = optimalMoves
         var result = {
             round: roundIndex + 1,
+            puzzleType: puzzleType,
+            puzzleName: currentRound.name,
             discCount: discCount,
             moves: moves,
             optimalMoves: optimal,
@@ -246,11 +309,11 @@ Item {
         sessionFinished = true
         phase = "complete"
         var result = {
-            gameVersion: "0.6.0",
+            gameVersion: "1.0.0",
             totalRounds: roundResults.length,
             rounds: roundResults,
             elapsed: localElapsedSec,
-            summary: qsTr("汉诺塔已完成五局（3/3/4/4/5）")
+            summary: qsTr("五局解谜完成：3/4/5盘汉诺塔与两局伦敦塔")
         }
         game.record("hanoi.attempt_finished", result)
         game.finish(result)
@@ -305,11 +368,11 @@ Item {
         } else {
             // 放盘
             var top = topOf(focusPole)
-            if (!(top === 0 || heldDisc < top)) {
+            if (focusPole !== selectedPole && !canDrop(focusPole)) {
                 illegal++
-                toast.show(qsTr("大盘不能压小盘"), "danger")
+                toast.show(puzzleType === "london" ? qsTr("目标柱已满") : qsTr("大盘不能压小盘"), "danger")
                 game.record("hanoi.illegal_move", {
-                    reason: "larger_on_smaller", fromPole: selectedPole,
+                    reason: puzzleType === "london" ? "capacity_exceeded" : "larger_on_smaller", fromPole: selectedPole,
                     toPole: focusPole, disc: heldDisc, top: top,
                     source: source, elapsed: hostElapsed()
                 })
@@ -335,7 +398,7 @@ Item {
                 })
             }
             // 只有本局完成才进入结算，绝不直接 game.finish()
-            if (poles[2].length === discCount) completeRound()
+            if (isRoundSolved()) completeRound()
         }
     }
 
@@ -392,9 +455,9 @@ Item {
         id: frame
         anchors.fill: parent
         theme: uiTheme
-        title: qsTr("汉诺塔")
-        subtitle: qsTr("目标：把全部盘从 A 柱移到 C 柱　规则：大盘不能压小盘")
-        mode: qsTr("第 %1/5 局 · %2 盘").arg(root.roundIndex + 1).arg(root.discCount)
+        title: qsTr("汉诺塔与伦敦塔")
+        subtitle: root.puzzleType === "london" ? qsTr("伦敦塔规则：只移动顶球，目标柱受容量限制；不使用大小盘规则") : qsTr("汉诺塔规则：只移动顶盘，大盘不能压小盘")
+        mode: qsTr("第 %1/5 局 · %2").arg(root.roundIndex + 1).arg(root.currentRound.name)
         inputSource: root.inputSource
 
         Rectangle {
@@ -415,6 +478,13 @@ Item {
                 // three towers, without turning their bases into a full-width backdrop.
                 readonly property real unit: Math.max(0.25, Math.min(width / 900, height / 410, 1.65))
                 readonly property real baseY: (height + 190 * unit) / 2
+                Text {
+                    anchors.horizontalCenter:parent.horizontalCenter
+                    y:8;width:parent.width-24
+                    horizontalAlignment:Text.AlignHCenter
+                    text:root.goalDescription()
+                    color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:14
+                }
                 onWidthChanged: if (root.dragActive || root.pointerPressed) root.cancelHeld("resized")
                 onHeightChanged: if (root.dragActive || root.pointerPressed) root.cancelHeld("resized")
 
@@ -475,7 +545,7 @@ Item {
                         y: 8
                         visible: root.dragActive && pegItem.isFocused
                         text: pegItem.index === root.selectedPole ? qsTr("放回原柱")
-                              : pegItem.isLegalTarget ? qsTr("松开放下") : qsTr("大盘不能压小盘")
+                              : pegItem.isLegalTarget ? qsTr("松开放下") : root.puzzleType === "london" ? qsTr("目标柱容量已满") : qsTr("大盘不能压小盘")
                         color: pegItem.accent
                         font.pixelSize: 14; font.family: uiTheme.fontFamily
                     }
@@ -497,8 +567,9 @@ Item {
                             x: root.pegCenterX[outerIndex] - width * stage.unit / 2
                             scale: stage.unit; transformOrigin: Item.TopLeft
                             y: stage.baseY - (index + 1) * 36 * stage.unit + root.settleAnim
-                            tint: root.discColors[(discSize - 1) % root.discColors.length]
                             number: discSize
+                            tint: root.pieceTint(discSize)
+                            label: root.pieceLabel(discSize)
                         }
                     }
                 }
@@ -527,8 +598,10 @@ Item {
                 scale: stage.unit; transformOrigin: Item.TopLeft
                 y: root.dragActive ? root.dragY : stage.baseY - 290 * stage.unit
                 z: 5
-                tint: root.discColors[(Math.max(1, root.heldDisc) - 1) % root.discColors.length]
+                tint: root.pieceTint(Math.max(1, root.heldDisc))
                 number: root.heldDisc
+                label: root.pieceLabel(Math.max(1, root.heldDisc))
+                label: root.pieceLabel(Math.max(1, root.heldDisc))
                 lifted: true
             }
 
@@ -623,7 +696,7 @@ Item {
                     spacing: 8
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("第 %1 局完成").arg(root.roundIndex + 1)
+                        text: root.currentRound.name + qsTr(" · 完成")
                         color: uiTheme.primaryText; font.pixelSize: 24; font.family: uiTheme.fontFamily; font.bold: true
                     }
                     Text {
