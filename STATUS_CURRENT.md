@@ -58,3 +58,7 @@ L3 及后续关卡已移植多阶段互锁和连续扫掠几何验证；L1/L2 �
 用户取消录屏要求，改为按公开 Qt/Windows 缩放资料选择 Windows/macOS 代表性逻辑画布尺寸，并授权推送独立开发分支。适配范围、来源和测试见 `docs/V5_ADAPTIVE_VIEWPORTS.md`。已修复 800×600 下的律动难度按钮溢出、汉诺塔目标预览裁剪与红绿灯顶栏可读性。正式 Windows/macOS 客户端和硬件验收仍不以 Linux 结果冒充。
 
 适配源码提交 `fb5fae6b0d6ace7664268d26146e881e4b4babf9`：统一回归 15/15，七游戏十画布 70/70，pointer 125% 缩放 110/110。证据见 `tests/results/v5-run-scenarios/`、`tests/results/v5-adaptive/`、`pointer/tests/evidence/acceptance-scale-1.25.json`。逐项矩阵仍只有 6 项 PASS，正式客户端项目没有因此自动通过。
+
+## 复测增量分支
+
+后续分支 `fix/v5-retest-20261110`，本轮变更和证据边界见 [复测修复记录](docs/RETEST_20261110.md)。旧五轮追光/律动结论被新三轮需求覆盖，历史缩放报告不继承为本轮通过。

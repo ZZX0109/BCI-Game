@@ -122,7 +122,7 @@ def suite_flow(source):
     r.resume()
     r.pump(160)
     pursuit_results = r.game.payloads("pursuit.attempt_finished")
-    check(f"{source}: full five-round pursuit returns result", r.get("phase") == "result" and len(pursuit_results) == 1 and pursuit_results[0]["roundsCompleted"] == 5, r.get("phase"))
+    check(f"{source}: full three-round pursuit returns result", r.get("phase") == "result" and len(pursuit_results) == 1 and pursuit_results[0]["roundsCompleted"] == 3, r.get("phase"))
     check(f"{source}: child finish never calls real finish", len(r.game.finishes) == 0)
     check(f"{source}: pursuit metrics remain independent", len(r.game.payloads("pursuit.attempt_finished")) == 1)
     if source == "local":

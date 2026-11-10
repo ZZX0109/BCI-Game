@@ -6,6 +6,7 @@ FocusScope {
     required property var game
     required property var taskContext
     focus: true
+    SharedUI.LegacyWindowFill { id: suiteFill; gameRoot: root }
     readonly property bool brainInput: game && game.inputSource === "bci"
     property string phase: "menu" // menu -> running -> result -> menu -> finished
     property bool started: false
@@ -28,6 +29,7 @@ FocusScope {
     readonly property var names: [qsTr("追光球 · 持续追踪"), qsTr("精准打靶 · 目标定位")]
     SharedUI.GameTheme { id: uiTheme }
 
+    function childIdentity(child) { return child ? child.taskIdentity : "" }
     function emitRecord(name, data) {
         if (!game || stopped || finished) return { ok: false, code: "inactive" }
         return game.record(name, data)
@@ -39,13 +41,14 @@ FocusScope {
             var cfg = taskContext.config.read({ pursuit: {}, target: {} })
             if (cfg && cfg.ok && cfg.values) configs = cfg.values
         } catch (e) { errorText = qsTr("使用默认任务配置") }
-        emitRecord("pointer.session_started", { version: "1.0.0", inputSource: childGame.inputSource,
+        emitRecord("pointer.session_started", { version: "1.1.0", inputSource: childGame.inputSource,
             submission: "separate_subtask_results_one_final_session", legacyModuleIds: modes })
         forceActiveFocus()
     }
     function selectTask(mode) {
         if (!started || stopped || finished || paused || phase !== "menu" || debounce.running) return
         if (modes.indexOf(mode) < 0) return
+        emitRecord("pointer.mode_selected", { requestedMode: mode, attemptId: attemptId + 1 })
         activeMode = mode
         attemptId++
         childFinished = false
@@ -87,7 +90,7 @@ FocusScope {
     }
     function finishSuite() {
         if (stopped || finished || paused || phase !== "menu" || results.length === 0 || debounce.running) return
-        var summary = { gameVersion: "1.0.0", taskMode: "pointer", submission: "one_final_session",
+        var summary = { gameVersion: "1.1.0", taskMode: "pointer", submission: "one_final_session",
             tasks: results.slice(), taskCount: results.length,
             summary: qsTr("目标控制训练完成 · %1次独立任务；持续追踪与打靶指标分别保存").arg(results.length) }
         emitRecord("pointer.session_finished", summary)
@@ -194,10 +197,12 @@ FocusScope {
     Loader {
         id: childLoader
         objectName: "cursorChildLoader"
-        anchors { left: parent.left; right: parent.right; top: parent.top; bottom: navigation.top }
+        anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom }
         visible: root.phase === "running"
         focus: visible
         onLoaded: {
+            root.emitRecord("pointer.child_loader_ready", { taskMode: root.activeMode, source: String(source), componentMode: root.childIdentity(item), width: width, height: height, fillStatus: suiteFill.statusText })
+            if (root.childIdentity(item) !== root.activeMode) { root.errorText = qsTr("组件模式与选择不一致，请检查运行包"); root.emitRecord("pointer.load_error", {reason:"mode_mismatch",source:String(source)}); return }
             childGame.started()
             if (root.paused) childGame.paused()
             var child = item as Item
@@ -317,10 +322,11 @@ FocusScope {
         Text { width: parent.width; visible: root.errorText !== ""; text: root.errorText; color: uiTheme.warning; wrapMode: Text.Wrap }
     }
     Rectangle {
-        id: navigation; anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+        id: navigation; anchors { right: parent.right; top: parent.top } width: Math.min(280, root.width * 0.35)
         height: root.phase === "running" ? 52 : 0; visible: height > 0
         color: uiTheme.panel; z: 10
         Text {
+            visible: false
             anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
             text: qsTr("独立任务 %1 · 暂停/返回沿用宿主操作").arg(root.attemptId)
             color: uiTheme.secondaryText; font { family: uiTheme.fontFamily; pixelSize: uiTheme.captionPx }

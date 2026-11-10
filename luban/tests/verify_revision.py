@@ -182,7 +182,7 @@ try:
     drag_offset = ev('offsetOf("p1")[0]')
     check('left_drag_on_wood_orbits_without_extracting', abs(root.property('camYaw')-yaw_before)>1 and abs(drag_offset)<1e-6, (root.property('camYaw'),drag_offset))
     # The projected A/B arrow is a real independent axis drag handle.
-    ev('loadLevel(3)'); QTest.qWait(80)
+    ev('loadLevel(3); selectByPid("p1")'); QTest.qWait(80)
     start_point = control_point('pullPositive')
     arrow_end = QPoint(round(start_point.x()+vector['x']*.55), round(start_point.y()+vector['y']*.55))
     QTest.mousePress(view,Qt.LeftButton,Qt.NoModifier,start_point)

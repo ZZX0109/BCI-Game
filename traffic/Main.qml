@@ -7,7 +7,7 @@ Item {
     required property var taskContext
     required property var game
 
-    readonly property string gameVersion: "0.6.0"
+    readonly property string gameVersion: "0.6.1"
     readonly property string inputSource: (game && game.inputSource) ? String(game.inputSource) : "local"
     readonly property bool isBci: /bci|brain/i.test(inputSource)
 
@@ -77,6 +77,8 @@ Item {
     property real phaseTimer: 0
     property real simTime: 0
     property real sessionTime: 0
+    property real islandWaitSeconds: 0
+    property bool islandOccupied: false
     property real crossingX: -0.6
     property real finishX: 7.25
     property int laneCount: 6
@@ -261,6 +263,7 @@ Item {
         var lv = levelPlans[idx]
         laneCount = lv.lanes.length
         finishX = totalU + 0.45
+        islandWaitSeconds = 0; islandOccupied = false
         crossingX = -0.6
         bciTargetX = -0.6
         simTime = 0
@@ -358,7 +361,7 @@ Item {
             inputSource: inputSource,
             elapsed: hostElapsed()
         })
-        toast.show(qsTr("被车撞到，本关重试"), "danger")
+        toast.show(qsTr("第 %1 车道碰撞，注意%2方来车").arg(car.lane+1).arg(car.dir>0?"上":"下"), "danger")
     }
 
     function onCrossingSuccess() {
@@ -491,6 +494,13 @@ Item {
     }
 
     function stepSim(dt) {
+        var safe = crossingX - pedHalfWidth >= 3 && crossingX + pedHalfWidth <= 3 + islandWidth
+        if (safe !== islandOccupied) {
+            game.record("traffic.island_transition", {inside:safe, t:simTime, waited:islandWaitSeconds, levelId:levelId})
+            islandOccupied = safe
+            if(safe) toast.show(qsTr("已到安全岛，可以停下观察"), "success")
+        }
+        if(safe && axisInput()===0) islandWaitSeconds += dt
         simTime += dt
         phaseTimer += dt
 

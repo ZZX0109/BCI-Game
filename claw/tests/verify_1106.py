@@ -106,12 +106,20 @@ try:
     check('stop_cannot_restart_or_finish', r.get('phase') == phase and not r.game.finished)
     remember(r, 'input_ownership_pause_stop')
 
+    for key in [Qt.Key_Return, Qt.Key_Enter]:
+        r = runner('bci')
+        QTest.keyClick(r.view, Qt.Key_Space)
+        check('bci_native_space_no_grab_'+str(key), not r.game.payloads('claw.grasp_trigger'))
+        QTest.keyClick(r.view, key); r.game.action.emit('confirm', True)
+        check('bci_native_enter_and_host_single_grab_'+str(key), len(r.game.payloads('claw.grasp_trigger')) == 1)
+        remember(r, 'bci_native_enter')
+
     # Full five-trial sessions use each promised device by itself. No state teleportation.
     for mode in ['keyboard', 'mouse', 'bci']:
         r = runner('bci' if mode == 'bci' else 'local')
         if mode == 'bci':
-            before = r.get('clawX'); QTest.keyClick(r.view, Qt.Key_Right); QTest.keyClick(r.view, Qt.Key_Return)
-            check('bci_input_not_overridden_by_native_keys', r.get('clawX') == before and r.get('phase') == 'aligning')
+            before = r.get('clawX'); QTest.keyClick(r.view, Qt.Key_Right)
+            check('bci_movement_not_overridden_by_native_arrows', r.get('clawX') == before and r.get('phase') == 'aligning')
         plan = r.jsv('toyPlan')
         check(mode + '_five_progressive_targets', len(plan) == 5 and plan[0]['size'] > plan[-1]['size'] and plan[1]['z'] < plan[0]['z'] and bool(plan[3]['distractors']) and plan[3]['occluder'] is not None)
         for i in range(5):

@@ -27,7 +27,11 @@ def package(destination: Path, with_shared_ui: bool = True) -> dict:
     shutil.copytree(REPOSITORY / "pointer", suite,
                     ignore=shutil.ignore_patterns("tests", "tools", "__pycache__"))
     main = suite / "Main.qml"
-    main.write_text(main.read_text(encoding="utf-8").replace(
+    source = main.read_text(encoding="utf-8")
+    expected = '"../pursuit/Main.qml" : "../target/Main.qml"'
+    if source.count(expected) != 1:
+        raise ValueError("Pointer source routing changed; refusing ambiguous runtime package")
+    main.write_text(source.replace(
         '"../pursuit/Main.qml" : "../target/Main.qml"',
         '"tasks/pursuit/Main.qml" : "tasks/target/Main.qml"'), encoding="utf-8")
     for mode in ("pursuit", "target"):
@@ -40,7 +44,7 @@ def package(destination: Path, with_shared_ui: bool = True) -> dict:
     if with_shared_ui:
         shutil.copytree(REPOSITORY / "shared-ui", destination / "shared-ui")
     manifest = {
-        "entry": "pointer", "version": "1.0.0",
+        "entry": "pointer", "version": "1.1.0",
         "discoverableModules": ["pointer"],
         "legacyModuleIds": ["pursuit", "target"],
         "submission": "separate_subtask_results_one_final_session",

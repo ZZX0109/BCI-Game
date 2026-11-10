@@ -7,6 +7,7 @@ import "../shared-ui" as SharedUI
 // 准星中心 = 射击判定点；遮挡中的射击按配置不计命中
 Item {
     id: root
+    readonly property string taskIdentity: "target"
     required property var taskContext
     required property var game
 

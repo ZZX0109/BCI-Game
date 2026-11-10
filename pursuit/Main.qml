@@ -1,3 +1,4 @@
+import "RandomPath.js" as RandomPath
 import QtQuick
 import QtQuick.Window
 import "../shared-ui" as SharedUI
@@ -7,6 +8,7 @@ import "../shared-ui" as SharedUI
 // 评分按整段可见轨迹（MAE/RMSE/区内占比/重捕获），不实时显示误差数值
 Item {
     id: root
+    readonly property string taskIdentity: "pursuit"
     required property var taskContext
     required property var game
 
@@ -163,12 +165,11 @@ Item {
     // 五轮计划（固定，无选关）
     // ------------------------------------------------------------------
     readonly property var roundPlan: [
-        { key: "line",    name: qsTr("直线宽转弯"), tolerance: 0.16, occlusion: 0.0, speed: 0.22 },
-        { key: "ellipse", name: qsTr("椭圆"),       tolerance: 0.13, occlusion: 0.0, speed: 0.42 },
-        { key: "figure8", name: qsTr("8 字形"),     tolerance: 0.12, occlusion: 0.0, speed: 0.50 },
-        { key: "roam",    name: qsTr("自由轨迹"),   tolerance: 0.11, occlusion: 0.0, speed: 0.0 },
-        { key: "roamocc", name: qsTr("遮挡恢复"),   tolerance: 0.11, occlusion: 1.5, speed: 0.0 }
+        { key: "basic", name: qsTr("基础自由追踪"), tolerance: .16, occlusion: 0, speed: .055 },
+        { key: "variable", name: qsTr("变速自由追踪"), tolerance: .13, occlusion: 0, speed: .075 },
+        { key: "complex", name: qsTr("复杂自由追踪"), tolerance: .11, occlusion: 1.5, speed: .095 }
     ]
+    property var randomPlan: ({})
     property int roundIndex: 0
     readonly property var roundCfg: roundPlan[Math.min(roundIndex, roundPlan.length - 1)]
 
@@ -177,7 +178,7 @@ Item {
     readonly property real countdownSeconds: 3.0
     readonly property real ballLerp: 6.0
     readonly property real sampleInterval: 0.05
-    readonly property int pathSeed: 12017
+    property int pathSeed: 12017
 
     // ------------------------------------------------------------------
     // 运行状态
@@ -285,39 +286,11 @@ Item {
     }
 
     function buildSmoothAnchors(seed, round) {
-        var s = (Math.abs(Math.floor(seed)) + 7919 * (round + 1)) % 2147483647
-        if (s < 1) s = 1
-        function rand01() {
-            s = (s * 48271) % 2147483647
-            return s / 2147483647
-        }
-        var corners = [
-            { x: 0.16, y: 0.16 }, { x: 0.81, y: 0.19 },
-            { x: 0.82, y: 0.81 }, { x: 0.17, y: 0.79 },
-            { x: 0.38, y: 0.28 }, { x: 0.69, y: 0.65 }
-        ]
-        var a = []
-        for (var i = 0; i < 14; ++i) {
-            var c = corners[i % corners.length]
-            a.push({
-                x: Math.max(0.10, Math.min(0.90, c.x + (rand01() - 0.5) * 0.12)),
-                y: Math.max(0.10, Math.min(0.90, c.y + (rand01() - 0.5) * 0.12))
-            })
-        }
-        smoothAnchors = a
+        randomPlan = RandomPath.build(seed, round, roundDuration)
+        smoothAnchors = randomPlan.waypoints
+        game.record("pursuit.path_plan", {round:round+1,pathSeed:seed,waypoints:randomPlan.waypoints,speedSchedule:randomPlan.speedSchedule,duration:roundDuration})
     }
-
-    function generatedSmoothPathAt(t, round) {
-        if (smoothAnchors.length < 2) return { x: 0.5, y: 0.5 }
-        var secondsPerSegment = round === 4 ? 2.7 : 3.2
-        var uGlobal = Math.max(0, t) / secondsPerSegment
-        var segment = Math.min(smoothAnchors.length - 2, Math.floor(uGlobal))
-        var u = Math.max(0, Math.min(1, uGlobal - segment))
-        var smooth = u * u * (3 - 2 * u)
-        var p = smoothAnchors[segment]
-        var q = smoothAnchors[segment + 1]
-        return { x: p.x + (q.x - p.x) * smooth, y: p.y + (q.y - p.y) * smooth }
-    }
+    function generatedSmoothPathAt(t, round) { return RandomPath.at(randomPlan,t) }
 
     function targetAt(t) {
         var p = pathAt(t)
@@ -327,22 +300,7 @@ Item {
         var my = Math.min(0.49, r / Math.max(1, scene.height))
         return { x: Math.max(mx, Math.min(1 - mx, p.x)), y: Math.max(my, Math.min(1 - my, p.y)) }
     }
-    function pathAt(t) {
-        var key = roundCfg.key
-        if (key === "line") {
-            return { x: 0.15 + 0.70 * triangle01(t * roundCfg.speed),
-                     y: 0.5 + 0.18 * Math.sin(t * 0.11) }
-        }
-        if (key === "ellipse") {
-            return { x: 0.5 + 0.34 * Math.cos(t * roundCfg.speed),
-                     y: 0.5 + 0.28 * Math.sin(t * roundCfg.speed) }
-        }
-        if (key === "figure8") {
-            return { x: 0.5 + 0.34 * Math.sin(t * roundCfg.speed),
-                     y: 0.5 + 0.26 * Math.sin(t * roundCfg.speed * 2.0) }
-        }
-        return generatedSmoothPathAt(t, roundIndex)
-    }
+    function pathAt(t) { return generatedSmoothPathAt(t, roundIndex) }
 
     // 遮挡窗口（仅 R5）：每 8 秒遮挡 1.5 秒，位置仍在更新
     function isVisibleNow() {
@@ -363,6 +321,7 @@ Item {
         sessionFinished = false
         isPaused = false
         localElapsed = 0.0
+        try { var saved = taskContext.config.read({seed:12017}); if(saved && saved.values && isFinite(Number(saved.values.seed))) pathSeed = Number(saved.values.seed) } catch(e) {}
         roundIndex = 0
         roundResults = []
         mouseOwnsInput = false
@@ -371,7 +330,7 @@ Item {
         rawX = 0.5; rawY = 0.5; ballX = 0.5; ballY = 0.5
         phase = "idle"
         game.record("pursuit.attempt_started", {
-            gameVersion: "0.6.0",
+            gameVersion: "0.7.0",
             inputSource: inputSource,
             roundPlan: roundPlan.map(function (r) { return r.key; }),
             geometry: viewportGeometry(),
@@ -515,7 +474,7 @@ Item {
         }
 
         var result = {
-            gameVersion: "0.6.0",
+            gameVersion: "0.7.0",
             reason: reason,
             roundsTotal: roundPlan.length,
             roundsCompleted: roundResults.length,

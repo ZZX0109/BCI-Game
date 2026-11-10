@@ -1,10 +1,10 @@
 .pragma library
 // Times are active-session seconds; all outcomes derive from this timeline.
 var directions = ["left", "down", "up", "right"]
-var roundNames = ["左右起步", "四向辨别", "方向序列", "稳定保持", "节奏适应"]
-var roundHelp = ["先练左与右。箭头进入横线时，输入对应方向。", "加入上与下。提前观察箭头，按提示的方向输入。", "跟随四步序列，练习连续指令的切换。", "箭头带有长尾：按住对应方向，或持续发送同方向脉冲。", "节拍将分段变化，继续跟随箭头到达横线的时刻。"]
+var roundNames = ["四方向教学", "长按教学", "混合训练"]
+var roundHelp = ["观察四方向，箭头到达判定线时输入。", "按住方向直到长音结束；脉冲输入需连续续期。", "混合短音与长音，观察箭头与尾巴后操作。"]
 var difficultyPresets = {
-    teaching: {bpm:70, beatsPerNote:2, windowSeconds:.55, leadSeconds:3, directionCount:2, intervalSeconds:1.714, title:"教学"},
+    teaching: {bpm:70, beatsPerNote:2, windowSeconds:.55, leadSeconds:3, directionCount:4, intervalSeconds:1.714, title:"教学"},
     standard: {bpm:90, beatsPerNote:2, windowSeconds:.40, leadSeconds:3, directionCount:4, intervalSeconds:1.333, title:"标准"},
     challenge: {bpm:110, beatsPerNote:2, windowSeconds:.30, leadSeconds:3, directionCount:4, intervalSeconds:1.091, title:"挑战（键盘练习）"}
 }
@@ -14,7 +14,7 @@ function configure(v,source){
     var difficulty=difficultyPresets[v.difficulty]?v.difficulty:"standard"
     var preset=difficultyPresets[difficulty]
     var c={difficulty:difficulty, difficultyTitle:preset.title, directionCount:preset.directionCount,
-        seed:Math.floor(num(v.seed,42,1,2147483646)), notesPerRound:Math.round(num(v.notesPerRound,8,4,24)),
+        seed:Math.floor(num(v.seed,42,1,2147483646)), notesPerRound:Math.round(num(v.notesPerRound,8,8,24)),
         bpm:num(v.bpm,preset.bpm,40,120), beatsPerNote:Math.round(num(v.beatsPerNote,preset.beatsPerNote,2,12)),
         windowSeconds:num(v.windowSeconds,preset.windowSeconds,.25,2), leadSeconds:num(v.leadSeconds,preset.leadSeconds,2,10),
         holdSeconds:num(v.holdSeconds,2,1,5), pulseValidity:num(v.pulseValidity,.8,.2,2),
@@ -28,7 +28,6 @@ function configure(v,source){
     return c
 }
 function roundHelpFor(s,r){
-    if(s&&s.cfg.directionCount===2&&r>0)return "继续使用左与右，按节拍观察后输入。此难度不加入上下方向。"
     return roundHelp[r]||""
 }
 function rng(seed){var x=seed;return function(){x=(x*48271)%2147483647;return x/2147483647}}
@@ -36,16 +35,12 @@ function chart(c,r){
     var random=rng((c.seed+r*7919)%2147483646+1),notes=[],t=c.leadSeconds+1
     var activeDirections=c.directionCount===2?["left","right"]:directions
     for(var i=0;i<c.notesPerRound;i++){
-        var dir=r===0?(i%2?"right":"left"):r===2?activeDirections[[0,activeDirections.length-1,Math.floor(activeDirections.length/2),1][i%4]%activeDirections.length]:activeDirections[(i%activeDirections.length+Math.floor(random()*activeDirections.length))%activeDirections.length]
-        // Balanced shuffled blocks ensure all four categories are presented.
-        if(r===1 || r===3 || r===4){
-            if(i%activeDirections.length===0){var bag=activeDirections.slice();for(var k=bag.length-1;k>0;k--){var j=Math.floor(random()*(k+1)),tmp=bag[k];bag[k]=bag[j];bag[j]=tmp}}
-            dir=bag[i%activeDirections.length]
-        }
-        var bpm=r===4?c.bpm*[1,.8,1.2][Math.min(2,Math.floor(i*3/c.notesPerRound))]:c.bpm
-        var hold=r===3?c.holdSeconds:0
+        if(i%4===0){var bag=directions.slice();for(var k=3;k>0;k--){var j=Math.floor(random()*(k+1)),tmp=bag[k];bag[k]=bag[j];bag[j]=tmp}}
+        var dir=bag[i%4]
+        var bpm=c.bpm
+        var hold=(r===1 || (r===2 && Math.floor(i/4)%2===1))?c.holdSeconds:0
         var beat=60/bpm
-        var gap=Math.ceil(Math.max(c.beatsPerNote*beat,2*c.windowSeconds+.35+(r===3?c.holdSeconds:0))/beat)*beat
+        var gap=Math.ceil(Math.max(c.beatsPerNote*beat,2*c.windowSeconds+.35+hold)/beat)*beat
         notes.push({id:"r"+(r+1)+"n"+(i+1),dir:dir,time:t,duration:hold,bpm:bpm,status:"pending",delta:null,
             covered:0,until:-1,coverage:null,sequence:r===2?Math.floor(i/4):-1})
         t+=gap
@@ -57,7 +52,7 @@ function create(v,source){
     var s={cfg:configure(v,source),source:source||"local",phase:"countdown",phaseT:0,round:-1,t:0,elapsed:0,
         notes:[],results:[],events:[],raw:[],outcomes:[],down:{},paused:false,stopped:false,finishSent:false,
         feedback:"准备跟随节拍",feedbackKind:"neutral",feedbackDir:"",feedbackUntil:0,correctInputs:0,wrongInputs:0,strayInputs:0,ignoredInputs:0,holdContinuations:0,holdWrongInputs:0}
-    emit(s,"session_started",{version:"1.2.0",config:s.cfg,inputSource:s.source,measurement:"game_commands_only"})
+    emit(s,"session_started",{version:"1.3.0",config:s.cfg,inputSource:s.source,measurement:"game_commands_only"})
     return s
 }
 function beginRound(s,r){
@@ -86,8 +81,8 @@ function summary(s,notes){
     s.raw.forEach(function(x){if(x.expected && confusion[x.expected] && x.pressed && (x.classification==="matched"||x.classification==="wrong_direction"))confusion[x.expected][x.name]++})
     var sequences=[],switches=0,switchOK=0
     var seqNotes=notes.filter(function(n){return n.round===3})
-    for(var i=0;i<seqNotes.length;i+=4){var group=seqNotes.slice(i,i+4);if(group.length===4)sequences.push(group.every(function(n){return n.outcome==="hit"}))}
-    for(var j=1;j<seqNotes.length;j++)if(seqNotes[j].dir!==seqNotes[j-1].dir){switches++;if(seqNotes[j].outcome==="hit"&&seqNotes[j-1].outcome==="hit")switchOK++}
+    for(var i=0;i<seqNotes.length;i+=4){var group=seqNotes.slice(i,i+4);if(group.length===4)sequences.push(group.every(function(n){return n.outcome==="hit" || n.outcome==="hold_complete"}))}
+    for(var j=1;j<seqNotes.length;j++)if(seqNotes[j].dir!==seqNotes[j-1].dir){switches++;if((seqNotes[j].outcome==="hit"||seqNotes[j].outcome==="hold_complete")&&(seqNotes[j-1].outcome==="hit"||seqNotes[j-1].outcome==="hold_complete"))switchOK++}
     return {presented:notes.length,completed:hit,completionRate:notes.length?hit/notes.length:0,
         directionalCorrect:s.correctInputs,directionalWrong:s.wrongInputs,directionRate:s.correctInputs+s.wrongInputs?s.correctInputs/(s.correctInputs+s.wrongInputs):null,
         outsideWindow:s.strayInputs,ignored:s.ignoredInputs,holdContinuations:s.holdContinuations,holdWrongInputs:s.holdWrongInputs,timingSamples:timed.length,
@@ -100,11 +95,11 @@ function summary(s,notes){
 function endRound(s){
     var local=s.outcomes.filter(function(n){return n.round===s.round+1}),b=s.roundBaseline
     var result={round:s.round+1,name:roundNames[s.round],presented:local.length,
-        completed:local.filter(function(n){return n.outcome==="hit"||n.outcome==="hold_complete"}).length,
+        completed:local.filter(function(n){return n.outcome==="hit" || n.outcome==="hold_complete"||n.outcome==="hold_complete"}).length,
         correct:s.correctInputs-b.correct,wrong:s.wrongInputs-b.wrong,outsideWindow:s.strayInputs-b.stray,holdWrong:s.holdWrongInputs-b.holdWrong,
         seconds:s.t}
     s.results.push(result);emit(s,"round_completed",result);s.down={}
-    if(s.round===4){s.phase="results";emit(s,"session_completed",{summary:summary(s)})}
+    if(s.round===roundNames.length-1){s.phase="results";emit(s,"session_completed",{summary:summary(s)})}
     else{s.phase="rest";s.phaseT=0}
 }
 function advancePlaying(s,dt){

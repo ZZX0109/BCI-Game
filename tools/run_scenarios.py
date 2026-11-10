@@ -45,6 +45,7 @@ def main():
             print(f'{game} {number}: {"PASS" if proc.returncode==0 else "FAIL"} ({log.relative_to(ROOT)})', flush=True)
     if target == 'all':
         for name, command in (
+            ('path-replay',['node','tests/test_random_path.js']),
             ('package',[PYTHON,'tests/package_v5.py']),
             ('sync-preview',[PYTHON,'tests/test_sync_v5.py']),
             ('qml-lint',[PYTHON,'tools/lint_qml.py']),

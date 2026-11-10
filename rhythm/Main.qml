@@ -170,7 +170,7 @@ Item {
     Text { x:root.stacked?root.inset:parent.width-root.inset-width;y:root.stacked?87:25;text:root.roundIndex<0?"准备开始":"第 "+(root.roundIndex+1)+" / 5 轮   ·   "+Engine.roundNames[root.roundIndex];color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:16 }
     Row {
         x:parent.width-root.inset-width;y:root.stacked?67:62;spacing:6
-        Repeater { model:5;Rectangle { required property int index;width:32;height:3;radius:1.5;color:index<=root.roundIndex?uiTheme.primary:uiTheme.panelBorder } }
+        Repeater { model:Engine.roundNames.length;Rectangle { required property int index;width:32;height:3;radius:1.5;color:index<=root.roundIndex?uiTheme.primary:uiTheme.panelBorder } }
     }
     Rectangle {
         id:board; objectName:"rhythmBoard"
@@ -181,7 +181,8 @@ Item {
         color:uiTheme.background;clip:true
         readonly property real laneW:width/4
         readonly property int notePx: Math.round(Math.max(56,Math.min(96,laneW*.42,60*root.uiScale)))
-        readonly property real lineY:84
+        readonly property real labelGap: Math.max(20, Math.min(30, height * .03))
+        readonly property real lineY: Math.max(notePx/2 + labelGap + root.captionPx + 24, Math.min(160,height*.16))
         readonly property real travel:height-lineY-45
         readonly property real pixelsPerSecond:travel/(root.state?root.state.cfg.leadSeconds:4)
         Repeater {
@@ -192,7 +193,7 @@ Item {
                 x:index*board.laneW;width:board.laneW;height:board.height
                 Rectangle { x:parent.width-1;width:1;height:parent.height;color:uiTheme.panelBorder;opacity:.3;visible:index<3 }
                 Rectangle { anchors.fill:parent;color:root.laneColors[index];opacity:root.feedbackDir===modelData&&root.clock<root.feedbackTime?.045:0 }
-                Text { x:0;y:12;width:parent.width;horizontalAlignment:Text.AlignHCenter;text:["左","下","上","右"][index];color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx }
+                Text { x:0;y:board.lineY-board.notePx/2-board.labelGap-implicitHeight;width:parent.width;horizontalAlignment:Text.AlignHCenter;text:["左","下","上","右"][index];color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx }
                 Rectangle { x:(parent.width-width)/2;y:board.lineY-height/2;width:board.notePx;height:board.notePx;radius:Math.round(width*.18);color:uiTheme.background;border.width:2;border.color:root.laneColors[index];opacity:.65+root.beatGlow*.35
                     Text { anchors.centerIn:parent;text:Engine.glyph(modelData);color:root.laneColors[index];font.pixelSize:Math.round(board.notePx*.64);font.family:uiTheme.fontFamily }
                 }
@@ -324,7 +325,7 @@ Item {
         Flickable { id:resultViewport
         anchors.fill:parent;contentHeight:resultColumn.height+48;clip:true
         Column { id:resultColumn;x:root.inset;y:24;width:parent.width-root.inset*2;spacing:14
-            Text { text:"五轮训练完成";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:28;font.bold:true }
+            Text { text:"三轮训练完成";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:28;font.bold:true }
             Text { text:"以下是本次游戏指令表现";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:14 }
             Row { spacing:root.stacked?12:root.compact?24:48
                 Repeater { model:[{label:"任务完成率",value:root.pct(root.stats.completionRate)},{label:"窗内方向匹配率",value:root.pct(root.stats.directionRate)},{label:"平均时序偏差",value:root.stats.meanAbsoluteError!==null&&root.stats.meanAbsoluteError!==undefined?Math.round(root.stats.meanAbsoluteError*1000)+" ms":"—"}]

@@ -150,7 +150,8 @@ Item {
         return ""
     }
     Keys.onPressed: function(event) {
-        if (brainInput) return
+        game.record("claw.native_key", {key:event.key, repeat:event.isAutoRepeat, inputSource:inputSource, focus:activeFocus, phase:phase})
+        if (brainInput && event.key !== Qt.Key_Return && event.key !== Qt.Key_Enter) return
         var dir = keyDirection(event.key)
         if (dir !== "") {
             if (!event.isAutoRepeat) directionInput(dir, true, true, "keyboard")
@@ -210,7 +211,7 @@ Item {
         sessionStarted = true; sessionFinished = false; isPaused = false; localElapsed = 0
         attempts = 0; successesUnassisted = 0; successesAssisted = 0; assistedAttempts = 0
         phase = "idle"
-        game.record("claw.attempt_started", {gameVersion: "0.5.0", taskMode: "precision_grasp_2d",
+        game.record("claw.attempt_started", {gameVersion: "0.5.1", taskMode: "precision_grasp_2d",
             inputSource: inputSource, difficulty: difficulty, baseTolerance: baseTolerance, attemptsTotal: attemptsTotal,
             assistEnabled: assistEnabled, inputMode: inputMode, seed: seed, toyPlan: toyPlan.slice(),
             localConfirmOwner: "native_enter_or_mouse", targetCoordinateGrid: pulseStep,
@@ -232,6 +233,7 @@ Item {
     }
     function trigger(source) {
         source = source || "internal"
+        game.record("claw.trigger_requested", {source:source, inputSource:inputSource, focus:activeFocus, phase:phase, allowed:canAlign})
         if (!canAlign) { recordRejected("confirm", source, "automatic_phase"); return }
         clearHeld()
         offsetAtTriggerX = clawX - toyFloorX; offsetAtTriggerZ = clawZ - toyFloorZ; triggerAt = hostElapsed()
@@ -294,7 +296,7 @@ Item {
             var r = trialResults[i]; controls += r.effectiveControls; errors += r.misoperations
             path += r.movementPath; positioning += r.positioningMs; distance += r.positioningDistance
         }
-        var result = {gameVersion: "0.5.0", attempts: attempts, successesUnassisted: successesUnassisted,
+        var result = {gameVersion: "0.5.1", attempts: attempts, successesUnassisted: successesUnassisted,
             successesAssisted: successesAssisted, assistedAttempts: assistedAttempts, difficulty: difficulty,
             elapsed: hostElapsed(), effectiveControls: controls, misoperations: totalMisoperations, movementPath: path,
             meanPositioningMs: positioning / Math.max(1, attempts), meanPositioningDistance: distance / Math.max(1, attempts),
@@ -310,6 +312,7 @@ Item {
         function onStarted() { root.startSession() }
         function onStep(seconds) { root.advance(seconds) }
         function onAction(name, pressed) {
+            root.game.record("claw.host_action", {name:name, pressed:pressed, inputSource:root.inputSource, focus:root.activeFocus, phase:root.phase})
             root.directionInput(name, pressed === true, !root.brainInput, root.brainInput ? "bci" : "host_local")
             // Opaque local confirm may originate from the host-reserved Space key.
             // Only native Enter/mouse owns local grabbing; BCI confirm stays available.

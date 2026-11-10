@@ -304,7 +304,7 @@ Item {
         sessionStarted=true; sessionStopped=false; finishSent=false; isPaused=false
         sessionTime=0; localElapsed=0; levelResults=[]
         blockedCount=0; undoCount=0; resetCount=0; hintsUsed=0
-        record("luban.session_started", {inputSource:inputSource,gameVersion:"0.7.0",rule:"long_axis_continuous_sweep",levelIds:LevelData.levels.map(function(l){return l.id})})
+        record("luban.session_started", {inputSource:inputSource,gameVersion:"0.8.0",rule:"long_axis_continuous_sweep",levelIds:LevelData.levels.map(function(l){return l.id})})
         loadLevel(0)
     }
     function loadLevel(index) {
@@ -321,7 +321,8 @@ Item {
     }
     function selectInitialPiece() {
         // Start in assembly view with the first piece, never auto-select the answer.
-        selectedIndex=-1; cycleSelection(1)
+        selectedIndex=-1; selectedId=""
+        if (levelIndex < 2) cycleSelection(1)
     }
     function selectByPid(pid) {
         if (!canAct || !pieceById(pid) || removedMap[pid] === true) return

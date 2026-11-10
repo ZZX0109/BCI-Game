@@ -32,6 +32,7 @@ try:
         r.resize(w,h)
         size = float(evaluate('board.notePx'))
         note_sizes.append(size)
+        check(f"label_gap_{w}", float(evaluate("board.labelGap")) >= 20, float(evaluate("board.labelGap")))
         check(f'note_size_{w}', (56 <= size <= 96), size)
         check(f'board_centered_{w}', bool(evaluate('root.stacked || Math.abs(board.x - (root.width-board.width-side.width-24)/2) < 1')), float(evaluate('board.x')))
         r.screenshot(out / f'layout-{w}x{h}.png')

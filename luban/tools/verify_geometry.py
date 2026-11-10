@@ -112,7 +112,7 @@ def solve(level):
     initial_extracts = [a for _, a in edges[start] if a['kind'] == 'extract']
     branches = max(sum(a['kind'] == 'extract' for _, a in outgoing) for outgoing in edges.values())
     # Replay the independent solver solution and sample every .025 unit sweep.
-    state = list(start); revisited = collections.Counter()
+    state = list(start); revisited = collections.Counter(); replay_states = [list(start)]
     for action in path:
         i = next(i for i, p in enumerate(ps) if p['id'] == action['piece'])
         sign = 1 if action['direction'][0] == '+' else -1
@@ -123,6 +123,7 @@ def solve(level):
             moved = boxes(ps[i], state[i] + sign * d * f / count)
             assert all(not overlap(a, b) for j in range(n) if j != i and state[j] is not None for a in moved for b in boxes(ps[j], state[j])), 'sweep penetration'
         revisited[i] += 1; state[i] = None if removable else round(state[i] + sign * d, 6)
+        replay_states.append(list(state))
     assert tuple(state) == goal
     if level['kind'] == 'offset_keyhole':
         assert not initial_extracts, 'advanced level can start by whole-piece removal'
@@ -133,7 +134,9 @@ def solve(level):
                 reachable_macro_states=len(parents), all_reachable_macro_states_solvable=True,
                 initial_whole_piece_moves=len(initial_extracts), maximum_extraction_branches=branches,
                 partial_moves_in_solution=sum(a['kind'] == 'partial' for a in path),
-                continuous_sweep_replay=True, solution=path)
+                continuous_sweep_replay=True, solution=path, reference_action_count=len(path),
+                state_trace=replay_states, reverse_state_trace=list(reversed(replay_states)),
+                inverse_note="Reverse each collision-free sweep from its recorded end position; removed pieces re-enter from that same endpoint.")
 
 
 def verify_all(path):

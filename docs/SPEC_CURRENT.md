@@ -7,3 +7,5 @@
 V3/V4 根报告、旧截图及 `docs/archive/delivery_20261105/` 只供追溯。任何历史 PASS 不代表 V5 验收通过。Windows Neuralife 实际运行、真实鼠标/DPI、音频/BCI 硬件证据须单独记录；自动 smoke 只能证明加载。
 
 2026-11-10 用户更新：不再要求录屏；参考公开的 Qt/Windows 缩放资料，按代表性 Windows/macOS 窗口画布尺寸完成界面适配，然后推送独立开发分支。具体尺寸、来源、测试和边界见 [V5_ADAPTIVE_VIEWPORTS.md](V5_ADAPTIVE_VIEWPORTS.md)。此更新不授权合并 `main`、正式宿主插件覆盖或旧游戏入口退役。
+
+本轮增量需求： [2026-11-10 复测修复方案](specs/BCI_Game_20261110_V5复测问题_完整修复方案.md)。以 dc31070 为基线，后续分支 fix/v5-retest-20261110；追光与律动的三轮要求覆盖旧五轮设计。
