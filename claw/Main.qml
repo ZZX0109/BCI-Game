@@ -1,24 +1,16 @@
 import QtQuick
 import "../shared-ui" as SharedUI
 
-// Dual projection claw machine: one simulation, front X/Y and side Z/Y.
+// One simulation drives front X/Y and side Z/Y projections.
 Item {
     id: root
     required property var taskContext
     required property var game
-
     readonly property string inputSource: (game && game.inputSource) ? game.inputSource : "local"
-    function hostElapsed() {
-        if (game && typeof game.elapsedSeconds === "number") return game.elapsedSeconds
-        return localElapsed
-    }
-
+    readonly property bool brainInput: /bci|brain/i.test(inputSource)
+    function hostElapsed() { return game && typeof game.elapsedSeconds === "number" ? game.elapsedSeconds : localElapsed }
     SharedUI.GameTheme { id: uiTheme }
-    SharedUI.FeedbackToast { id: toast; theme: uiTheme; parent: root }
 
-    // ------------------------------------------------------------------
-    // Park-Miller 种子随机
-    // ------------------------------------------------------------------
     QtObject {
         id: rng
         property int state: 1
@@ -26,22 +18,15 @@ Item {
         function next() { state = (state * 48271) % 2147483647; return state / 2147483647 }
         function pickReal(low, high) { return low + next() * (high - low) }
     }
-
-    // ------------------------------------------------------------------
-    // 配置
-    // ------------------------------------------------------------------
     property string difficulty: "standard"
     property int attemptsTotal: 5
     property bool assistEnabled: false
     property string inputMode: "held"
     property int seed: 42
     readonly property var tolerances: ({ "easy": 55, "standard": 40, "precision": 25 })
-    readonly property real tolerance: tolerances[difficulty] || 40
+    readonly property real baseTolerance: tolerances[difficulty] || 40
+    readonly property real tolerance: baseTolerance * toleranceScale
     readonly property real pulseStep: 26
-
-    // ------------------------------------------------------------------
-    // 场景几何（设计坐标）
-    // ------------------------------------------------------------------
     readonly property real xMin: 70
     readonly property real xMax: 630
     readonly property real zMin: 30
@@ -49,65 +34,110 @@ Item {
     readonly property real clawTopY: 96
     readonly property real floorY: 430
     readonly property real dropX: 720
+    readonly property real contactY: floorY - 66 * targetSize
 
-    // ------------------------------------------------------------------
-    // 运行状态
-    // ------------------------------------------------------------------
-    property string phase: "idle"   // idle | aligning | lowering | contact | lifting | transport | release | attempt_end | complete
+    property string phase: "idle"
     property bool sessionFinished: false
+    property bool sessionStarted: false
     property bool stopped: false
     property bool isPaused: false
-    property real localElapsed: 0.0
-    property real phaseTimer: 0.0
-
+    property real localElapsed: 0
+    property real phaseTimer: 0
     property real clawX: 350
     property real clawZ: 140
     property real clawY: clawTopY
     property real toyFloorX: 420
     property real toyFloorZ: 140
-    property string toyState: "floor"        // floor | attached | binned
+    property string toyState: "floor"
     property var toyPlan: []
-
+    property var trialResults: []
+    property var sessionResult: ({})
+    property int totalMisoperations: 0
+    property string targetKind: "ball"
+    property string targetName: "大软球"
+    property real targetSize: 1.1
+    property real toleranceScale: 1
+    property var distractors: []
+    property var occluder: null
     property int attempts: 0
     property int successesUnassisted: 0
     property int successesAssisted: 0
-
+    property int assistedAttempts: 0
     property real offsetAtTriggerX: 0
     property real offsetAtTriggerZ: 0
     property bool assistanceActuallyUsed: false
-    property real attemptStartedAt: 0.0
-    property real triggerAt: 0.0
-    property real contactAt: -1.0
+    property real attemptStartedAt: 0
+    property real triggerAt: 0
+    property real contactAt: -1
     property bool lastJudgedSuccess: false
-    property real lastNormalizedError: 0.0
-
+    property real lastNormalizedError: 0
+    property string contactKind: "miss"
+    property real tiltDirection: 0
+    property real nearLiftHeight: 0
+    property int controlInputs: 0
+    property int effectiveControls: 0
+    property int misoperations: 0
+    property bool boundaryHit: false
+    property real movementPath: 0
+    property real sampleTimer: 0
+    property bool movementPending: false
+    property string lastControlSource: "none"
     property bool leftHeld: false
     property bool rightHeld: false
     property bool upHeld: false
     property bool downHeld: false
-
     readonly property bool canAlign: phase === "aligning" && !isPaused && !sessionFinished && !stopped
-    function clearHeld() { leftHeld = false; rightHeld = false; upHeld = false; downHeld = false }
-    function directionInput(name, pressed, localHold) {
-        // Releases must be consumed in every phase, including during automatic motion.
-        if (!pressed) {
-            if (name === "left") leftHeld = false
-            if (name === "right") rightHeld = false
-            if (name === "up") upHeld = false
-            if (name === "down") downHeld = false
-            return
+    readonly property bool feedbackAvailable: phase === "attempt_end" || phase === "complete"
+    function clearHeld() { leftHeld = false; rightHeld = false; upHeld = false; downHeld = false; movementPending = false }
+    function statePayload() {
+        return { attempt: Math.min(phase === "attempt_end" || phase === "complete" ? attempts : attempts + 1, attemptsTotal), phase: phase,
+                 clawX: clawX, clawZ: clawZ, clawY: clawY,
+                 toyX: toyFloorX, toyZ: toyFloorZ, toyState: toyState, elapsed: hostElapsed() }
+    }
+    function changePhase(next) {
+        var previous = phase
+        phase = next; phaseTimer = 0
+        var data = statePayload(); data.previousPhase = previous
+        game.record("claw.phase_changed", data)
+    }
+    function recordRejected(name, source, reason) {
+        if (isPaused || stopped || sessionFinished || !sessionStarted) return
+        misoperations++; totalMisoperations++
+        var data = statePayload(); data.action = name; data.source = source; data.reason = reason
+        game.record("claw.input_rejected", data)
+    }
+    function moveBy(dx, dz, source) {
+        var oldX = clawX, oldZ = clawZ
+        clawX = Math.max(xMin, Math.min(xMax, oldX + dx))
+        clawZ = Math.max(zMin, Math.min(zMax, oldZ + dz))
+        if (clawX !== oldX + dx || clawZ !== oldZ + dz) {
+            if (!boundaryHit) { misoperations++; totalMisoperations++; game.record("claw.boundary_reached", statePayload()) }
+            boundaryHit = true
         }
-        if (!canAlign) return
-        if (inputMode === "held" || localHold) {
-            if (name === "left") leftHeld = true
-            if (name === "right") rightHeld = true
-            if (name === "up") upHeld = true
-            if (name === "down") downHeld = true
-        } else {
-            if (name === "left") clawX = Math.max(xMin, clawX - pulseStep)
-            if (name === "right") clawX = Math.min(xMax, clawX + pulseStep)
-            if (name === "up") clawZ = Math.max(zMin, clawZ - pulseStep)
-            if (name === "down") clawZ = Math.min(zMax, clawZ + pulseStep)
+        var distance = Math.hypot(clawX - oldX, clawZ - oldZ)
+        movementPath += distance
+        if (distance > 0 && movementPending) { effectiveControls++; movementPending = false }
+        lastControlSource = source
+        return distance
+    }
+    function directionInput(name, pressed, localHold, source) {
+        if (["left", "right", "up", "down"].indexOf(name) < 0) return
+        source = source || "host"
+        var prop = name + "Held"
+        if (!pressed) { root[prop] = false; return }
+        if (!canAlign) { recordRejected(name, source, "automatic_phase"); return }
+        var held = inputMode === "held" || localHold || !brainInput
+        // Native and host events for the same held key share one state.
+        if (held && root[prop]) return
+        controlInputs++; movementPending = true; lastControlSource = source
+        var data = statePayload(); data.action = name; data.source = source; data.mode = held ? "held" : "pulse"
+        game.record("claw.control", data)
+        if (held) root[prop] = true
+        else {
+            moveBy(name === "left" ? -pulseStep : name === "right" ? pulseStep : 0,
+                   name === "up" ? -pulseStep : name === "down" ? pulseStep : 0, source)
+            var position = statePayload(); position.source = source
+            game.record("claw.position_sample", position)
         }
     }
     focus: true
@@ -120,256 +150,222 @@ Item {
         return ""
     }
     Keys.onPressed: function(event) {
+        if (brainInput) return
         var dir = keyDirection(event.key)
-        if (dir !== "") { if (!event.isAutoRepeat) directionInput(dir, true, true); event.accepted = true }
-        else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-            if (!event.isAutoRepeat) trigger()
+        if (dir !== "") {
+            if (!event.isAutoRepeat) directionInput(dir, true, true, "keyboard")
+            event.accepted = true
+        } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+            if (!event.isAutoRepeat) trigger("keyboard_enter")
             event.accepted = true
         }
+        // Space is reserved by the host and never handled as a grab.
     }
     Keys.onReleased: function(event) {
+        if (brainInput) return
         var dir = keyDirection(event.key)
-        if (dir !== "") { if (!event.isAutoRepeat) directionInput(dir, false, true); event.accepted = true }
+        if (dir !== "") { if (!event.isAutoRepeat) directionInput(dir, false, true, "keyboard"); event.accepted = true }
     }
     function loadConfig() {
-        var sourceName = inputSource.toLowerCase()
-        var defaultInputMode = sourceName === "bci" || sourceName === "brain" ? "pulse" : "held"
-        inputMode = defaultInputMode
+        inputMode = brainInput ? "pulse" : "held"
         try {
-            var r = taskContext.config.read({
-                difficulty: "standard", attempts: 5, assistEnabled: false, inputMode: defaultInputMode, seed: 42
-            })
-            if (r && r.ok && r.values) {
-                var d = String(r.values.difficulty)
-                if (tolerances[d]) difficulty = d
-                var a = parseInt(r.values.attempts)
-                if (a === 3 || a === 5 || a === 8) attemptsTotal = a
-                assistEnabled = r.values.assistEnabled === true || String(r.values.assistEnabled) === "true"
-                var m = String(r.values.inputMode)
-                if (m === "held" || m === "pulse") inputMode = m
-                var s = parseInt(r.values.seed)
-                if (!isNaN(s)) seed = s
-            }
-        } catch (e) {
-            console.log("claw: config.read unavailable, using defaults")
-        }
+            var r = taskContext.config.read({difficulty: "standard", attempts: 5, assistEnabled: false, inputMode: inputMode, seed: 42})
+            var values = r && r.ok && r.values ? r.values : r
+            if (!values) return
+            if (tolerances[String(values.difficulty)]) difficulty = String(values.difficulty)
+            var a = parseInt(values.attempts)
+            if (a === 3 || a === 5 || a === 8) attemptsTotal = a
+            assistEnabled = values.assistEnabled === true || String(values.assistEnabled) === "true"
+            if (brainInput && (values.inputMode === "held" || values.inputMode === "pulse")) inputMode = values.inputMode
+            var s = parseInt(values.seed); if (isFinite(s)) seed = s
+        } catch (e) { console.log("claw: config.read unavailable, using defaults") }
     }
-
-    function startSession() {
-        stopped = false
-        clearHeld()
-        forceActiveFocus()
-        loadConfig()
+    function quantized(value, anchor) { return anchor + Math.round((value - anchor) / pulseStep) * pulseStep }
+    function buildPlan() {
         rng.seed(seed)
         var plan = []
-        for (var i = 0; i < attemptsTotal; ++i)
-            plan.push({ x: Math.round(rng.pickReal(xMin + 60, xMax - 60)), z: Math.round(rng.pickReal(zMin + 30, zMax - 30)) })
-        toyPlan = plan
-
-        sessionFinished = false
-        isPaused = false
-        localElapsed = 0.0
-        attempts = 0
-        successesUnassisted = 0
-        successesAssisted = 0
-        clawX = 350; clawZ = 140; clawY = clawTopY
+        var kinds = ["ball", "block", "block", "ball", "block"]
+        var names = ["大软球 · 前排", "大方块 · 后排", "小方块", "软球 · 干扰与遮挡", "小方块 · 精细定位"]
+        var sizes = [1.12, 1.0, 0.72, 0.88, 0.6]
+        var scales = [1.2, 1.1, 0.85, 0.9, 0.65]
+        for (var i = 0; i < attemptsTotal; ++i) {
+            var k = i % 5
+            var x = quantized(rng.pickReal(xMin + 70, xMax - 70), 350)
+            var z = quantized(k === 0 ? rng.pickReal(185, 220) : k === 1 || k === 4 ? rng.pickReal(55, 90) : rng.pickReal(85, 200), 140)
+            var clutter = []
+            if (k >= 3) {
+                clutter = [{x: Math.max(xMin + 25, x - 105), z: Math.min(zMax - 15, z + 55), kind: "block"},
+                           {x: Math.min(xMax - 25, x + 115), z: Math.max(zMin + 15, z - 45), kind: "ball"}]
+            }
+            plan.push({x: x, z: z, kind: kinds[k], name: names[k], size: sizes[k],
+                       tolerance: baseTolerance * scales[k], toleranceScale: scales[k], distractors: clutter,
+                       occluder: k === 3 ? {x: x + 32, z: Math.min(zMax - 10, z + 28), width: 38} : null})
+        }
+        return plan
+    }
+    function startSession() {
+        if (sessionStarted) return // duplicate host started cannot reset a running or completed session
+        stopped = false; clearHeld(); forceActiveFocus(); loadConfig()
+        toyPlan = buildPlan(); trialResults = []; sessionResult = ({}); totalMisoperations = 0
+        sessionStarted = true; sessionFinished = false; isPaused = false; localElapsed = 0
+        attempts = 0; successesUnassisted = 0; successesAssisted = 0; assistedAttempts = 0
         phase = "idle"
-
-        game.record("claw.attempt_started", {
-            gameVersion: "0.4.1",
-            taskMode: "precision_grasp_2d",
-            inputSource: inputSource,
-            difficulty: difficulty,
-            tolerance: tolerance,
-            attemptsTotal: attemptsTotal,
-            assistEnabled: assistEnabled,
-            inputMode: inputMode,
-            seed: seed,
-            toyPlan: toyPlan.slice()
-        })
+        game.record("claw.attempt_started", {gameVersion: "0.5.0", taskMode: "precision_grasp_2d",
+            inputSource: inputSource, difficulty: difficulty, baseTolerance: baseTolerance, attemptsTotal: attemptsTotal,
+            assistEnabled: assistEnabled, inputMode: inputMode, seed: seed, toyPlan: toyPlan.slice(),
+            localConfirmOwner: "native_enter_or_mouse", targetCoordinateGrid: pulseStep,
+            metricDefinition: "effectiveControls=count of input press/pulse producing motion; misoperations=blocked/invalid commands; path=manual XZ pixels"})
         beginAttempt()
     }
-
     function beginAttempt() {
         clearHeld()
         var p = toyPlan[attempts]
-        toyFloorX = p.x
-        toyFloorZ = p.z
-        toyState = "floor"
+        toyFloorX = p.x; toyFloorZ = p.z; targetKind = p.kind; targetName = p.name
+        targetSize = p.size; toleranceScale = p.toleranceScale; distractors = p.distractors; occluder = p.occluder
+        toyState = "floor"; contactKind = "miss"; tiltDirection = 0; nearLiftHeight = 0
         clawX = 350; clawZ = 140; clawY = clawTopY
-        assistanceActuallyUsed = false
-        contactAt = -1
-        attemptStartedAt = hostElapsed()
-        phaseTimer = 0.0
-        phase = "aligning"
-        game.record("claw.trial_started", {
-            attempt: attempts + 1, toyX: toyFloorX, toyZ: toyFloorZ,
-            clawX: clawX, clawZ: clawZ, elapsed: hostElapsed()
-        })
+        assistanceActuallyUsed = false; contactAt = -1; lastJudgedSuccess = false; lastNormalizedError = 0
+        controlInputs = 0; effectiveControls = 0; misoperations = 0; boundaryHit = false; movementPath = 0; sampleTimer = 0
+        attemptStartedAt = hostElapsed(); changePhase("aligning")
+        var data = statePayload(); data.plan = p
+        game.record("claw.trial_started", data)
     }
-
-    function trigger() {
-        if (!canAlign) return
+    function trigger(source) {
+        source = source || "internal"
+        if (!canAlign) { recordRejected("confirm", source, "automatic_phase"); return }
         clearHeld()
-        offsetAtTriggerX = clawX - toyFloorX
-        offsetAtTriggerZ = clawZ - toyFloorZ
-        triggerAt = hostElapsed()
-
+        offsetAtTriggerX = clawX - toyFloorX; offsetAtTriggerZ = clawZ - toyFloorZ; triggerAt = hostElapsed()
         if (assistEnabled) {
-            var ex = offsetAtTriggerX / tolerance
-            var ez = offsetAtTriggerZ / tolerance
-            var err = Math.sqrt(ex * ex + ez * ez)
-            if (err > 1.0 && err <= 1.8) {
-                clawX = toyFloorX
-                clawZ = toyFloorZ
-                assistanceActuallyUsed = true
-                game.record("claw.assist_applied", {
-                    attempt: attempts + 1, newClawX: Math.round(clawX), newClawZ: Math.round(clawZ),
-                    originalOffsetX: Math.round(offsetAtTriggerX), originalOffsetZ: Math.round(offsetAtTriggerZ),
-                    elapsed: hostElapsed()
-                })
+            var err = Math.hypot(offsetAtTriggerX, offsetAtTriggerZ) / tolerance
+            if (err > 1 && err <= 1.8) {
+                clawX = toyFloorX; clawZ = toyFloorZ; assistanceActuallyUsed = true; assistedAttempts++
+                game.record("claw.assist_applied", {attempt: attempts + 1, newClawX: clawX, newClawZ: clawZ,
+                    originalOffsetX: offsetAtTriggerX, originalOffsetZ: offsetAtTriggerZ, elapsed: hostElapsed()})
             }
         }
-
-        game.record("claw.grasp_trigger", {
-            attempt: attempts + 1,
-            clawX: Math.round(clawX), clawZ: Math.round(clawZ),
-            toyX: Math.round(toyFloorX), toyZ: Math.round(toyFloorZ),
-            offsetAtTriggerX: Math.round(offsetAtTriggerX),
-            offsetAtTriggerZ: Math.round(offsetAtTriggerZ),
-            tolerance: tolerance, assisted: assistanceActuallyUsed,
-            elapsed: hostElapsed()
-        })
-        phase = "lowering"
-        phaseTimer = 0.0
+        var data = statePayload(); data.source = source
+        data.offsetAtTriggerX = offsetAtTriggerX; data.offsetAtTriggerZ = offsetAtTriggerZ
+        data.tolerance = tolerance; data.assisted = assistanceActuallyUsed
+        data.positioningMs = Math.round((triggerAt - attemptStartedAt) * 1000)
+        game.record("claw.grasp_trigger", data)
+        changePhase("lowering")
     }
-
     function evaluateGrip() {
         var dx = assistanceActuallyUsed ? 0 : offsetAtTriggerX
         var dz = assistanceActuallyUsed ? 0 : offsetAtTriggerZ
-        var ex = dx / tolerance
-        var ez = dz / tolerance
-        var normalizedError = Math.sqrt(ex * ex + ez * ez)
-        var success = normalizedError <= 1.0
-        lastJudgedSuccess = success
-        lastNormalizedError = normalizedError
-        toyState = success ? "attached" : "floor"
-        contactAt = hostElapsed()
-
-        game.record(success ? "claw.grasp_success" : "claw.grasp_fail", {
-            attempt: attempts + 1,
-            offsetAtTriggerX: Math.round(offsetAtTriggerX),
-            offsetAtTriggerZ: Math.round(offsetAtTriggerZ),
-            dx: Math.round(dx), dz: Math.round(dz),
-            normalizedError: normalizedError,
-            assisted: assistanceActuallyUsed,
-            reason: success ? "within_tolerance" : "misaligned",
-            triggerToContactMs: Math.round((contactAt - triggerAt) * 1000),
-            elapsed: hostElapsed()
-        })
-        return success
+        lastNormalizedError = Math.hypot(dx, dz) / tolerance
+        lastJudgedSuccess = lastNormalizedError <= 1
+        contactKind = lastJudgedSuccess ? "success" : lastNormalizedError <= 1.35 ? "near_miss" : "miss"
+        tiltDirection = contactKind === "near_miss" ? Math.max(-18, Math.min(18, dx / Math.max(tolerance, .001) * 15 + dz / Math.max(tolerance, .001) * 7)) : 0
+        nearLiftHeight = contactKind === "near_miss" ? Math.max(.10, Math.min(.30, (1.35-lastNormalizedError)/.35*.30)) : 0
+        toyState = lastJudgedSuccess ? "attached" : contactKind === "near_miss" ? "near_miss" : "floor"; contactAt = hostElapsed()
+        var data = statePayload()
+        data.offsetAtTriggerX = offsetAtTriggerX; data.offsetAtTriggerZ = offsetAtTriggerZ
+        data.dx = dx; data.dz = dz; data.normalizedError = lastNormalizedError
+        data.assisted = assistanceActuallyUsed; data.reason = lastJudgedSuccess ? "within_tolerance" : "misaligned"
+        data.contactKind = contactKind; data.tiltDirection = tiltDirection; data.liftHeight = nearLiftHeight
+        data.triggerToContactMs = Math.round((contactAt - triggerAt) * 1000)
+        game.record(lastJudgedSuccess ? "claw.grasp_success" : "claw.grasp_fail", data)
+        if (contactKind === "near_miss") game.record("claw.near_miss", data)
+        return lastJudgedSuccess
     }
-
     function resolveRelease() {
         var success = lastJudgedSuccess && toyState === "attached"
-        if (success) {
-            toyState = "binned"
-            if (assistanceActuallyUsed) successesAssisted++
-            else successesUnassisted++
-        } else {
-            toyState = "floor"
-        }
-        game.record("claw.attempt_result", {
-            attempt: attempts + 1,
-            success: success,
-            assisted: assistanceActuallyUsed,
-            offsetAtTriggerX: Math.round(offsetAtTriggerX),
-            offsetAtTriggerZ: Math.round(offsetAtTriggerZ),
-            normalizedError: lastNormalizedError,
-            attemptMs: Math.round((hostElapsed() - attemptStartedAt) * 1000),
-            elapsed: hostElapsed()
-        })
-        attempts++
-        phase = "attempt_end"
-        phaseTimer = 0.0
+        if (success) { toyState = "binned"; if (assistanceActuallyUsed) successesAssisted++; else successesUnassisted++ }
+        else toyState = "floor"
+        var data = {attempt: attempts + 1, success: success, assisted: assistanceActuallyUsed,
+            offsetAtTriggerX: offsetAtTriggerX, offsetAtTriggerZ: offsetAtTriggerZ,
+            positioningDistance: Math.hypot(offsetAtTriggerX, offsetAtTriggerZ), normalizedError: lastNormalizedError,
+            contactKind: contactKind, tiltDirection: tiltDirection, liftHeight: nearLiftHeight,
+            dominantErrorAxis: Math.abs(offsetAtTriggerX) >= Math.abs(offsetAtTriggerZ) ? "X" : "Z",
+            outOfBounds: boundaryHit, controlInputs: controlInputs, effectiveControls: effectiveControls,
+            misoperations: misoperations, movementPath: movementPath,
+            positioningMs: Math.round((triggerAt - attemptStartedAt) * 1000),
+            graspCompleted: lastJudgedSuccess, releaseCompleted: success,
+            attemptMs: Math.round((hostElapsed() - attemptStartedAt) * 1000), elapsed: hostElapsed()}
+        trialResults = trialResults.concat([data]); game.record("claw.attempt_result", data)
+        attempts++; changePhase("attempt_end")
     }
-
     function finishSession() {
-        if (sessionFinished) return
-        sessionFinished = true
-        phase = "complete"
-
-        var result = {
-            gameVersion: "0.4.1",
-            attempts: attempts,
-            successesUnassisted: successesUnassisted,
-            successesAssisted: successesAssisted,
-            tolerance: tolerance,
-            difficulty: difficulty,
-            elapsed: hostElapsed(),
-            summary: qsTr("抓娃娃机完成 | 尝试 %1 | 自主成功 %2 | 辅助成功 %3")
-                     .arg(attempts).arg(successesUnassisted).arg(successesAssisted)
+        if (sessionFinished || stopped) return
+        clearHeld(); sessionFinished = true; changePhase("complete")
+        var controls = 0, errors = 0, path = 0, positioning = 0, distance = 0
+        for (var i = 0; i < trialResults.length; ++i) {
+            var r = trialResults[i]; controls += r.effectiveControls; errors += r.misoperations
+            path += r.movementPath; positioning += r.positioningMs; distance += r.positioningDistance
         }
-        game.record("claw.attempt_finished", result)
-        game.finish(result)
+        var result = {gameVersion: "0.5.0", attempts: attempts, successesUnassisted: successesUnassisted,
+            successesAssisted: successesAssisted, assistedAttempts: assistedAttempts, difficulty: difficulty,
+            elapsed: hostElapsed(), effectiveControls: controls, misoperations: totalMisoperations, movementPath: path,
+            meanPositioningMs: positioning / Math.max(1, attempts), meanPositioningDistance: distance / Math.max(1, attempts),
+            graspCompletionRate: (successesUnassisted + successesAssisted) / Math.max(1, attempts),
+            releaseCompletionRate: (successesUnassisted + successesAssisted) / Math.max(1, attempts),
+            trials: trialResults.slice(),
+            summary: qsTr("抓娃娃机完成 | 尝试 %1 | 自主成功 %2 | 辅助成功 %3").arg(attempts).arg(successesUnassisted).arg(successesAssisted)}
+        sessionResult = result
+        game.record("claw.attempt_finished", result); game.finish(result)
     }
-
-    // ------------------------------------------------------------------
-    // 宿主事件
-    // ------------------------------------------------------------------
     Connections {
         target: root.game
         function onStarted() { root.startSession() }
         function onStep(seconds) { root.advance(seconds) }
         function onAction(name, pressed) {
-            root.directionInput(name, pressed === true, false)
-            if (name === "confirm" && pressed === true) root.trigger()
+            root.directionInput(name, pressed === true, !root.brainInput, root.brainInput ? "bci" : "host_local")
+            // Opaque local confirm may originate from the host-reserved Space key.
+            // Only native Enter/mouse owns local grabbing; BCI confirm stays available.
+            if (name === "confirm" && pressed === true && root.brainInput) root.trigger("bci_confirm")
         }
-        function onPointer(x, y) { /* GamepadLite 游戏不需要指针 */ }
-        function onPaused() { root.isPaused = true; root.leftHeld = false; root.rightHeld = false; root.upHeld = false; root.downHeld = false }
-        function onResumed() { if (!root.stopped) root.isPaused = false }
-        function onStopping() { root.stopped = true; root.isPaused = true; root.leftHeld = false; root.rightHeld = false; root.upHeld = false; root.downHeld = false }
+        function onPointer(x, y) { }
+        function onPaused() { root.clearHeld(); root.isPaused = true }
+        function onResumed() { if (!root.stopped && !root.sessionFinished) { root.isPaused = false; root.forceActiveFocus() } }
+        function onStopping() {
+            if (!root.stopped && root.sessionStarted && !root.sessionFinished) root.game.record("claw.interrupted", root.statePayload())
+            root.stopped = true; root.isPaused = true; root.clearHeld()
+        }
     }
-
     function advance(dt) {
-        if (stopped || isPaused || sessionFinished) return
+        if (stopped || isPaused || sessionFinished || !sessionStarted || !isFinite(dt) || dt <= 0) return
         localElapsed += dt
         if (phase !== "aligning") phaseTimer += dt
-
         if (phase === "aligning") {
-            {
-                var dx = (rightHeld ? 1 : 0) - (leftHeld ? 1 : 0)
-                var dz = (downHeld ? 1 : 0) - (upHeld ? 1 : 0)
-                if (dx !== 0) clawX = Math.max(xMin, Math.min(xMax, clawX + dx * 220 * dt))
-                if (dz !== 0) clawZ = Math.max(zMin, Math.min(zMax, clawZ + dz * 120 * dt))
+            var dx = (rightHeld ? 1 : 0) - (leftHeld ? 1 : 0)
+            var dz = (downHeld ? 1 : 0) - (upHeld ? 1 : 0)
+            if (dx || dz) {
+                var moved = moveBy(dx * 220 * dt, dz * 120 * dt, lastControlSource)
+                if (moved > 0) sampleTimer += dt
+                if (sampleTimer >= 0.2) { var data = statePayload(); data.source = lastControlSource; game.record("claw.position_sample", data); sampleTimer = 0 }
             }
         } else if (phase === "lowering") {
-            clawY += 300 * dt
-            if (clawY >= floorY - 66) { clawY = floorY - 66; evaluateGrip(); phase = "lifting"; phaseTimer = 0 }
+            clawY = Math.min(contactY, clawY + 300 * dt)
+            if (clawY >= contactY) { evaluateGrip(); changePhase("closing") }
+        } else if (phase === "closing") {
+            if (phaseTimer >= 0.22) changePhase(contactKind === "near_miss" ? "partial_lift" : "lifting")
+        } else if (phase === "partial_lift") {
+            if (phaseTimer >= 0.35) changePhase("slip")
+        } else if (phase === "slip") {
+            if (phaseTimer >= 0.35) changePhase("settle")
+        } else if (phase === "settle") {
+            if (phaseTimer >= 0.2) resolveRelease()
         } else if (phase === "lifting") {
-            clawY -= 300 * dt
-            if (clawY <= clawTopY) { clawY = clawTopY; phase = "transport"; phaseTimer = 0 }
+            clawY = Math.max(clawTopY, clawY - 300 * dt)
+            if (clawY <= clawTopY) changePhase("transport")
         } else if (phase === "transport") {
             var tx = dropX - clawX
             clawX += tx * Math.min(1, dt * 2.2)
-            if (Math.abs(tx) < 3) { clawX = dropX; phase = "release"; phaseTimer = 0 }
+            if (Math.abs(tx) < 3) { clawX = dropX; changePhase("release") }
         } else if (phase === "release") {
             if (phaseTimer >= 0.5) resolveRelease()
-        } else if (phase === "attempt_end") {
-            if (phaseTimer >= 0.8) {
-                if (attempts >= attemptsTotal) finishSession()
-                else beginAttempt()
-            }
+        } else if (phase === "attempt_end" && phaseTimer >= 0.8) {
+            if (attempts >= attemptsTotal) finishSession(); else beginAttempt()
         }
     }
-
 
     SharedUI.GameFrame {
         id: frame
         anchors.fill: parent
         theme: uiTheme
         title: qsTr("抓娃娃机")
-        subtitle: /bci|brain/i.test(root.inputSource) ? qsTr("左右 / 前后指令调整位置 · 确认抓取") : qsTr("左右调整位置 · 上下调整前后 · 空格 / 确认抓取")
+        subtitle: /bci|brain/i.test(root.inputSource) ? qsTr("左右 / 前后指令调整位置 · 确认抓取") : qsTr("左右调整位置 · 上下调整前后 · Enter 抓取")
         mode: qsTr("%1 / %2 次").arg(Math.min(root.attempts + 1, root.attemptsTotal)).arg(root.attemptsTotal)
         inputSource: root.inputSource
         Item {
@@ -413,8 +409,12 @@ Item {
                 }
                 Text { font.family: uiTheme.fontFamily;
                     x: canvas.inset; y: canvas.controlsY - 38; width: canvas.width - canvas.inset * 2; horizontalAlignment: Text.AlignHCenter
-                    text: root.phase === "aligning" ? qsTr("将夹爪在两个视图中对准黄色玩具，再抓取")
+                    text: root.phase === "aligning" ? qsTr("%1 · 在 X / Z 两个视图中对准黄色目标").arg(root.targetName)
                         : root.phase === "lowering" ? qsTr("正在下降…")
+                        : root.phase === "closing" ? qsTr("接触判定完成 · 正在夹合…")
+                        : root.phase === "partial_lift" ? qsTr("轻微接触，短暂提起…")
+                        : root.phase === "slip" ? qsTr("玩具滑落，未成功抓取")
+                        : root.phase === "settle" ? qsTr("近失误，玩具已落回")
                         : root.phase === "lifting" ? (root.lastJudgedSuccess ? qsTr("抓到了，正在升起") : qsTr("未抓住，夹爪返回"))
                         : root.phase === "transport" || root.phase === "release" ? qsTr("正在投放…")
                         : root.phase === "attempt_end" ? (root.lastJudgedSuccess ? qsTr("投放成功，即将开始下一次") : qsTr("本次未抓到，即将开始下一次"))
@@ -441,9 +441,9 @@ Item {
                             Text { font.family: uiTheme.fontFamily; anchors.centerIn: parent; text: modelData.label; color: "#f5f5ef"; font.pixelSize: 18; font.bold: true }
                             MouseArea {
                                 id: pad; anchors.fill: parent; enabled: root.canAlign
-                                onPressed: { root.forceActiveFocus(); root.directionInput(modelData.action, true, true) }
-                                onReleased: root.directionInput(modelData.action, false, true)
-                                onCanceled: root.directionInput(modelData.action, false, true)
+                                onPressed: { root.forceActiveFocus(); root.directionInput(modelData.action, true, true, "mouse") }
+                                onReleased: root.directionInput(modelData.action, false, true, "mouse")
+                                onCanceled: root.directionInput(modelData.action, false, true, "mouse")
                             }
                         }
                     }
@@ -455,14 +455,16 @@ Item {
                         height: 52; radius: 4
                         color: fire.pressed ? "#c89838" : "#efbe5b"
                         opacity: root.canAlign ? 1 : 0.45
-                        Text { font.family: uiTheme.fontFamily; anchors.centerIn: parent; text: /bci|brain/i.test(root.inputSource) ? qsTr("抓取  /  确认") : qsTr("抓取  /  空格"); color: "#201b11"; font.pixelSize: 20; font.bold: true }
-                        MouseArea { id: fire; anchors.fill: parent; enabled: root.canAlign; onClicked: { root.forceActiveFocus(); root.trigger() } }
+                        Text { font.family: uiTheme.fontFamily; anchors.centerIn: parent; text: /bci|brain/i.test(root.inputSource) ? qsTr("抓取  /  确认") : qsTr("抓取  /  Enter"); color: "#201b11"; font.pixelSize: 20; font.bold: true }
+                        MouseArea { id: fire; anchors.fill: parent; enabled: root.canAlign; onClicked: { root.forceActiveFocus(); root.trigger("mouse") } }
                     }
                 }
                 Text { font.family: uiTheme.fontFamily;
                     x: canvas.inset; y: canvas.height - 32; width: canvas.width - canvas.inset * 2; horizontalAlignment: Text.AlignHCenter
-                    text: root.contactAt >= 0 && root.phase !== "aligning"
-                        ? qsTr("接触偏差：左右 %1 · 前后 %2　|　自主成功 %3　辅助成功 %4").arg(Math.round(root.offsetAtTriggerX)).arg(Math.round(root.offsetAtTriggerZ)).arg(root.successesUnassisted).arg(root.successesAssisted)
+                    text: root.phase === "complete"
+                        ? qsTr("平均偏差 %1px · 定位 %2s · 有效控制 %3 · 误操作 %4").arg(Number(root.sessionResult.meanPositioningDistance || 0).toFixed(1)).arg((Number(root.sessionResult.meanPositioningMs || 0) / 1000).toFixed(1)).arg(root.sessionResult.effectiveControls || 0).arg(root.sessionResult.misoperations || 0)
+                        : root.feedbackAvailable
+                        ? qsTr("本次偏差 X %1 / Z %2 · %3轴较大 · %4").arg(Math.round(root.offsetAtTriggerX)).arg(Math.round(root.offsetAtTriggerZ)).arg(Math.abs(root.offsetAtTriggerX) >= Math.abs(root.offsetAtTriggerZ) ? "X" : "Z").arg(root.boundaryHit ? qsTr("曾到达边界") : qsTr("定位未越界"))
                         : /bci|brain/i.test(root.inputSource) ? (root.inputMode === "pulse" ? qsTr("每次方向指令移动一步 · 前后位置请观察左上侧视图") : qsTr("方向信号持续时移动 · 前后位置请观察左上侧视图")) : qsTr("方向键 / WASD 或屏幕按钮 · 前后移动请观察左上侧视图")
                     color: "#92958d"; font.pixelSize: 15
                 }

@@ -34,3 +34,7 @@
 ## 阶段 4：汉诺塔与伦敦塔（本地功能验证）
 
 已用独立 `LondonBall.qml` 绘制伦敦塔球体，保留容量 3/2/1 杆高；每局有起始/目标图预览，确认后才开始计时，进行中仍有小目标图。`hanoi/tests/verify_1106.py` 以 1.0/1.5 缩放各 225/225 通过，包含五局鼠标/键盘/模拟 BCI 完整路线、目标状态、预览等待与暂停。实际截图在 `hanoi/tests/evidence/preview-round-*.png` 和 `london-playing.png`。正式 Windows 宿主未测试。
+
+## 阶段 5：抓娃娃机（本地功能验证）
+
+已实现三档接触反馈，近失误有连续 `partial_lift → slip → settle`，在主视图出现确定性倾斜与短提后落回，且只把真正成功计入成功率。`claw/tests/verify_1106.py` 1.0/1.5 缩放各 110/110；`claw/tests/verify_v5_near_miss.py` 11/11，输出 `tests/results/v5-claw/` 截图及事件。1920×1080 主正视图已截图，Windows 实机视觉和录屏未测试。

@@ -52,3 +52,9 @@
 - `python ../tools/check_qml.py Main.qml` 通过
 - `--game-smoke` EXIT 0，截图见 `../docs/shots/`
 - 玩法级验收 C-01~C-08 需键鼠输入，见 `../tests/acceptance_matrix.csv`
+
+## V5 近失误与大屏
+
+抓取接触按归一化 X/Z 误差确定 `success`（≤1）、`near_miss`（1–1.35）或 `miss`（>1.35）。近失误经过 `partial_lift`、`slip`、`settle`，玩具沿误差方向歪斜、短提后落回，成绩仍是失败；原 `claw.grasp_fail` 语义保留并新增 `claw.near_miss` 事件。主正视图在高窗口放大夹爪/玩具，侧视保留前后定位。
+
+Linux Qt 模拟宿主原有回归在 1.0/1.5 倍缩放各 110/110，通过；`claw/tests/verify_v5_near_miss.py` 在固定种子和 0.8/1.1/1.5 倍容差位点 11/11，通过并保存阶段截图至 `tests/results/v5-claw/`。正式 Windows 宿主录像尚未验收。

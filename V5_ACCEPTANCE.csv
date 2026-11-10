@@ -40,13 +40,13 @@ V5-038,P1,hanoi,操作中目标小图,打开关卡且操作中观察,目标图�
 V5-039,P1,hanoi,纯鼠标五关,仅使用鼠标完成五局,无需键盘取放或进入下一关,全流程录屏,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
 V5-040,P1,hanoi,键盘与BCI预览,键盘/模拟脑控确认预览并操控,不依赖鼠标，预览中不会计时移动,日志和录屏,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
 V5-041,P1,hanoi,伦敦塔规则,目标柱满及不同球重排,容量约束正确、颜色球任意叠放合法,自动回归,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
-V5-042,P1,claw,主辅视图布局,1920x1080和2560x1440定位,玩具夹爪可清晰看到，辅助视角可用,真实截图,NOT_TESTED,
-V5-043,P1,claw,键盘Enter,方向调整后Enter触发,Enter抓取，Space不触发,键盘回归,NOT_TESTED,
-V5-044,P1,claw,成功动画,误差0.8倍容差触发,成功抓取运输投放，记录success,录屏/日志,NOT_TESTED,
-V5-045,P1,claw,近失误动画,误差1.1倍容差触发,碰触→歪斜→略抬→滑落，结果仍失败,录屏/日志,NOT_TESTED,
-V5-046,P1,claw,完全失败,误差1.5倍容差触发,无抓起，记录miss与误差,录屏/日志,NOT_TESTED,
-V5-047,P1,claw,结果前不泄露误差,定位过程中观察,无实时坐标误差答案，结束后可显示,录屏,NOT_TESTED,
-V5-048,P1,claw,两轴定位一致,分别移动X、Z,正视/侧视一致，二维误差可复算,日志,NOT_TESTED,
+V5-042,P1,claw,主辅视图布局,1920x1080和2560x1440定位,玩具夹爪可清晰看到，辅助视角可用,真实截图,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-043,P1,claw,键盘Enter,方向调整后Enter触发,Enter抓取，Space不触发,键盘回归,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-044,P1,claw,成功动画,误差0.8倍容差触发,成功抓取运输投放，记录success,录屏/日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-045,P1,claw,近失误动画,误差1.1倍容差触发,碰触→歪斜→略抬→滑落，结果仍失败,录屏/日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-046,P1,claw,完全失败,误差1.5倍容差触发,无抓起，记录miss与误差,录屏/日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-047,P1,claw,结果前不泄露误差,定位过程中观察,无实时坐标误差答案，结束后可显示,录屏,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-048,P1,claw,两轴定位一致,分别移动X、Z,正视/侧视一致，二维误差可复算,日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
 V5-049,P1,luban,L3复杂锁,第三关演示必要的局部滑移,至少有一件先部分抽出才解锁另一件,几何求解和录屏,NOT_TESTED,
 V5-050,P1,luban,L4双层互锁,新增第四关,多方向阻挡与可逆路径，自动解算可完成,几何报告,NOT_TESTED,
 V5-051,P1,luban,无穿模,逐帧观察每段抽取、复位,连续运动不发生几何穿透或瞬移,求解器及视频,NOT_TESTED,
