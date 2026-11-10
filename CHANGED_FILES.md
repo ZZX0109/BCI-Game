@@ -1,6 +1,6 @@
 # V5 变更与本地提交
 
-基线 `main@a8a2e7660683fe4fe661e25ca1c61c010669a160`；独立分支 `feat/neuralife-v5-interaction`。以下提交均为本地提交，尚未推送或合并。
+基线 `main@a8a2e7660683fe4fe661e25ca1c61c010669a160`；独立分支 `feat/neuralife-v5-interaction`，未合并 `main`。
 
 | 本地提交 | 主要文件 | 行为变化与证据 |
 |---|---|---|

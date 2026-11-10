@@ -48,8 +48,12 @@ def main():
             ('package',[PYTHON,'tests/package_v5.py']),
             ('sync-preview',[PYTHON,'tests/test_sync_v5.py']),
             ('qml-lint',[PYTHON,'tools/lint_qml.py']),
+            ('adaptive-viewports',[PYTHON,'tests/verify_adaptive_viewports.py']),
         ):
-            proc = subprocess.run(command,cwd=ROOT,env={**os.environ,'QT_QPA_PLATFORM':'offscreen'},stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
+            env = {**os.environ, 'QT_QPA_PLATFORM': 'offscreen'}
+            if name == 'adaptive-viewports':
+                env.update(DISPLAY=':88', QT_QPA_PLATFORM='xcb', QSG_RHI_BACKEND='opengl', LIBGL_ALWAYS_SOFTWARE='1')
+            proc = subprocess.run(command,cwd=ROOT,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
             log=out/f'{name}.log';log.write_text(proc.stdout)
             checks.append({'game':name,'command':command,'exitCode':proc.returncode,'passed':proc.returncode==0,'log':str(log.relative_to(ROOT))})
             print(f'{name}: {"PASS" if proc.returncode==0 else "FAIL"}', flush=True)

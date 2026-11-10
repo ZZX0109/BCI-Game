@@ -37,6 +37,12 @@ Rectangle {
         height: root.sceneTop
         z: 50
 
+        Rectangle {
+            anchors.fill: parent
+            color: "#e0050505"
+            visible: root.width < 1000
+        }
+
         Text {
             id: titleText
             anchors.left: parent.left

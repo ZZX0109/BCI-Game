@@ -726,14 +726,17 @@ Item {
                 color: "#ed050505"
                 MouseArea { anchors.fill: parent }
                 Column {
-                    anchors.centerIn: parent
+                    id: previewContent
+                    objectName: "hanoiPreviewContent"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y: Math.max(0, (parent.height - implicitHeight) / 2)
                     width: Math.min(650, parent.width - 36)
                     spacing: 12
                     Text { anchors.horizontalCenter: parent.horizontalCenter; text: root.currentRound.name + qsTr(" · 目标预览"); color: uiTheme.primaryText; font.family: uiTheme.fontFamily; font.pixelSize: 26; font.bold: true }
                     Text { text: qsTr("起始状态"); color: uiTheme.secondaryText; font.family: uiTheme.fontFamily; font.pixelSize: 17 }
-                    GoalPreview { width: parent.width; height: 150; expanded: true; stacks: [root.initialStack(root.discCount),[],[]]; capacities: root.currentCapacities; london: root.puzzleType === "london"; theme: uiTheme }
+                    GoalPreview { width: parent.width; height: Math.max(82, Math.min(150, (stage.height - 244) / 2)); expanded: stage.height >= 500; stacks: [root.initialStack(root.discCount),[],[]]; capacities: root.currentCapacities; london: root.puzzleType === "london"; theme: uiTheme }
                     Text { text: qsTr("目标状态"); color: uiTheme.secondaryText; font.family: uiTheme.fontFamily; font.pixelSize: 17 }
-                    GoalPreview { width: parent.width; height: 150; expanded: true; stacks: root.goalState; capacities: root.currentCapacities; london: root.puzzleType === "london"; theme: uiTheme }
+                    GoalPreview { width: parent.width; height: Math.max(82, Math.min(150, (stage.height - 244) / 2)); expanded: stage.height >= 500; stacks: root.goalState; capacities: root.currentCapacities; london: root.puzzleType === "london"; theme: uiTheme }
                     Text { width: parent.width; wrapMode: Text.WordWrap; text: root.puzzleType === "london" ? qsTr("每次只移动顶球；A/B/C 杆容量为 3/2/1，彩球可任意叠放。") : qsTr("每次只移动顶盘；大盘不能压在小盘上。目标是将所有盘移到 C 杆。"); color: uiTheme.secondaryText; font.family: uiTheme.fontFamily; font.pixelSize: 16 }
                     SharedUI.GameButton { objectName: "hanoiStartRoundButton"; anchors.horizontalCenter: parent.horizontalCenter; theme: uiTheme; text: qsTr("开始本关"); width: 220; height: 50; highlighted: true; onClicked: root.confirmPreview("mouse") }
                 }

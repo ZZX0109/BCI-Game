@@ -290,12 +290,16 @@ Item {
                 Repeater { model:["teaching","standard","challenge"]
                     delegate:UI.GameButton {
                         required property string modelData
+                        objectName: "rhythmDifficultyButton"
                         theme:uiTheme;width:Math.min(180,(parent.width-20)/3);height:74;highlighted:root.difficulty===modelData;enabled:!root.isBci||modelData==="teaching"
-                        text:Engine.difficultyPresets[modelData].title+"\n"+Engine.difficultyPresets[modelData].bpm+" BPM · "+Engine.difficultyPresets[modelData].intervalSeconds.toFixed(2)+"秒/音 · ±"+Engine.difficultyPresets[modelData].windowSeconds.toFixed(2)+"秒"
+                        text:Engine.difficultyPresets[modelData].title+"\n"+Engine.difficultyPresets[modelData].bpm+" BPM"
                         onClicked:root.difficulty=modelData
                     }
                 }
             }
+            Text { width:parent.width;horizontalAlignment:Text.AlignHCenter;wrapMode:Text.Wrap
+                text:{var p=Engine.difficultyPresets[root.difficulty];return p.intervalSeconds.toFixed(2)+"秒/音 · 判定窗口 ±"+p.windowSeconds.toFixed(2)+"秒"}
+                color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:15 }
             Row { width:parent.width;anchors.horizontalCenter:parent.horizontalCenter;spacing:12
                 UI.GameButton { theme:uiTheme;width:(parent.width-24)/3;height:50;text:root.musicEnabled?"音乐：开":"音乐：关";onClicked:root.toggleMusic() }
                 UI.GameButton { theme:uiTheme;width:(parent.width-24)/3;height:50;text:root.beatCueEnabled?"节拍：开":"节拍：关";onClicked:root.toggleBeatCue() }
