@@ -26,3 +26,7 @@
 ## 阶段 2：四向律动（本地功能验证）
 
 `rhythm/Main.qml` 由容器尺寸统一计算音符、判定框及侧栏字号；超宽屏轨道设最大宽度并居中。长音符尾巴用 `time + duration - clock` 决定剩余长度，保持覆盖率仍由原引擎单独计算。`rhythm/tests/verify_v5_visual.py` 实际 Linux Qt 窗口 22/22 通过，涵盖 1280/1920/2560/3440 宽、尾巴五帧、开始/暂停/恢复及三种声音开关；截图与数值见 `tests/results/v5-rhythm/`。`node rhythm/tests/test_engine.js` 30/30 通过；旧脚本两例用超出判定窗的输入却期待命中，已按窗内可判定输入纠正。旧 `rhythm/tests/verify_qt.py` 依赖本仓库不存在的 `preview.py`，本轮无法运行；新 Qt 检查替代其相关局部项目，但完整宿主流程尚需 Windows 验证。无音频输出设备，声音可听性未验收。
+
+## 阶段 3：红绿灯过马路（本地功能验证）
+
+五轮均为六车道。画面按左→右的世界坐标显示三车道、安全岛、三车道；车辆沿垂直轴运行，碰撞仅在车道范围成立，岛中心可等待。标准条件不再根据输入源偷偷降低车速；`traffic.level_started` 记录固定 `trafficSpeedScale=1.0` 与岛宽。`traffic/tests/verify_v5.py` Linux Qt 模拟宿主 10/10，通过六车道、投影正交、左右移动与松开、岛内无碰撞、同车道碰撞和15秒等待；截图在 `tests/results/v5-traffic/`。真实 Windows 录像、完整五轮安全通关和固定种子双次轨迹对比尚未完成。旧场景测试包含旧斜向道路/车道数假设，不能继承为 V5 通过。

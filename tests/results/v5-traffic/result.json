@@ -1,0 +1,57 @@
+{
+  "environment": "Linux PySide6 QQuickView; simulated host",
+  "checks": [
+    {
+      "name": "five_rounds_six_lanes",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "island_between_three_and_four",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "orthogonal_projection",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "right_moves_right",
+      "passed": true,
+      "actual": 0.044800000000000124
+    },
+    {
+      "name": "release_stops",
+      "passed": true,
+      "actual": 0.044800000000000124
+    },
+    {
+      "name": "left_retreats",
+      "passed": true,
+      "actual": -0.28999999999999987
+    },
+    {
+      "name": "island_no_collision",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "same_lane_collision",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "island_wait_15s_safe",
+      "passed": true,
+      "actual": 0
+    },
+    {
+      "name": "traffic_continues_during_wait",
+      "passed": true,
+      "actual": 35
+    }
+  ],
+  "passed": 10,
+  "total": 10
+}
