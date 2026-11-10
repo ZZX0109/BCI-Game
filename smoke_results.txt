@@ -1,7 +1,2 @@
-hanoi: PASS
-sokoban: PASS
-claw: PASS
-pursuit: PASS
-target: PASS
-traffic: PASS
-luban: PASS
+Historical smoke log: docs/archive/v3_20261103/smoke_results.txt
+Current V5 tests: STATUS_CURRENT.md and tests/results/v5-run-scenarios/result.json

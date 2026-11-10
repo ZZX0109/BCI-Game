@@ -1,0 +1,95 @@
+{
+  "scope": "full local deployment package and actual Qt QML loading; simulated plugin discovery/host",
+  "discoverableModules": [
+    "claw",
+    "hanoi",
+    "luban",
+    "pointer",
+    "rhythm",
+    "sokoban",
+    "traffic"
+  ],
+  "checks": [
+    {
+      "module": "claw",
+      "checks": [
+        {
+          "check": "packaged_qml_loaded",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "module": "hanoi",
+      "checks": [
+        {
+          "check": "packaged_qml_loaded",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "module": "luban",
+      "checks": [
+        {
+          "check": "packaged_qml_loaded",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "module": "pointer",
+      "checks": [
+        {
+          "check": "packaged_qml_loaded",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "packaged_pursuit_loaded",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "packaged_target_loaded",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "module": "rhythm",
+      "checks": [
+        {
+          "check": "packaged_qml_loaded",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "module": "sokoban",
+      "checks": [
+        {
+          "check": "packaged_qml_loaded",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "module": "traffic",
+      "checks": [
+        {
+          "check": "packaged_qml_loaded",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

@@ -7,7 +7,7 @@
   S-04 墙角死锁可恢复（撤销即取消倒计时，随后仍能通关）
   S-06 步数可由事件重算
   S-07 五关全部可通关
-  S-08 死锁提示不强制结束（3 秒后自动重开，会话继续）
+  S-08 确证死锁3秒自动重开，会话继续（2026-11-09用户确认）
 
 解题路径来自 BFS（与 tools/verify_sokoban_levels.py 同一份关卡数据），且是
 **从当前盘面**搜的（不是照抄初始解），避免「为了通过而通过」。
@@ -216,7 +216,7 @@ def scen_s03_reversible(r):
 
 
 def scen_s04_deadlock_recover(r):
-    """0.5.0 有意变更：死锁只提示、不自动丢弃棋盘；撤销恢复且进度保留。"""
+    """确证墙角触发倒计时，撤销取消并可继续完成。"""
     r.start()
     r.pump(0.1)
     clear_level(r)                        # S01
@@ -228,8 +228,8 @@ def scen_s04_deadlock_recover(r):
     hints = r.game.payloads("sokoban.deadlock_hint")
     r.check("S-04b 触发静态墙角死锁提示",
             bool(hints) and hints[-1].get("rule") == "static_corner", f"{hints[-1:]}")
-    r.check("S-04c 不进入自动重开倒计时",
-            r.get("deadlockCountdown") is False and "sokoban.deadlock_confirmed" not in names,
+    r.check("S-04c 仅确证墙角进入自动重开倒计时",
+            r.get("deadlockCountdown") is True and "sokoban.deadlock_confirmed" in names,
             f"deadlockCountdown={r.get('deadlockCountdown')}")
     r.check("S-04d 死锁箱体被标记出来", "1,1" in (r.jsv("deadlockBoxes") or []),
             f"deadlockBoxes={r.jsv('deadlockBoxes')}")
@@ -295,7 +295,7 @@ def scen_s07_all_levels(r):
 
 
 def scen_s08_deadlock_not_forced(r):
-    """0.5.0 有意变更：死锁不自动重开、不结束会话，盘面与步数完整保留。"""
+    """3秒倒计时只重开本关，不结束整个会话。"""
     r.start()
     r.pump(0.1)
     clear_level(r)
@@ -306,24 +306,23 @@ def scen_s08_deadlock_not_forced(r):
     r.check("S-08b 已触发死锁提示", bool(hints) and hints[-1].get("boxes") == ["1,1"],
             f"{hints[-1:]}")
 
-    moves_before, boxes_before = r.get("moves"), boxes_of(r)
-    r.pump(3.4)                           # 旧版 3 秒倒计时应已走完
+    r.pump(1)
+    remaining = r.get("deadlockSecondsLeft")
+    r.pause()
+    r.pump(5)
+    r.check_eq("S-08c 暂停冻结倒计时", r.get("deadlockSecondsLeft"), remaining)
+    r.resume()
+    r.pump(2.2)
     names = r.game.names()
-    r.check("S-08c 没有自动重开事件", "sokoban.level_auto_restarted" not in names)
-    r.check("S-08d 步数保留、不归零",
-            r.get("moves") == moves_before and moves_before > 0,
-            f"moves {moves_before} -> {r.get('moves')}")
-    r.check("S-08e 盘面保留", boxes_of(r) == boxes_before, f"{boxes_of(r)}")
+    r.check("S-08d 只记录一次自动重开", names.count("sokoban.deadlock_auto_restart") == 1)
+    r.check_eq("S-08e 本关恢复初始盘面", boxes_of(r), {(2, 2)})
+    r.check_eq("S-08e 本关保留步数归零", r.get("moves"), 0)
     r.check_eq("S-08f 会话没有结束", r.get("sessionFinished"), False)
     r.check_eq("S-08g 仍在同一关", current_level(r).get("id"), "S02")
     r.check_eq("S-08h 没有强制 finish", "sokoban.attempt_finished" in names, False)
-    r.check_eq("S-08i autoRestarts 保持 0", r.get("autoRestarts"), 0)
-
-    r.action("confirm")                   # 主动恢复：菜单 → 撤销一步
-    r.action("confirm")
-    r.pump(0.05)
+    r.check_eq("S-08i autoRestarts 记为1", r.get("autoRestarts"), 1)
     solve_current(r)
-    r.check("S-08j 主动撤销后仍能通关", "sokoban.level_completed" in r.game.names())
+    r.check("S-08j 自动重开后仍能通关", r.game.payloads("sokoban.level_completed")[-1]["levelId"] == "S02")
 
 
 SCENARIOS = {

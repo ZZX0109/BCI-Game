@@ -3,7 +3,7 @@
     "os": "linux",
     "pyside6": "6.10.2",
     "qtPlatform": "offscreen",
-    "scaleFactor": "1.5",
+    "scaleFactor": "1",
     "host": "simulated API 1",
     "bci": "simulated commands",
     "input": "native QTest keys/mouse plus host signals"

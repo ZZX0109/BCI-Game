@@ -42,3 +42,9 @@
 ## 阶段 6：鲁班锁（本地功能验证）
 
 L3 及后续关卡已移植多阶段互锁和连续扫掠几何验证；L1/L2 仍为教学。左键点击木件选择、在木件表面拖动旋转相机，独立箭头操作柄才会滑移木件。Linux Xorg/OpenGL 的真实 Qt Quick 3D 窗口 1.0/1.5 缩放各 241/241 通过；求解器 5 关 2693 状态可解。证据：`luban/tests/evidence/`、`luban/tests/runtime-result.json`、`luban/tests/geometry-result.json`。Windows Neuralife RHI/GPU 仍未测试。
+
+## 阶段 7：发布预检与文档治理
+
+`config/active_games.json` 是七活动入口清单；`tools/package_v5.py` 打出的运行包含一个 `pointer`、共七个可发现入口，旧追光/打靶作为私有子任务。`tests/package_v5.py` 的 Linux 模拟宿主 QML 加载检查通过。`tools/run_scenarios.py all` 改为按清单执行七游戏自动验证与打包/同步预检；旧场景入口保留为 `--legacy`。同步脚本默认只读，测试用虚拟宿主目录的预览 6/6 通过，真实 Neuralife 未写入。V3/V4 根报告和旧交付目录已完整归档至 `docs/archive/`，旧路径留跳转说明。回退方法见 `docs/V5_DEPLOYMENT.md`。
+
+用户确认之后只可能部署到此前提供的 Neuralife Windows 客户端分包，当前没有可访问的 Windows/macOS 运行环境。Linux Qt 多窗口截图可验证布局计算与实际 Qt 渲染，但不作为 Windows DPI、macOS 原生窗口或正式客户端录屏证据。上传的 Demo 分包缺少 Quick3D DLL/QML 模块，正式鲁班锁 RHI 验收仍需完整客户端运行时。`V5_ACCEPTANCE.csv` 中没有实际证据的条目继续保留 `NOT_TESTED`。本分支没有合并 main、写入宿主或退役旧入口。

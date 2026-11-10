@@ -1,6 +1,6 @@
 {
   "environment": "Linux Xorg :88 / PySide6 6.10.2 / OpenGL Mesa / real Quick3D / mock Neuralife signals",
-  "scaleFactor": "1.5",
+  "scaleFactor": "1",
   "windows_host": "NOT_TESTED",
   "physical_bci": "NOT_TESTED",
   "checks": [
@@ -75,7 +75,7 @@
     {
       "name": "axis_arrow_partial_drag",
       "passed": true,
-      "detail": 0.5522179800429896
+      "detail": 0.5517363702001691
     },
     {
       "name": "keyboard_undo_partial_drag",

@@ -31,6 +31,7 @@ Item {
 
     property string phase: "idle"     // idle | playing | menu | level_done | complete
     property bool sessionFinished: false
+    property bool sessionStarted: false
     property bool isPaused: false
     property real localElapsed: 0.0
     property bool stopped: false
@@ -79,7 +80,7 @@ Item {
     // 撤销栈
     property var undoStack: []
 
-    // Legacy compatibility fields: automatic restarts are disabled.
+    // Only a proven non-goal static corner starts this active-time countdown.
     property bool deadlockCountdown: false
     property real deadlockSecondsLeft: 0.0
     property string deadlockReason: ""
@@ -152,6 +153,8 @@ Item {
     }
 
     function startSession() {
+        if (sessionStarted) return
+        sessionStarted = true
         sessionFinished = false
         stopped = false
         sessionMoves = 0; sessionPushes = 0
@@ -165,9 +168,10 @@ Item {
         menuIndex = 0
 
         game.record("sokoban.attempt_started", {
-            gameVersion: "0.4.1",
+            gameVersion: "0.4.2",
             taskMode: "multi_level",
             inputSource: inputSource,
+            deadlockRecovery: { rule: "static_corner", autoRestartSeconds: 3, undoCancels: true },
             levelPlan: Levels.levels.map(function(l) { return { id: l.id, version: l.version } })
         })
         loadLevel(0)
@@ -180,7 +184,7 @@ Item {
         cancelDeadlockCountdown("session_end")
 
         var result = {
-            gameVersion: "0.4.1",
+            gameVersion: "0.4.2",
             reason: reason,
             levelsCompleted: levelStats.filter(function(stat) { return stat.completed }).length,
             totalLevels: Levels.levels.length,
@@ -251,12 +255,18 @@ Item {
     }
 
     // ------------------------------------------------------------------
-    // 静态墙角提示与主动恢复
+    // 静态墙角确认与可撤销的自动恢复
     // ------------------------------------------------------------------
-    // Kept as a compatibility cleanup helper; recovery never discards a board automatically.
     function cancelDeadlockCountdown(reason) {
+        if (deadlockCountdown) {
+            game.record("sokoban.deadlock_auto_restart_cancelled", {
+                reason: reason, remainingSeconds: deadlockSecondsLeft,
+                levelId: level ? level.id : null, elapsed: hostElapsed()
+            })
+        }
         deadlockCountdown = false
         deadlockSecondsLeft = 0
+        deadlockReason = ""
     }
 
     function refreshDeadlock() {
@@ -277,10 +287,17 @@ Item {
         deadlockBoxes = found
         if (changed && found.length > 0) {
             deadlockHints++
-            toast.show(qsTr("箱子卡在墙角：请撤销或重开，进度会保留"), "danger")
+            toast.show(qsTr("箱子卡在墙角：3 秒后重开，可撤销取消"), "danger")
             game.record("sokoban.deadlock_hint", {
                 rule: "static_corner", boxes: found.slice(),
                 levelId: level.id, elapsed: hostElapsed()
+            })
+            deadlockCountdown = true
+            deadlockSecondsLeft = 3
+            deadlockReason = "static_corner"
+            game.record("sokoban.deadlock_confirmed", {
+                rule: deadlockReason, boxes: found.slice(), levelId: level.id,
+                restartAfterSeconds: 3, elapsed: hostElapsed()
             })
         }
         if (found.length === 0) cancelDeadlockCountdown("deadlock_resolved")
@@ -451,6 +468,20 @@ Item {
         if (phase !== "playing") return
         localElapsed += seconds
         pushFlash = Math.max(0, pushFlash - seconds * 3)
+        if (deadlockCountdown) {
+            deadlockSecondsLeft = Math.max(0, deadlockSecondsLeft - seconds)
+            if (deadlockSecondsLeft <= 0.000001) {
+                var reason = deadlockReason
+                deadlockCountdown = false
+                deadlockSecondsLeft = 0
+                autoRestarts++
+                game.record("sokoban.deadlock_auto_restart", {
+                    rule: reason, levelId: level.id, boxes: deadlockBoxes.slice(),
+                    autoRestarts: autoRestarts, elapsed: hostElapsed()
+                })
+                restartLevel("deadlock_auto")
+            }
+        }
     }
 
     // ------------------------------------------------------------------
@@ -643,7 +674,9 @@ Item {
                 visible: root.deadlockBoxes.length > 0 && root.phase !== "complete"
                 anchors.bottom: parent.bottom; anchors.bottomMargin: controls.height + 44
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("箱子卡在墙角 · 点击撤销或重开 · 不会自动丢失进度")
+                text: root.deadlockCountdown
+                    ? qsTr("墙角死锁 · %1 秒后重开 · 撤销可取消").arg(Math.ceil(root.deadlockSecondsLeft))
+                    : qsTr("墙角死锁 · 请继续撤销或手动重开")
                 color: uiTheme.warning; font.pixelSize: 16; font.bold: true
             }
         }
@@ -669,6 +702,7 @@ Item {
                     SharedUI.GameButton {
                         required property int index
                         required property string modelData
+                        objectName: "sokoban_" + ["up", "left", "down", "right"][index]
                         x: index === 0 ? 52 : (index - 1) * 52
                         y: index === 0 ? 0 : 52
                         width: 44; height: 44
@@ -685,6 +719,7 @@ Item {
                 y: controls.compact ? 112 : 52
                 spacing: 8
                 SharedUI.GameButton {
+                    objectName: "sokoban_undo"
                     width: 80; height: 44; theme: uiTheme; text: qsTr("撤销")
                     radius: 8
                     border.color: activeFocus ? uiTheme.warning : "#879b80"
@@ -692,6 +727,7 @@ Item {
                     onClicked: root.undoMove("mouse")
                 }
                 SharedUI.GameButton {
+                    objectName: "sokoban_menu"
                     width: 80; height: 44; theme: uiTheme; text: qsTr("菜单")
                     radius: 8
                     border.color: activeFocus ? uiTheme.warning : "#515b4d"
@@ -699,6 +735,7 @@ Item {
                     onClicked: root.openMenu()
                 }
                 SharedUI.GameButton {
+                    objectName: "sokoban_restart"
                     width: 64; height: 44; theme: uiTheme; text: qsTr("重开")
                     border.width: activeFocus ? 2 : 0
                     color: activeFocus ? "#20271e" : "transparent"
@@ -707,6 +744,7 @@ Item {
                     onClicked: root.restartLevel("mouse")
                 }
                 SharedUI.GameButton {
+                    objectName: "sokoban_finish"
                     width: 64; height: 44; theme: uiTheme; text: qsTr("结束")
                     border.width: activeFocus ? 2 : 0
                     color: activeFocus ? "#20271e" : "transparent"

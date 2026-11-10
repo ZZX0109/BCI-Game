@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# LEGACY RESTORE ONLY: historical delivery tool; not a V5 deployment path.
 """把交付 zip 中指定游戏（+必需的 shared-ui）精确部署到开发副本和真实宿主目录。
 
 只写内容变化的文件；未列出的游戏目录、play.bat、顶层说明文档都不动。

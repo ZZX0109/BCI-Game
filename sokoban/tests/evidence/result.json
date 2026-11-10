@@ -1,0 +1,502 @@
+{
+  "environment": "Linux PySide6 real QQuickView, simulated Neuralife/BCI; keyboard via explicit simulated host relay",
+  "passed": 99,
+  "total": 99,
+  "checks": [
+    {
+      "check": "repeated_started_does_not_reset_session",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "BFS_current_board_S01",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S01",
+      "ok": true,
+      "detail": "实际='S01' 期望='S01'"
+    },
+    {
+      "check": "minimum_moves_S01",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "BFS_current_board_S02",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S02",
+      "ok": true,
+      "detail": "实际='S02' 期望='S02'"
+    },
+    {
+      "check": "minimum_moves_S02",
+      "ok": true,
+      "detail": "实际=10 期望=10"
+    },
+    {
+      "check": "BFS_current_board_S03",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S03",
+      "ok": true,
+      "detail": "实际='S03' 期望='S03'"
+    },
+    {
+      "check": "minimum_moves_S03",
+      "ok": true,
+      "detail": "实际=8 期望=8"
+    },
+    {
+      "check": "BFS_current_board_S04",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S04",
+      "ok": true,
+      "detail": "实际='S04' 期望='S04'"
+    },
+    {
+      "check": "minimum_moves_S04",
+      "ok": true,
+      "detail": "实际=10 期望=10"
+    },
+    {
+      "check": "BFS_current_board_S05",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S05",
+      "ok": true,
+      "detail": "实际='S05' 期望='S05'"
+    },
+    {
+      "check": "minimum_moves_S05",
+      "ok": true,
+      "detail": "实际=7 期望=7"
+    },
+    {
+      "check": "five_levels",
+      "ok": true,
+      "detail": "实际=5 期望=5"
+    },
+    {
+      "check": "finish_once",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "complete_ignores_input",
+      "ok": true,
+      "detail": "实际=84 期望=84"
+    },
+    {
+      "check": "session_moves_recompute",
+      "ok": true,
+      "detail": "实际=36 期望=36"
+    },
+    {
+      "check": "session_pushes_recompute",
+      "ok": true,
+      "detail": "实际=18 期望=18"
+    },
+    {
+      "check": "no_double_finish",
+      "ok": true,
+      "detail": "实际=0 期望=0"
+    },
+    {
+      "check": "late_start_cannot_repeat_finish",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "late_start_cannot_restart",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "repeated_started_does_not_reset_session",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "BFS_current_board_S01",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S01",
+      "ok": true,
+      "detail": "实际='S01' 期望='S01'"
+    },
+    {
+      "check": "minimum_moves_S01",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "BFS_current_board_S02",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S02",
+      "ok": true,
+      "detail": "实际='S02' 期望='S02'"
+    },
+    {
+      "check": "minimum_moves_S02",
+      "ok": true,
+      "detail": "实际=10 期望=10"
+    },
+    {
+      "check": "BFS_current_board_S03",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S03",
+      "ok": true,
+      "detail": "实际='S03' 期望='S03'"
+    },
+    {
+      "check": "minimum_moves_S03",
+      "ok": true,
+      "detail": "实际=8 期望=8"
+    },
+    {
+      "check": "BFS_current_board_S04",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S04",
+      "ok": true,
+      "detail": "实际='S04' 期望='S04'"
+    },
+    {
+      "check": "minimum_moves_S04",
+      "ok": true,
+      "detail": "实际=10 期望=10"
+    },
+    {
+      "check": "BFS_current_board_S05",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S05",
+      "ok": true,
+      "detail": "实际='S05' 期望='S05'"
+    },
+    {
+      "check": "minimum_moves_S05",
+      "ok": true,
+      "detail": "实际=7 期望=7"
+    },
+    {
+      "check": "five_levels",
+      "ok": true,
+      "detail": "实际=5 期望=5"
+    },
+    {
+      "check": "finish_once",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "complete_ignores_input",
+      "ok": true,
+      "detail": "实际=84 期望=84"
+    },
+    {
+      "check": "session_moves_recompute",
+      "ok": true,
+      "detail": "实际=36 期望=36"
+    },
+    {
+      "check": "session_pushes_recompute",
+      "ok": true,
+      "detail": "实际=18 期望=18"
+    },
+    {
+      "check": "no_double_finish",
+      "ok": true,
+      "detail": "实际=0 期望=0"
+    },
+    {
+      "check": "late_start_cannot_repeat_finish",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "late_start_cannot_restart",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "repeated_started_does_not_reset_session",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "BFS_current_board_S01",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S01",
+      "ok": true,
+      "detail": "实际='S01' 期望='S01'"
+    },
+    {
+      "check": "minimum_moves_S01",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "BFS_current_board_S02",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S02",
+      "ok": true,
+      "detail": "实际='S02' 期望='S02'"
+    },
+    {
+      "check": "minimum_moves_S02",
+      "ok": true,
+      "detail": "实际=10 期望=10"
+    },
+    {
+      "check": "BFS_current_board_S03",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S03",
+      "ok": true,
+      "detail": "实际='S03' 期望='S03'"
+    },
+    {
+      "check": "minimum_moves_S03",
+      "ok": true,
+      "detail": "实际=8 期望=8"
+    },
+    {
+      "check": "BFS_current_board_S04",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S04",
+      "ok": true,
+      "detail": "实际='S04' 期望='S04'"
+    },
+    {
+      "check": "minimum_moves_S04",
+      "ok": true,
+      "detail": "实际=10 期望=10"
+    },
+    {
+      "check": "BFS_current_board_S05",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_S05",
+      "ok": true,
+      "detail": "实际='S05' 期望='S05'"
+    },
+    {
+      "check": "minimum_moves_S05",
+      "ok": true,
+      "detail": "实际=7 期望=7"
+    },
+    {
+      "check": "five_levels",
+      "ok": true,
+      "detail": "实际=5 期望=5"
+    },
+    {
+      "check": "finish_once",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "complete_ignores_input",
+      "ok": true,
+      "detail": "实际=84 期望=84"
+    },
+    {
+      "check": "session_moves_recompute",
+      "ok": true,
+      "detail": "实际=36 期望=36"
+    },
+    {
+      "check": "session_pushes_recompute",
+      "ok": true,
+      "detail": "实际=18 期望=18"
+    },
+    {
+      "check": "no_double_finish",
+      "ok": true,
+      "detail": "实际=0 期望=0"
+    },
+    {
+      "check": "late_start_cannot_repeat_finish",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "late_start_cannot_restart",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "wall_does_not_push_undo",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "wall_no_deadlock_countdown",
+      "ok": true,
+      "detail": "实际=False 期望=False"
+    },
+    {
+      "check": "wall_count_separate",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "host_repeat_ignored",
+      "ok": true,
+      "detail": "实际=(1, 2, ('2,3',)) 期望=(1, 2, ('2,3',))"
+    },
+    {
+      "check": "keyboard_menu_undo",
+      "ok": true,
+      "detail": "实际=(2, 2) 期望=(2, 2)"
+    },
+    {
+      "check": "adjacent_cell_click",
+      "ok": true,
+      "detail": "实际=(1, 2) 期望=(1, 2)"
+    },
+    {
+      "check": "mouse_undo",
+      "ok": true,
+      "detail": "实际=(2, 2) 期望=(2, 2)"
+    },
+    {
+      "check": "confirmed_static_corner",
+      "ok": true,
+      "detail": "实际=True 期望=True"
+    },
+    {
+      "check": "countdown_rule",
+      "ok": true,
+      "detail": "实际='static_corner' 期望='static_corner'"
+    },
+    {
+      "check": "pause_freezes_countdown",
+      "ok": true,
+      "detail": "实际=2.1839999999999993 期望=2.1839999999999993"
+    },
+    {
+      "check": "undo_cancels_countdown",
+      "ok": true,
+      "detail": "实际=False 期望=False"
+    },
+    {
+      "check": "undo_resolves_corner",
+      "ok": true,
+      "detail": "实际=[] 期望=[]"
+    },
+    {
+      "check": "undo_prevents_auto_restart",
+      "ok": true,
+      "detail": "实际=0 期望=0"
+    },
+    {
+      "check": "mouse_restart_restores_board",
+      "ok": true,
+      "detail": "实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))"
+    },
+    {
+      "check": "not_before_three_seconds",
+      "ok": true,
+      "detail": "实际=0 期望=0"
+    },
+    {
+      "check": "three_seconds_restarts_once",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    },
+    {
+      "check": "auto_restart_same_level",
+      "ok": true,
+      "detail": "实际='S02' 期望='S02'"
+    },
+    {
+      "check": "auto_restart_not_finish",
+      "ok": true,
+      "detail": "实际=0 期望=0"
+    },
+    {
+      "check": "auto_restart_restores_board",
+      "ok": true,
+      "detail": "实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))"
+    },
+    {
+      "check": "cumulative_metrics_survive_restart",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "resize_keeps_board_1000",
+      "ok": true,
+      "detail": "实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))"
+    },
+    {
+      "check": "resize_keeps_board_1280",
+      "ok": true,
+      "detail": "实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))"
+    },
+    {
+      "check": "resize_keeps_board_1920",
+      "ok": true,
+      "detail": "实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))"
+    },
+    {
+      "check": "resize_keeps_board_700",
+      "ok": true,
+      "detail": "实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))"
+    },
+    {
+      "check": "screenshot",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "stop_ignores_input_step",
+      "ok": true,
+      "detail": "实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))"
+    },
+    {
+      "check": "stop_late_start_not_recreated",
+      "ok": true,
+      "detail": "实际=1 期望=1"
+    }
+  ]
+}
