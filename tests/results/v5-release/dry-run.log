@@ -1,5 +1,5 @@
-源运行包: /tmp/bci-v5-runtime-_af_80fx
-目标: /tmp/bci-v5-host-preview-1v4mzece/games
+源运行包: /tmp/bci-v5-runtime-v3xjqh2g
+目标: /tmp/bci-v5-host-preview-vzzhctao/games
 活动入口: hanoi, sokoban, pointer, claw, traffic, luban, rhythm
 新增 hanoi/GoalPreview.qml sha256=4af12896122ab68b5d1418b0ecda6dc942363b7f3467c249ad005b7dbd384ced
 新增 hanoi/HanoiDisc.qml sha256=22e9c83ba24c72b33d51e363b2681c41f3c057f317d296be3872276e1f270331
@@ -15,11 +15,11 @@
 新增 sokoban/TaskDefinition.qml sha256=15223943d91632c172b562ca04a643d693640a01011bce5e8b9720148b607e33
 新增 sokoban/assets/icon.png sha256=e4740771e6cf19e0693fcfcc4e6571e4c1832501bbd68eab12080cce953802c1
 新增 sokoban/assets/icon.svg sha256=2f7d93059e2812ccfc768897038a4bb028e83348f55d6fb0dd38c9039dd2b306
-新增 pointer/Main.qml sha256=5a3ee5789570c886bd05ce715d7abeb2ce4cecaaa52cbdc5f2ad9e2b143208d7
+新增 pointer/Main.qml sha256=458ba9a0068af94949a2b3d7600cd9a04ffed7de392645c9b134967618a3a29c
 新增 pointer/README.md sha256=f5cdf55bf5ca9eedd563e25aa5c5eeedbd31b34a527a6c66022112d2dbadc808
 新增 pointer/TaskDefinition.qml sha256=8976c07cc5631e1ec11a8ad4c45928bf78fa1f97561d851d883c5f2c3a47de4a
 新增 pointer/assets/icon.svg sha256=f8f55144e45bd7b23fd7c2a426da6e75854f1617e5dbaf4287a26cad9de22799
-新增 pointer/tasks/pursuit/Main.qml sha256=c07cb4c2d9c2a16456f8d3f1cb3153786268d9409424b98fc5f80180e488b9cf
+新增 pointer/tasks/pursuit/Main.qml sha256=0eff1a8c2f66fe64af6cc72734bc146d8bce3abeeb3a33fee8f7504d347cd7c5
 新增 pointer/tasks/pursuit/README.md sha256=dd47f8dd869e16b521e98a79af0b6524c690cd4cab143c3a775a58fab1ded4f2
 新增 pointer/tasks/pursuit/RandomPath.js sha256=d2be55e86d072a079dc1d91da0a033e6dc9505e65fbd3277aacbea442011b53a
 新增 pointer/tasks/pursuit/assets/icon.png sha256=5db6e07716278acfd8216540b634d877fcd020a89aece0d471b873333dabf6f8
@@ -70,9 +70,9 @@
 新增 luban/assets/wood.png sha256=e428634c5862c40493136bef66186c1d98ea0364364a2845183dc9d76ce10686
 新增 luban/适配验证.json sha256=cc49e171f32ab0a4406eb520affcc4160054f9ffe07a8e7160a16a7b94f4edb0
 新增 rhythm/LegacyWindowFill.qml sha256=28b5006ea1569ba9d5f44b85c3f7b85d41f62c48b6031155d158f2a982d82252
-新增 rhythm/Main.qml sha256=80b04daa4073ba4c0789afec47e62dee89fe99e98edee4cd977b394ba2bba5eb
+新增 rhythm/Main.qml sha256=9c6aa06520e65f6e72aaaf956ced4fa26ab22528769a66286f4874c6611c2dde
 新增 rhythm/README.md sha256=bb06b6a40ab7dc8476c9f6273684ac72f71390309f99036a45272c1e8e5e6a84
-新增 rhythm/RhythmEngine.js sha256=dc338abcf38e4b7cd19f43f1bac5b4542799971e0f05c06b6f5b7b0c47fdb8e1
+新增 rhythm/RhythmEngine.js sha256=cb9d7f49829866a13d705ab7f1b89023e003e6187fd6ebd9a956cb8be3d40b05
 新增 rhythm/TaskDefinition.qml sha256=42bacb14c90d155681fe0b735c6b9f99a84c1a4ca05c601fe8f396413e75d92e
 新增 rhythm/audio/background-90bpm.wav sha256=66824c40e06a6b6211d50adba849d4995929a69e2a767cc6a38256f09c25ae27
 新增 rhythm/audio/chord-1.wav sha256=de0882f9f5161de7a158e25b91f9c658b3f4366972df02f0041a90db6bdf4254
@@ -80,6 +80,7 @@
 新增 rhythm/audio/chord-3.wav sha256=3e36914bc9d4929c7ddd979c1baf6cb47bb247945dee0d0388eb1debe6129b22
 新增 rhythm/audio/chord-4.wav sha256=45df607147b3e1cef6df44804b22f62b0a6361f79cc3571bceba4c3a2a846b26
 新增 rhythm/audio/pulse.wav sha256=2207e1464d6f58a2a82a62072083e618d8df78c521c453036c82bac352b909a5
+新增 rhythm/audio/success.wav sha256=c9dd5dd4aaac8c50b91754697de6b498f374f6dce0d167867e9448d3f38bc7c1
 新增 shared-ui/FeedbackToast.qml sha256=f07d2a19856cbe2ab69a353745a50f790a4361614cb8e4069f52aa9ac1315be2
 新增 shared-ui/GameButton.qml sha256=5b1ab28e393d66e48ed8d7221530d382f9cce79cd5ebb57167fb7dde59a500ae
 新增 shared-ui/GameDialog.qml sha256=87c76131549148f142a94df0ec5c0a4b14a783e16c7da7c29453dfbf8070aa05
@@ -92,7 +93,7 @@
 新增 shared-ui/MetricSummary.qml sha256=7bf93bd8ffc230fb91d2aa185ead6f1db08e16d5a748b92838b52b264fa5bfce
 新增 shared-ui/SceneViewport.qml sha256=500ed9646ac33b1030fb65bac3e6a835c67a6c31b0433341be754dd8bfe42559
 新增 shared-ui/qmldir sha256=cd9e37275ef3d793e1c9479d6001e31097f33cbe1c0c9affcbbf49cefb1fd273
-旧入口待退役: /tmp/bci-v5-host-preview-1v4mzece/games/pursuit sha256=387a793e137796c8158ca7678c8fd613ecd063b619ea1fd5dffafc6ac36f4592
-旧入口待退役: /tmp/bci-v5-host-preview-1v4mzece/games/target sha256=23446c9c375f248b29cee2a3e3ef5678bd099248435ff8aac71ec215d539e4ed
-文件总数 91，需新增/替换 91；旧入口 2
+旧入口待退役: /tmp/bci-v5-host-preview-vzzhctao/games/pursuit sha256=387a793e137796c8158ca7678c8fd613ecd063b619ea1fd5dffafc6ac36f4592
+旧入口待退役: /tmp/bci-v5-host-preview-vzzhctao/games/target sha256=23446c9c375f248b29cee2a3e3ef5678bd099248435ff8aac71ec215d539e4ed
+文件总数 92，需新增/替换 92；旧入口 2
 只读预览：未写入宿主；退役旧入口需要用户明确授权。

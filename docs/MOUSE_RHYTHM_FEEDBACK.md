@@ -16,7 +16,20 @@
 
 `rhythm/tests/verify_input_feedback.py` 使用真实 Qt 窗口与按键，不直接设置音符判定或分数；覆盖不按键、毫秒反馈、松开、两个重复来源顺序、早松长音失败、完整按住长音成功、脉冲熄灭、失焦／暂停清理，以及 960×600 判定文字可见。截图和原始事件在 `tests/results/v5-rhythm-input/`。`tools/run_scenarios.py all` 已包含该验证器。
 
-最终测试数量、缩放结果与提交证据将在本轮完整回归后补充。
+测试代码提交：`1c67e91530dc607b54474d9f8d77eff336ad07ef`。
+
+| 验证 | 本轮结果 |
+|---|---|
+| pointer 全流程＋输入回归 | 100%／125%／150% 各 127/127 |
+| rhythm 原生输入／模拟宿主反馈 | 三档缩放各 38/38 |
+| rhythm 引擎 | 30/30 |
+| rhythm 布局与长尾 | 26/26 |
+| 七游戏及发布预检统一入口 | 17/17 测试组 |
+| 全部活动游戏代表窗口布局 | 70/70 |
+
+嵌套追光九点检查（三档缩放、三种窗口尺寸、两种宿主输入标签）实际球心最大误差：0.0 逻辑像素。统一报告在 `tests/results/v5-run-scenarios/result.json`，追加缩放报告在 `tests/results/v5-mouse-rhythm-scales.json`。通用 pointer 与 rhythm-input PNG 由最后的 150% 运行生成；每档数值报告单独保存。完整回归未修改的其他游戏 PNG 仅有渲染字节波动，未纳入本次截图变更。
+
+另已生成独立候选运行包 `/workspace/Neuralife-V5-mouse-rhythm-20261110.zip`，保持七个活动入口及 pointer 私有子任务结构；没有复制到正式宿主。
 
 ## 验收边界
 

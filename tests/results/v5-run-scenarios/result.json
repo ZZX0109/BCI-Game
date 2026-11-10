@@ -1,6 +1,6 @@
 {
-  "utc": "2026-11-10T08:20:16.788437+00:00",
-  "sourceHead": "24e3b4b277a1985bcef203e4b8d15d3696c87d76",
+  "utc": "2026-11-10T09:01:49.972161+00:00",
+  "sourceHead": "1c67e91530dc607b54474d9f8d77eff336ad07ef",
   "activeGames": [
     "hanoi",
     "sokoban",
@@ -122,6 +122,16 @@
       "log": "tests/results/v5-run-scenarios/rhythm-2.log"
     },
     {
+      "game": "rhythm",
+      "command": [
+        "/workspace/.venvs/bci-game/bin/python3",
+        "rhythm/tests/verify_input_feedback.py"
+      ],
+      "exitCode": 0,
+      "passed": true,
+      "log": "tests/results/v5-run-scenarios/rhythm-3.log"
+    },
+    {
       "game": "path-replay",
       "command": [
         "node",
@@ -172,6 +182,6 @@
       "log": "tests/results/v5-run-scenarios/adaptive-viewports.log"
     }
   ],
-  "passed": 16,
-  "total": 16
+  "passed": 17,
+  "total": 17
 }

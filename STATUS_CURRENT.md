@@ -1,5 +1,7 @@
 # BCI-Game V5 当前状态
 
+最新增量：`fix/v5-mouse-rhythm-feedback`，源码提交 `1c67e91`。修复追光原生鼠标被 BCI 标签拒绝、玩法菜单改鼠标选择、律动输入与节拍反馈混淆。100%／125%／150% 下 pointer 各 127/127，律动输入各 38/38；完整回归 17/17 组、布局 70/70。具体代码问题、截图、事件日志和验收边界见 [输入反馈修复报告](docs/MOUSE_RHYTHM_FEEDBACK.md)。以下阶段记录保留历史过程；当前结果以本段及报告为准。
+
 基线：2026-11-10 从 GitHub `main` 的 `a8a2e7660683fe4fe661e25ca1c61c010669a160` 克隆，在独立分支 `feat/neuralife-v5-interaction` 开发。原 `/workspace/BCI-Game` 的 `work` 分支含未提交 1106 修改，未覆盖、未 reset；先比较后移植。当前工作树不包含这些旧改动。
 
 当前规格：[docs/SPEC_CURRENT.md](docs/SPEC_CURRENT.md)；逐项证据：[V5_ACCEPTANCE.csv](V5_ACCEPTANCE.csv)。本文件为实施前基线，不将历史报告或旧自动日志认作 V5 通过。

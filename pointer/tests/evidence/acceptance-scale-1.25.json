@@ -1,12 +1,20 @@
 {
   "runtime": "PySide6 real Qt / simulated game API",
   "scaleFactor": "1.25",
-  "platform": "offscreen",
+  "platform": "xcb",
   "windowsHostTested": false,
   "brainHardwareTested": false,
   "checks": [
     {
       "name": "local: selection ready before task clock",
+      "passed": true
+    },
+    {
+      "name": "local: pursuit runtime identity and source",
+      "passed": true
+    },
+    {
+      "name": "local: full child canvas",
       "passed": true
     },
     {
@@ -18,7 +26,7 @@
       "passed": true
     },
     {
-      "name": "local: full five-round pursuit returns result",
+      "name": "local: full three-round pursuit returns result",
       "passed": true,
       "detail": "result"
     },
@@ -36,6 +44,10 @@
     },
     {
       "name": "local: repeated confirm cannot leak across return",
+      "passed": true
+    },
+    {
+      "name": "local: target runtime identity and source",
       "passed": true
     },
     {
@@ -79,6 +91,14 @@
       "passed": true
     },
     {
+      "name": "bci: pursuit runtime identity and source",
+      "passed": true
+    },
+    {
+      "name": "bci: full child canvas",
+      "passed": true
+    },
+    {
       "name": "bci: Loader receives started exactly once",
       "passed": true
     },
@@ -87,7 +107,7 @@
       "passed": true
     },
     {
-      "name": "bci: full five-round pursuit returns result",
+      "name": "bci: full three-round pursuit returns result",
       "passed": true,
       "detail": "result"
     },
@@ -105,6 +125,10 @@
     },
     {
       "name": "bci: repeated confirm cannot leak across return",
+      "passed": true
+    },
+    {
+      "name": "bci: target runtime identity and source",
       "passed": true
     },
     {
@@ -148,6 +172,14 @@
       "passed": true
     },
     {
+      "name": "mouse: pursuit runtime identity and source",
+      "passed": true
+    },
+    {
+      "name": "mouse: full child canvas",
+      "passed": true
+    },
+    {
       "name": "mouse: Loader receives started exactly once",
       "passed": true
     },
@@ -156,7 +188,7 @@
       "passed": true
     },
     {
-      "name": "mouse: full five-round pursuit returns result",
+      "name": "mouse: full three-round pursuit returns result",
       "passed": true,
       "detail": "result"
     },
@@ -170,6 +202,10 @@
     },
     {
       "name": "mouse: result returns to selection",
+      "passed": true
+    },
+    {
+      "name": "mouse: target runtime identity and source",
       "passed": true
     },
     {
@@ -218,8 +254,12 @@
       "passed": true
     },
     {
-      "name": "pursuit: (1000, 700) BCI cannot be overwritten by local mouse",
-      "passed": true
+      "name": "pursuit: (1000, 700) BCI-labelled native mouse directly positions ball",
+      "passed": true,
+      "detail": [
+        175.0,
+        96.0
+      ]
     },
     {
       "name": "pursuit: (1000, 700) native mouse center/corners/edges align",
@@ -231,12 +271,12 @@
       "passed": true,
       "detail": {
         "actual": [
-          0.9677894736842106,
-          0.4653543307086615
+          0.9661052631578948,
+          0.4622047244094488
         ],
         "expected": [
-          0.9677894736842106,
-          0.4653543307086615
+          0.9661052631578948,
+          0.4622047244094488
         ]
       }
     },
@@ -250,8 +290,12 @@
       "passed": true
     },
     {
-      "name": "pursuit: (1280, 800) BCI cannot be overwritten by local mouse",
-      "passed": true
+      "name": "pursuit: (1280, 800) BCI-labelled native mouse directly positions ball",
+      "passed": true,
+      "detail": [
+        168.00000000000003,
+        96.0
+      ]
     },
     {
       "name": "pursuit: (1280, 800) native mouse center/corners/edges align",
@@ -263,12 +307,12 @@
       "passed": true,
       "detail": {
         "actual": [
-          0.9723684210526319,
-          0.47105263157894744
+          0.9710526315789473,
+          0.46842105263157896
         ],
         "expected": [
-          0.9723684210526319,
-          0.47105263157894744
+          0.9710526315789473,
+          0.46842105263157896
         ]
       }
     },
@@ -282,8 +326,12 @@
       "passed": true
     },
     {
-      "name": "pursuit: (1920, 1080) BCI cannot be overwritten by local mouse",
-      "passed": true
+      "name": "pursuit: (1920, 1080) BCI-labelled native mouse directly positions ball",
+      "passed": true,
+      "detail": [
+        160.0,
+        96.0
+      ]
     },
     {
       "name": "pursuit: (1920, 1080) native mouse center/corners/edges align",
@@ -295,12 +343,12 @@
       "passed": true,
       "detail": {
         "actual": [
-          0.9784782608695652,
-          0.48018018018018016
+          0.977608695652174,
+          0.47837837837837843
         ],
         "expected": [
-          0.9784782608695652,
-          0.48018018018018016
+          0.977608695652174,
+          0.47837837837837843
         ]
       }
     },
@@ -327,12 +375,12 @@
       "passed": true,
       "detail": {
         "actual": [
-          874.1539370078742,
-          224.76614173228347
+          872.6326771653545,
+          223.2448818897638
         ],
         "expected": [
-          874.1539370078742,
-          224.76614173228347
+          872.6326771653545,
+          223.2448818897638
         ]
       }
     },
@@ -359,12 +407,12 @@
       "passed": true,
       "detail": {
         "actual": [
-          939.3078947368424,
-          227.51842105263162
+          938.0368421052632,
+          226.2473684210527
         ],
         "expected": [
-          939.3078947368424,
-          227.51842105263162
+          938.0368421052632,
+          226.2473684210527
         ]
       }
     },
@@ -391,14 +439,112 @@
       "passed": true,
       "detail": {
         "actual": [
-          979.2716216216218,
-          231.92702702702704
+          978.4013513513515,
+          231.0567567567568
         ],
         "expected": [
-          979.2716216216218,
-          231.92702702702704
+          978.4013513513515,
+          231.0567567567568
         ]
       }
+    },
+    {
+      "name": "local: host actions cannot start mouse menu",
+      "passed": true
+    },
+    {
+      "name": "local: nested pursuit 1000x700 nine mouse points align after host event",
+      "passed": true,
+      "detail": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "local: nested pursuit 1280x800 nine mouse points align after host event",
+      "passed": true,
+      "detail": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "local: nested pursuit 1920x1080 nine mouse points align after host event",
+      "passed": true,
+      "detail": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "bci: host actions cannot start mouse menu",
+      "passed": true
+    },
+    {
+      "name": "bci: nested pursuit 1000x700 nine mouse points align after host event",
+      "passed": true,
+      "detail": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "bci: nested pursuit 1280x800 nine mouse points align after host event",
+      "passed": true,
+      "detail": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "bci: nested pursuit 1920x1080 nine mouse points align after host event",
+      "passed": true,
+      "detail": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
     },
     {
       "name": "pursuit: native mouse and actual control point coincide",
@@ -489,15 +635,15 @@
       "passed": true
     },
     {
-      "name": "suite: host-first native/host navigation advances once",
+      "name": "suite: host-first native/host cannot change mouse menu",
       "passed": true
     },
     {
-      "name": "suite: native-first native/host navigation advances once",
+      "name": "suite: native-first native/host cannot change mouse menu",
       "passed": true
     },
     {
-      "name": "suite: host-first task start cannot leak native Enter as shot",
+      "name": "suite: Enter cannot start a task from mouse menu",
       "passed": true
     },
     {
@@ -549,6 +695,6 @@
       "passed": true
     }
   ],
-  "passed": 110,
-  "total": 110
+  "passed": 127,
+  "total": 127
 }
