@@ -102,6 +102,10 @@ def suite_flow(source):
         r.action("confirm")
     wait_ui(r)
     item = child(r)
+    loaded = r.game.payloads("pointer.child_loader_ready")[-1]
+    check(f"{source}: pursuit runtime identity and source", loaded["componentMode"] == "pursuit" and "pursuit/Main.qml" in loaded["source"])
+    check(f"{source}: full child canvas", abs(item.height()-r.root.height()) < 1)
+    if source == "local": r.screenshot(str(EVIDENCE / "pursuit-running.png"))
     check(f"{source}: Loader receives started exactly once", r.get("activeMode") == "pursuit" and item is not None and item.property("phase") == "countdown")
     if source == "bci":
         r.pointer(500, 300)
@@ -144,6 +148,9 @@ def suite_flow(source):
         r.action("confirm")
     wait_ui(r)
     item = child(r)
+    loaded = r.game.payloads("pointer.child_loader_ready")[-1]
+    check(f"{source}: target runtime identity and source", loaded["componentMode"] == "target" and "target/Main.qml" in loaded["source"])
+    if source == "local": r.screenshot(str(EVIDENCE / "target-running.png"))
     check(f"{source}: target gets fresh lifecycle and clock", item.property("phase") == "target_visible" and item.property("trialIndex") == 0)
     check(f"{source}: task starts without inherited confirm shot", not r.game.payloads("target.shot_debug"))
     for _ in range(8):
