@@ -1,0 +1,2033 @@
+{
+  "qt": "6.10.2",
+  "platform": "offscreen",
+  "scaleFactor": "1.5",
+  "scope": "Qt QTest native mouse/keyboard and simulated Neuralife signals; Windows host/physical BCI not tested",
+  "qmlWarnings": [],
+  "passed": 225,
+  "total": 225,
+  "checks": [
+    {
+      "check": "host: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "host: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "host: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "native_first: Enter + host confirm pick once",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "native_first: repeated physical press while held ignored",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "native_first: delayed forwarded confirm ignored",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "native_first: cancel no move",
+      "ok": true,
+      "actual": [
+        0,
+        1
+      ],
+      "expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "check": "host_first: Enter + host confirm pick once",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "host_first: repeated physical press while held ignored",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "host_first: delayed forwarded confirm ignored",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "host_first: cancel no move",
+      "ok": true,
+      "actual": [
+        0,
+        2
+      ],
+      "expected": [
+        0,
+        2
+      ]
+    },
+    {
+      "check": "numeric Enter supported",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "Hanoi rejects larger on smaller",
+      "ok": true,
+      "actual": [
+        1,
+        2,
+        1
+      ],
+      "expected": [
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "check": "empty picks separate from illegal moves",
+      "ok": true,
+      "actual": [
+        1,
+        1
+      ],
+      "expected": [
+        1,
+        1
+      ]
+    },
+    {
+      "check": "paused input and time frozen",
+      "ok": true,
+      "actual": [
+        [
+          [
+            3
+          ],
+          [],
+          [
+            1
+          ]
+        ],
+        1,
+        0.008
+      ],
+      "expected": [
+        [
+          [
+            3
+          ],
+          [],
+          [
+            1
+          ]
+        ],
+        1,
+        0.008
+      ]
+    },
+    {
+      "check": "pause/resume preserves a keyboard-held piece",
+      "ok": true,
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "check": "repeated started signal cannot reset board",
+      "ok": true,
+      "actual": [
+        [
+          [
+            3
+          ],
+          [],
+          [
+            1
+          ]
+        ],
+        1
+      ],
+      "expected": [
+        [
+          [
+            3
+          ],
+          [],
+          [
+            1
+          ]
+        ],
+        1
+      ]
+    },
+    {
+      "check": "stopped session cannot be resumed or restarted",
+      "ok": true,
+      "actual": [
+        [
+          [
+            3
+          ],
+          [],
+          [
+            1
+          ]
+        ],
+        1
+      ],
+      "expected": [
+        [
+          [
+            3
+          ],
+          [],
+          [
+            1
+          ]
+        ],
+        1
+      ]
+    },
+    {
+      "check": "host: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "host: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "host: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "host: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "host: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "host: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "host: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "host: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "host: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "host: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "host: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "host: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "host: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "host: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "host: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "local host fallback completes five rounds",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "host: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "host: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "host: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "mouse drag moves once, no click-after-drag",
+      "ok": true,
+      "actual": [
+        1,
+        [
+          1
+        ]
+      ],
+      "expected": [
+        1,
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "check": "illegal mouse drag records once and safely restores",
+      "ok": true,
+      "actual": [
+        1,
+        -1,
+        1,
+        [
+          3,
+          2
+        ]
+      ],
+      "expected": [
+        1,
+        -1,
+        1,
+        [
+          3,
+          2
+        ]
+      ]
+    },
+    {
+      "check": "pause safely cancels mouse drag without a move",
+      "ok": true,
+      "actual": [
+        1,
+        -1,
+        [
+          3,
+          2
+        ]
+      ],
+      "expected": [
+        1,
+        -1,
+        [
+          3,
+          2
+        ]
+      ]
+    },
+    {
+      "check": "drag holds second piece",
+      "ok": true,
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "check": "resize safely cancels drag without a move",
+      "ok": true,
+      "actual": [
+        1,
+        -1,
+        [
+          3,
+          2
+        ]
+      ],
+      "expected": [
+        1,
+        -1,
+        [
+          3,
+          2
+        ]
+      ]
+    },
+    {
+      "check": "focus loss restores dragged piece",
+      "ok": true,
+      "actual": [
+        false,
+        -1,
+        [
+          3,
+          2
+        ]
+      ],
+      "expected": [
+        false,
+        -1,
+        [
+          3,
+          2
+        ]
+      ]
+    },
+    {
+      "check": "bci: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "bci: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "bci: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "bci: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "bci: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "bci: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "bci: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "bci: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "bci: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "independent London BFS distance 3",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "QML London BFS matches 3",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "independent London BFS distance 5",
+      "ok": true,
+      "actual": 5,
+      "expected": 5
+    },
+    {
+      "check": "QML London BFS matches 5",
+      "ok": true,
+      "actual": 5,
+      "expected": 5
+    },
+    {
+      "check": "bci: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "bci: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "bci: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "London capacity, not size, rejects full C",
+      "ok": true,
+      "actual": [
+        2,
+        "capacity_exceeded"
+      ],
+      "expected": [
+        2,
+        "capacity_exceeded"
+      ]
+    },
+    {
+      "check": "London permits blue on green and other color orders",
+      "ok": true,
+      "actual": [
+        2,
+        1
+      ],
+      "expected": [
+        2,
+        1
+      ]
+    },
+    {
+      "check": "London cancellation leaves move count",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "keyboard: five-round plan",
+      "ok": true,
+      "actual": [
+        [
+          "hanoi",
+          3
+        ],
+        [
+          "hanoi",
+          4
+        ],
+        [
+          "hanoi",
+          5
+        ],
+        [
+          "london",
+          3
+        ],
+        [
+          "london",
+          3
+        ]
+      ],
+      "expected": [
+        [
+          "hanoi",
+          3
+        ],
+        [
+          "hanoi",
+          4
+        ],
+        [
+          "hanoi",
+          5
+        ],
+        [
+          "london",
+          3
+        ],
+        [
+          "london",
+          3
+        ]
+      ]
+    },
+    {
+      "check": "keyboard: round 1 starts",
+      "ok": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "keyboard: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "keyboard: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "keyboard: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "keyboard: round 1 independently optimal",
+      "ok": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "keyboard: round 1 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "keyboard: round 1 move count",
+      "ok": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "keyboard: round 1 optimum",
+      "ok": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "keyboard: round 1 exact destination",
+      "ok": true,
+      "actual": [
+        [],
+        [],
+        [
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        [],
+        [],
+        [
+          3,
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "check": "keyboard: paused feedback/animation freezes",
+      "ok": true,
+      "actual": [
+        0.048,
+        1.492,
+        0.292,
+        0.5020670599938934
+      ],
+      "expected": [
+        0.048,
+        1.492,
+        0.292,
+        0.5020670599938934
+      ]
+    },
+    {
+      "check": "keyboard: round 2 starts",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "keyboard: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "keyboard: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "keyboard: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "keyboard: round 2 independently optimal",
+      "ok": true,
+      "actual": 15,
+      "expected": 15
+    },
+    {
+      "check": "keyboard: round 2 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "keyboard: round 2 move count",
+      "ok": true,
+      "actual": 15,
+      "expected": 15
+    },
+    {
+      "check": "keyboard: round 2 optimum",
+      "ok": true,
+      "actual": 15,
+      "expected": 15
+    },
+    {
+      "check": "keyboard: round 2 exact destination",
+      "ok": true,
+      "actual": [
+        [],
+        [],
+        [
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        [],
+        [],
+        [
+          4,
+          3,
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "check": "keyboard: round 3 starts",
+      "ok": true,
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "check": "keyboard: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "keyboard: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "keyboard: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "keyboard: round 3 independently optimal",
+      "ok": true,
+      "actual": 31,
+      "expected": 31
+    },
+    {
+      "check": "keyboard: round 3 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "keyboard: round 3 move count",
+      "ok": true,
+      "actual": 31,
+      "expected": 31
+    },
+    {
+      "check": "keyboard: round 3 optimum",
+      "ok": true,
+      "actual": 31,
+      "expected": 31
+    },
+    {
+      "check": "keyboard: round 3 exact destination",
+      "ok": true,
+      "actual": [
+        [],
+        [],
+        [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        [],
+        [],
+        [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "check": "keyboard: round 4 starts",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "keyboard: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "keyboard: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "keyboard: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "keyboard: round 4 independently optimal",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "keyboard: round 4 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "keyboard: round 4 move count",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "keyboard: round 4 optimum",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "keyboard: round 4 exact destination",
+      "ok": true,
+      "actual": [
+        [],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ]
+      ],
+      "expected": [
+        [],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "check": "keyboard: round 5 starts",
+      "ok": true,
+      "actual": 4,
+      "expected": 4
+    },
+    {
+      "check": "keyboard: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "keyboard: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "keyboard: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "keyboard: round 5 independently optimal",
+      "ok": true,
+      "actual": 5,
+      "expected": 5
+    },
+    {
+      "check": "keyboard: round 5 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "keyboard: round 5 move count",
+      "ok": true,
+      "actual": 5,
+      "expected": 5
+    },
+    {
+      "check": "keyboard: round 5 optimum",
+      "ok": true,
+      "actual": 5,
+      "expected": 5
+    },
+    {
+      "check": "keyboard: round 5 exact destination",
+      "ok": true,
+      "actual": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ]
+      ],
+      "expected": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "check": "keyboard: finish exactly once",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "keyboard: all results distinct",
+      "ok": true,
+      "actual": [
+        "hanoi",
+        "hanoi",
+        "hanoi",
+        "london",
+        "london"
+      ],
+      "expected": [
+        "hanoi",
+        "hanoi",
+        "hanoi",
+        "london",
+        "london"
+      ]
+    },
+    {
+      "check": "keyboard: no incorrect move events",
+      "ok": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "keyboard: explicit rule change",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "keyboard: post-finish no restart or extra records",
+      "ok": true,
+      "actual": 320,
+      "expected": 320
+    },
+    {
+      "check": "keyboard: post-finish still once",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "keyboard: finish-stop-late-start cannot revive",
+      "ok": true,
+      "actual": [
+        "complete",
+        true,
+        320,
+        1
+      ],
+      "expected": [
+        "complete",
+        true,
+        320,
+        1
+      ]
+    },
+    {
+      "check": "mouse: five-round plan",
+      "ok": true,
+      "actual": [
+        [
+          "hanoi",
+          3
+        ],
+        [
+          "hanoi",
+          4
+        ],
+        [
+          "hanoi",
+          5
+        ],
+        [
+          "london",
+          3
+        ],
+        [
+          "london",
+          3
+        ]
+      ],
+      "expected": [
+        [
+          "hanoi",
+          3
+        ],
+        [
+          "hanoi",
+          4
+        ],
+        [
+          "hanoi",
+          5
+        ],
+        [
+          "london",
+          3
+        ],
+        [
+          "london",
+          3
+        ]
+      ]
+    },
+    {
+      "check": "mouse: round 1 starts",
+      "ok": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "mouse: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "mouse: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "mouse: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "mouse: round 1 independently optimal",
+      "ok": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "mouse: round 1 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "mouse: round 1 move count",
+      "ok": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "mouse: round 1 optimum",
+      "ok": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "mouse: round 1 exact destination",
+      "ok": true,
+      "actual": [
+        [],
+        [],
+        [
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        [],
+        [],
+        [
+          3,
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "check": "mouse: paused feedback/animation freezes",
+      "ok": true,
+      "actual": [
+        0.048,
+        1.492,
+        0.292,
+        0.5020670599938934
+      ],
+      "expected": [
+        0.048,
+        1.492,
+        0.292,
+        0.5020670599938934
+      ]
+    },
+    {
+      "check": "mouse: round 2 starts",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "mouse: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "mouse: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "mouse: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "mouse: round 2 independently optimal",
+      "ok": true,
+      "actual": 15,
+      "expected": 15
+    },
+    {
+      "check": "mouse: round 2 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "mouse: round 2 move count",
+      "ok": true,
+      "actual": 15,
+      "expected": 15
+    },
+    {
+      "check": "mouse: round 2 optimum",
+      "ok": true,
+      "actual": 15,
+      "expected": 15
+    },
+    {
+      "check": "mouse: round 2 exact destination",
+      "ok": true,
+      "actual": [
+        [],
+        [],
+        [
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        [],
+        [],
+        [
+          4,
+          3,
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "check": "mouse: round 3 starts",
+      "ok": true,
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "check": "mouse: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "mouse: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "mouse: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "mouse: round 3 independently optimal",
+      "ok": true,
+      "actual": 31,
+      "expected": 31
+    },
+    {
+      "check": "mouse: round 3 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "mouse: round 3 move count",
+      "ok": true,
+      "actual": 31,
+      "expected": 31
+    },
+    {
+      "check": "mouse: round 3 optimum",
+      "ok": true,
+      "actual": 31,
+      "expected": 31
+    },
+    {
+      "check": "mouse: round 3 exact destination",
+      "ok": true,
+      "actual": [
+        [],
+        [],
+        [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        [],
+        [],
+        [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "check": "mouse: round 4 starts",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "mouse: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "mouse: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "mouse: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "mouse: round 4 independently optimal",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "mouse: round 4 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "mouse: round 4 move count",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "mouse: round 4 optimum",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "mouse: round 4 exact destination",
+      "ok": true,
+      "actual": [
+        [],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ]
+      ],
+      "expected": [
+        [],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "check": "mouse: round 5 starts",
+      "ok": true,
+      "actual": 4,
+      "expected": 4
+    },
+    {
+      "check": "mouse: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "mouse: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "mouse: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "mouse: round 5 independently optimal",
+      "ok": true,
+      "actual": 5,
+      "expected": 5
+    },
+    {
+      "check": "mouse: round 5 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "mouse: round 5 move count",
+      "ok": true,
+      "actual": 5,
+      "expected": 5
+    },
+    {
+      "check": "mouse: round 5 optimum",
+      "ok": true,
+      "actual": 5,
+      "expected": 5
+    },
+    {
+      "check": "mouse: round 5 exact destination",
+      "ok": true,
+      "actual": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ]
+      ],
+      "expected": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "check": "mouse: finish exactly once",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "mouse: all results distinct",
+      "ok": true,
+      "actual": [
+        "hanoi",
+        "hanoi",
+        "hanoi",
+        "london",
+        "london"
+      ],
+      "expected": [
+        "hanoi",
+        "hanoi",
+        "hanoi",
+        "london",
+        "london"
+      ]
+    },
+    {
+      "check": "mouse: no incorrect move events",
+      "ok": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "mouse: explicit rule change",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "mouse: post-finish no restart or extra records",
+      "ok": true,
+      "actual": 262,
+      "expected": 262
+    },
+    {
+      "check": "mouse: post-finish still once",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "mouse: finish-stop-late-start cannot revive",
+      "ok": true,
+      "actual": [
+        "complete",
+        true,
+        262,
+        1
+      ],
+      "expected": [
+        "complete",
+        true,
+        262,
+        1
+      ]
+    },
+    {
+      "check": "bci: five-round plan",
+      "ok": true,
+      "actual": [
+        [
+          "hanoi",
+          3
+        ],
+        [
+          "hanoi",
+          4
+        ],
+        [
+          "hanoi",
+          5
+        ],
+        [
+          "london",
+          3
+        ],
+        [
+          "london",
+          3
+        ]
+      ],
+      "expected": [
+        [
+          "hanoi",
+          3
+        ],
+        [
+          "hanoi",
+          4
+        ],
+        [
+          "hanoi",
+          5
+        ],
+        [
+          "london",
+          3
+        ],
+        [
+          "london",
+          3
+        ]
+      ]
+    },
+    {
+      "check": "bci: round 1 starts",
+      "ok": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "bci: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "bci: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "bci: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "bci: round 1 independently optimal",
+      "ok": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "bci: round 1 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "bci: round 1 move count",
+      "ok": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "bci: round 1 optimum",
+      "ok": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "bci: round 1 exact destination",
+      "ok": true,
+      "actual": [
+        [],
+        [],
+        [
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        [],
+        [],
+        [
+          3,
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "check": "bci: paused feedback/animation freezes",
+      "ok": true,
+      "actual": [
+        0.048,
+        1.492,
+        0.292,
+        0.5020670599938934
+      ],
+      "expected": [
+        0.048,
+        1.492,
+        0.292,
+        0.5020670599938934
+      ]
+    },
+    {
+      "check": "bci: round 2 starts",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "bci: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "bci: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "bci: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "bci: round 2 independently optimal",
+      "ok": true,
+      "actual": 15,
+      "expected": 15
+    },
+    {
+      "check": "bci: round 2 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "bci: round 2 move count",
+      "ok": true,
+      "actual": 15,
+      "expected": 15
+    },
+    {
+      "check": "bci: round 2 optimum",
+      "ok": true,
+      "actual": 15,
+      "expected": 15
+    },
+    {
+      "check": "bci: round 2 exact destination",
+      "ok": true,
+      "actual": [
+        [],
+        [],
+        [
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        [],
+        [],
+        [
+          4,
+          3,
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "check": "bci: round 3 starts",
+      "ok": true,
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "check": "bci: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "bci: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "bci: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "bci: round 3 independently optimal",
+      "ok": true,
+      "actual": 31,
+      "expected": 31
+    },
+    {
+      "check": "bci: round 3 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "bci: round 3 move count",
+      "ok": true,
+      "actual": 31,
+      "expected": 31
+    },
+    {
+      "check": "bci: round 3 optimum",
+      "ok": true,
+      "actual": 31,
+      "expected": 31
+    },
+    {
+      "check": "bci: round 3 exact destination",
+      "ok": true,
+      "actual": [
+        [],
+        [],
+        [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        [],
+        [],
+        [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "check": "bci: round 4 starts",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "bci: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "bci: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "bci: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "bci: round 4 independently optimal",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "bci: round 4 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "bci: round 4 move count",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "bci: round 4 optimum",
+      "ok": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "bci: round 4 exact destination",
+      "ok": true,
+      "actual": [
+        [],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ]
+      ],
+      "expected": [
+        [],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "check": "bci: round 5 starts",
+      "ok": true,
+      "actual": 4,
+      "expected": 4
+    },
+    {
+      "check": "bci: preview awaits confirmation",
+      "ok": true,
+      "actual": "preview",
+      "expected": "preview"
+    },
+    {
+      "check": "bci: preview does not count trial time",
+      "ok": true,
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "check": "bci: preview confirmed",
+      "ok": true,
+      "actual": "select",
+      "expected": "select"
+    },
+    {
+      "check": "bci: round 5 independently optimal",
+      "ok": true,
+      "actual": 5,
+      "expected": 5
+    },
+    {
+      "check": "bci: round 5 feedback",
+      "ok": true,
+      "actual": "round_feedback",
+      "expected": "round_feedback"
+    },
+    {
+      "check": "bci: round 5 move count",
+      "ok": true,
+      "actual": 5,
+      "expected": 5
+    },
+    {
+      "check": "bci: round 5 optimum",
+      "ok": true,
+      "actual": 5,
+      "expected": 5
+    },
+    {
+      "check": "bci: round 5 exact destination",
+      "ok": true,
+      "actual": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ]
+      ],
+      "expected": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "check": "bci: finish exactly once",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "bci: all results distinct",
+      "ok": true,
+      "actual": [
+        "hanoi",
+        "hanoi",
+        "hanoi",
+        "london",
+        "london"
+      ],
+      "expected": [
+        "hanoi",
+        "hanoi",
+        "hanoi",
+        "london",
+        "london"
+      ]
+    },
+    {
+      "check": "bci: no incorrect move events",
+      "ok": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "bci: explicit rule change",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "bci: post-finish no restart or extra records",
+      "ok": true,
+      "actual": 320,
+      "expected": 320
+    },
+    {
+      "check": "bci: post-finish still once",
+      "ok": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "bci: finish-stop-late-start cannot revive",
+      "ok": true,
+      "actual": [
+        "complete",
+        true,
+        320,
+        1
+      ],
+      "expected": [
+        "complete",
+        true,
+        320,
+        1
+      ]
+    },
+    {
+      "check": "no QML runtime/binding errors",
+      "ok": true,
+      "actual": [],
+      "expected": []
+    }
+  ]
+}

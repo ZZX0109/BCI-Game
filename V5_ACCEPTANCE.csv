@@ -33,13 +33,13 @@ V5-031,P0,traffic,安全岛恢复,安全岛等待后按右继续,能正确进入
 V5-032,P0,traffic,固定种子确定性,相同seed重复过街,车流轨迹与碰撞时间一致,replay report,NOT_TESTED,Linux Qt simulated host: tests/results/v5-traffic/result.json (10/10) and road PNGs; formal Windows gameplay evidence pending
 V5-033,P0,traffic,碰撞判定,同车道抢行；相同时间在安全岛等待,车道中可撞车，安全岛绝对不撞车,事件流,NOT_TESTED,Linux Qt simulated host: tests/results/v5-traffic/result.json (10/10) and road PNGs; formal Windows gameplay evidence pending
 V5-034,P0,traffic,训练/评测分离,同种子键盘与BCI比较,标准条件车速一致，训练降速单独记录,日志参数,NOT_TESTED,Linux Qt simulated host: tests/results/v5-traffic/result.json (10/10) and road PNGs; formal Windows gameplay evidence pending
-V5-035,P1,hanoi,五关顺序,完成3/4/5盘及伦敦塔两关,恰好5关自动推进、盘数及目标正确,录屏/结果,NOT_TESTED,
-V5-036,P1,hanoi,伦敦塔球体,进入第4、5关,圆球不是平盘、颜色可区分、3/2/1杆长明显,实机截图,NOT_TESTED,
-V5-037,P1,hanoi,目标预览,每关开始前观察目标图,显示当前/目标示意，并等待人工确认,每关截图,NOT_TESTED,
-V5-038,P1,hanoi,操作中目标小图,打开关卡且操作中观察,目标图持续可查看，不只文本通知,实机截图,NOT_TESTED,
-V5-039,P1,hanoi,纯鼠标五关,仅使用鼠标完成五局,无需键盘取放或进入下一关,全流程录屏,NOT_TESTED,
-V5-040,P1,hanoi,键盘与BCI预览,键盘/模拟脑控确认预览并操控,不依赖鼠标，预览中不会计时移动,日志和录屏,NOT_TESTED,
-V5-041,P1,hanoi,伦敦塔规则,目标柱满及不同球重排,容量约束正确、颜色球任意叠放合法,自动回归,NOT_TESTED,
+V5-035,P1,hanoi,五关顺序,完成3/4/5盘及伦敦塔两关,恰好5关自动推进、盘数及目标正确,录屏/结果,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
+V5-036,P1,hanoi,伦敦塔球体,进入第4、5关,圆球不是平盘、颜色可区分、3/2/1杆长明显,实机截图,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
+V5-037,P1,hanoi,目标预览,每关开始前观察目标图,显示当前/目标示意，并等待人工确认,每关截图,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
+V5-038,P1,hanoi,操作中目标小图,打开关卡且操作中观察,目标图持续可查看，不只文本通知,实机截图,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
+V5-039,P1,hanoi,纯鼠标五关,仅使用鼠标完成五局,无需键盘取放或进入下一关,全流程录屏,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
+V5-040,P1,hanoi,键盘与BCI预览,键盘/模拟脑控确认预览并操控,不依赖鼠标，预览中不会计时移动,日志和录屏,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
+V5-041,P1,hanoi,伦敦塔规则,目标柱满及不同球重排,容量约束正确、颜色球任意叠放合法,自动回归,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
 V5-042,P1,claw,主辅视图布局,1920x1080和2560x1440定位,玩具夹爪可清晰看到，辅助视角可用,真实截图,NOT_TESTED,
 V5-043,P1,claw,键盘Enter,方向调整后Enter触发,Enter抓取，Space不触发,键盘回归,NOT_TESTED,
 V5-044,P1,claw,成功动画,误差0.8倍容差触发,成功抓取运输投放，记录success,录屏/日志,NOT_TESTED,
