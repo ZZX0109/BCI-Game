@@ -260,7 +260,7 @@ Item {
             Rectangle { width:parent.width*(root.active?root.holdFraction(root.active):0);height:parent.height;radius:2.5;color:uiTheme.primary }
             visible:root.roundIndex===3
         }
-        Text { visible:!root.tightStack;width:parent.width;text:root.state?(root.state.cfg.inputMode==="pulse"?"保持任务：脉冲续期":"保持任务：按下 / 松开")+"\n判定区间 ±"+root.state.cfg.windowSeconds.toFixed(1)+"s · "+Math.round((root.clock, Engine.currentBpm(root.state)))+" BPM":"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx;lineHeight:1.5 }
+        Text { visible:!root.tightStack;width:parent.width;text:root.state?(root.state.cfg.inputMode==="pulse"?"保持任务：脉冲续期":"保持任务：按下 / 松开")+"\n判定区间 ±"+root.state.cfg.windowSeconds.toFixed(1)+"s · "+(root.clock >= 0 ? Math.round(Engine.currentBpm(root.state)) : 0)+" BPM":"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx;lineHeight:1.5 }
     }
     Row { x:root.inset;y:parent.height-67;spacing:8
         Repeater {

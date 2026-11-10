@@ -48,3 +48,5 @@ L3 及后续关卡已移植多阶段互锁和连续扫掠几何验证；L1/L2 �
 `config/active_games.json` 是七活动入口清单；`tools/package_v5.py` 打出的运行包含一个 `pointer`、共七个可发现入口，旧追光/打靶作为私有子任务。`tests/package_v5.py` 的 Linux 模拟宿主 QML 加载检查通过。`tools/run_scenarios.py all` 改为按清单执行七游戏自动验证与打包/同步预检；旧场景入口保留为 `--legacy`。同步脚本默认只读，测试用虚拟宿主目录的预览 6/6 通过，真实 Neuralife 未写入。V3/V4 根报告和旧交付目录已完整归档至 `docs/archive/`，旧路径留跳转说明。回退方法见 `docs/V5_DEPLOYMENT.md`。
 
 用户确认之后只可能部署到此前提供的 Neuralife Windows 客户端分包，当前没有可访问的 Windows/macOS 运行环境。Linux Qt 多窗口截图可验证布局计算与实际 Qt 渲染，但不作为 Windows DPI、macOS 原生窗口或正式客户端录屏证据。上传的 Demo 分包缺少 Quick3D DLL/QML 模块，正式鲁班锁 RHI 验收仍需完整客户端运行时。`V5_ACCEPTANCE.csv` 中没有实际证据的条目继续保留 `NOT_TESTED`。本分支没有合并 main、写入宿主或退役旧入口。
+
+当前活动模块版本：hanoi 1.1.0、sokoban 0.4.2、pointer 1.0.0、claw 0.5.0、traffic 0.6.0、luban 0.7.0、rhythm 1.2.0。当前本地统一测试以 `tests/results/v5-run-scenarios/result.json` 中的 `sourceHead` 为实际已提交源码基线，测试失败不得从历史结果继承。

@@ -495,7 +495,8 @@ Item {
     function viewportChanged(){if(dragActive)cancelDrag()}
     function projectVoxel(p) {
         if(!sceneReady)return Qt.vector3d(sceneLoader.width/2,sceneLoader.height/2,0)
-        return sceneLoader.item.projectVoxel(p)
+        var scene = sceneLoader.item as LubanScene
+        return scene.projectVoxel(p)
     }
     // World endpoint used by the numbered labels and the two axis arrows.
     function endpoint(pid, positive, padding) {

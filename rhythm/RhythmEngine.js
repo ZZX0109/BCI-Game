@@ -57,7 +57,7 @@ function create(v,source){
     var s={cfg:configure(v,source),source:source||"local",phase:"countdown",phaseT:0,round:-1,t:0,elapsed:0,
         notes:[],results:[],events:[],raw:[],outcomes:[],down:{},paused:false,stopped:false,finishSent:false,
         feedback:"准备跟随节拍",feedbackKind:"neutral",feedbackDir:"",feedbackUntil:0,correctInputs:0,wrongInputs:0,strayInputs:0,ignoredInputs:0,holdContinuations:0,holdWrongInputs:0}
-    emit(s,"session_started",{version:"1.1.0",config:s.cfg,inputSource:s.source,measurement:"game_commands_only"})
+    emit(s,"session_started",{version:"1.2.0",config:s.cfg,inputSource:s.source,measurement:"game_commands_only"})
     return s
 }
 function beginRound(s,r){

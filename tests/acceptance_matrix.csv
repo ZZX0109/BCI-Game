@@ -1,9 +1,9 @@
 case_id,priority,module,check,steps,expected,evidence_required,status,actual_evidence
 V5-001,P0,repo,工作树安全,记录git status和HEAD并建立工作分支,不覆盖脏工作区；注明代码基线和变更范围,git输出/分支,PASS,STATUS_CURRENT.md; AGENTS.md; docs/SPEC_CURRENT.md; git branch feat/neuralife-v5-interaction
 V5-002,P0,repo,唯一规格,根AGENTS链接SPEC_CURRENT并标注旧报告归档,Agent能找到唯一当前需求，不从历史PASS认定完成,文档审查,PASS,STATUS_CURRENT.md; AGENTS.md; docs/SPEC_CURRENT.md; git branch feat/neuralife-v5-interaction
-V5-003,P0,repo,活动入口清单,检查活动模块登记,"发布列表是hanoi,sokoban,pointer,claw,traffic,luban,rhythm",文件清单/游戏截图,NOT_TESTED,
-V5-004,P0,repo,全量测试覆盖,运行tools/run_scenarios.py all,包含rhythm和pointer；每个当前游戏至少有适配测试,测试输出,NOT_TESTED,
-V5-005,P0,repo,只读部署预览,运行sync_to_host --dry-run,未写入宿主；显示新增替换与旧模块退役项,日志与SHA256,NOT_TESTED,
+V5-003,P0,repo,活动入口清单,检查活动模块登记,"发布列表是hanoi,sokoban,pointer,claw,traffic,luban,rhythm",文件清单/游戏截图,PASS,config/active_games.json; tests/results/v5-package/package-result.json: exactly seven discoverable module IDs in clean runtime tree
+V5-004,P0,repo,全量测试覆盖,运行tools/run_scenarios.py all,包含rhythm和pointer；每个当前游戏至少有适配测试,测试输出,PASS,tests/results/v5-run-scenarios/result.json: all seven current games plus packaging/sync/lint checks; see per-command logs
+V5-005,P0,repo,只读部署预览,运行sync_to_host --dry-run,未写入宿主；显示新增替换与旧模块退役项,日志与SHA256,NOT_TESTED,tests/results/v5-release/sync-result.json: read-only preview 6/6 against isolated test host; real Neuralife target directory unavailable
 V5-006,P0,repo,旧插件退役安全,经过同意执行旧模块退役演练,备份pursuit/target旧插件；重新打开Neuralife不再显示旧入口,屏幕截图/回退验证,NOT_TESTED,
 V5-007,P0,pointer,统一模式入口,进入Neuralife游戏列表,只有1个目标控制训练，进入后可选追踪/打靶,列表截图与录屏,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
 V5-008,P0,pointer,两模式独立评分,分别完成追踪和打靶模式,追踪指标与命中指标独立且mode写入事件,日志与汇总,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
@@ -40,13 +40,13 @@ V5-038,P1,hanoi,操作中目标小图,打开关卡且操作中观察,目标图�
 V5-039,P1,hanoi,纯鼠标五关,仅使用鼠标完成五局,无需键盘取放或进入下一关,全流程录屏,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
 V5-040,P1,hanoi,键盘与BCI预览,键盘/模拟脑控确认预览并操控,不依赖鼠标，预览中不会计时移动,日志和录屏,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
 V5-041,P1,hanoi,伦敦塔规则,目标柱满及不同球重排,容量约束正确、颜色球任意叠放合法,自动回归,NOT_TESTED,"Linux Qt simulated host: hanoi/tests/evidence/results-scale-1.json and results-scale-1.5.json (225/225 each), preview-round-*.png and london-playing.png; Windows evidence pending"
-V5-042,P1,claw,主辅视图布局,1920x1080和2560x1440定位,玩具夹爪可清晰看到，辅助视角可用,真实截图,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
-V5-043,P1,claw,键盘Enter,方向调整后Enter触发,Enter抓取，Space不触发,键盘回归,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
-V5-044,P1,claw,成功动画,误差0.8倍容差触发,成功抓取运输投放，记录success,录屏/日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
-V5-045,P1,claw,近失误动画,误差1.1倍容差触发,碰触→歪斜→略抬→滑落，结果仍失败,录屏/日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
-V5-046,P1,claw,完全失败,误差1.5倍容差触发,无抓起，记录miss与误差,录屏/日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
-V5-047,P1,claw,结果前不泄露误差,定位过程中观察,无实时坐标误差答案，结束后可显示,录屏,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
-V5-048,P1,claw,两轴定位一致,分别移动X、Z,正视/侧视一致，二维误差可复算,日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-042,P1,claw,主辅视图布局,1920x1080和2560x1440定位,玩具夹爪可清晰看到，辅助视角可用,真实截图,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance.json (110/110; 1.0 and 1.5 scale runs in session logs); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-043,P1,claw,键盘Enter,方向调整后Enter触发,Enter抓取，Space不触发,键盘回归,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance.json (110/110; 1.0 and 1.5 scale runs in session logs); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-044,P1,claw,成功动画,误差0.8倍容差触发,成功抓取运输投放，记录success,录屏/日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance.json (110/110; 1.0 and 1.5 scale runs in session logs); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-045,P1,claw,近失误动画,误差1.1倍容差触发,碰触→歪斜→略抬→滑落，结果仍失败,录屏/日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance.json (110/110; 1.0 and 1.5 scale runs in session logs); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-046,P1,claw,完全失败,误差1.5倍容差触发,无抓起，记录miss与误差,录屏/日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance.json (110/110; 1.0 and 1.5 scale runs in session logs); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-047,P1,claw,结果前不泄露误差,定位过程中观察,无实时坐标误差答案，结束后可显示,录屏,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance.json (110/110; 1.0 and 1.5 scale runs in session logs); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
+V5-048,P1,claw,两轴定位一致,分别移动X、Z,正视/侧视一致，二维误差可复算,日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance.json (110/110; 1.0 and 1.5 scale runs in session logs); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
 V5-049,P1,luban,L3复杂锁,第三关演示必要的局部滑移,至少有一件先部分抽出才解锁另一件,几何求解和录屏,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
 V5-050,P1,luban,L4双层互锁,新增第四关,多方向阻挡与可逆路径，自动解算可完成,几何报告,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
 V5-051,P1,luban,无穿模,逐帧观察每段抽取、复位,连续运动不发生几何穿透或瞬移,求解器及视频,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
@@ -54,9 +54,9 @@ V5-052,P1,luban,左键旋转,从木件表面按左键拖动,旋转视角，不�
 V5-053,P1,luban,短点击和抽件手柄,单击选中，随后拖操作柄,先选中后抽件，两种手势无冲突,实机录屏,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
 V5-054,P1,luban,撤销与重装,进行局部滑移后撤销,返回完全相同位置，不丢卡槽状态,状态对比,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
 V5-055,P1,luban,真实3D渲染,RHI Windows宿主播放新关卡,不是软件后端空白/伪3D，几何和遮挡正确,窗口截图/配置,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
-V5-056,P1,sokoban,原有五关回归,测试五关通关与死局、撤销,无需重写，全部功能不退化,自动回归报告,NOT_TESTED,
+V5-056,P1,sokoban,原有五关回归,测试五关通关与死局、撤销,无需重写，全部功能不退化,自动回归报告,PASS,sokoban/tests/evidence/result.json: 99/99 Qt simulated-host regression at scale 1 and 1.5; tools/verify_sokoban_levels.py
 V5-057,P1,all,暂停与停止,各游戏运行中暂停/失焦/结束,无非预期动作，无计时补偿，finish一次,日志,NOT_TESTED,
 V5-058,P1,all,统一界面,并排查看新游戏与宿主原版示例,字体/按钮/帮助/结算属于同产品而非独立科技模板,实际截图,NOT_TESTED,
 V5-059,P0,release,旧入口清理后列表,正式宿主重新启动后检查,显示当前7个新增游戏入口，不残留target/pursuit旧入口,游戏列表截图,NOT_TESTED,
-V5-060,P0,release,提交验收证据,查看STATUS_CURRENT和V5_ACCEPTANCE,每条有证据或明确NOT_TESTED，不伪造全部PASS,文档审计,NOT_TESTED,
+V5-060,P0,release,提交验收证据,查看STATUS_CURRENT和V5_ACCEPTANCE,每条有证据或明确NOT_TESTED，不伪造全部PASS,文档审计,PASS,V5_ACCEPTANCE.csv: all 61 rows have explicit status and evidence or remain NOT_TESTED; STATUS_CURRENT.md records limitations
 V5-061,P0,release,安全回退,演练恢复旧插件备份,能够从pointer版本回滚且不丢历史记录,回滚记录,NOT_TESTED,

@@ -7,7 +7,7 @@ Item {
     required property var taskContext
     required property var game
 
-    readonly property string gameVersion: "0.5.1"
+    readonly property string gameVersion: "0.6.0"
     readonly property string inputSource: (game && game.inputSource) ? String(game.inputSource) : "local"
     readonly property bool isBci: /bci|brain/i.test(inputSource)
 

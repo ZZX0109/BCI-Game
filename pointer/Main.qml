@@ -200,7 +200,8 @@ FocusScope {
         onLoaded: {
             childGame.started()
             if (root.paused) childGame.paused()
-            if (item) item.forceActiveFocus()
+            var child = item as Item
+            if (child) child.forceActiveFocus()
         }
         onStatusChanged: if (status === Loader.Error) {
             root.emitRecord("pointer.load_error", { taskMode: root.activeMode, attemptId: root.attemptId, source: String(source) })

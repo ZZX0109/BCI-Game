@@ -12,6 +12,8 @@
 | `291373c` | `claw/`, `tests/results/v5-claw/` | 大屏主视图、三级接触与近失误连续动画；旧回归各 110/110、新专项 11/11 |
 | `4cf73c2` | `luban/` | L3–L5 多阶段可逆互锁、左键视角与独立抽件柄；Qt Quick 3D 各 241/241、求解器 2693 状态 |
 
+| `d7f6aef` | `tools/run_scenarios.py`, `tools/package_v5.py`, `tools/sync_to_host.py`, `docs/archive/`, `tests/` | 七游戏统一回归、只读宿主同步预览、旧资料完整归档和安全回退说明 |
+
 随后本轮仓库治理涉及 `tools/run_scenarios.py`、`tools/package_v5.py`、`tools/sync_to_host.py`、`play.ps1/bat`、`tests/acceptance_matrix.csv`、`docs/archive/`、`docs/V5_DEPLOYMENT.md`。最终源提交与统一测试报告见 `STATUS_CURRENT.md`、`tests/results/v5-run-scenarios/result.json`。
 
 真实 Neuralife 客户端的截图、录屏、Windows DPI 实测与旧入口正式退役尚未执行；Linux Qt 截图只证明当前窗口渲染。
