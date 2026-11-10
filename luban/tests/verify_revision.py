@@ -228,6 +228,8 @@ try:
         (OUT / (source + '-events.json')).write_text(json.dumps(bridge.events, ensure_ascii=False, indent=2))
     # Micro moves and all requested layouts use actual geometry and no hidden answer state.
     new_session('keyboard'); ev('loadLevel(4)')
+    check('advanced_level_has_no_auto_selection', root.property('selectedId') == '')
+    ev('selectByPid("p1")')
     execute(9, 'keyboard'); step(); check('quarter_unit_micro_move', abs(ev('offsetOf("p1")[0]') - .25) < 1e-6)
     execute(8, 'keyboard'); step(); check('reverse_push_returns', abs(ev('offsetOf("p1")[0]')) < 1e-6)
     execute(5, 'keyboard'); check('whole_level_reset', ev('history.length===0 && offsets.p1[0]===0'))
