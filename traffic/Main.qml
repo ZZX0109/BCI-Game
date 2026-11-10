@@ -29,7 +29,7 @@ Item {
     readonly property real pedHalfDepth: 0.22   // 车流方向半深
     readonly property real crossSpeed: 1.55     // 世界单位/秒
     readonly property real bciStepUnit: 0.5     // 脑控离散步长
-    readonly property real bciCarSpeedScale: 0.62
+    readonly property real trafficSpeedScale: 1.0
     readonly property real passMinClear: 1.05
     readonly property real sceneScale: Math.max(0.45, Math.min(width / 1000, (height - 175) / 500, 2.4))
     readonly property real sceneOffsetX: width / 2 - (originX + totalU * crossDx / 2) * sceneScale
@@ -238,7 +238,7 @@ Item {
             inputSource: inputSource,
             seed: seed,
             levelPlan: levelPlans.map(function (l) { return l.id }),
-            bciCarSpeedScale: isBci ? bciCarSpeedScale : 1.0,
+            trafficSpeedScale: trafficSpeedScale,
             crossSpeed: crossSpeed,
             pedHalfWidth: pedHalfWidth,
             pedHalfDepth: pedHalfDepth,
@@ -306,7 +306,7 @@ Item {
             seed: levelSeed,
             laneCount: laneCount,
             islandWidth: islandWidth,
-            trafficSpeedScale: 1.0,
+            trafficSpeedScale: trafficSpeedScale,
             finishX: r2(finishX),
             startX: -0.6,
             lanes: laneDesc,
@@ -549,7 +549,7 @@ Item {
                 var prev = ln.events[ln.events.length-1], cfg=ln.cfg, st=ln.rng
                 var truck=rngNext(st)<cfg.truckRatio
                 var len=truck?2.5:1.55+rngNext(st)*0.35
-                var speed=rngRange(st,cfg.s0,cfg.s1)*(isBci?bciCarSpeedScale:1)
+                var speed=rngRange(st,cfg.s0,cfg.s1)*trafficSpeedScale
                 var kind=truck?"truck":(rngNext(st)<0.3?"van":"sedan")
                 var evNew={tc:ln.nextTime,speed:speed,len:len,kind:kind}
                 ln.nextTime += rngRange(st,cfg.g0,cfg.g1)

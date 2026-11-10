@@ -50,8 +50,21 @@
       "name": "traffic_continues_during_wait",
       "passed": true,
       "actual": 35
+    },
+    {
+      "name": "same_seed_local_bci_full_schedule",
+      "passed": true,
+      "actual": {
+        "local_sha256": "13039e8c2416dab5bec821859a6a7abb54927e2717739ac30dd7ee781a28ee77",
+        "bci_sha256": "13039e8c2416dab5bec821859a6a7abb54927e2717739ac30dd7ee781a28ee77"
+      }
+    },
+    {
+      "name": "standard_speed_scale_both_inputs",
+      "passed": true,
+      "actual": null
     }
   ],
-  "passed": 10,
-  "total": 10
+  "passed": 12,
+  "total": 12
 }

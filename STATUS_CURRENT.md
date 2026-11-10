@@ -17,7 +17,7 @@
 
 基线有 8 个 `TaskDefinition.qml` 入口。`tools/run_scenarios.py all` 仍列旧七款而缺 rhythm；`tools/sync_to_host.py` 会复制旧两入口且默认非只读。`docs/host_capabilities.md` 记录 2026-11-02 宿主 API；`docs/luban_3d_deployment.md` 记录 2026-11-03 的 Windows Quick3D 补装，与本轮附件 Demo 不同，应重新核实实际目标环境。
 
-可用命令：`python tools/lint_qml.py`、`python tools/run_scenarios.py all`、`python tools/sync_to_host.py --dry-run`。这三个工具的当前默认行为/覆盖范围须先修复再用于 V5 全量验收。当前 Linux 环境具备 PySide6/Xorg 模拟宿主；Windows Neuralife 实际窗口、DPI、录屏、真实音频与 BCI 设备本轮均未测试。
+可用命令：`/workspace/.venvs/bci-game/bin/python3 tools/lint_qml.py`、`/workspace/.venvs/bci-game/bin/python3 tools/run_scenarios.py all`、`/workspace/.venvs/bci-game/bin/python3 tools/sync_to_host.py --dry-run`。这三个工具的当前默认行为/覆盖范围须先修复再用于 V5 全量验收。当前 Linux 环境具备 PySide6/Xorg 模拟宿主；Windows Neuralife 实际窗口、DPI、录屏、真实音频与 BCI 设备本轮均未测试。
 
 ## 阶段 1：pointer（本地功能验证）
 
@@ -29,7 +29,7 @@
 
 ## 阶段 3：红绿灯过马路（本地功能验证）
 
-五轮均为六车道。画面按左→右的世界坐标显示三车道、安全岛、三车道；车辆沿垂直轴运行，碰撞仅在车道范围成立，岛中心可等待。标准条件不再根据输入源偷偷降低车速；`traffic.level_started` 记录固定 `trafficSpeedScale=1.0` 与岛宽。`traffic/tests/verify_v5.py` Linux Qt 模拟宿主 10/10，通过六车道、投影正交、左右移动与松开、岛内无碰撞、同车道碰撞和15秒等待；截图在 `tests/results/v5-traffic/`。真实 Windows 录像、完整五轮安全通关和固定种子双次轨迹对比尚未完成。旧场景测试包含旧斜向道路/车道数假设，不能继承为 V5 通过。
+五轮均为六车道。画面按左→右的世界坐标显示三车道、安全岛、三车道；车辆沿垂直轴运行，碰撞仅在车道范围成立，岛中心可等待。标准条件不再根据输入源偷偷降低车速；`traffic.level_started` 记录固定 `trafficSpeedScale=1.0` 与岛宽。`traffic/tests/verify_v5.py` Linux Qt 模拟宿主 12/12，通过六车道、投影正交、左右移动与松开、岛内无碰撞、同车道碰撞、15秒等待，以及相同种子在本地/BCI 输入下包括 40 秒后滚动生成车辆的完整车次计划一致；截图在 `tests/results/v5-traffic/`。真实 Windows 录像、完整五轮安全通关和固定种子完整时序轨迹对比尚未完成。旧场景测试包含旧斜向道路/车道数假设，不能继承为 V5 通过。
 
 ## 阶段 4：汉诺塔与伦敦塔（本地功能验证）
 
