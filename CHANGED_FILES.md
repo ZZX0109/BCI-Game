@@ -14,7 +14,8 @@
 | `d7f6aef` | `tools/run_scenarios.py`, `tools/package_v5.py`, `tools/sync_to_host.py`, `docs/archive/`, `tests/` | 七游戏统一回归、只读宿主同步预览、旧资料完整归档和安全回退说明 |
 | `c4477a8` | `pointer/Main.qml`, `luban/Main.qml`, `rhythm/Main.qml`, `traffic/`, `STATUS_CURRENT.md` | QML 静态检查清零；模块版本与状态统一 |
 | `889ad3d` | `traffic/Main.qml`, `traffic/tests/verify_v5.py`, `tests/results/v5-traffic/` | 修复 40 秒后 BCI 车速差异；同种子跨输入源完整车次计划一致，Linux Qt 12/12 |
+| `fb5fae6` | `hanoi/Main.qml`, `rhythm/Main.qml`, `shared-ui/GameFrame.qml`, `tests/verify_adaptive_viewports.py` | 小窗预览、难度按钮与顶栏适配；十尺寸真实 Qt 渲染 70/70 |
 
-最终源提交为 `889ad3d`，统一测试 14/14 通过，原始命令日志与测试报告见 `tests/results/v5-run-scenarios/`。
+当前适配源码提交为 `fb5fae6`，统一测试 15/15、七游戏十画布 70/70 通过，原始命令日志与测试报告见 `tests/results/v5-run-scenarios/`、`tests/results/v5-adaptive/`。
 
 真实 Neuralife 客户端的截图、录屏、Windows DPI 实测与旧入口正式退役尚未执行；Linux Qt 截图只证明当前窗口渲染。

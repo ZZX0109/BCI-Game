@@ -1,0 +1,1377 @@
+{
+  "scope": "Linux Qt 6 actual frame resize at representative logical window sizes",
+  "rows": [
+    {
+      "game": "hanoi",
+      "logicalSize": [
+        800,
+        600
+      ],
+      "rootSize": [
+        800.0,
+        600.0
+      ],
+      "framePixels": [
+        800,
+        600
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": [
+        5.0,
+        403.0,
+        408.0
+      ],
+      "screenshot": "hanoi-800x600.png",
+      "passed": true
+    },
+    {
+      "game": "hanoi",
+      "logicalSize": [
+        1280,
+        720
+      ],
+      "rootSize": [
+        1280.0,
+        720.0
+      ],
+      "framePixels": [
+        1280,
+        720
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": [
+        5.0,
+        523.0,
+        528.0
+      ],
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "hanoi",
+      "logicalSize": [
+        1366,
+        768
+      ],
+      "rootSize": [
+        1366.0,
+        768.0
+      ],
+      "framePixels": [
+        1366,
+        768
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": [
+        21.0,
+        555.0,
+        576.0
+      ],
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "hanoi",
+      "logicalSize": [
+        1440,
+        900
+      ],
+      "rootSize": [
+        1440.0,
+        900.0
+      ],
+      "framePixels": [
+        1440,
+        900
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": [
+        87.0,
+        621.0,
+        708.0
+      ],
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "hanoi",
+      "logicalSize": [
+        1512,
+        982
+      ],
+      "rootSize": [
+        1512.0,
+        982.0
+      ],
+      "framePixels": [
+        1512,
+        982
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": [
+        128.0,
+        662.0,
+        790.0
+      ],
+      "screenshot": "hanoi-1512x982.png",
+      "passed": true
+    },
+    {
+      "game": "hanoi",
+      "logicalSize": [
+        1728,
+        1117
+      ],
+      "rootSize": [
+        1728.0,
+        1117.0
+      ],
+      "framePixels": [
+        1728,
+        1117
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": [
+        195.5,
+        729.5,
+        925.0
+      ],
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "hanoi",
+      "logicalSize": [
+        1920,
+        1080
+      ],
+      "rootSize": [
+        1920.0,
+        1080.0
+      ],
+      "framePixels": [
+        1920,
+        1080
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": [
+        177.0,
+        711.0,
+        888.0
+      ],
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "hanoi",
+      "logicalSize": [
+        2560,
+        1440
+      ],
+      "rootSize": [
+        2560.0,
+        1440.0
+      ],
+      "framePixels": [
+        2560,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": [
+        357.0,
+        891.0,
+        1248.0
+      ],
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "hanoi",
+      "logicalSize": [
+        3440,
+        1440
+      ],
+      "rootSize": [
+        3440.0,
+        1440.0
+      ],
+      "framePixels": [
+        3440,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": [
+        357.0,
+        891.0,
+        1248.0
+      ],
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "hanoi",
+      "logicalSize": [
+        3840,
+        2160
+      ],
+      "rootSize": [
+        3840.0,
+        2160.0
+      ],
+      "framePixels": [
+        3840,
+        2160
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": [
+        717.0,
+        1251.0,
+        1968.0
+      ],
+      "screenshot": "hanoi-3840x2160.png",
+      "passed": true
+    },
+    {
+      "game": "sokoban",
+      "logicalSize": [
+        800,
+        600
+      ],
+      "rootSize": [
+        800.0,
+        600.0
+      ],
+      "framePixels": [
+        800,
+        600
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "sokoban-800x600.png",
+      "passed": true
+    },
+    {
+      "game": "sokoban",
+      "logicalSize": [
+        1280,
+        720
+      ],
+      "rootSize": [
+        1280.0,
+        720.0
+      ],
+      "framePixels": [
+        1280,
+        720
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "sokoban",
+      "logicalSize": [
+        1366,
+        768
+      ],
+      "rootSize": [
+        1366.0,
+        768.0
+      ],
+      "framePixels": [
+        1366,
+        768
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "sokoban",
+      "logicalSize": [
+        1440,
+        900
+      ],
+      "rootSize": [
+        1440.0,
+        900.0
+      ],
+      "framePixels": [
+        1440,
+        900
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "sokoban",
+      "logicalSize": [
+        1512,
+        982
+      ],
+      "rootSize": [
+        1512.0,
+        982.0
+      ],
+      "framePixels": [
+        1512,
+        982
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "sokoban-1512x982.png",
+      "passed": true
+    },
+    {
+      "game": "sokoban",
+      "logicalSize": [
+        1728,
+        1117
+      ],
+      "rootSize": [
+        1728.0,
+        1117.0
+      ],
+      "framePixels": [
+        1728,
+        1117
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "sokoban",
+      "logicalSize": [
+        1920,
+        1080
+      ],
+      "rootSize": [
+        1920.0,
+        1080.0
+      ],
+      "framePixels": [
+        1920,
+        1080
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "sokoban",
+      "logicalSize": [
+        2560,
+        1440
+      ],
+      "rootSize": [
+        2560.0,
+        1440.0
+      ],
+      "framePixels": [
+        2560,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "sokoban",
+      "logicalSize": [
+        3440,
+        1440
+      ],
+      "rootSize": [
+        3440.0,
+        1440.0
+      ],
+      "framePixels": [
+        3440,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "sokoban",
+      "logicalSize": [
+        3840,
+        2160
+      ],
+      "rootSize": [
+        3840.0,
+        2160.0
+      ],
+      "framePixels": [
+        3840,
+        2160
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "sokoban-3840x2160.png",
+      "passed": true
+    },
+    {
+      "game": "pointer",
+      "logicalSize": [
+        800,
+        600
+      ],
+      "rootSize": [
+        800.0,
+        600.0
+      ],
+      "framePixels": [
+        800,
+        600
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "pointer-800x600.png",
+      "passed": true
+    },
+    {
+      "game": "pointer",
+      "logicalSize": [
+        1280,
+        720
+      ],
+      "rootSize": [
+        1280.0,
+        720.0
+      ],
+      "framePixels": [
+        1280,
+        720
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "pointer",
+      "logicalSize": [
+        1366,
+        768
+      ],
+      "rootSize": [
+        1366.0,
+        768.0
+      ],
+      "framePixels": [
+        1366,
+        768
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "pointer",
+      "logicalSize": [
+        1440,
+        900
+      ],
+      "rootSize": [
+        1440.0,
+        900.0
+      ],
+      "framePixels": [
+        1440,
+        900
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "pointer",
+      "logicalSize": [
+        1512,
+        982
+      ],
+      "rootSize": [
+        1512.0,
+        982.0
+      ],
+      "framePixels": [
+        1512,
+        982
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "pointer-1512x982.png",
+      "passed": true
+    },
+    {
+      "game": "pointer",
+      "logicalSize": [
+        1728,
+        1117
+      ],
+      "rootSize": [
+        1728.0,
+        1117.0
+      ],
+      "framePixels": [
+        1728,
+        1117
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "pointer",
+      "logicalSize": [
+        1920,
+        1080
+      ],
+      "rootSize": [
+        1920.0,
+        1080.0
+      ],
+      "framePixels": [
+        1920,
+        1080
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "pointer",
+      "logicalSize": [
+        2560,
+        1440
+      ],
+      "rootSize": [
+        2560.0,
+        1440.0
+      ],
+      "framePixels": [
+        2560,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "pointer",
+      "logicalSize": [
+        3440,
+        1440
+      ],
+      "rootSize": [
+        3440.0,
+        1440.0
+      ],
+      "framePixels": [
+        3440,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "pointer",
+      "logicalSize": [
+        3840,
+        2160
+      ],
+      "rootSize": [
+        3840.0,
+        2160.0
+      ],
+      "framePixels": [
+        3840,
+        2160
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "pointer-3840x2160.png",
+      "passed": true
+    },
+    {
+      "game": "claw",
+      "logicalSize": [
+        800,
+        600
+      ],
+      "rootSize": [
+        800.0,
+        600.0
+      ],
+      "framePixels": [
+        800,
+        600
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "claw-800x600.png",
+      "passed": true
+    },
+    {
+      "game": "claw",
+      "logicalSize": [
+        1280,
+        720
+      ],
+      "rootSize": [
+        1280.0,
+        720.0
+      ],
+      "framePixels": [
+        1280,
+        720
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "claw",
+      "logicalSize": [
+        1366,
+        768
+      ],
+      "rootSize": [
+        1366.0,
+        768.0
+      ],
+      "framePixels": [
+        1366,
+        768
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "claw",
+      "logicalSize": [
+        1440,
+        900
+      ],
+      "rootSize": [
+        1440.0,
+        900.0
+      ],
+      "framePixels": [
+        1440,
+        900
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "claw",
+      "logicalSize": [
+        1512,
+        982
+      ],
+      "rootSize": [
+        1512.0,
+        982.0
+      ],
+      "framePixels": [
+        1512,
+        982
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "claw-1512x982.png",
+      "passed": true
+    },
+    {
+      "game": "claw",
+      "logicalSize": [
+        1728,
+        1117
+      ],
+      "rootSize": [
+        1728.0,
+        1117.0
+      ],
+      "framePixels": [
+        1728,
+        1117
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "claw",
+      "logicalSize": [
+        1920,
+        1080
+      ],
+      "rootSize": [
+        1920.0,
+        1080.0
+      ],
+      "framePixels": [
+        1920,
+        1080
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "claw",
+      "logicalSize": [
+        2560,
+        1440
+      ],
+      "rootSize": [
+        2560.0,
+        1440.0
+      ],
+      "framePixels": [
+        2560,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "claw",
+      "logicalSize": [
+        3440,
+        1440
+      ],
+      "rootSize": [
+        3440.0,
+        1440.0
+      ],
+      "framePixels": [
+        3440,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "claw",
+      "logicalSize": [
+        3840,
+        2160
+      ],
+      "rootSize": [
+        3840.0,
+        2160.0
+      ],
+      "framePixels": [
+        3840,
+        2160
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "claw-3840x2160.png",
+      "passed": true
+    },
+    {
+      "game": "traffic",
+      "logicalSize": [
+        800,
+        600
+      ],
+      "rootSize": [
+        800.0,
+        600.0
+      ],
+      "framePixels": [
+        800,
+        600
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "traffic-800x600.png",
+      "passed": true
+    },
+    {
+      "game": "traffic",
+      "logicalSize": [
+        1280,
+        720
+      ],
+      "rootSize": [
+        1280.0,
+        720.0
+      ],
+      "framePixels": [
+        1280,
+        720
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "traffic",
+      "logicalSize": [
+        1366,
+        768
+      ],
+      "rootSize": [
+        1366.0,
+        768.0
+      ],
+      "framePixels": [
+        1366,
+        768
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "traffic",
+      "logicalSize": [
+        1440,
+        900
+      ],
+      "rootSize": [
+        1440.0,
+        900.0
+      ],
+      "framePixels": [
+        1440,
+        900
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "traffic",
+      "logicalSize": [
+        1512,
+        982
+      ],
+      "rootSize": [
+        1512.0,
+        982.0
+      ],
+      "framePixels": [
+        1512,
+        982
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "traffic-1512x982.png",
+      "passed": true
+    },
+    {
+      "game": "traffic",
+      "logicalSize": [
+        1728,
+        1117
+      ],
+      "rootSize": [
+        1728.0,
+        1117.0
+      ],
+      "framePixels": [
+        1728,
+        1117
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "traffic",
+      "logicalSize": [
+        1920,
+        1080
+      ],
+      "rootSize": [
+        1920.0,
+        1080.0
+      ],
+      "framePixels": [
+        1920,
+        1080
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "traffic",
+      "logicalSize": [
+        2560,
+        1440
+      ],
+      "rootSize": [
+        2560.0,
+        1440.0
+      ],
+      "framePixels": [
+        2560,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "traffic",
+      "logicalSize": [
+        3440,
+        1440
+      ],
+      "rootSize": [
+        3440.0,
+        1440.0
+      ],
+      "framePixels": [
+        3440,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "traffic",
+      "logicalSize": [
+        3840,
+        2160
+      ],
+      "rootSize": [
+        3840.0,
+        2160.0
+      ],
+      "framePixels": [
+        3840,
+        2160
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "traffic-3840x2160.png",
+      "passed": true
+    },
+    {
+      "game": "luban",
+      "logicalSize": [
+        800,
+        600
+      ],
+      "rootSize": [
+        800.0,
+        600.0
+      ],
+      "framePixels": [
+        800,
+        600
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "luban-800x600.png",
+      "passed": true
+    },
+    {
+      "game": "luban",
+      "logicalSize": [
+        1280,
+        720
+      ],
+      "rootSize": [
+        1280.0,
+        720.0
+      ],
+      "framePixels": [
+        1280,
+        720
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "luban",
+      "logicalSize": [
+        1366,
+        768
+      ],
+      "rootSize": [
+        1366.0,
+        768.0
+      ],
+      "framePixels": [
+        1366,
+        768
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "luban",
+      "logicalSize": [
+        1440,
+        900
+      ],
+      "rootSize": [
+        1440.0,
+        900.0
+      ],
+      "framePixels": [
+        1440,
+        900
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "luban",
+      "logicalSize": [
+        1512,
+        982
+      ],
+      "rootSize": [
+        1512.0,
+        982.0
+      ],
+      "framePixels": [
+        1512,
+        982
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "luban-1512x982.png",
+      "passed": true
+    },
+    {
+      "game": "luban",
+      "logicalSize": [
+        1728,
+        1117
+      ],
+      "rootSize": [
+        1728.0,
+        1117.0
+      ],
+      "framePixels": [
+        1728,
+        1117
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "luban",
+      "logicalSize": [
+        1920,
+        1080
+      ],
+      "rootSize": [
+        1920.0,
+        1080.0
+      ],
+      "framePixels": [
+        1920,
+        1080
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "luban",
+      "logicalSize": [
+        2560,
+        1440
+      ],
+      "rootSize": [
+        2560.0,
+        1440.0
+      ],
+      "framePixels": [
+        2560,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "luban",
+      "logicalSize": [
+        3440,
+        1440
+      ],
+      "rootSize": [
+        3440.0,
+        1440.0
+      ],
+      "framePixels": [
+        3440,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "luban",
+      "logicalSize": [
+        3840,
+        2160
+      ],
+      "rootSize": [
+        3840.0,
+        2160.0
+      ],
+      "framePixels": [
+        3840,
+        2160
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "luban-3840x2160.png",
+      "passed": true
+    },
+    {
+      "game": "rhythm",
+      "logicalSize": [
+        800,
+        600
+      ],
+      "rootSize": [
+        800.0,
+        600.0
+      ],
+      "framePixels": [
+        800,
+        600
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "rhythm-800x600.png",
+      "passed": true
+    },
+    {
+      "game": "rhythm",
+      "logicalSize": [
+        1280,
+        720
+      ],
+      "rootSize": [
+        1280.0,
+        720.0
+      ],
+      "framePixels": [
+        1280,
+        720
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "rhythm",
+      "logicalSize": [
+        1366,
+        768
+      ],
+      "rootSize": [
+        1366.0,
+        768.0
+      ],
+      "framePixels": [
+        1366,
+        768
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "rhythm",
+      "logicalSize": [
+        1440,
+        900
+      ],
+      "rootSize": [
+        1440.0,
+        900.0
+      ],
+      "framePixels": [
+        1440,
+        900
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "rhythm",
+      "logicalSize": [
+        1512,
+        982
+      ],
+      "rootSize": [
+        1512.0,
+        982.0
+      ],
+      "framePixels": [
+        1512,
+        982
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "rhythm-1512x982.png",
+      "passed": true
+    },
+    {
+      "game": "rhythm",
+      "logicalSize": [
+        1728,
+        1117
+      ],
+      "rootSize": [
+        1728.0,
+        1117.0
+      ],
+      "framePixels": [
+        1728,
+        1117
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "rhythm",
+      "logicalSize": [
+        1920,
+        1080
+      ],
+      "rootSize": [
+        1920.0,
+        1080.0
+      ],
+      "framePixels": [
+        1920,
+        1080
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "rhythm",
+      "logicalSize": [
+        2560,
+        1440
+      ],
+      "rootSize": [
+        2560.0,
+        1440.0
+      ],
+      "framePixels": [
+        2560,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "rhythm",
+      "logicalSize": [
+        3440,
+        1440
+      ],
+      "rootSize": [
+        3440.0,
+        1440.0
+      ],
+      "framePixels": [
+        3440,
+        1440
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": null,
+      "passed": true
+    },
+    {
+      "game": "rhythm",
+      "logicalSize": [
+        3840,
+        2160
+      ],
+      "rootSize": [
+        3840.0,
+        2160.0
+      ],
+      "framePixels": [
+        3840,
+        2160
+      ],
+      "devicePixelRatio": 1.0,
+      "previewBounds": null,
+      "screenshot": "rhythm-3840x2160.png",
+      "passed": true
+    }
+  ],
+  "passed": 70,
+  "total": 70
+}

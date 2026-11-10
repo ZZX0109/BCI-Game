@@ -51,8 +51,10 @@ L3 及后续关卡已移植多阶段互锁和连续扫掠几何验证；L1/L2 �
 
 当前活动模块版本：hanoi 1.1.0、sokoban 0.4.2、pointer 1.0.0、claw 0.5.0、traffic 0.6.0、luban 0.7.0、rhythm 1.2.0。当前本地统一测试以 `tests/results/v5-run-scenarios/result.json` 中的 `sourceHead` 为实际已提交源码基线，测试失败不得从历史结果继承。
 
-最终本地源码基线 `889ad3d33b684897ffd6067c76d9653d05dcefa2`：使用 `/workspace/.venvs/bci-game/bin/python3 tools/run_scenarios.py all` 跑完七个活动游戏及发布预检，14/14 命令组通过；红绿灯专项 12/12。逐项 61 条验收中仅 6 条有足够证据标为 PASS，其余 55 条保持 NOT_TESTED（其中多数要求正式 Neuralife 宿主操作、DPI 或完整时序验证）。已在工作区生成 `/workspace/Neuralife-V5-candidate.zip` 供审阅，尚未写入正式客户端；独立开发分支将在本轮适配测试后推送 GitHub。
+前次本地源码基线 `889ad3d33b684897ffd6067c76d9653d05dcefa2`：使用 `/workspace/.venvs/bci-game/bin/python3 tools/run_scenarios.py all` 跑完七个活动游戏及发布预检，14/14 命令组通过；红绿灯专项 12/12。逐项 61 条验收中仅 6 条有足够证据标为 PASS，其余 55 条保持 NOT_TESTED（其中多数要求正式 Neuralife 宿主操作、DPI 或完整时序验证）。已在工作区生成 `/workspace/Neuralife-V5-adaptive-candidate.zip` 供审阅，尚未写入正式客户端；独立开发分支将在本轮适配测试后推送 GitHub。
 
 ## 2026-11-10 桌面画布适配更新
 
 用户取消录屏要求，改为按公开 Qt/Windows 缩放资料选择 Windows/macOS 代表性逻辑画布尺寸，并授权推送独立开发分支。适配范围、来源和测试见 `docs/V5_ADAPTIVE_VIEWPORTS.md`。已修复 800×600 下的律动难度按钮溢出、汉诺塔目标预览裁剪与红绿灯顶栏可读性。正式 Windows/macOS 客户端和硬件验收仍不以 Linux 结果冒充。
+
+适配源码提交 `fb5fae6b0d6ace7664268d26146e881e4b4babf9`：统一回归 15/15，七游戏十画布 70/70，pointer 125% 缩放 110/110。证据见 `tests/results/v5-run-scenarios/`、`tests/results/v5-adaptive/`、`pointer/tests/evidence/acceptance-scale-1.25.json`。逐项矩阵仍只有 6 项 PASS，正式客户端项目没有因此自动通过。

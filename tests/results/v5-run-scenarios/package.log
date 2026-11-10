@@ -1,13 +1,13 @@
 Fontconfig error: No writable cache directories
-file:///tmp/neuralife-v5-package-_qtda2ji/luban/Main.qml:499: TypeError: Cannot read property 'projectVoxel' of null
-file:///tmp/neuralife-v5-package-_qtda2ji/luban/Main.qml:499: TypeError: Cannot read property 'projectVoxel' of null
-file:///tmp/neuralife-v5-package-_qtda2ji/luban/Main.qml:499: TypeError: Cannot read property 'projectVoxel' of null
-file:///tmp/neuralife-v5-package-_qtda2ji/luban/Main.qml:499: TypeError: Cannot read property 'projectVoxel' of null
-file:///tmp/neuralife-v5-package-_qtda2ji/luban/Main.qml:499: TypeError: Cannot read property 'projectVoxel' of null
-file:///tmp/neuralife-v5-package-_qtda2ji/luban/Main.qml:499: TypeError: Cannot read property 'projectVoxel' of null
+file:///tmp/neuralife-v5-package-i322ql_1/luban/Main.qml:499: TypeError: Cannot read property 'projectVoxel' of null
+file:///tmp/neuralife-v5-package-i322ql_1/luban/Main.qml:499: TypeError: Cannot read property 'projectVoxel' of null
+file:///tmp/neuralife-v5-package-i322ql_1/luban/Main.qml:499: TypeError: Cannot read property 'projectVoxel' of null
+file:///tmp/neuralife-v5-package-i322ql_1/luban/Main.qml:499: TypeError: Cannot read property 'projectVoxel' of null
+file:///tmp/neuralife-v5-package-i322ql_1/luban/Main.qml:499: TypeError: Cannot read property 'projectVoxel' of null
+file:///tmp/neuralife-v5-package-i322ql_1/luban/Main.qml:499: TypeError: Cannot read property 'projectVoxel' of null
 qt.multimedia.ffmpeg: Using Qt multimedia with FFmpeg version 7.1.2 LGPL version 2.1 or later
-[W][06:01:33.704914] pw.conf      | [          conf.c: 1182 try_load_conf()] can't load config client.conf: No such file or directory
-[E][06:01:33.704939] pw.conf      | [          conf.c: 1215 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+[W][06:18:58.597485] pw.conf      | [          conf.c: 1182 try_load_conf()] can't load config client.conf: No such file or directory
+[E][06:18:58.597510] pw.conf      | [          conf.c: 1215 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
 Failed to create secure directory (/home/agent/.config/pulse): Read-only file system
 PulseAudioService: pa_context_connect() failed
 No audio device detected
@@ -16,7 +16,7 @@ No audio device detected
 No audio device detected
 No audio device detected
 No audio device detected
-Input #0, wav, from '/tmp/neuralife-v5-package-_qtda2ji/rhythm/audio/background-90bpm.wav':
+Input #0, wav, from '/tmp/neuralife-v5-package-i322ql_1/rhythm/audio/background-90bpm.wav':
   Duration: 00:00:21.33, bitrate: 352 kb/s
   Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, s16, 352 kb/s
 qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.

@@ -1,6 +1,6 @@
 {
-  "utc": "2026-11-10T06:01:37.051289+00:00",
-  "sourceHead": "889ad3d33b684897ffd6067c76d9653d05dcefa2",
+  "utc": "2026-11-10T06:19:28.228197+00:00",
+  "sourceHead": "fb5fae6b0d6ace7664268d26146e881e4b4babf9",
   "activeGames": [
     "hanoi",
     "sokoban",
@@ -150,8 +150,18 @@
       "exitCode": 0,
       "passed": true,
       "log": "tests/results/v5-run-scenarios/qml-lint.log"
+    },
+    {
+      "game": "adaptive-viewports",
+      "command": [
+        "/workspace/.venvs/bci-game/bin/python3",
+        "tests/verify_adaptive_viewports.py"
+      ],
+      "exitCode": 0,
+      "passed": true,
+      "log": "tests/results/v5-run-scenarios/adaptive-viewports.log"
     }
   ],
-  "passed": 14,
-  "total": 14
+  "passed": 15,
+  "total": 15
 }

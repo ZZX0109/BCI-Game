@@ -18,6 +18,6 @@
 | 3440×1440 | 超宽画布 |
 | 3840×2160 | 4K 大画布 |
 
-`tests/verify_adaptive_viewports.py` 在 Linux Qt 6 的实际图形窗口中依次调整七个游戏到上述十种尺寸，检查 QML 根尺寸、非空渲染帧，并保存关键窗口截图。汉诺塔额外检查预览内容整体在场景内。`pointer/tests/verify_1106.py` 另以 `QT_SCALE_FACTOR=1.25` 运行坐标与输入回归；此前还以 1.0 和 1.5 运行。截图与数值在 `tests/results/v5-adaptive/` 和 `pointer/tests/evidence/`。
+`tests/verify_adaptive_viewports.py` 在 Linux Qt 6 的实际图形窗口中依次调整七个游戏到上述十种尺寸（70/70 通过），检查 QML 根尺寸、非空渲染帧，并保存关键窗口截图。汉诺塔额外检查预览内容整体在场景内。`pointer/tests/verify_1106.py` 另以 `QT_SCALE_FACTOR=1.25` 运行坐标与输入回归（110/110 通过）；此前还以 1.0 和 1.5 运行。截图与数值在 `tests/results/v5-adaptive/` 和 `pointer/tests/evidence/`。
 
 小窗口截图发现并修正了三个问题：律动难度按钮长文案溢出、汉诺塔预览内容被场景裁剪、红绿灯顶栏与车道图像相互干扰。修复后截图应审阅 `*-800x600.png`；几何和渲染检查只证明当前 Qt/Linux 条件下的行为，无法替代原生系统或正式客户端测试。

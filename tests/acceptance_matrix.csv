@@ -2,7 +2,7 @@ case_id,priority,module,check,steps,expected,evidence_required,status,actual_evi
 V5-001,P0,repo,工作树安全,记录git status和HEAD并建立工作分支,不覆盖脏工作区；注明代码基线和变更范围,git输出/分支,PASS,STATUS_CURRENT.md; AGENTS.md; docs/SPEC_CURRENT.md; git branch feat/neuralife-v5-interaction
 V5-002,P0,repo,唯一规格,根AGENTS链接SPEC_CURRENT并标注旧报告归档,Agent能找到唯一当前需求，不从历史PASS认定完成,文档审查,PASS,STATUS_CURRENT.md; AGENTS.md; docs/SPEC_CURRENT.md; git branch feat/neuralife-v5-interaction
 V5-003,P0,repo,活动入口清单,检查活动模块登记,"发布列表是hanoi,sokoban,pointer,claw,traffic,luban,rhythm",文件清单/游戏截图,PASS,config/active_games.json; tests/results/v5-package/package-result.json: exactly seven discoverable module IDs in clean runtime tree
-V5-004,P0,repo,全量测试覆盖,运行tools/run_scenarios.py all,包含rhythm和pointer；每个当前游戏至少有适配测试,测试输出,PASS,tests/results/v5-run-scenarios/result.json: all seven current games plus packaging/sync/lint checks; see per-command logs
+V5-004,P0,repo,全量测试覆盖,运行tools/run_scenarios.py all,包含rhythm和pointer；每个当前游戏至少有适配测试,测试输出,PASS,tests/results/v5-run-scenarios/result.json: all seven current games plus packaging/sync/lint/adaptive checks (15/15; 70/70 viewport frames); see per-command logs
 V5-005,P0,repo,只读部署预览,运行sync_to_host --dry-run,未写入宿主；显示新增替换与旧模块退役项,日志与SHA256,NOT_TESTED,tests/results/v5-release/sync-result.json: read-only preview 6/6 against isolated test host; real Neuralife target directory unavailable
 V5-006,P0,repo,旧插件退役安全,经过同意执行旧模块退役演练,备份pursuit/target旧插件；重新打开Neuralife不再显示旧入口,屏幕截图/回退验证,NOT_TESTED,
 V5-007,P0,pointer,统一模式入口,进入Neuralife游戏列表,只有1个目标控制训练，进入后可选追踪/打靶,列表截图与窗口截图/操作日志,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
