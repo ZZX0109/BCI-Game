@@ -498,6 +498,9 @@ Item {
                     readonly property bool isLegalTarget: root.canDrop(index)
                     readonly property color accent: root.heldDisc >= 0
                         ? (isLegalTarget ? "#8ac69a" : uiTheme.danger) : "#d7bd87"
+                    // London Tower: rod height mirrors the peg capacity (36 per ball + tip clearance).
+                    readonly property real rodHeight: root.puzzleType === "london"
+                        ? root.currentCapacities[index] * 36 + 24 : 239
                     x: root.pegCenterX[index] - 130 * stage.unit; y: stage.baseY - 278 * stage.unit
                     scale: stage.unit; transformOrigin: Item.TopLeft
                     width: 260; height: 335
@@ -517,7 +520,7 @@ Item {
                         color: "#363a35"; border.width: 1; border.color: "#55584f"
                     }
                     Rectangle {
-                        x: 124; y: 40; width: 12; height: 239; radius: 6
+                        x: 124; y: 279 - pegItem.rodHeight; width: 12; height: pegItem.rodHeight; radius: 6
                         gradient: Gradient {
                             orientation: Gradient.Horizontal
                             GradientStop { position: 0; color: "#363a35" }
