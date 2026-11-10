@@ -18,3 +18,7 @@
 基线有 8 个 `TaskDefinition.qml` 入口。`tools/run_scenarios.py all` 仍列旧七款而缺 rhythm；`tools/sync_to_host.py` 会复制旧两入口且默认非只读。`docs/host_capabilities.md` 记录 2026-11-02 宿主 API；`docs/luban_3d_deployment.md` 记录 2026-11-03 的 Windows Quick3D 补装，与本轮附件 Demo 不同，应重新核实实际目标环境。
 
 可用命令：`python tools/lint_qml.py`、`python tools/run_scenarios.py all`、`python tools/sync_to_host.py --dry-run`。这三个工具的当前默认行为/覆盖范围须先修复再用于 V5 全量验收。当前 Linux 环境具备 PySide6/Xorg 模拟宿主；Windows Neuralife 实际窗口、DPI、录屏、真实音频与 BCI 设备本轮均未测试。
+
+## 阶段 1：pointer（本地功能验证）
+
+已把旧 `cursor_suite` 的成熟实现移植为 V5 `pointer` ID；源仓库原有 `pursuit`、`target` 插件描述仍保留。单入口分发器只生成一个 `TaskDefinition.qml`，将两种玩法放在私有子目录。独立结果、历史 `pursuit.*`/`target.*` 事件与整会话一次 `game.finish` 保留。`pointer/tests/verify_1106.py` 在 Linux PySide6 模拟宿主中 1.0/1.5 倍缩放各 110/110 通过；证据在 `pointer/tests/evidence/`。Windows Neuralife 菜单、100/125/150% DPI 真实点击及录屏均未测试。

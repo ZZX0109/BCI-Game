@@ -1,0 +1,554 @@
+{
+  "runtime": "PySide6 real Qt / simulated game API",
+  "scaleFactor": "1.5",
+  "platform": "offscreen",
+  "windowsHostTested": false,
+  "brainHardwareTested": false,
+  "checks": [
+    {
+      "name": "local: selection ready before task clock",
+      "passed": true
+    },
+    {
+      "name": "local: Loader receives started exactly once",
+      "passed": true
+    },
+    {
+      "name": "local: suite pause freezes child time",
+      "passed": true
+    },
+    {
+      "name": "local: full five-round pursuit returns result",
+      "passed": true,
+      "detail": "result"
+    },
+    {
+      "name": "local: child finish never calls real finish",
+      "passed": true
+    },
+    {
+      "name": "local: pursuit metrics remain independent",
+      "passed": true
+    },
+    {
+      "name": "local: result returns to selection",
+      "passed": true
+    },
+    {
+      "name": "local: repeated confirm cannot leak across return",
+      "passed": true
+    },
+    {
+      "name": "local: target gets fresh lifecycle and clock",
+      "passed": true
+    },
+    {
+      "name": "local: task starts without inherited confirm shot",
+      "passed": true
+    },
+    {
+      "name": "local: target eight shots complete",
+      "passed": true
+    },
+    {
+      "name": "local: all static shots hit at visible aim",
+      "passed": true
+    },
+    {
+      "name": "local: native/forwarded Enter does not double shoot",
+      "passed": true
+    },
+    {
+      "name": "local: taskMode routes separate result schemas",
+      "passed": true
+    },
+    {
+      "name": "local: legacy event namespace plus source metadata",
+      "passed": true
+    },
+    {
+      "name": "local: one real final finish despite repeated inputs/start",
+      "passed": true
+    },
+    {
+      "name": "local: final result retains both tasks without merged accuracy",
+      "passed": true
+    },
+    {
+      "name": "bci: selection ready before task clock",
+      "passed": true
+    },
+    {
+      "name": "bci: Loader receives started exactly once",
+      "passed": true
+    },
+    {
+      "name": "bci: suite pause freezes child time",
+      "passed": true
+    },
+    {
+      "name": "bci: full five-round pursuit returns result",
+      "passed": true,
+      "detail": "result"
+    },
+    {
+      "name": "bci: child finish never calls real finish",
+      "passed": true
+    },
+    {
+      "name": "bci: pursuit metrics remain independent",
+      "passed": true
+    },
+    {
+      "name": "bci: result returns to selection",
+      "passed": true
+    },
+    {
+      "name": "bci: repeated confirm cannot leak across return",
+      "passed": true
+    },
+    {
+      "name": "bci: target gets fresh lifecycle and clock",
+      "passed": true
+    },
+    {
+      "name": "bci: task starts without inherited confirm shot",
+      "passed": true
+    },
+    {
+      "name": "bci: target eight shots complete",
+      "passed": true
+    },
+    {
+      "name": "bci: all static shots hit at visible aim",
+      "passed": true
+    },
+    {
+      "name": "bci: native/forwarded Enter does not double shoot",
+      "passed": true
+    },
+    {
+      "name": "bci: taskMode routes separate result schemas",
+      "passed": true
+    },
+    {
+      "name": "bci: legacy event namespace plus source metadata",
+      "passed": true
+    },
+    {
+      "name": "bci: one real final finish despite repeated inputs/start",
+      "passed": true
+    },
+    {
+      "name": "bci: final result retains both tasks without merged accuracy",
+      "passed": true
+    },
+    {
+      "name": "mouse: selection ready before task clock",
+      "passed": true
+    },
+    {
+      "name": "mouse: Loader receives started exactly once",
+      "passed": true
+    },
+    {
+      "name": "mouse: suite pause freezes child time",
+      "passed": true
+    },
+    {
+      "name": "mouse: full five-round pursuit returns result",
+      "passed": true,
+      "detail": "result"
+    },
+    {
+      "name": "mouse: child finish never calls real finish",
+      "passed": true
+    },
+    {
+      "name": "mouse: pursuit metrics remain independent",
+      "passed": true
+    },
+    {
+      "name": "mouse: result returns to selection",
+      "passed": true
+    },
+    {
+      "name": "mouse: target gets fresh lifecycle and clock",
+      "passed": true
+    },
+    {
+      "name": "mouse: task starts without inherited confirm shot",
+      "passed": true
+    },
+    {
+      "name": "mouse: target eight shots complete",
+      "passed": true
+    },
+    {
+      "name": "mouse: all static shots hit at visible aim",
+      "passed": true
+    },
+    {
+      "name": "mouse: native/forwarded Enter does not double shoot",
+      "passed": true
+    },
+    {
+      "name": "mouse: taskMode routes separate result schemas",
+      "passed": true
+    },
+    {
+      "name": "mouse: legacy event namespace plus source metadata",
+      "passed": true
+    },
+    {
+      "name": "mouse: one real final finish despite repeated inputs/start",
+      "passed": true
+    },
+    {
+      "name": "mouse: final result retains both tasks without merged accuracy",
+      "passed": true
+    },
+    {
+      "name": "pursuit: (1000, 700) BCI center/corners/edges round trip",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "pursuit: (1000, 700) window relocation preserves pointer space",
+      "passed": true
+    },
+    {
+      "name": "pursuit: (1000, 700) BCI cannot be overwritten by local mouse",
+      "passed": true
+    },
+    {
+      "name": "pursuit: (1000, 700) native mouse center/corners/edges align",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "pursuit: (1000, 700) native mouse screen position survives window move",
+      "passed": true,
+      "detail": {
+        "actual": [
+          0.9673684210526315,
+          0.4645669291338583
+        ],
+        "expected": [
+          0.9673684210526315,
+          0.4645669291338583
+        ]
+      }
+    },
+    {
+      "name": "pursuit: (1280, 800) BCI center/corners/edges round trip",
+      "passed": true,
+      "detail": 1.1102230246251565e-16
+    },
+    {
+      "name": "pursuit: (1280, 800) window relocation preserves pointer space",
+      "passed": true
+    },
+    {
+      "name": "pursuit: (1280, 800) BCI cannot be overwritten by local mouse",
+      "passed": true
+    },
+    {
+      "name": "pursuit: (1280, 800) native mouse center/corners/edges align",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "pursuit: (1280, 800) native mouse screen position survives window move",
+      "passed": true,
+      "detail": {
+        "actual": [
+          0.9720394736842105,
+          0.47039473684210525
+        ],
+        "expected": [
+          0.9720394736842105,
+          0.47039473684210525
+        ]
+      }
+    },
+    {
+      "name": "pursuit: (1920, 1080) BCI center/corners/edges round trip",
+      "passed": true,
+      "detail": 3.469446951953614e-18
+    },
+    {
+      "name": "pursuit: (1920, 1080) window relocation preserves pointer space",
+      "passed": true
+    },
+    {
+      "name": "pursuit: (1920, 1080) BCI cannot be overwritten by local mouse",
+      "passed": true
+    },
+    {
+      "name": "pursuit: (1920, 1080) native mouse center/corners/edges align",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "pursuit: (1920, 1080) native mouse screen position survives window move",
+      "passed": true,
+      "detail": {
+        "actual": [
+          0.9782608695652174,
+          0.4797297297297296
+        ],
+        "expected": [
+          0.9782608695652174,
+          0.4797297297297296
+        ]
+      }
+    },
+    {
+      "name": "target: (1000, 700) BCI center/corners/edges round trip",
+      "passed": true,
+      "detail": 1.1102230246251565e-16
+    },
+    {
+      "name": "target: (1000, 700) window relocation preserves pointer space",
+      "passed": true
+    },
+    {
+      "name": "target: (1000, 700) BCI cannot be overwritten by local mouse",
+      "passed": true
+    },
+    {
+      "name": "target: (1000, 700) native mouse center/corners/edges align",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "target: (1000, 700) native mouse screen position survives window move",
+      "passed": true,
+      "detail": {
+        "actual": [
+          873.7736220472442,
+          224.38582677165357
+        ],
+        "expected": [
+          873.7736220472442,
+          224.38582677165357
+        ]
+      }
+    },
+    {
+      "name": "target: (1280, 800) BCI center/corners/edges round trip",
+      "passed": true,
+      "detail": 1.5700924586837752e-16
+    },
+    {
+      "name": "target: (1280, 800) window relocation preserves pointer space",
+      "passed": true
+    },
+    {
+      "name": "target: (1280, 800) BCI cannot be overwritten by local mouse",
+      "passed": true
+    },
+    {
+      "name": "target: (1280, 800) native mouse center/corners/edges align",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "target: (1280, 800) native mouse screen position survives window move",
+      "passed": true,
+      "detail": {
+        "actual": [
+          938.9901315789474,
+          227.20065789473685
+        ],
+        "expected": [
+          938.9901315789474,
+          227.20065789473685
+        ]
+      }
+    },
+    {
+      "name": "target: (1920, 1080) BCI center/corners/edges round trip",
+      "passed": true,
+      "detail": 1.1114420827879992e-16
+    },
+    {
+      "name": "target: (1920, 1080) window relocation preserves pointer space",
+      "passed": true
+    },
+    {
+      "name": "target: (1920, 1080) BCI cannot be overwritten by local mouse",
+      "passed": true
+    },
+    {
+      "name": "target: (1920, 1080) native mouse center/corners/edges align",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "target: (1920, 1080) native mouse screen position survives window move",
+      "passed": true,
+      "detail": {
+        "actual": [
+          979.0540540540542,
+          231.7094594594594
+        ],
+        "expected": [
+          979.0540540540542,
+          231.7094594594594
+        ]
+      }
+    },
+    {
+      "name": "pursuit: native mouse and actual control point coincide",
+      "passed": true,
+      "detail": [
+        [
+          380.0,
+          305.0
+        ],
+        [
+          380.0,
+          305.0
+        ]
+      ]
+    },
+    {
+      "name": "pursuit: native and host key paths share one movement",
+      "passed": true,
+      "detail": {
+        "delta": 0.0757894736842104,
+        "expected": 0.07578947368421053
+      }
+    },
+    {
+      "name": "pursuit: release stops virtual cursor",
+      "passed": true
+    },
+    {
+      "name": "pursuit: pause/resume retains keyboard pointer ownership",
+      "passed": true
+    },
+    {
+      "name": "pursuit: resize hover replay cannot steal keyboard ownership",
+      "passed": true
+    },
+    {
+      "name": "target: native mouse and actual control point coincide",
+      "passed": true,
+      "detail": [
+        [
+          361.29921259842524,
+          289.99015748031496
+        ],
+        [
+          361.29921259842524,
+          289.99015748031496
+        ]
+      ]
+    },
+    {
+      "name": "target: actual Qt mouse click uses displayed aim for hit",
+      "passed": true
+    },
+    {
+      "name": "target: deliberate feedback trigger is counted without extra shot",
+      "passed": true
+    },
+    {
+      "name": "target: native and host key paths share one movement",
+      "passed": true,
+      "detail": {
+        "delta": 68.45669291338581,
+        "expected": 68.45669291338584
+      }
+    },
+    {
+      "name": "target: release stops virtual cursor",
+      "passed": true
+    },
+    {
+      "name": "target: pause/resume retains keyboard pointer ownership",
+      "passed": true
+    },
+    {
+      "name": "target: resize hover replay cannot steal keyboard ownership",
+      "passed": true
+    },
+    {
+      "name": "pursuit: lag estimate recovers independent 300ms trace",
+      "passed": true
+    },
+    {
+      "name": "pursuit: late started cannot revive stopped standalone task",
+      "passed": true
+    },
+    {
+      "name": "target: late started cannot revive stopped standalone task",
+      "passed": true
+    },
+    {
+      "name": "suite: host-first native/host navigation advances once",
+      "passed": true
+    },
+    {
+      "name": "suite: native-first native/host navigation advances once",
+      "passed": true
+    },
+    {
+      "name": "suite: host-first task start cannot leak native Enter as shot",
+      "passed": true
+    },
+    {
+      "name": "suite: target receives namespaced config without pursuit leakage",
+      "passed": true
+    },
+    {
+      "name": "suite: config write preserves other child namespace",
+      "passed": true
+    },
+    {
+      "name": "suite: stopped session cannot revive and does not finish",
+      "passed": true
+    },
+    {
+      "name": "suite: rejects BCI pointer with invalid upstream geometry 0/0",
+      "passed": true
+    },
+    {
+      "name": "suite: rejects BCI pointer with invalid upstream geometry nan/700",
+      "passed": true
+    },
+    {
+      "name": "suite: rejects BCI pointer with invalid upstream geometry 1000/inf",
+      "passed": true
+    },
+    {
+      "name": "suite: rejects BCI pointer with invalid upstream geometry -10/700",
+      "passed": true
+    },
+    {
+      "name": "suite: valid upstream geometry restores BCI readiness",
+      "passed": true
+    },
+    {
+      "name": "deployment: one discoverable TaskDefinition at every depth",
+      "passed": true
+    },
+    {
+      "name": "deployment: legacy source descriptors untouched",
+      "passed": true
+    },
+    {
+      "name": "deployment: packaged pursuit loads and starts",
+      "passed": true
+    },
+    {
+      "name": "deployment: packaged target loads and starts",
+      "passed": true
+    }
+  ],
+  "passed": 110,
+  "total": 110
+}

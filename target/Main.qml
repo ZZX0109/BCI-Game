@@ -10,6 +10,60 @@ Item {
     required property var taskContext
     required property var game
 
+
+    // Local keyboard and forwarded host directions share held state, so a physical
+    // key delivered twice does not double movement. Pointer ownership changes only
+    // on intentional movement, never on a resize/resume synchronization event.
+    focus: true
+    property bool keyboardOwnsInput: false
+    property var keyboardDirections: ({ left: false, right: false, up: false, down: false })
+    function keyboardDirection(key) {
+        if (key === Qt.Key_Left || key === Qt.Key_A) return "left"
+        if (key === Qt.Key_Right || key === Qt.Key_D) return "right"
+        if (key === Qt.Key_Up || key === Qt.Key_W) return "up"
+        if (key === Qt.Key_Down || key === Qt.Key_S) return "down"
+        return ""
+    }
+    function clearKeyboard() {
+        keyboardDirections = ({ left: false, right: false, up: false, down: false })
+    }
+    function setKeyboardDirection(name, pressed) {
+        if (brainInput || isPaused || sessionStopped || sessionFinished || phase === "idle" || (game && game.inputBlocked === true)) return
+        if (["left", "right", "up", "down"].indexOf(name) < 0) return
+        var held = Object.assign({}, keyboardDirections)
+        held[name] = !!pressed
+        keyboardDirections = held
+        if (pressed) { keyboardOwnsInput = true; mouseOwnsInput = false; inputReady = true }
+    }
+    Keys.onPressed: function(event) {
+        event.accepted = false
+        if (brainInput || (game && game.inputBlocked === true)) return
+        var dir = keyboardDirection(event.key)
+        if (dir !== "") {
+            if (!event.isAutoRepeat) setKeyboardDirection(dir, true)
+            event.accepted = true
+        } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+            if (!event.isAutoRepeat) requestShot("keyboard")
+            event.accepted = true
+        }
+    }
+    Keys.onReleased: function(event) {
+        var dir = keyboardDirection(event.key)
+        if (!brainInput && dir !== "") {
+            if (!event.isAutoRepeat) setKeyboardDirection(dir, false)
+            event.accepted = true
+        }
+    }
+    function moveKeyboardCursor(dt) {
+        if (!keyboardOwnsInput || brainInput) return
+        var dx = (keyboardDirections.right ? 1 : 0) - (keyboardDirections.left ? 1 : 0)
+        var dy = (keyboardDirections.down ? 1 : 0) - (keyboardDirections.up ? 1 : 0)
+        if (dx === 0 && dy === 0) return
+        var norm = Math.hypot(dx, dy)
+        setAimSceneLocal(aimX + dx / norm * 360 / logicalScale * dt,
+                         aimY + dy / norm * 360 / logicalScale * dt, "keyboard")
+    }
+
     readonly property string inputSource: (game && game.inputSource) ? game.inputSource : "local"
     function hostElapsed() {
         if (game && typeof game.elapsedSeconds === "number") return game.elapsedSeconds
@@ -107,6 +161,7 @@ Item {
     Timer { id: mouseSyncTimer; interval: 1; repeat: false; onTriggered: root.syncLocalMouse() }
     Connections {
         target: root.Window.window
+        function onActiveChanged() { if (!root.Window.window.active) root.clearKeyboard() }
         function onXChanged() { if (!root.destroying) mouseSyncTimer.restart() }
         function onYChanged() { if (!root.destroying) mouseSyncTimer.restart() }
     }
@@ -125,6 +180,9 @@ Item {
     property int hits: 0
     property int misses: 0
     property int timeouts: 0
+    property int falseTriggers: 0
+    property real positioningTotal: 0
+    property int positioningCount: 0
 
     property real targetBaseX: 0
     property real targetBaseY: 0
@@ -150,6 +208,7 @@ Item {
     onBrainInputChanged: {
         // Ownership belongs to the current input mode, not the entire object's lifetime.
         mouseOwnsInput = false
+        keyboardOwnsInput = false; clearKeyboard()
         baselineSet = false
         inputReady = !brainInput
         syncLocalMouse()
@@ -264,6 +323,9 @@ Item {
     }
 
     function startSession() {
+        if (phase !== "idle" || sessionStopped || sessionFinished) return
+        forceActiveFocus()
+        clearKeyboard(); keyboardOwnsInput = false
         sessionStopped = false
         inputReady = !brainInput
         loadConfig()
@@ -273,13 +335,14 @@ Item {
         localElapsed = 0.0
         trialIndex = 0
         hits = 0; misses = 0; timeouts = 0
+        falseTriggers = 0; positioningTotal = 0; positioningCount = 0
         feedbackTimer = 0.0
         mouseOwnsInput = false
         lastShotAt = -999
         phase = "idle"
 
         game.record("target.attempt_started", {
-            gameVersion: "0.5.1",
+            gameVersion: "0.6.0",
             taskMode: taskMode,
             inputSource: inputSource,
             seed: seed,
@@ -327,6 +390,10 @@ Item {
     }
 
     function rememberMouse(sx, sy, force) {
+        var screenPoint = sceneRect.mapToGlobal(sx, sy)
+        if (!force && keyboardOwnsInput && mouseGlobalKnown
+                && Math.abs(screenPoint.x - latestMouseGlobal.x) <= .5
+                && Math.abs(screenPoint.y - latestMouseGlobal.y) <= .5) return false
         var win = root.Window.window
         var windowItem = win ? win.contentItem : root
         var point = sceneRect.mapToItem(windowItem, sx, sy)
@@ -348,7 +415,7 @@ Item {
         return true
     }
     function syncLocalMouse() {
-        if (brainInput || isPaused || sessionStopped || sessionFinished || destroying || !aimMouse) return
+        if (brainInput || keyboardOwnsInput || isPaused || sessionStopped || sessionFinished || destroying || !aimMouse) return
         var p = mouseGlobalKnown ? sceneRect.mapFromGlobal(latestMouseGlobal.x, latestMouseGlobal.y)
                                  : Qt.point(aimMouse.mouseX, aimMouse.mouseY)
         if (!mouseGlobalKnown && !aimMouse.containsMouse) return
@@ -360,8 +427,9 @@ Item {
     // 把任意来源换算成场景局部坐标（唯一入口）
     function setAimSceneLocal(sx, sy, source) {
         if (isPaused || sessionStopped || sessionFinished || (phase !== "target_visible" && phase !== "shot_feedback")) return
-        if (source === "mouse") { if (brainInput) return; mouseOwnsInput = true }
-        else if (mouseOwnsInput) return
+        if (source === "mouse") { if (brainInput) return; mouseOwnsInput = true; keyboardOwnsInput = false; clearKeyboard() }
+        else if (source === "keyboard") { keyboardOwnsInput = true; mouseOwnsInput = false }
+        else if (mouseOwnsInput || keyboardOwnsInput) return
         var pointer = sceneRect.mapToItem(root, sx, sy)
         pointerRootX = pointer.x; pointerRootY = pointer.y; pointerKnown = true
         var nx = Math.max(0, Math.min(sceneW, sx))
@@ -386,11 +454,22 @@ Item {
     }
 
     function requestShot(source) {
+        if (game && game.inputBlocked === true) return
         // Once a physical mouse owns the pointer, its clicked event owns the shot
         // coordinate too. A forwarded host confirm may arrive before that event.
         if (source === "host_action" && mouseOwnsInput && !brainInput) return
         if (source === "mouse" && brainInput) return
-        if (phase !== "target_visible" || isPaused || sessionStopped || !inputReady) return
+        if (isPaused || sessionStopped || sessionFinished || phase === "idle" || phase === "complete") return
+        // Same physical native/forwarded event is discarded before false-trigger
+        // counting. A later deliberate trigger during feedback is recorded.
+        if (localElapsed - lastShotAt < 0.15) return
+        if (!inputReady || phase !== "target_visible") {
+            falseTriggers++
+            lastShotAt = localElapsed
+            game.record("target.ignored_trigger", { source: source, trial: trialIndex + 1,
+                reason: !inputReady ? "input_not_ready" : "feedback_in_progress", elapsed: hostElapsed() })
+            return
+        }
         if (awaitingStart) {
             var sx = currentTrial.startX - sceneOX, sy = currentTrial.startY - sceneOY
             if (Math.hypot(aimX - sx, aimY - sy) > 22) return
@@ -433,6 +512,7 @@ Item {
             blocked: blocked,
             hit: hit,
             firstActionLatency: firstActionLatency,
+            positioningSeconds: trialTimer,
             actualDistance: taskMode === "fitts_targets" ? Math.hypot(movementStartX - tx, movementStartY - ty) : null,
             plannedDistance: currentTrial && currentTrial.actualDistance !== undefined ? currentTrial.actualDistance : null,
             condition: currentTrial ? (currentTrial.size || currentTrial.group || "") : "",
@@ -448,6 +528,7 @@ Item {
         shotAimX = aimX; shotAimY = aimY
         shotTargetX = tx; shotTargetY = ty
 
+        positioningTotal += trialTimer; positioningCount++
         if (hit) hits++; else misses++
         game.record(hit ? "target.hit" : "target.miss", shot)
 
@@ -481,11 +562,13 @@ Item {
         var total = trialPlan.length
         var acc = total > 0 ? hits / total : 0
         var result = {
-            gameVersion: "0.5.1",
+            gameVersion: "0.6.0",
             taskMode: taskMode,
             reason: reason,
             totalTrials: total,
             hits: hits, misses: misses, timeouts: timeouts,
+            falseTriggers: falseTriggers,
+            meanPositioningSeconds: positioningCount ? positioningTotal / positioningCount : null,
             accuracy: acc,
             elapsed: hostElapsed(),
             summary: qsTr("精准打靶完成 | 命中 %1/%2 | 脱靶 %3 | 超时 %4").arg(hits).arg(total).arg(misses).arg(timeouts)
@@ -537,15 +620,17 @@ Item {
         function onStep(seconds) { root.advance(seconds) }
         function onPointer(x, y) { root.handlePointer(x, y) }
         function onAction(name, pressed) {
+            root.setKeyboardDirection(name, pressed)
             if (name === "confirm" && pressed === true) root.requestShot("host_action")
         }
-        function onPaused() { root.isPaused = true }
+        function onPaused() { root.clearKeyboard(); root.isPaused = true }
         function onResumed() { if (!root.sessionStopped) { root.isPaused = false; root.syncLocalMouse() } }
-        function onStopping() { root.sessionStopped = true; root.isPaused = true }
+        function onStopping() { root.clearKeyboard(); root.sessionStopped = true; root.isPaused = true }
     }
 
     function advance(seconds) {
         if (isPaused || sessionStopped || sessionFinished || !inputReady) return
+        moveKeyboardCursor(seconds)
         localElapsed += seconds
 
         if (phase === "target_visible") {

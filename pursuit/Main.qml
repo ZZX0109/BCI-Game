@@ -10,6 +10,57 @@ Item {
     required property var taskContext
     required property var game
 
+
+    // Local keyboard and forwarded host directions share held state, so a physical
+    // key delivered twice does not double movement. Pointer ownership changes only
+    // on intentional movement, never on a resize/resume synchronization event.
+    focus: true
+    property bool keyboardOwnsInput: false
+    property var keyboardDirections: ({ left: false, right: false, up: false, down: false })
+    function keyboardDirection(key) {
+        if (key === Qt.Key_Left || key === Qt.Key_A) return "left"
+        if (key === Qt.Key_Right || key === Qt.Key_D) return "right"
+        if (key === Qt.Key_Up || key === Qt.Key_W) return "up"
+        if (key === Qt.Key_Down || key === Qt.Key_S) return "down"
+        return ""
+    }
+    function clearKeyboard() {
+        keyboardDirections = ({ left: false, right: false, up: false, down: false })
+    }
+    function setKeyboardDirection(name, pressed) {
+        if (brainInput || isPaused || sessionStopped || sessionFinished || phase === "idle" || (game && game.inputBlocked === true)) return
+        if (["left", "right", "up", "down"].indexOf(name) < 0) return
+        var held = Object.assign({}, keyboardDirections)
+        held[name] = !!pressed
+        keyboardDirections = held
+        if (pressed) { keyboardOwnsInput = true; mouseOwnsInput = false; inputReady = true }
+    }
+    Keys.onPressed: function(event) {
+        event.accepted = false
+        if (brainInput || (game && game.inputBlocked === true)) return
+        var dir = keyboardDirection(event.key)
+        if (dir !== "") {
+            if (!event.isAutoRepeat) setKeyboardDirection(dir, true)
+            event.accepted = true
+        }
+    }
+    Keys.onReleased: function(event) {
+        var dir = keyboardDirection(event.key)
+        if (!brainInput && dir !== "") {
+            if (!event.isAutoRepeat) setKeyboardDirection(dir, false)
+            event.accepted = true
+        }
+    }
+    function moveKeyboardCursor(dt) {
+        if (!keyboardOwnsInput || brainInput) return
+        var dx = (keyboardDirections.right ? 1 : 0) - (keyboardDirections.left ? 1 : 0)
+        var dy = (keyboardDirections.down ? 1 : 0) - (keyboardDirections.up ? 1 : 0)
+        if (dx === 0 && dy === 0) return
+        var norm = Math.hypot(dx, dy)
+        setPointerScene(rawX * scene.width + dx / norm * 360 * dt,
+                        rawY * scene.height + dy / norm * 360 * dt, "keyboard")
+    }
+
     readonly property string inputSource: (game && game.inputSource) ? game.inputSource : "local"
     function hostElapsed() {
         if (game && typeof game.elapsedSeconds === "number") return game.elapsedSeconds
@@ -33,6 +84,11 @@ Item {
     property real lastMouseOriginX: 0
     property real lastMouseOriginY: 0
     function rememberMouse(x, y) {
+        var p = pointerArea.mapToGlobal(x, y)
+        // Resizing can replay an unchanged mouse screen point. It is geometry
+        // synchronization, not an intentional switch away from the keyboard.
+        if (keyboardOwnsInput && mousePositionKnown
+                && Math.abs(p.x - mouseGlobalX) <= .5 && Math.abs(p.y - mouseGlobalY) <= .5) return false
         var content = root.Window.window ? root.Window.window.contentItem : root
         var local = pointerArea.mapToItem(content, x, y)
         var origin = content.mapToGlobal(0, 0)
@@ -46,14 +102,13 @@ Item {
             syncLocalMouse()
             return false
         }
-        var p = pointerArea.mapToGlobal(x, y)
         mouseGlobalX = p.x; mouseGlobalY = p.y; mousePositionKnown = true
         lastMouseWindowX = local.x; lastMouseWindowY = local.y
         lastMouseOriginX = origin.x; lastMouseOriginY = origin.y
         return true
     }
     function syncLocalMouse() {
-        if (brainInput || !pointerArea.containsMouse || !mousePositionKnown) return
+        if (brainInput || keyboardOwnsInput || !pointerArea.containsMouse || !mousePositionKnown) return
         var p = scene.mapFromGlobal(mouseGlobalX, mouseGlobalY)
         setPointerScene(p.x, p.y, "mouse")
     }
@@ -61,6 +116,7 @@ Item {
     function resetInputOwnership() {
         var nextBrain = /bci|brain/i.test(inputSource)
         mouseOwnsInput = false
+        keyboardOwnsInput = false; clearKeyboard()
         pointerKnown = false
         inputReady = !nextBrain
         pointerSource = "host_pointer"
@@ -70,6 +126,7 @@ Item {
     onBrainInputChanged: resetInputOwnership()
     Connections {
         target: root.Window.window
+        function onActiveChanged() { if (!root.Window.window.active) root.clearKeyboard() }
         function onXChanged() { root.syncLocalMouse() }
         function onYChanged() { root.syncLocalMouse() }
     }
@@ -163,6 +220,7 @@ Item {
 
     property int sampleCount: 0
     property real sampleAccum: 0.0
+    property var lagSamples: []
     property var trail: []
     property var roundResults: []
     property var smoothAnchors: []
@@ -182,8 +240,9 @@ Item {
     }
     function setPointerScene(x, y, source) {
         if (isPaused || sessionStopped || sessionFinished || scene.width <= 0 || scene.height <= 0) return
-        if (source === "mouse") { if (brainInput) return; mouseOwnsInput = true }
-        else if (mouseOwnsInput) return
+        if (source === "mouse") { if (brainInput) return; mouseOwnsInput = true; keyboardOwnsInput = false; clearKeyboard() }
+        else if (source === "keyboard") { keyboardOwnsInput = true; mouseOwnsInput = false }
+        else if (mouseOwnsInput || keyboardOwnsInput) return
         var pointer = scene.mapToItem(root, x, y)
         pointerRootX = pointer.x; pointerRootY = pointer.y; pointerKnown = true
         pointerSource = source
@@ -296,6 +355,9 @@ Item {
     // 生命周期
     // ------------------------------------------------------------------
     function startSession() {
+        if (phase !== "idle" || sessionStopped || sessionFinished) return
+        forceActiveFocus()
+        clearKeyboard(); keyboardOwnsInput = false
         sessionStopped = false
         inputReady = !brainInput
         sessionFinished = false
@@ -309,7 +371,7 @@ Item {
         rawX = 0.5; rawY = 0.5; ballX = 0.5; ballY = 0.5
         phase = "idle"
         game.record("pursuit.attempt_started", {
-            gameVersion: "0.5.2",
+            gameVersion: "0.6.0",
             inputSource: inputSource,
             roundPlan: roundPlan.map(function (r) { return r.key; }),
             geometry: viewportGeometry(),
@@ -337,7 +399,7 @@ Item {
         occludedAbsDt = 0; occludedSqDt = 0; rawAbsDt = 0; rawOccludedAbsDt = 0
         sampleCount = 0
         sampleAccum = 0.0
-        trail = []
+        trail = []; lagSamples = []
         targetVisible = true
         var pos = targetAt(0)
         targetX = clamp01(pos.x); targetY = clamp01(pos.y)
@@ -353,6 +415,32 @@ Item {
             geometry: viewportGeometry(),
             roundDuration: roundDuration
         })
+    }
+
+    function estimateTrackingLag() {
+        // Exploratory software lag estimate, distinct from device/EEG latency.
+        // Match visible rendered/raw positions against earlier target samples.
+        function estimate(fieldX, fieldY) {
+            if (lagSamples.length < 30) return null
+            var best = Infinity, bestLag = null
+            for (var lag = 0; lag <= 40; lag++) {
+                var squared = 0, count = 0
+                for (var i = 40; i < lagSamples.length; i++) {
+                    var now = lagSamples[i], prior = lagSamples[i - lag]
+                    if (!now.visible || !prior.visible) continue
+                    var dx = (now[fieldX] - prior.tx) * scene.width
+                    var dy = (now[fieldY] - prior.ty) * scene.height
+                    squared += dx * dx + dy * dy; count++
+                }
+                if (count >= 20 && squared / count < best) {
+                    best = squared / count; bestLag = lag * sampleInterval
+                }
+            }
+            return bestLag
+        }
+        return { renderedSeconds: estimate("x", "y"), rawSeconds: estimate("rx", "ry"),
+            method: "minimum_visible_2d_mse_discrete_lags", stepSeconds: sampleInterval,
+            maxLagSeconds: 2, samples: lagSamples.length, includesSoftwareSmoothing: brainInput }
     }
 
     function roundMetrics() {
@@ -372,7 +460,8 @@ Item {
             occludedMae2d: occludedSeconds > 0 ? occludedAbsDt / occludedSeconds : null,
             occludedRmse2d: occludedSeconds > 0 ? Math.sqrt(occludedSqDt / occludedSeconds) : null,
             rawOccludedMae2d: occludedSeconds > 0 ? rawOccludedAbsDt / occludedSeconds : null,
-            samples: sampleCount
+            samples: sampleCount,
+            trackingLag: estimateTrackingLag()
         }
     }
 
@@ -393,6 +482,7 @@ Item {
             occludedSeconds: m.occludedSeconds,
             recaptureSeconds: m.recaptureSeconds,
             recaptureEvents: m.recaptureEvents,
+            trackingLag: m.trackingLag,
             errorUnit: m.errorUnit,
             rawMae2d: m.rawMae2d,
             occludedMae2d: m.occludedMae2d,
@@ -425,7 +515,7 @@ Item {
         }
 
         var result = {
-            gameVersion: "0.5.2",
+            gameVersion: "0.6.0",
             reason: reason,
             roundsTotal: roundPlan.length,
             roundsCompleted: roundResults.length,
@@ -444,6 +534,10 @@ Item {
 
     function logSample() {
         sampleCount++
+        var history = lagSamples.slice()
+        history.push({ t: roundElapsed, x: ballX, y: ballY, rx: rawX, ry: rawY,
+            tx: targetX, ty: targetY, visible: targetVisible })
+        lagSamples = history
         game.record("pursuit.sample", {
             sampleIndex: sampleCount,
             round: roundIndex + 1,
@@ -478,6 +572,7 @@ Item {
     // ------------------------------------------------------------------
     function advance(dt) {
         if (isPaused || sessionStopped || sessionFinished || !inputReady) return
+        moveKeyboardCursor(dt)
         localElapsed += dt
 
         if (phase === "countdown") {
@@ -548,12 +643,12 @@ Item {
         function onStarted() { root.startSession() }
         function onStep(seconds) { root.advance(seconds) }
         function onPointer(x, y) { root.handlePointer(x, y) }
-        function onAction(name, pressed) { /* 本任务仅指针 */ }
-        function onPaused() { root.isPaused = true }
+        function onAction(name, pressed) { root.setKeyboardDirection(name, pressed) }
+        function onPaused() { root.clearKeyboard(); root.isPaused = true }
         function onResumed() {
             if (!root.sessionStopped) { root.isPaused = false; root.syncLocalMouse() }
         }
-        function onStopping() { root.sessionStopped = true; root.isPaused = true }
+        function onStopping() { root.clearKeyboard(); root.sessionStopped = true; root.isPaused = true }
     }
 
     // ------------------------------------------------------------------

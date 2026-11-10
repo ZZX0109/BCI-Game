@@ -1,22 +1,22 @@
-﻿case_id,priority,module,check,steps,expected,evidence_required,status,actual_evidence
-V5-001,P0,repo,工作树安全,记录git status和HEAD并建立工作分支,不覆盖脏工作区；注明代码基线和变更范围,git输出/分支,NOT_TESTED,
-V5-002,P0,repo,唯一规格,根AGENTS链接SPEC_CURRENT并标注旧报告归档,Agent能找到唯一当前需求，不从历史PASS认定完成,文档审查,NOT_TESTED,
+case_id,priority,module,check,steps,expected,evidence_required,status,actual_evidence
+V5-001,P0,repo,工作树安全,记录git status和HEAD并建立工作分支,不覆盖脏工作区；注明代码基线和变更范围,git输出/分支,PASS,STATUS_CURRENT.md; AGENTS.md; docs/SPEC_CURRENT.md; git branch feat/neuralife-v5-interaction
+V5-002,P0,repo,唯一规格,根AGENTS链接SPEC_CURRENT并标注旧报告归档,Agent能找到唯一当前需求，不从历史PASS认定完成,文档审查,PASS,STATUS_CURRENT.md; AGENTS.md; docs/SPEC_CURRENT.md; git branch feat/neuralife-v5-interaction
 V5-003,P0,repo,活动入口清单,检查活动模块登记,"发布列表是hanoi,sokoban,pointer,claw,traffic,luban,rhythm",文件清单/游戏截图,NOT_TESTED,
 V5-004,P0,repo,全量测试覆盖,运行tools/run_scenarios.py all,包含rhythm和pointer；每个当前游戏至少有适配测试,测试输出,NOT_TESTED,
 V5-005,P0,repo,只读部署预览,运行sync_to_host --dry-run,未写入宿主；显示新增替换与旧模块退役项,日志与SHA256,NOT_TESTED,
 V5-006,P0,repo,旧插件退役安全,经过同意执行旧模块退役演练,备份pursuit/target旧插件；重新打开Neuralife不再显示旧入口,屏幕截图/回退验证,NOT_TESTED,
-V5-007,P0,pointer,统一模式入口,进入Neuralife游戏列表,只有1个目标控制训练，进入后可选追踪/打靶,列表截图与录屏,NOT_TESTED,
-V5-008,P0,pointer,两模式独立评分,分别完成追踪和打靶模式,追踪指标与命中指标独立且mode写入事件,日志与汇总,NOT_TESTED,
-V5-009,P0,pointer,模式选择可操作,分别使用鼠标/键盘/模拟Cursor选择,不强制键鼠混用，未开始前不计实验成绩,三输入录屏,NOT_TESTED,
-V5-010,P0,pointer,单次finish,完成模式并退出,同一会话game.finish最多一次，失败/返回不丢记录,事件流,NOT_TESTED,
-V5-011,P0,pointer,中心坐标一致,在场景中心点击和射击,准星=射击点，≤2场景逻辑像素,截图/坐标CSV,NOT_TESTED,
-V5-012,P0,pointer,九点坐标检验,中心/四角/四边中点点击射击,每点≤2场景逻辑像素；不夹入虚假命中,9点CSV,NOT_TESTED,
-V5-013,P0,pointer,屏幕缩放,1280x720/1920x1080/2560x1440测试,窗口缩放不产生可见位置偏移,实机截图和CSV,NOT_TESTED,
-V5-014,P0,pointer,Windows DPI,100/125/150%下实际点击,记录DPI和残差；不跳到另一位置,实机CSV与录屏,NOT_TESTED,
-V5-015,P0,pointer,窗口跨屏/失焦,移动窗口/最大化/暂停/恢复,鼠标和指针状态不粘连，不连发,操作录屏,NOT_TESTED,
-V5-016,P0,pointer,同帧命中,先将指针移远再点击靶心,按点击当帧坐标判定，不用上一帧缓存,目标事件,NOT_TESTED,
-V5-017,P0,pointer,移动遮挡场景,击中移动目标并在遮挡时射击,目标中心与时间正确；遮挡不算命中,测试日志,NOT_TESTED,
-V5-018,P0,pointer,模拟脑控输入,host onPointer和confirm完成打靶,有效二维输入，非法NaN/Inf被拒,fake-host记录,NOT_TESTED,
+V5-007,P0,pointer,统一模式入口,进入Neuralife游戏列表,只有1个目标控制训练，进入后可选追踪/打靶,列表截图与录屏,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
+V5-008,P0,pointer,两模式独立评分,分别完成追踪和打靶模式,追踪指标与命中指标独立且mode写入事件,日志与汇总,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
+V5-009,P0,pointer,模式选择可操作,分别使用鼠标/键盘/模拟Cursor选择,不强制键鼠混用，未开始前不计实验成绩,三输入录屏,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
+V5-010,P0,pointer,单次finish,完成模式并退出,同一会话game.finish最多一次，失败/返回不丢记录,事件流,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
+V5-011,P0,pointer,中心坐标一致,在场景中心点击和射击,准星=射击点，≤2场景逻辑像素,截图/坐标CSV,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
+V5-012,P0,pointer,九点坐标检验,中心/四角/四边中点点击射击,每点≤2场景逻辑像素；不夹入虚假命中,9点CSV,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
+V5-013,P0,pointer,屏幕缩放,1280x720/1920x1080/2560x1440测试,窗口缩放不产生可见位置偏移,实机截图和CSV,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
+V5-014,P0,pointer,Windows DPI,100/125/150%下实际点击,记录DPI和残差；不跳到另一位置,实机CSV与录屏,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
+V5-015,P0,pointer,窗口跨屏/失焦,移动窗口/最大化/暂停/恢复,鼠标和指针状态不粘连，不连发,操作录屏,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
+V5-016,P0,pointer,同帧命中,先将指针移远再点击靶心,按点击当帧坐标判定，不用上一帧缓存,目标事件,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
+V5-017,P0,pointer,移动遮挡场景,击中移动目标并在遮挡时射击,目标中心与时间正确；遮挡不算命中,测试日志,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
+V5-018,P0,pointer,模拟脑控输入,host onPointer和confirm完成打靶,有效二维输入，非法NaN/Inf被拒,fake-host记录,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
 V5-019,P0,rhythm,大屏布局1920,1920x1080开始第四轮,轨道箭头/音符/侧栏清楚，文字不小且无溢出,实机截图,NOT_TESTED,
 V5-020,P0,rhythm,大屏布局2560,2560x1440运行,按键相对轨道比例与前一尺寸一致,实机截图,NOT_TESTED,
 V5-021,P0,rhythm,超宽及小窗,3440x1440和小于1200窗口测试,轨道居中有最大宽度、侧栏适当折叠,实机截图,NOT_TESTED,

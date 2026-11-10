@@ -13,7 +13,7 @@
 ------------------------------
 - 时间是**确定性模拟时间**：以 8ms 步长人工推进 `step`，与宿主行为一致，但不受机器快慢影响。
   这能证明逻辑正确，不能证明「在真实 60fps 下体感如何」。
-- 渲染走 PySide6 **6.12.0** offscreen，不是宿主自带的 6.11.1。QML 语义一致，
+- 渲染走当前 Python 环境的 PySide6（版本写入 transcript），不是 Windows 正式宿主。
   但「宿主里跑」仍以 `--game-smoke` 与截图为准。
 - 不产生 OS 级鼠标/键盘事件；`pointer/action` 就是宿主对游戏的输入通道本身，
   所以对「宿主收到输入后游戏怎么走」是充分证据，对「鼠标手感/BCI 硬件」不是。
@@ -29,6 +29,18 @@ from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlComponent, QQmlEngine
 from PySide6.QtQuick import QQuickItem, QQuickView
 from PySide6.QtTest import QTest
+import PySide6
+
+
+def to_python(value):
+    """Detach QML values while their engine is alive, including nested payloads."""
+    if hasattr(value, "toVariant"):
+        value = value.toVariant()
+    if isinstance(value, dict):
+        return {str(k): to_python(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [to_python(v) for v in value]
+    return value
 
 STEP = 0.008          # 宿主 onStep 的固定步长（8ms）
 DESIGN_W, DESIGN_H = 1000, 700
@@ -44,12 +56,16 @@ class FakeGame(QObject):
     paused = Signal()
     resumed = Signal()
     stopping = Signal()
+    elapsedChanged = Signal()
+    inputSourceChanged = Signal()
+    sizeChanged = Signal()
 
     def __init__(self, width=DESIGN_W, height=DESIGN_H):
         super().__init__()
         self.events = []          # [(sim_time, name, payload)]
         self.marks = []
         self.finished = None
+        self.finishes = []
         self._elapsed = 0.0
         self._paused = False
         self._input = "local"
@@ -62,12 +78,12 @@ class FakeGame(QObject):
     def _get_elapsed(self):
         return self._elapsed
 
-    elapsedSeconds = Property(float, _get_elapsed, constant=False)
+    elapsedSeconds = Property(float, _get_elapsed, notify=elapsedChanged)
 
     def _get_input(self):
         return self._input
 
-    inputSource = Property(str, _get_input, constant=False)
+    inputSource = Property(str, _get_input, notify=inputSourceChanged)
 
     def _get_width(self):
         return self._width
@@ -75,15 +91,21 @@ class FakeGame(QObject):
     def _get_height(self):
         return self._height
 
-    width = Property(float, _get_width, constant=False)
-    height = Property(float, _get_height, constant=False)
+    width = Property(float, _get_width, notify=sizeChanged)
+    height = Property(float, _get_height, notify=sizeChanged)
 
     def set_input_source(self, value):
         self._input = value
+        self.inputSourceChanged.emit()
+
+    def set_size(self, width, height):
+        self._width, self._height = float(width), float(height)
+        self.sizeChanged.emit()
 
     # ---- 宿主 API ---------------------------------------------------
     @Slot(str, "QVariant", result="QVariant")
     def record(self, name, data):
+        data = to_python(data)
         if self._paused:
             # 暂停期间游戏不该记录业务事件；记下来供断言检查
             self.events.append((self._elapsed, name + "@PAUSED", data))
@@ -93,14 +115,16 @@ class FakeGame(QObject):
 
     @Slot("QVariant")
     def finish(self, result):
+        result = to_python(result)
         if self.finished is not None:
             self.events.append((self._elapsed, "DOUBLE_FINISH", result))
         self.finished = result
+        self.finishes.append(result)
         return {"ok": True}
 
     @Slot(str, "QVariant")
     def mark(self, name, data):
-        self.marks.append((self._elapsed, name, data))
+        self.marks.append((self._elapsed, name, to_python(data)))
         return {"ok": True}
 
     @Slot()
@@ -121,6 +145,7 @@ class FakeGame(QObject):
         if self._paused or self.finished is not None:
             return
         self._elapsed += seconds
+        self.elapsedChanged.emit()
         self.step.emit(seconds)
 
     def names(self):
@@ -137,13 +162,13 @@ class FakeConfig(QObject):
 
     @Slot("QVariant", result="QVariant")
     def read(self, defaults):
-        values = dict(defaults or {})
+        values = dict(to_python(defaults) or {})
         values.update(self.store)
         return {"ok": True, "values": values}
 
     @Slot("QVariant", result="QVariant")
     def write(self, values):
-        self.store.update(values or {})
+        self.store.update(to_python(values) or {})
         return {"ok": True}
 
 
@@ -161,12 +186,13 @@ class FakeTaskContext(QObject):
 class Runner:
     """一个游戏实例 + 确定性时间推进 + 断言收集。"""
 
-    def __init__(self, game_id, root_dir, input_source="local", size=(DESIGN_W, DESIGN_H)):
+    def __init__(self, game_id, root_dir, input_source="local", size=(DESIGN_W, DESIGN_H), config=None):
         self.game_id = game_id
         self.root_dir = root_dir
         self.game = FakeGame(*size)
         self.game.set_input_source(input_source)
         self.ctx = FakeTaskContext()
+        self.ctx._config.store.update(config or {})
         self.app = QGuiApplication.instance() or QGuiApplication(sys.argv[:1])
         self.engine = QQmlEngine()
         self.view = QQuickView(self.engine, None)
@@ -187,6 +213,21 @@ class Runner:
         QTest.qWait(120)
         self._shown = True
         return self
+
+    def resize(self, width, height):
+        self.game.set_size(width, height)
+        self.view.resize(width, height)
+        QTest.qWait(80)
+
+    def screenshot(self, path):
+        os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+        QTest.qWait(80)
+        return self.view.grabWindow().save(str(path))
+
+    def close(self):
+        self.view.close()
+        self.view.deleteLater()
+        QTest.qWait(10)
 
     def start(self):
         self.game.started.emit()
@@ -275,7 +316,7 @@ class Runner:
         e = QQmlExpression(QQmlEngine.contextForObject(self.root), self.root, expr)
         value, _undefined = e.evaluate()
         if e.hasError():
-            raise RuntimeError(f"QML 表达式求值失败: {expr}\n{e.errorToString()}")
+            raise RuntimeError(f"QML 表达式求值失败: {expr}\n{e.error().toString()}")
         return value
 
     # ---- 真实鼠标事件（走 MouseArea，属于手势层证据）-------------------
@@ -329,9 +370,13 @@ class Runner:
     def transcript(self):
         return {
             "game": self.game_id,
+            "environment": {"platform": sys.platform, "pyside6": PySide6.__version__,
+                            "qtPlatform": os.environ.get("QT_QPA_PLATFORM", "default"),
+                            "host": "simulated", "bci": "simulated"},
             "inputSource": self.game.inputSource,
             "simSeconds": round(self.game.elapsedSeconds, 3),
             "finished": self.game.finished,
+            "finishCount": len(self.game.finishes),
             "events": [
                 {"t": round(t, 3), "name": n, "data": d} for t, n, d in self.game.events
             ],
