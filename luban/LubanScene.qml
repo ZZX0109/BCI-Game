@@ -45,6 +45,8 @@ View3D {
             readonly property var off: root ? root.offsetOf(pid) : [0,0,0]
             readonly property bool selected: root && root.selectedId === pid
             readonly property bool blocked: root && root.blockerId === pid
+            readonly property bool hovered: root && root.hoverId === pid
+            opacity: !root || root.inspectPiece || selected || hovered || blocked ? 1 : 0.63
             visible: root && root.removedMap[pid] !== true && (!root.inspectPiece || root.selectedId === pid)
             position: Qt.vector3d(off[0]*21,off[1]*21,off[2]*21)
             Repeater3D {
@@ -63,10 +65,22 @@ View3D {
                         baseColorMap: Texture { source: "assets/wood.png"; scaleU: 3; scaleV: 1; rotationUV: pieceNode.modelData.axis === "y" ? 0 : 90 }
                         roughness: 0.76
                         metalness: 0
-                        emissiveFactor: pieceNode.blocked ? Qt.vector3d(0.22,0.015,0.008) : pieceNode.selected ? Qt.vector3d(0.035,0.025,0.012) : Qt.vector3d(0,0,0)
+                        emissiveFactor: pieceNode.blocked ? Qt.vector3d(0.28,0.012,0.006) : pieceNode.hovered ? Qt.vector3d(0.16,0.10,0.02) : pieceNode.selected ? Qt.vector3d(0.075,0.06,0.025) : Qt.vector3d(0,0,0)
                     }
                 }
             }
+        }
+    }
+    // Thin red patches are the actual axis contact faces, derived from the
+    // same AABBs as collision; they do not add collision or reveal a next move.
+    Repeater3D {
+        model: view.gameRoot ? view.gameRoot.contactMarkers : []
+        delegate: Model {
+            required property var modelData
+            source: "#Cube"
+            position: Qt.vector3d(modelData.c[0]*21,modelData.c[1]*21,modelData.c[2]*21)
+            scale: Qt.vector3d(modelData.s[0]*21/100,modelData.s[1]*21/100,modelData.s[2]*21/100)
+            materials: PrincipledMaterial { baseColor: "#E55E48"; emissiveFactor: Qt.vector3d(.5,.03,.01); roughness: .8; cullMode: Material.NoCulling }
         }
     }
 }

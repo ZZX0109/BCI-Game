@@ -43,3 +43,9 @@ Windows Neuralife 实机和真实脑控设备尚未验收。
 本次在 macOS / PySide6 6.12 完成运行测试；800×600、1000×700、1440×900截图已检查。未验证 Windows 正式 Neuralife 宿主、真实脑控设备、手机尺寸和读屏。测试结果见 tests/runtime-result.json 与 geometry-result.json。Qt 捕获日志无 QML 错误；macOS 输入法服务输出一条非 QML 系统提示，未影响测试。
 
 参考：https://github.com/YoungJett123/luban-lock-studio （借鉴选件、多视角、结构观察思路；未复制素材或代码）。其说明也限定了理想刚体模型的机械边界。
+
+## V5 左键手势与多阶段关卡
+
+L1/L2 保留教学；L3/L4/L5 含局部滑移、反推、可逆拆解与多方向阻挡。左键短点击木件选中，左键按住移动超过 6 逻辑像素后转动视角；只有选中木件的独立 A/B 端操作柄能拖动抽件。滚轮缩放、键盘/模拟脑控选方向菜单和撤销保持原状态机。
+
+Linux Xorg/OpenGL 的 Qt Quick 3D 运行回归在 1.0/1.5 缩放各 241/241，通过；几何求解器验证 5 关共 2693 个状态。`luban/tests/evidence/` 保存窗口截图与动作事件；Windows Neuralife RHI/GPU 仍需实机验证。

@@ -1,116 +1,213 @@
-[
-  {
-    "level": 1,
-    "connected": true,
-    "zero_overlap": true,
-    "all_reachable_states_solvable": true,
-    "states": {
-      "(0, 1)": [
-        [
-          "穿榫纵梁",
-          -1
-        ],
-        [
-          "穿榫纵梁",
-          1
-        ]
-      ],
-      "(0,)": [
-        [
-          "承榫横梁",
-          -1
-        ],
-        [
-          "承榫横梁",
-          1
-        ]
-      ]
-    }
+{
+  "summary": {
+    "status": "PASS",
+    "levels": 5,
+    "total_states": 2693
   },
-  {
-    "level": 2,
-    "connected": true,
-    "zero_overlap": true,
-    "all_reachable_states_solvable": true,
-    "states": {
-      "(0, 1, 2)": [
-        [
-          "中心锁销",
-          -1
-        ],
-        [
-          "中心锁销",
-          1
-        ]
-      ],
-      "(0, 1)": [
-        [
-          "穿榫纵梁",
-          -1
-        ],
-        [
-          "穿榫纵梁",
-          1
-        ]
-      ],
-      "(0,)": [
-        [
-          "承榫横梁",
-          -1
-        ],
-        [
-          "承榫横梁",
-          1
-        ]
+  "geometry_sha256": "ae25d974448fd7556de9b78c14557f8f35b6aee76f49b1b21d5a7c43d50fd1c7",
+  "model": "connected ideal rigid solids; only own-axis translations; macro states at exact contacts/removal",
+  "levels": [
+    {
+      "level": "L1",
+      "pieces": 2,
+      "connected": true,
+      "zero_overlap": true,
+      "reachable_macro_states": 3,
+      "all_reachable_macro_states_solvable": true,
+      "initial_whole_piece_moves": 2,
+      "maximum_extraction_branches": 2,
+      "partial_moves_in_solution": 0,
+      "continuous_sweep_replay": true,
+      "solution": [
+        {
+          "piece": "p2",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p1",
+          "direction": "-x",
+          "distance": 6.9,
+          "kind": "extract"
+        }
+      ]
+    },
+    {
+      "level": "L2",
+      "pieces": 3,
+      "connected": true,
+      "zero_overlap": true,
+      "reachable_macro_states": 4,
+      "all_reachable_macro_states_solvable": true,
+      "initial_whole_piece_moves": 2,
+      "maximum_extraction_branches": 2,
+      "partial_moves_in_solution": 0,
+      "continuous_sweep_replay": true,
+      "solution": [
+        {
+          "piece": "p3",
+          "direction": "-z",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p2",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p1",
+          "direction": "-x",
+          "distance": 6.9,
+          "kind": "extract"
+        }
+      ]
+    },
+    {
+      "level": "L3",
+      "pieces": 4,
+      "connected": true,
+      "zero_overlap": true,
+      "reachable_macro_states": 5,
+      "all_reachable_macro_states_solvable": true,
+      "initial_whole_piece_moves": 2,
+      "maximum_extraction_branches": 2,
+      "partial_moves_in_solution": 0,
+      "continuous_sweep_replay": true,
+      "solution": [
+        {
+          "piece": "p4",
+          "direction": "-x",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p3",
+          "direction": "-z",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p2",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p1",
+          "direction": "-x",
+          "distance": 6.9,
+          "kind": "extract"
+        }
+      ]
+    },
+    {
+      "level": "L4",
+      "pieces": 3,
+      "connected": true,
+      "zero_overlap": true,
+      "reachable_macro_states": 50,
+      "all_reachable_macro_states_solvable": true,
+      "initial_whole_piece_moves": 0,
+      "maximum_extraction_branches": 2,
+      "partial_moves_in_solution": 2,
+      "continuous_sweep_replay": true,
+      "solution": [
+        {
+          "piece": "p1",
+          "direction": "-x",
+          "distance": 0.75,
+          "kind": "partial"
+        },
+        {
+          "piece": "p3",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p1",
+          "direction": "-x",
+          "distance": 3.0,
+          "kind": "partial"
+        },
+        {
+          "piece": "p2",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p1",
+          "direction": "-x",
+          "distance": 3.15,
+          "kind": "extract"
+        }
+      ]
+    },
+    {
+      "level": "L5",
+      "pieces": 6,
+      "connected": true,
+      "zero_overlap": true,
+      "reachable_macro_states": 2631,
+      "all_reachable_macro_states_solvable": true,
+      "initial_whole_piece_moves": 0,
+      "maximum_extraction_branches": 6,
+      "partial_moves_in_solution": 2,
+      "continuous_sweep_replay": true,
+      "solution": [
+        {
+          "piece": "p1",
+          "direction": "-x",
+          "distance": 0.75,
+          "kind": "partial"
+        },
+        {
+          "piece": "p3",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p5",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p1",
+          "direction": "+x",
+          "distance": 1.5,
+          "kind": "partial"
+        },
+        {
+          "piece": "p2",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p4",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p6",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p1",
+          "direction": "-x",
+          "distance": 10.65,
+          "kind": "extract"
+        }
       ]
     }
-  },
-  {
-    "level": 3,
-    "connected": true,
-    "zero_overlap": true,
-    "all_reachable_states_solvable": true,
-    "states": {
-      "(0, 1, 2, 3)": [
-        [
-          "横向止退销",
-          -1
-        ],
-        [
-          "横向止退销",
-          1
-        ]
-      ],
-      "(0, 1, 2)": [
-        [
-          "中心锁销",
-          -1
-        ],
-        [
-          "中心锁销",
-          1
-        ]
-      ],
-      "(0, 1)": [
-        [
-          "穿榫纵梁",
-          -1
-        ],
-        [
-          "穿榫纵梁",
-          1
-        ]
-      ],
-      "(0,)": [
-        [
-          "承榫横梁",
-          -1
-        ],
-        [
-          "承榫横梁",
-          1
-        ]
-      ]
-    }
-  }
-]
+  ]
+}

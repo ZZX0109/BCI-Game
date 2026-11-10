@@ -47,13 +47,13 @@ V5-045,P1,claw,近失误动画,误差1.1倍容差触发,碰触→歪斜→略抬
 V5-046,P1,claw,完全失败,误差1.5倍容差触发,无抓起，记录miss与误差,录屏/日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
 V5-047,P1,claw,结果前不泄露误差,定位过程中观察,无实时坐标误差答案，结束后可显示,录屏,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
 V5-048,P1,claw,两轴定位一致,分别移动X、Z,正视/侧视一致，二维误差可复算,日志,NOT_TESTED,Linux Qt simulated host: claw/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); tests/results/v5-claw/result.json (11/11) and PNG stages; Windows video pending
-V5-049,P1,luban,L3复杂锁,第三关演示必要的局部滑移,至少有一件先部分抽出才解锁另一件,几何求解和录屏,NOT_TESTED,
-V5-050,P1,luban,L4双层互锁,新增第四关,多方向阻挡与可逆路径，自动解算可完成,几何报告,NOT_TESTED,
-V5-051,P1,luban,无穿模,逐帧观察每段抽取、复位,连续运动不发生几何穿透或瞬移,求解器及视频,NOT_TESTED,
-V5-052,P1,luban,左键旋转,从木件表面按左键拖动,旋转视角，不误触发抽件,实机录屏,NOT_TESTED,
-V5-053,P1,luban,短点击和抽件手柄,单击选中，随后拖操作柄,先选中后抽件，两种手势无冲突,实机录屏,NOT_TESTED,
-V5-054,P1,luban,撤销与重装,进行局部滑移后撤销,返回完全相同位置，不丢卡槽状态,状态对比,NOT_TESTED,
-V5-055,P1,luban,真实3D渲染,RHI Windows宿主播放新关卡,不是软件后端空白/伪3D，几何和遮挡正确,窗口截图/配置,NOT_TESTED,
+V5-049,P1,luban,L3复杂锁,第三关演示必要的局部滑移,至少有一件先部分抽出才解锁另一件,几何求解和录屏,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
+V5-050,P1,luban,L4双层互锁,新增第四关,多方向阻挡与可逆路径，自动解算可完成,几何报告,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
+V5-051,P1,luban,无穿模,逐帧观察每段抽取、复位,连续运动不发生几何穿透或瞬移,求解器及视频,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
+V5-052,P1,luban,左键旋转,从木件表面按左键拖动,旋转视角，不误触发抽件,实机录屏,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
+V5-053,P1,luban,短点击和抽件手柄,单击选中，随后拖操作柄,先选中后抽件，两种手势无冲突,实机录屏,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
+V5-054,P1,luban,撤销与重装,进行局部滑移后撤销,返回完全相同位置，不丢卡槽状态,状态对比,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
+V5-055,P1,luban,真实3D渲染,RHI Windows宿主播放新关卡,不是软件后端空白/伪3D，几何和遮挡正确,窗口截图/配置,NOT_TESTED,"Linux Qt Quick 3D Xorg/OpenGL: luban/tests/runtime-result.json (241/241 at scale 1 and 1.5), geometry-result.json (2693 states), luban/tests/evidence/ PNGs; Windows RHI video pending"
 V5-056,P1,sokoban,原有五关回归,测试五关通关与死局、撤销,无需重写，全部功能不退化,自动回归报告,NOT_TESTED,
 V5-057,P1,all,暂停与停止,各游戏运行中暂停/失焦/结束,无非预期动作，无计时补偿，finish一次,日志,NOT_TESTED,
 V5-058,P1,all,统一界面,并排查看新游戏与宿主原版示例,字体/按钮/帮助/结算属于同产品而非独立科技模板,实际截图,NOT_TESTED,

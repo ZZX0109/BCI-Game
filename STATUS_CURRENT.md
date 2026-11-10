@@ -38,3 +38,7 @@
 ## 阶段 5：抓娃娃机（本地功能验证）
 
 已实现三档接触反馈，近失误有连续 `partial_lift → slip → settle`，在主视图出现确定性倾斜与短提后落回，且只把真正成功计入成功率。`claw/tests/verify_1106.py` 1.0/1.5 缩放各 110/110；`claw/tests/verify_v5_near_miss.py` 11/11，输出 `tests/results/v5-claw/` 截图及事件。1920×1080 主正视图已截图，Windows 实机视觉和录屏未测试。
+
+## 阶段 6：鲁班锁（本地功能验证）
+
+L3 及后续关卡已移植多阶段互锁和连续扫掠几何验证；L1/L2 仍为教学。左键点击木件选择、在木件表面拖动旋转相机，独立箭头操作柄才会滑移木件。Linux Xorg/OpenGL 的真实 Qt Quick 3D 窗口 1.0/1.5 缩放各 241/241 通过；求解器 5 关 2693 状态可解。证据：`luban/tests/evidence/`、`luban/tests/runtime-result.json`、`luban/tests/geometry-result.json`。Windows Neuralife RHI/GPU 仍未测试。

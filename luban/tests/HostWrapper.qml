@@ -24,5 +24,5 @@ Item {
         property var config: ({read: function(defaults) {return defaults}})
     }
     Loader { id: loader; anchors.fill: parent }
-    function loadGame(url) { loader.setSource(url, {game: host, taskContext: context}) }
+    function loadGame(url) { loader.source=""; loader.setSource(url, {game: host, taskContext: context}) }
 }
