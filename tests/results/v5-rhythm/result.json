@@ -1,0 +1,128 @@
+{
+  "environment": "Linux PySide6 actual QQuickView; synthetic visual note and simulated host",
+  "checks": [
+    {
+      "name": "note_size_1280",
+      "passed": true,
+      "actual": 60.0
+    },
+    {
+      "name": "board_centered_1280",
+      "passed": true,
+      "actual": 32.0
+    },
+    {
+      "name": "note_size_1920",
+      "passed": true,
+      "actual": 90.0
+    },
+    {
+      "name": "board_centered_1920",
+      "passed": true,
+      "actual": 32.0
+    },
+    {
+      "name": "note_size_2560",
+      "passed": true,
+      "actual": 96.0
+    },
+    {
+      "name": "board_centered_2560",
+      "passed": true,
+      "actual": 200.5
+    },
+    {
+      "name": "note_size_3440",
+      "passed": true,
+      "actual": 96.0
+    },
+    {
+      "name": "board_centered_3440",
+      "passed": true,
+      "actual": 640.5
+    },
+    {
+      "name": "large_notes_grow",
+      "passed": true,
+      "actual": [
+        60.0,
+        90.0,
+        96.0,
+        96.0
+      ]
+    },
+    {
+      "name": "tail_0",
+      "passed": true,
+      "actual": 376.5
+    },
+    {
+      "name": "tail_25",
+      "passed": true,
+      "actual": 282.375
+    },
+    {
+      "name": "tail_50",
+      "passed": true,
+      "actual": 188.25
+    },
+    {
+      "name": "tail_75",
+      "passed": true,
+      "actual": 94.125
+    },
+    {
+      "name": "tail_100",
+      "passed": true,
+      "actual": 0.0
+    },
+    {
+      "name": "tail_monotonic",
+      "passed": true,
+      "actual": [
+        376.5,
+        282.375,
+        188.25,
+        94.125,
+        0.0
+      ]
+    },
+    {
+      "name": "setup_entered",
+      "passed": true,
+      "actual": "setup"
+    },
+    {
+      "name": "countdown_entered",
+      "passed": true,
+      "actual": "countdown"
+    },
+    {
+      "name": "actual_round_started",
+      "passed": true,
+      "actual": "playing"
+    },
+    {
+      "name": "audio_switches_preserve_chart",
+      "passed": true,
+      "actual": "playing"
+    },
+    {
+      "name": "audio_switches_preserve_clock",
+      "passed": true,
+      "actual": 0.12000000000000005
+    },
+    {
+      "name": "pause_freezes_clock",
+      "passed": true,
+      "actual": 0.12000000000000005
+    },
+    {
+      "name": "resume_advances_clock",
+      "passed": true,
+      "actual": 0.21600000000000014
+    }
+  ],
+  "passed": 22,
+  "total": 22
+}

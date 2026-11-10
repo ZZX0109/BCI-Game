@@ -32,10 +32,13 @@ Item {
     property bool musicEnabled: true
     property bool beatCueEnabled: true
     property bool sfxEnabled: true
-    readonly property bool stacked: width < 720
+    readonly property bool stacked: width < 1120 || height < 660
     readonly property bool tightStack: stacked && height < 650
     readonly property real footerHeight: stacked ? 112 : 92
     readonly property bool compact: width < 1050 || height < 760
+    readonly property real uiScale: Math.max(1, Math.min(1.65, Math.min(width / 1280, height / 720)))
+    readonly property int bodyPx: Math.round(16 * uiScale)
+    readonly property int captionPx: Math.round(14 * uiScale)
     readonly property int inset: width < 900 ? 20 : 32
     readonly property string inputSource: game && game.inputSource ? String(game.inputSource) : "local"
     readonly property bool isBci: /bci|brain/i.test(inputSource)
@@ -171,11 +174,13 @@ Item {
     }
     Rectangle {
         id:board; objectName:"rhythmBoard"
-        x:root.inset;y:root.stacked?122:106
-        width:parent.width-root.inset*2-(root.stacked?0:side.width+24)
+        x:root.stacked?root.inset:Math.max(root.inset,(root.width-width-side.width-24)/2)
+        y:root.stacked?122:106
+        width:Math.min(1660,parent.width-root.inset*2-(root.stacked?0:side.width+24))
         height:Math.max(180,parent.height-y-root.footerHeight-(root.stacked?330:0))
         color:uiTheme.background;clip:true
         readonly property real laneW:width/4
+        readonly property int notePx: Math.round(Math.max(56,Math.min(96,laneW*.42,60*root.uiScale)))
         readonly property real lineY:84
         readonly property real travel:height-lineY-45
         readonly property real pixelsPerSecond:travel/(root.state?root.state.cfg.leadSeconds:4)
@@ -187,14 +192,15 @@ Item {
                 x:index*board.laneW;width:board.laneW;height:board.height
                 Rectangle { x:parent.width-1;width:1;height:parent.height;color:uiTheme.panelBorder;opacity:.3;visible:index<3 }
                 Rectangle { anchors.fill:parent;color:root.laneColors[index];opacity:root.feedbackDir===modelData&&root.clock<root.feedbackTime?.045:0 }
-                Text { x:0;y:17;width:parent.width;horizontalAlignment:Text.AlignHCenter;text:["左","下","上","右"][index];color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
-                Rectangle { x:(parent.width-width)/2;y:board.lineY-25;width:50;height:50;radius:9;color:uiTheme.background;border.width:2;border.color:root.laneColors[index];opacity:.65+root.beatGlow*.35
-                    Text { anchors.centerIn:parent;text:Engine.glyph(modelData);color:root.laneColors[index];font.pixelSize:32;font.family:uiTheme.fontFamily }
+                Text { x:0;y:12;width:parent.width;horizontalAlignment:Text.AlignHCenter;text:["左","下","上","右"][index];color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx }
+                Rectangle { x:(parent.width-width)/2;y:board.lineY-height/2;width:board.notePx;height:board.notePx;radius:Math.round(width*.18);color:uiTheme.background;border.width:2;border.color:root.laneColors[index];opacity:.65+root.beatGlow*.35
+                    Text { anchors.centerIn:parent;text:Engine.glyph(modelData);color:root.laneColors[index];font.pixelSize:Math.round(board.notePx*.64);font.family:uiTheme.fontFamily }
                 }
             }
         }
         Rectangle { y:board.lineY-1;width:parent.width;height:2;color:uiTheme.primary;opacity:.22+root.beatGlow*.4 }
         Repeater {
+            id: noteRepeater
             model:root.notes
             delegate: Item {
                 id:noteView
@@ -202,30 +208,34 @@ Item {
                 required property var modelData
                 readonly property var n:root.noteData(index)
                 readonly property int lane:Engine.directions.indexOf(modelData.dir)
-                readonly property real remaining:modelData.time-root.clock
-                visible:n && (n.status==="pending"||n.status==="holding") && remaining<= (root.state?root.state.cfg.leadSeconds:4)
-                    && remaining+modelData.duration>=-(root.state?root.state.cfg.windowSeconds:.9)
-                x:lane*board.laneW+(board.laneW-48)/2
-                y:board.lineY+(n && n.status==="holding"?0:remaining*board.pixelsPerSecond)-24
-                width:48;height:48+Math.max(0,modelData.duration+(n && n.status==="holding"?remaining:0))*board.pixelsPerSecond
-                Rectangle { visible:modelData.duration>0;x:14;y:24;width:20;height:Math.max(0,noteView.modelData.duration+(noteView.n && noteView.n.status==="holding"?noteView.remaining:0))*board.pixelsPerSecond;radius:10;color:root.laneColors[noteView.lane];opacity:.45 }
-                Rectangle { width:48;height:48;radius:9;color:root.laneColors[noteView.lane];border.color:"#FFFFFF";border.width:1
-                    Text { anchors.centerIn:parent;text:Engine.glyph(noteView.modelData.dir);color:uiTheme.background;font.pixelSize:32;font.family:uiTheme.fontFamily;font.bold:true }
+                readonly property real headRemaining:modelData.time-root.clock
+                readonly property real endRemaining:modelData.time+modelData.duration-root.clock
+                readonly property real tailSeconds:modelData.duration>0?Math.max(0,Math.min(modelData.duration,endRemaining)):0
+                readonly property real tailPx:tailSeconds*board.pixelsPerSecond
+                readonly property int notePx:board.notePx
+                visible:n && (n.status==="pending"||n.status==="holding") && headRemaining<= (root.state?root.state.cfg.leadSeconds:4)
+                    && endRemaining>=-(root.state?root.state.cfg.windowSeconds:.9)
+                x:lane*board.laneW+(board.laneW-notePx)/2
+                y:board.lineY+Math.max(0,headRemaining)*board.pixelsPerSecond-notePx/2
+                width:notePx;height:notePx+tailPx
+                Rectangle { visible:modelData.duration>0 && noteView.tailPx>0;x:noteView.notePx*.32;y:noteView.notePx*.5;width:noteView.notePx*.36;height:noteView.tailPx;radius:width/2;color:root.laneColors[noteView.lane];opacity:.45 }
+                Rectangle { width:noteView.notePx;height:noteView.notePx;radius:Math.round(width*.18);color:root.laneColors[noteView.lane];border.color:"#FFFFFF";border.width:1
+                    Text { anchors.centerIn:parent;text:Engine.glyph(noteView.modelData.dir);color:uiTheme.background;font.pixelSize:Math.round(noteView.notePx*.64);font.family:uiTheme.fontFamily;font.bold:true }
                 }
             }
         }
-        Text { x:12;y:board.height-27;width:board.width-24;horizontalAlignment:Text.AlignHCenter;text:"箭头向上行进，到横线时输入对应方向";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
+        Text { x:12;y:board.height-27;width:board.width-24;horizontalAlignment:Text.AlignHCenter;text:"箭头向上行进，到横线时输入对应方向";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx }
     }
     Column {
-        id:side;x:root.stacked?root.inset:board.x+board.width+24;y:root.stacked?board.y+board.height+16:106;width:root.stacked?root.width-root.inset*2:root.compact?230:288;spacing:root.compact?8:16
-        Text { visible:!root.tightStack;width:parent.width;text:root.state?Engine.roundHelpFor(root.state,root.roundIndex)+(root.roundIndex===2?(root.state.cfg.directionCount===2?"\n本组：← →":"\n本组：← → ↑ ↓"):""):"留意提前出现的箭头，跟随节拍。";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:15;lineHeight:1.3 }
+        id:side;x:root.stacked?root.inset:board.x+board.width+24;y:root.stacked?board.y+board.height+16:106;width:root.stacked?root.width-root.inset*2:Math.round(288*root.uiScale);spacing:root.compact?8:16
+        Text { visible:!root.tightStack;width:parent.width;text:root.state?Engine.roundHelpFor(root.state,root.roundIndex)+(root.roundIndex===2?(root.state.cfg.directionCount===2?"\n本组：← →":"\n本组：← → ↑ ↓"):""):"留意提前出现的箭头，跟随节拍。";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.bodyPx;lineHeight:1.3 }
         Rectangle { visible:!root.tightStack;width:parent.width;height:1;color:uiTheme.panelBorder }
-        Text { visible:!root.tightStack;text:"下一步";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
+        Text { visible:!root.tightStack;text:"下一步";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx }
         Row { spacing:12
-            Text { text:root.active?Engine.glyph(root.active.dir):"—";color:root.active?root.laneColors[Engine.directions.indexOf(root.active.dir)]:uiTheme.disabledText;font.family:uiTheme.fontFamily;font.pixelSize:50;font.bold:true }
+            Text { text:root.active?Engine.glyph(root.active.dir):"—";color:root.active?root.laneColors[Engine.directions.indexOf(root.active.dir)]:uiTheme.disabledText;font.family:uiTheme.fontFamily;font.pixelSize:Math.round(50*root.uiScale);font.bold:true }
             Column { y:9;spacing:4
-                Text { text:root.active?(root.active.duration?"持续 "+root.active.duration.toFixed(1)+" 秒":"一次方向输入"):"本轮即将结束";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:15 }
-                Text { text:root.active?(root.sustaining?"保持中 · 剩余 "+Math.max(0,root.active.time+root.active.duration-root.clock).toFixed(1)+" 秒":Math.max(0,root.active.time-root.clock).toFixed(1)+" 秒后到达"):"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
+                Text { text:root.active?(root.active.duration?"持续 "+root.active.duration.toFixed(1)+" 秒":"一次方向输入"):"本轮即将结束";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.bodyPx }
+                Text { text:root.active?(root.sustaining?"保持中 · 剩余 "+Math.max(0,root.active.time+root.active.duration-root.clock).toFixed(1)+" 秒":Math.max(0,root.active.time-root.clock).toFixed(1)+" 秒后到达"):"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx }
             }
         }
         Rectangle { visible:!root.stacked;width:parent.width;height:root.compact?76:92;radius:8;color:uiTheme.panel;border.color:uiTheme.panelBorder
@@ -244,13 +254,13 @@ Item {
                 }
             }
         }
-        Text { visible:!root.stacked;width:parent.width;text:"方向动作示意反馈";color:uiTheme.disabledText;font.family:uiTheme.fontFamily;font.pixelSize:13;horizontalAlignment:Text.AlignHCenter }
-        Text { visible:!root.tightStack;width:parent.width;height:root.compact?44:60;text:root.feedback;wrapMode:Text.Wrap;color:root.feedbackKind==="warning"?uiTheme.warning:uiTheme.primary;font.family:uiTheme.fontFamily;font.pixelSize:15;lineHeight:1.3 }
+        Text { visible:!root.stacked;width:parent.width;text:"方向动作示意反馈";color:uiTheme.disabledText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx;horizontalAlignment:Text.AlignHCenter }
+        Text { visible:!root.tightStack;width:parent.width;height:root.compact?44:60;text:root.feedback;wrapMode:Text.Wrap;color:root.feedbackKind==="warning"?uiTheme.warning:uiTheme.primary;font.family:uiTheme.fontFamily;font.pixelSize:root.bodyPx;lineHeight:1.3 }
         Rectangle { width:parent.width;height:5;radius:2.5;color:uiTheme.panelBorder
             Rectangle { width:parent.width*(root.active?root.holdFraction(root.active):0);height:parent.height;radius:2.5;color:uiTheme.primary }
             visible:root.roundIndex===3
         }
-        Text { visible:!root.tightStack;width:parent.width;text:root.state?(root.state.cfg.inputMode==="pulse"?"保持任务：脉冲续期":"保持任务：按下 / 松开")+"\n判定区间 ±"+root.state.cfg.windowSeconds.toFixed(1)+"s · "+Math.round((root.clock, Engine.currentBpm(root.state)))+" BPM":"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13;lineHeight:1.5 }
+        Text { visible:!root.tightStack;width:parent.width;text:root.state?(root.state.cfg.inputMode==="pulse"?"保持任务：脉冲续期":"保持任务：按下 / 松开")+"\n判定区间 ±"+root.state.cfg.windowSeconds.toFixed(1)+"s · "+Math.round((root.clock, Engine.currentBpm(root.state)))+" BPM":"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx;lineHeight:1.5 }
     }
     Row { x:root.inset;y:parent.height-67;spacing:8
         Repeater {
@@ -266,9 +276,9 @@ Item {
     }
     Text { visible:!root.stacked;x:root.inset+248;y:parent.height-57;width:Math.max(0,parent.width-root.inset-310-x-12);text:"方向键 / WASD · 持续音符需保持";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
     Row { x:root.stacked?root.inset:parent.width-root.inset-310;y:root.stacked?parent.height-115:parent.height-67;spacing:6
-        UI.GameButton { theme:uiTheme;width:root.stacked?(parent.width-2*root.inset-12)/3:98;height:44;text:root.musicEnabled?"音乐：开":"音乐：关";onClicked:root.toggleMusic() }
-        UI.GameButton { theme:uiTheme;width:root.stacked?(parent.width-2*root.inset-12)/3:98;height:44;text:root.beatCueEnabled?"节拍：开":"节拍：关";onClicked:root.toggleBeatCue() }
-        UI.GameButton { theme:uiTheme;width:root.stacked?(parent.width-2*root.inset-12)/3:98;height:44;text:root.sfxEnabled?"音效：开":"音效：关";onClicked:root.toggleSfx() }
+        UI.GameButton { theme:uiTheme;width:root.stacked?(root.width-2*root.inset-12)/3:98;height:44;text:root.musicEnabled?"音乐：开":"音乐：关";onClicked:root.toggleMusic() }
+        UI.GameButton { theme:uiTheme;width:root.stacked?(root.width-2*root.inset-12)/3:98;height:44;text:root.beatCueEnabled?"节拍：开":"节拍：关";onClicked:root.toggleBeatCue() }
+        UI.GameButton { theme:uiTheme;width:root.stacked?(root.width-2*root.inset-12)/3:98;height:44;text:root.sfxEnabled?"音效：开":"音效：关";onClicked:root.toggleSfx() }
     }
     Rectangle {
         anchors.fill:parent;z:20;visible:root.phase==="setup";color:"#F0050505"

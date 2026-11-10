@@ -22,3 +22,7 @@
 ## 阶段 1：pointer（本地功能验证）
 
 已把旧 `cursor_suite` 的成熟实现移植为 V5 `pointer` ID；源仓库原有 `pursuit`、`target` 插件描述仍保留。单入口分发器只生成一个 `TaskDefinition.qml`，将两种玩法放在私有子目录。独立结果、历史 `pursuit.*`/`target.*` 事件与整会话一次 `game.finish` 保留。`pointer/tests/verify_1106.py` 在 Linux PySide6 模拟宿主中 1.0/1.5 倍缩放各 110/110 通过；证据在 `pointer/tests/evidence/`。Windows Neuralife 菜单、100/125/150% DPI 真实点击及录屏均未测试。
+
+## 阶段 2：四向律动（本地功能验证）
+
+`rhythm/Main.qml` 由容器尺寸统一计算音符、判定框及侧栏字号；超宽屏轨道设最大宽度并居中。长音符尾巴用 `time + duration - clock` 决定剩余长度，保持覆盖率仍由原引擎单独计算。`rhythm/tests/verify_v5_visual.py` 实际 Linux Qt 窗口 22/22 通过，涵盖 1280/1920/2560/3440 宽、尾巴五帧、开始/暂停/恢复及三种声音开关；截图与数值见 `tests/results/v5-rhythm/`。`node rhythm/tests/test_engine.js` 30/30 通过；旧脚本两例用超出判定窗的输入却期待命中，已按窗内可判定输入纠正。旧 `rhythm/tests/verify_qt.py` 依赖本仓库不存在的 `preview.py`，本轮无法运行；新 Qt 检查替代其相关局部项目，但完整宿主流程尚需 Windows 验证。无音频输出设备，声音可听性未验收。

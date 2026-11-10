@@ -17,14 +17,14 @@ V5-015,P0,pointer,窗口跨屏/失焦,移动窗口/最大化/暂停/恢复,鼠�
 V5-016,P0,pointer,同帧命中,先将指针移远再点击靶心,按点击当帧坐标判定，不用上一帧缓存,目标事件,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
 V5-017,P0,pointer,移动遮挡场景,击中移动目标并在遮挡时射击,目标中心与时间正确；遮挡不算命中,测试日志,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
 V5-018,P0,pointer,模拟脑控输入,host onPointer和confirm完成打靶,有效二维输入，非法NaN/Inf被拒,fake-host记录,NOT_TESTED,Linux simulated host: pointer/tests/evidence/acceptance-scale-1.json and acceptance-scale-1.5.json (110/110 each); Windows host evidence pending
-V5-019,P0,rhythm,大屏布局1920,1920x1080开始第四轮,轨道箭头/音符/侧栏清楚，文字不小且无溢出,实机截图,NOT_TESTED,
-V5-020,P0,rhythm,大屏布局2560,2560x1440运行,按键相对轨道比例与前一尺寸一致,实机截图,NOT_TESTED,
-V5-021,P0,rhythm,超宽及小窗,3440x1440和小于1200窗口测试,轨道居中有最大宽度、侧栏适当折叠,实机截图,NOT_TESTED,
-V5-022,P0,rhythm,长音符尾巴减少,头部达到判定线后按住1/4、1/2、3/4持续时间,可见尾巴剩余长度约75/50/25%，直至0,四帧截图/视频,NOT_TESTED,
-V5-023,P0,rhythm,提前释放,长音符在50%时放开,尾巴随时间变化但判定为保持不足，不乱计分,动画和日志,NOT_TESTED,
-V5-024,P0,rhythm,脉冲续期,模拟BCI间歇续期保持,视觉与脉冲计分一致，欠续期不会成功,测试日志,NOT_TESTED,
-V5-025,P0,rhythm,暂停恢复,长音符期间暂停5秒后恢复,模拟时间冻结，尾巴不跳、不补放积压音,录屏/事件,NOT_TESTED,
-V5-026,P0,rhythm,声音独立开关,开始前/游戏中切换音乐、节拍、音效,不改变节拍时钟、音符表、成绩,日志/录屏,NOT_TESTED,
+V5-019,P0,rhythm,大屏布局1920,1920x1080开始第四轮,轨道箭头/音符/侧栏清楚，文字不小且无溢出,实机截图,NOT_TESTED,Linux Qt visual 22/22: tests/results/v5-rhythm/result.json and PNG frames; Node engine 30/30: rhythm/tests/engine-results.json; Windows host/manual evidence pending
+V5-020,P0,rhythm,大屏布局2560,2560x1440运行,按键相对轨道比例与前一尺寸一致,实机截图,NOT_TESTED,Linux Qt visual 22/22: tests/results/v5-rhythm/result.json and PNG frames; Node engine 30/30: rhythm/tests/engine-results.json; Windows host/manual evidence pending
+V5-021,P0,rhythm,超宽及小窗,3440x1440和小于1200窗口测试,轨道居中有最大宽度、侧栏适当折叠,实机截图,NOT_TESTED,Linux Qt visual 22/22: tests/results/v5-rhythm/result.json and PNG frames; Node engine 30/30: rhythm/tests/engine-results.json; Windows host/manual evidence pending
+V5-022,P0,rhythm,长音符尾巴减少,头部达到判定线后按住1/4、1/2、3/4持续时间,可见尾巴剩余长度约75/50/25%，直至0,四帧截图/视频,NOT_TESTED,Linux Qt visual 22/22: tests/results/v5-rhythm/result.json and PNG frames; Node engine 30/30: rhythm/tests/engine-results.json; Windows host/manual evidence pending
+V5-023,P0,rhythm,提前释放,长音符在50%时放开,尾巴随时间变化但判定为保持不足，不乱计分,动画和日志,NOT_TESTED,Linux Qt visual 22/22: tests/results/v5-rhythm/result.json and PNG frames; Node engine 30/30: rhythm/tests/engine-results.json; Windows host/manual evidence pending
+V5-024,P0,rhythm,脉冲续期,模拟BCI间歇续期保持,视觉与脉冲计分一致，欠续期不会成功,测试日志,NOT_TESTED,Linux Qt visual 22/22: tests/results/v5-rhythm/result.json and PNG frames; Node engine 30/30: rhythm/tests/engine-results.json; Windows host/manual evidence pending
+V5-025,P0,rhythm,暂停恢复,长音符期间暂停5秒后恢复,模拟时间冻结，尾巴不跳、不补放积压音,录屏/事件,NOT_TESTED,Linux Qt visual 22/22: tests/results/v5-rhythm/result.json and PNG frames; Node engine 30/30: rhythm/tests/engine-results.json; Windows host/manual evidence pending
+V5-026,P0,rhythm,声音独立开关,开始前/游戏中切换音乐、节拍、音效,不改变节拍时钟、音符表、成绩,日志/录屏,NOT_TESTED,Linux Qt visual 22/22: tests/results/v5-rhythm/result.json and PNG frames; Node engine 30/30: rhythm/tests/engine-results.json; Windows host/manual evidence pending
 V5-027,P0,traffic,完整六车道,在正式场景中截图道路,左人行道+3车道+安全岛+3车道+右人行道,宿主截图,NOT_TESTED,
 V5-028,P0,traffic,过街方向,按右并移动人物,人物从左向右，与各车道车辆垂直交叉,录屏,NOT_TESTED,
 V5-029,P0,traffic,方向撤退停止,左右移动及松开,能主动撤退且松开停止，无输入漂移,录屏/日志,NOT_TESTED,
