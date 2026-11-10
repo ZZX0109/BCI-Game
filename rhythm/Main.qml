@@ -167,7 +167,7 @@ Item {
     Rectangle { anchors.fill:parent;color:uiTheme.background }
     Text { x:root.inset;y:22;text:"四向律动";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:28;font.bold:true }
     Text { x:root.inset;y:62;text:"运动想象节奏训练";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:14 }
-    Text { x:root.stacked?root.inset:parent.width-root.inset-width;y:root.stacked?87:25;text:root.roundIndex<0?"准备开始":"第 "+(root.roundIndex+1)+" / 5 轮   ·   "+Engine.roundNames[root.roundIndex];color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:16 }
+    Text { x:root.stacked?root.inset:parent.width-root.inset-width;y:root.stacked?87:25;text:root.roundIndex<0?"准备开始":"第 "+(root.roundIndex+1)+" / "+Engine.roundNames.length+" 轮   ·   "+Engine.roundNames[root.roundIndex];color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:16 }
     Row {
         x:parent.width-root.inset-width;y:root.stacked?67:62;spacing:6
         Repeater { model:Engine.roundNames.length;Rectangle { required property int index;width:32;height:3;radius:1.5;color:index<=root.roundIndex?uiTheme.primary:uiTheme.panelBorder } }

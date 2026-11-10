@@ -3,8 +3,8 @@ import QtQuick
 import QtQuick.Window
 import "../shared-ui" as SharedUI
 
-// 追光球 V4：固定五轮 R1–R5 二维自由追踪，onStep 自动推进
-// R1 直线宽转弯 / R2 椭圆 / R3 8字 / R4 种子化平滑自由轨迹 / R5 自由轨迹+遮挡
+// 三轮种子化随机平滑追踪，onStep 自动推进
+// R1 基础自由 / R2 连续变速 / R3 复杂自由与遮挡
 // 评分按整段可见轨迹（MAE/RMSE/区内占比/重捕获），不实时显示误差数值
 Item {
     id: root
@@ -162,7 +162,7 @@ Item {
     Component.onDestruction: { destroying = true; geometryTimer.stop() }
 
     // ------------------------------------------------------------------
-    // 五轮计划（固定，无选关）
+    // 三轮计划（固定，无选关）
     // ------------------------------------------------------------------
     readonly property var roundPlan: [
         { key: "basic", name: qsTr("基础自由追踪"), tolerance: .16, occlusion: 0, speed: .055 },
@@ -302,7 +302,7 @@ Item {
     }
     function pathAt(t) { return generatedSmoothPathAt(t, roundIndex) }
 
-    // 遮挡窗口（仅 R5）：每 8 秒遮挡 1.5 秒，位置仍在更新
+    // 遮挡窗口（仅 R3）：每 8 秒遮挡 1.5 秒，位置仍在更新
     function isVisibleNow() {
         if (roundCfg.occlusion <= 0) return true
         var cycle = roundElapsed % 8.0
