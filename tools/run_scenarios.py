@@ -16,7 +16,7 @@ COMMANDS = {
     'claw': [[PYTHON, 'claw/tests/verify_1106.py'], [PYTHON, 'claw/tests/verify_v5_near_miss.py']],
     'traffic': [[PYTHON, 'traffic/tests/verify_v5.py']],
     'luban': [[PYTHON, 'luban/tools/luban_solver.py'], [PYTHON, 'luban/tests/verify_1106.py']],
-    'rhythm': [['node', 'rhythm/tests/test_engine.js'], [PYTHON, 'rhythm/tests/verify_v5_visual.py']],
+    'rhythm': [['node', 'rhythm/tests/test_engine.js'], [PYTHON, 'rhythm/tests/verify_v5_visual.py'], [PYTHON, 'rhythm/tests/verify_input_feedback.py']],
 }
 
 def main():
@@ -33,7 +33,7 @@ def main():
     for game in games:
         for number, command in enumerate(COMMANDS[game], start=1):
             env = os.environ.copy()
-            if game == 'luban' and command[-1].endswith('verify_1106.py'):
+            if (game == 'luban' and command[-1].endswith('verify_1106.py')) or game == 'pointer' or command[-1].endswith('verify_input_feedback.py'):
                 env.pop('QT_QUICK_BACKEND', None)
                 env.update(DISPLAY=':88', QT_QPA_PLATFORM='xcb', QSG_RHI_BACKEND='opengl', LIBGL_ALWAYS_SOFTWARE='1')
             elif command[0] != 'node':

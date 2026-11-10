@@ -58,26 +58,6 @@ def wait_ui(r):
     raise AssertionError(f"UI debounce failed to settle in phase {r.get('phase')}")
 
 
-def navigate_to(r, selection):
-    for _ in range(3):
-        if r.get("selection") == selection:
-            return
-        r.action("right")
-    raise AssertionError(f"selection navigation failed: phase={r.get('phase')} selection={r.get('selection')}")
-
-
-def native_navigate_to(r, selection):
-    # A real X11 pointer may already hover the right card when the window opens.
-    # Keyboard acceptance must choose its intended card with real keys instead of
-    # assuming selection stays at its construction default under every backend.
-    r.root.forceActiveFocus()
-    for _ in range(3):
-        if r.get("selection") == selection:
-            return
-        QTest.keyClick(r.view, Qt.Key_Right)
-    raise AssertionError(f"native selection failed: selection={r.get('selection')}")
-
-
 def keyboard_aim(r, item):
     # Use only native arrow press/release, not direct coordinate setters.
     for axis, plus, minus in (("X", Qt.Key_Right, Qt.Key_Left), ("Y", Qt.Key_Down, Qt.Key_Up)):
@@ -92,14 +72,7 @@ def suite_flow(source):
     r = Runner("pointer", str(ROOT), input_source="local" if source == "mouse" else source).boot()
     r.start()
     check(f"{source}: selection ready before task clock", r.get("phase") == "menu")
-    if source == "local":
-        native_navigate_to(r, 0)
-        QTest.keyClick(r.view, Qt.Key_Return)
-    elif source == "mouse":
-        r.click_item("cursorTaskCard0")
-    else:
-        navigate_to(r, 0)
-        r.action("confirm")
+    r.click_item("cursorTaskCard0")
     wait_ui(r)
     item = child(r)
     loaded = r.game.payloads("pointer.child_loader_ready")[-1]
@@ -141,11 +114,7 @@ def suite_flow(source):
         r.action("confirm")
         check(f"{source}: repeated confirm cannot leak across return", r.get("phase") == "menu")
     wait_ui(r)
-    if source == "mouse":
-        r.click_item("cursorTaskCard1")
-    else:
-        navigate_to(r, 1)
-        r.action("confirm")
+    r.click_item("cursorTaskCard1")
     wait_ui(r)
     item = child(r)
     loaded = r.game.payloads("pointer.child_loader_ready")[-1]
@@ -184,12 +153,7 @@ def suite_flow(source):
     else:
         r.action("confirm")
     wait_ui(r)
-    if source == "mouse":
-        r.click_item("cursorFinishButton")
-    else:
-        navigate_to(r, 2)
-        r.action("confirm")
-        r.action("confirm")
+    r.click_item("cursorFinishButton")
     r.game.started.emit()
     check(f"{source}: one real final finish despite repeated inputs/start", len(r.game.finishes) == 1)
     check(f"{source}: final result retains both tasks without merged accuracy", r.game.finished["taskCount"] == 2 and "accuracy" not in r.game.finished)
@@ -228,11 +192,16 @@ def coordinate_matrix():
             r.pointer(point.x(), point.y())
             actual = (r.get("rawX"), r.get("rawY")) if mode == "pursuit" else (r.get("aimX") / r.get("sceneW"), r.get("aimY") / r.get("sceneH"))
             check(f"{mode}: {size} window relocation preserves pointer space", abs(actual[0] - .4) < 1e-7 and abs(actual[1] - .6) < 1e-7)
-            # Mouse movement is ignored while a BCI source owns the pointer.
+            # Pursuit accepts real mouse even if the host labels this session BCI.
             QTest.mouseMove(r.view, QPoint(200, 200))
             QTest.qWait(20)
             after = (r.get("rawX"), r.get("rawY")) if mode == "pursuit" else (r.get("aimX") / r.get("sceneW"), r.get("aimY") / r.get("sceneH"))
-            check(f"{mode}: {size} BCI cannot be overwritten by local mouse", math.dist(actual, after) < 1e-7)
+            if mode == "pursuit":
+                local = r.eval_js("scene.mapFromItem(root, 200, 200)")
+                actual_ball = (r.get("ballX") * r.eval_js("scene.width"), r.get("ballY") * r.eval_js("scene.height"))
+                check(f"{mode}: {size} BCI-labelled native mouse directly positions ball", math.dist(actual_ball, (local.x(), local.y())) < .6, actual_ball)
+            else:
+                check(f"{mode}: {size} BCI cannot be overwritten by local mouse", math.dist(actual, after) < 1e-7)
             r.close()
             r = Runner(mode, str(ROOT), size=size).boot()
             r.start()
@@ -259,6 +228,34 @@ def coordinate_matrix():
                 expect = (max(0, min(r.get("sceneW"), expected.x())), max(0, min(r.get("sceneH"), expected.y())))
             check(f"{mode}: {size} native mouse screen position survives window move", math.dist(actual, expect) < .6, {"actual": actual, "expected": expect})
             r.close()
+
+
+def nested_mouse_coordinates():
+    # Exercise the shipped pointer Loader and actual rendered ball, not raw input alone.
+    for source in ("local", "bci"):
+        r = Runner("pointer", str(ROOT), input_source=source).boot()
+        r.start()
+        r.action("right")
+        r.action("confirm")
+        check(f"{source}: host actions cannot start mouse menu", r.get("phase") == "menu")
+        r.click_item("cursorTaskCard0")
+        wait_ui(r)
+        c = child(r)
+        for w, h in ((1000, 700), (1280, 800), (1920, 1080)):
+            r.resize(w, h)
+            errors = []
+            for nx, ny in ((.1,.1),(.5,.1),(.9,.1),(.1,.5),(.5,.5),(.9,.5),(.1,.9),(.5,.9),(.9,.9)):
+                p = ev(c, f"scene.mapToItem(null,scene.width*{nx},scene.height*{ny})").toPoint()
+                QTest.mouseMove(r.view, QPoint(5, 5))
+                QTest.qWait(5)
+                QTest.mouseMove(r.view, p)
+                QTest.qWait(15)
+                r.pointer(20, 20)  # a forwarded host point must not displace native mouse
+                center = ev(c, "scene.mapToItem(null,ballX*scene.width,ballY*scene.height)")
+                errors.append(math.hypot(center.x()-p.x(), center.y()-p.y()))
+            check(f"{source}: nested pursuit {w}x{h} nine mouse points align after host event", max(errors) < .6, errors)
+        r.screenshot(str(EVIDENCE / f"pursuit-native-{source}.png"))
+        r.close()
 
 
 def mouse_and_keyboard():
@@ -318,14 +315,12 @@ def deployment():
         check("deployment: legacy source descriptors untouched", (ROOT/"pursuit/TaskDefinition.qml").exists() and (ROOT/"target/TaskDefinition.qml").exists())
         r = Runner("pointer", str(out)).boot()
         r.start()
-        navigate_to(r, 0)
-        r.action("confirm")
+        r.click_item("cursorTaskCard0")
         wait_ui(r)
         check("deployment: packaged pursuit loads and starts", child(r) is not None and child(r).property("phase") == "countdown")
         r.eval_js("returnToMenu()")
         wait_ui(r)
-        navigate_to(r, 1)
-        r.action("confirm")
+        r.click_item("cursorTaskCard1")
         wait_ui(r)
         check("deployment: packaged target loads and starts", child(r) is not None and child(r).property("phase") == "target_visible")
         r.close()
@@ -334,9 +329,13 @@ def deployment():
 def invalid_geometry():
     r = Runner("pointer", str(ROOT), input_source="bci").boot()
     r.start()
-    r.action("confirm")
+    r.click_item("cursorTaskCard0")
     wait_ui(r)
     item = child(r)
+    # Explicitly switch back to decoder ownership after the mouse menu click.
+    QTest.mouseMove(r.view, QPoint(5, 5))
+    r.game.set_input_source("local")
+    r.game.set_input_source("bci")
     for width, height in ((0, 0), (float("nan"), 700), (1000, float("inf")), (-10, 700)):
         r.game.set_size(width, height)
         r.pointer(500, 300)
@@ -389,17 +388,16 @@ def metrics_and_lifecycle():
             QTest.keyClick(r.view, Qt.Key_Right)
             r.game.action.emit("right", True)
         r.game.action.emit("right", False)
-        check(f"suite: {first}-first native/host navigation advances once", r.get("selection") == 1)
+        check(f"suite: {first}-first native/host cannot change mouse menu", r.get("selection") == 0)
     wait_ui(r)
     r.set("selection", 1)
     r.game.action.emit("confirm", True)
     QTest.keyClick(r.view, Qt.Key_Return)
-    check("suite: host-first task start cannot leak native Enter as shot", child(r) is not None and not r.game.payloads("target.shot_debug"))
+    check("suite: Enter cannot start a task from mouse menu", child(r) is None and r.get("phase") == "menu")
     r.close()
     r = Runner("pointer", str(ROOT), config={"pursuit": {"seed": 31}, "target": {"mode": "moving_target", "seed": 777}}).boot()
     r.start()
-    navigate_to(r, 1)
-    r.action("confirm")
+    r.click_item("cursorTaskCard1")
     wait_ui(r)
     item = child(r)
     check("suite: target receives namespaced config without pursuit leakage", item.property("taskMode") == "moving_target" and item.property("seed") == 777)
@@ -424,6 +422,7 @@ def main():
     suite_flow("bci")
     suite_flow("mouse")
     coordinate_matrix()
+    nested_mouse_coordinates()
     mouse_and_keyboard()
     metrics_and_lifecycle()
     invalid_geometry()

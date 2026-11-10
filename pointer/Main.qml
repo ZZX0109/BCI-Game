@@ -20,10 +20,6 @@ FocusScope {
     property var results: []
     property var latestResult: ({})
     property var configs: ({ pursuit: {}, target: {} })
-    property real lastNavigationAt: -1000
-    property string lastNavigationOrigin: ""
-    property int lastNavigationDirection: 0
-    property bool navigationPaired: false
     property string errorText: ""
     readonly property var modes: ["pursuit", "target"]
     readonly property var names: [qsTr("追光球 · 持续追踪"), qsTr("精准打靶 · 目标定位")]
@@ -98,32 +94,6 @@ FocusScope {
         phase = "finished"
         game.finish(summary)
     }
-    function activateSelection() {
-        if (paused || stopped || finished || debounce.running) return
-        if (phase === "menu") {
-            if (selection < 2) selectTask(modes[selection]); else finishSuite()
-        } else if (phase === "result") returnToMenu()
-    }
-    function navigate(direction) {
-        if (paused || stopped || finished || phase !== "menu") return
-        selection = (selection + direction + (results.length ? 3 : 2)) % (results.length ? 3 : 2)
-    }
-    function navigateFrom(direction, origin) {
-        var now = Date.now()
-        // Native and host may arrive in either order for the same physical key.
-        // Pair one opposite-source duplicate, while a new same-source key remains
-        // a new deliberate selection even inside this short route-pairing window.
-        if (!brainInput && !navigationPaired && origin !== lastNavigationOrigin
-                && direction === lastNavigationDirection && now - lastNavigationAt < 120) {
-            navigationPaired = true
-            return
-        }
-        lastNavigationAt = now
-        lastNavigationOrigin = origin
-        lastNavigationDirection = direction
-        navigationPaired = false
-        navigate(direction)
-    }
     function forwardPointer(x, y) {
         if (!started || stopped || finished || paused || !isFinite(x) || !isFinite(y)) return
         if (brainInput && (typeof game.width !== "number" || typeof game.height !== "number"
@@ -135,14 +105,6 @@ FocusScope {
             var q = childLoader.mapFromItem(root, p.x, p.y)
             if (q.x >= 0 && q.x <= childLoader.width && q.y >= 0 && q.y <= childLoader.height)
                 childGame.pointer(q.x, q.y)
-        } else if (phase === "menu" && brainInput) {
-            for (var i = 0; i < cards.count; i++) {
-                var card = cards.itemAt(i)
-                var cp = card.mapFromItem(root, p.x, p.y)
-                if (cp.x >= 0 && cp.x <= card.width && cp.y >= 0 && cp.y <= card.height) selection = i
-            }
-            var ep = finishButton.mapFromItem(root, p.x, p.y)
-            if (finishButton.visible && ep.x >= 0 && ep.x <= finishButton.width && ep.y >= 0 && ep.y <= finishButton.height) selection = 2
         }
     }
 
@@ -228,11 +190,7 @@ FocusScope {
             if (root.phase === "running") {
                 if (!pressed || !debounce.running) childGame.action(name, pressed)
             }
-            else if (pressed) {
-                if (name === "left" || name === "up") root.navigateFrom(-1, "host")
-                else if (name === "right" || name === "down") root.navigateFrom(1, "host")
-                else if (name === "confirm") root.activateSelection()
-            }
+            else if (pressed && root.phase === "result" && name === "confirm") root.returnToMenu()
         }
         function onPaused() { root.paused = true; if (root.phase === "running") childGame.paused() }
         function onResumed() { if (!root.stopped) { root.paused = false; if (root.phase === "running") childGame.resumed() } }
@@ -245,15 +203,10 @@ FocusScope {
     }
     Keys.onPressed: function(event) {
         event.accepted = false
+        if (phase === "menu") { event.accepted = true; return }
         if (brainInput || phase === "running") return
-        if ([Qt.Key_Left, Qt.Key_Up, Qt.Key_A, Qt.Key_W].indexOf(event.key) >= 0) {
-            if (!event.isAutoRepeat) { navigateFrom(-1, "native") }
-            event.accepted = true
-        } else if ([Qt.Key_Right, Qt.Key_Down, Qt.Key_D, Qt.Key_S, Qt.Key_Tab].indexOf(event.key) >= 0) {
-            if (!event.isAutoRepeat) { navigateFrom(1, "native") }
-            event.accepted = true
-        } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-            if (!event.isAutoRepeat) activateSelection()
+        if (phase === "result" && (event.key === Qt.Key_Return || event.key === Qt.Key_Enter)) {
+            if (!event.isAutoRepeat) returnToMenu()
             event.accepted = true
         }
     }
@@ -296,7 +249,7 @@ FocusScope {
                         }
                     }
                     MouseArea {
-                        anchors.fill: parent; hoverEnabled: true; enabled: !root.brainInput && !root.paused && !root.stopped
+                        anchors.fill: parent; hoverEnabled: true; enabled: !root.paused && !root.stopped
                         onEntered: root.selection = parent.index
                         onClicked: root.selectTask(root.modes[parent.index])
                     }
@@ -306,7 +259,7 @@ FocusScope {
         Text {
             visible: root.phase === "menu"; width: parent.width; wrapMode: Text.Wrap
             color: uiTheme.secondaryText; font { family: uiTheme.fontFamily; pixelSize: uiTheme.captionPx }
-            text: qsTr("已完成 %1 次任务 · %2").arg(root.results.length).arg(root.brainInput ? qsTr("脑控光标选择卡片并确认，或方向切换后确认") : qsTr("鼠标选择，或方向键切换、Enter确认"))
+            text: qsTr("已完成 %1 次任务 · %2").arg(root.results.length).arg(qsTr("鼠标点击卡片选择任务"))
         }
         SharedUI.GameButton {
             id: finishButton; objectName: "cursorFinishButton"

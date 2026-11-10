@@ -17,4 +17,14 @@ for name,frequencies in [('chord-1',[146.83,174.61,220]),('chord-2',[174.61,220,
         samples.append(int(max(-1,min(1,y))*32767))
     with wave.open(str(OUT/(name+'.wav')),'wb') as f:
         f.setnchannels(1);f.setsampwidth(2);f.setframerate(RATE);f.writeframes(struct.pack('<'+'h'*len(samples),*samples))
-print('Generated five original PCM WAV assets')
+# A bright two-tone success chime, deliberately distinct from the metronome tick.
+samples=[]
+for i in range(int(.22*RATE)):
+    t=i/RATE
+    env=min(1,t/.006)*math.exp(-t*16)*min(1,(.22-t)/.02)
+    y=.22*env*(math.sin(2*math.pi*1318.51*t)+.5*math.sin(2*math.pi*1975.53*t))
+    samples.append(int(y*32767))
+with wave.open(str(OUT/'success.wav'),'wb') as f:
+    f.setnchannels(1);f.setsampwidth(2);f.setframerate(RATE)
+    f.writeframes(struct.pack('<'+'h'*len(samples),*samples))
+print('Generated six original PCM WAV assets')

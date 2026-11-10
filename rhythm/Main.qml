@@ -28,6 +28,41 @@ Item {
     readonly property bool sustaining: revision>=0 && active && active.status==="holding"
     property int beatIndex: 0
     property real beatGlow: 0
+    property var pressedDirections: ({})
+    property var pulseUntil: ({})
+    property var inputRoutes: ({})
+    property string inputFeedback: "尚未收到方向输入"
+    function directionPressed(name) { return playing && pressedDirections[name] === true && (state.cfg.inputMode === "held" || pulseUntil[name] > sessionClock) }
+    function clearInputFeedback() {
+        pressedDirections=({});pulseUntil=({});inputRoutes=({});inputFeedback="尚未收到方向输入"
+    }
+    function releaseInputs() {
+        if(state) {
+            Engine.directions.forEach(function(d) { if(state.down[d])Engine.input(state,d,false) })
+            sync()
+        }
+        clearInputFeedback()
+    }
+    Connections {
+        target: root.Window.window
+        function onActiveChanged() { if(!root.Window.window.active)root.releaseInputs() }
+    }
+    function keyDirection(key) {
+        if(key===Qt.Key_Left||key===Qt.Key_A)return "left"
+        if(key===Qt.Key_Right||key===Qt.Key_D)return "right"
+        if(key===Qt.Key_Up||key===Qt.Key_W)return "up"
+        if(key===Qt.Key_Down||key===Qt.Key_S)return "down"
+        return ""
+    }
+    Keys.onPressed: function(event) {
+        var direction=keyDirection(event.key)
+        if(direction!=="") { if(!event.isAutoRepeat)root.input(direction,true,"native"); event.accepted=true }
+    }
+    Keys.onReleased: function(event) {
+        var direction=keyDirection(event.key)
+        if(direction!=="") { if(!event.isAutoRepeat)root.input(direction,false,"native"); event.accepted=true }
+    }
+
     property string difficulty: "standard"
     property bool musicEnabled: true
     property bool beatCueEnabled: true
@@ -57,13 +92,16 @@ Item {
         if(!state)return
         var list=state.events.splice(0)
         for(var i=0;i<list.length;i++){
-            if(list[i].name==="rhythm.note_result"&&sfxEnabled)feedbackFx.play()
+            if(list[i].name==="rhythm.note_result"&&sfxEnabled&&(list[i].data.outcome==="hit"||list[i].data.outcome==="hold_complete")) {
+                feedbackFx.play()
+                if(game && typeof game.record === "function")game.record("rhythm.feedback_sound",{note:list[i].data.id,outcome:list[i].data.outcome})
+            }
             if(game && typeof game.record === "function")game.record(list[i].name,list[i].data)
         }
     }
     function sync() {
         if(!state)return
-        if(roundIndex!==state.round){roundIndex=state.round;notes=state.notes;beatIndex=0}
+        if(roundIndex!==state.round){roundIndex=state.round;notes=state.notes;beatIndex=0;clearInputFeedback()}
         clock=state.t;sessionClock=state.elapsed;phase=state.phase;paused=state.paused;phaseClock=state.phaseT;finishSent=state.finishSent
         feedback=state.feedback;feedbackDir=state.feedbackDir;feedbackKind=state.feedbackKind;feedbackTime=state.feedbackUntil
         active=Engine.activeNote(state);revision++
@@ -78,7 +116,7 @@ Item {
         musicEnabled=saved.musicEnabled!==false
         beatCueEnabled=saved.beatCueEnabled!==false&&saved.audioEnabled!==false
         sfxEnabled=saved.sfxEnabled!==false
-        state=null;roundIndex=-1;notes=[];beatIndex=0;beatGlow=0;paused=false;finishSent=false
+        clearInputFeedback();state=null;roundIndex=-1;notes=[];beatIndex=0;beatGlow=0;paused=false;finishSent=false
         phase="setup";phaseClock=0;feedback="选择难度与声音设置";forceActiveFocus()
         if(musicEnabled)backingTrack.play()
     }
@@ -92,12 +130,29 @@ Item {
         c.difficulty=difficulty;c.bpm=p.bpm;c.beatsPerNote=p.beatsPerNote;c.windowSeconds=p.windowSeconds;c.leadSeconds=p.leadSeconds
         c.musicEnabled=musicEnabled;c.beatCueEnabled=beatCueEnabled;c.sfxEnabled=sfxEnabled;c.audioEnabled=beatCueEnabled
         persistSettings()
-        state=Engine.create(c,inputSource);roundIndex=-1;notes=[];beatIndex=0;beatGlow=0;sync()
+        forceActiveFocus();clearInputFeedback();state=Engine.create(c,inputSource);roundIndex=-1;notes=[];beatIndex=0;beatGlow=0;sync()
     }
-    function input(name,pressed) {
+    function input(name,pressed,origin) {
+        origin=origin||"host"
+        if(Engine.directions.indexOf(name)>=0 && (origin==="native"||origin==="host")) {
+            // One physical key can reach Qt and the host callback in either order.
+            // Pair only opposite routes; independent decoder pulses remain distinct.
+            var token=name+":"+pressed,now=Date.now(),previous=inputRoutes[token]
+            if(previous && !previous.paired && previous.origin!==origin && now-previous.time<120) {
+                previous.paired=true
+                return
+            }
+            inputRoutes[token]={origin:origin,time:now,paired:false}
+        }
         if(phase==="setup"){if(name==="confirm"&&pressed)launchConfiguredSession();return}
         if(!state)return
         if(name==="confirm" && pressed && phase==="results"){finishSession();return}
+        if(Engine.directions.indexOf(name)>=0) {
+            if(pressed && directionPressed(name) && state.cfg.inputMode==="held")return
+            var keys=Object.assign({},pressedDirections);keys[name]=pressed===true && playing;pressedDirections=keys
+            var times=Object.assign({},pulseUntil);times[name]=sessionClock+.18;pulseUntil=times
+            inputFeedback=(pressed?"收到按下：":"收到松开：")+Engine.glyph(name)
+        }
         Engine.input(state,name,pressed);sync()
     }
     function finishSession() {
@@ -145,9 +200,9 @@ Item {
         function onStarted(){root.startSession()}
         function onStep(seconds){root.advance(seconds)}
         function onAction(name,pressed){root.input(name,pressed)}
-        function onPaused(){root.paused=true;root.stopAudio();backingTrack.pause();if(root.state){Engine.pause(root.state);root.sync()}}
+        function onPaused(){root.paused=true;root.clearInputFeedback();root.stopAudio();backingTrack.pause();if(root.state){Engine.pause(root.state);root.sync()}}
         function onResumed(){root.paused=false;if(root.state){Engine.resume(root.state);root.sync()}if(root.musicEnabled&&root.phase!=="results")backingTrack.play()}
-        function onStopping(){root.paused=true;root.stopAudio();backingTrack.stop();if(root.state){Engine.stop(root.state);root.sync()}else root.phase="idle"}
+        function onStopping(){root.paused=true;root.clearInputFeedback();root.stopAudio();backingTrack.stop();if(root.state){Engine.stop(root.state);root.sync()}else root.phase="idle"}
     }
     AudioOutput { id:musicOutput;volume:.22;muted:!root.musicEnabled||root.paused||root.phase==="results" }
     MediaPlayer {
@@ -163,7 +218,7 @@ Item {
     SoundEffect { id:chord2; source:"audio/chord-2.wav"; volume:.32 }
     SoundEffect { id:chord3; source:"audio/chord-3.wav"; volume:.32 }
     SoundEffect { id:chord4; source:"audio/chord-4.wav"; volume:.32 }
-    SoundEffect { id:feedbackFx; source:"audio/pulse.wav"; volume:.18 }
+    SoundEffect { id:feedbackFx; source:"audio/success.wav"; volume:.18 }
     Rectangle { anchors.fill:parent;color:uiTheme.background }
     Text { x:root.inset;y:22;text:"四向律动";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:28;font.bold:true }
     Text { x:root.inset;y:62;text:"运动想象节奏训练";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:14 }
@@ -194,12 +249,12 @@ Item {
                 Rectangle { x:parent.width-1;width:1;height:parent.height;color:uiTheme.panelBorder;opacity:.3;visible:index<3 }
                 Rectangle { anchors.fill:parent;color:root.laneColors[index];opacity:root.feedbackDir===modelData&&root.clock<root.feedbackTime?.045:0 }
                 Text { x:0;y:board.lineY-board.notePx/2-board.labelGap-implicitHeight;width:parent.width;horizontalAlignment:Text.AlignHCenter;text:["左","下","上","右"][index];color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx }
-                Rectangle { x:(parent.width-width)/2;y:board.lineY-height/2;width:board.notePx;height:board.notePx;radius:Math.round(width*.18);color:uiTheme.background;border.width:2;border.color:root.laneColors[index];opacity:.65+root.beatGlow*.35
+                Rectangle { objectName:"rhythmReceptor_"+modelData;x:(parent.width-width)/2;y:board.lineY-height/2;width:board.notePx;height:board.notePx;radius:Math.round(width*.18);color:uiTheme.background;border.width:root.directionPressed(modelData)?4:2;border.color:root.laneColors[index];opacity:root.directionPressed(modelData)?1:.45
                     Text { anchors.centerIn:parent;text:Engine.glyph(modelData);color:root.laneColors[index];font.pixelSize:Math.round(board.notePx*.64);font.family:uiTheme.fontFamily }
                 }
             }
         }
-        Rectangle { y:board.lineY-1;width:parent.width;height:2;color:uiTheme.primary;opacity:.22+root.beatGlow*.4 }
+        Rectangle { y:board.lineY-1;width:parent.width;height:2;color:uiTheme.primary;opacity:.22 }
         Repeater {
             id: noteRepeater
             model:root.notes
@@ -256,10 +311,10 @@ Item {
             }
         }
         Text { visible:!root.stacked;width:parent.width;text:"方向动作示意反馈";color:uiTheme.disabledText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx;horizontalAlignment:Text.AlignHCenter }
-        Text { visible:!root.tightStack;width:parent.width;height:root.compact?44:60;text:root.feedback;wrapMode:Text.Wrap;color:root.feedbackKind==="warning"?uiTheme.warning:uiTheme.primary;font.family:uiTheme.fontFamily;font.pixelSize:root.bodyPx;lineHeight:1.3 }
+        Text { objectName:"rhythmJudgementFeedback";width:parent.width;height:root.compact?44:60;text:root.feedback;wrapMode:Text.Wrap;color:root.feedbackKind==="warning"?uiTheme.warning:uiTheme.primary;font.family:uiTheme.fontFamily;font.pixelSize:root.bodyPx;lineHeight:1.3 }
         Rectangle { width:parent.width;height:5;radius:2.5;color:uiTheme.panelBorder
             Rectangle { width:parent.width*(root.active?root.holdFraction(root.active):0);height:parent.height;radius:2.5;color:uiTheme.primary }
-            visible:root.roundIndex===3
+            visible:root.sustaining
         }
         Text { visible:!root.tightStack;width:parent.width;text:root.state?(root.state.cfg.inputMode==="pulse"?"保持任务：脉冲续期":"保持任务：按下 / 松开")+"\n判定区间 ±"+root.state.cfg.windowSeconds.toFixed(1)+"s · "+(root.clock >= 0 ? Math.round(Engine.currentBpm(root.state)) : 0)+" BPM":"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx;lineHeight:1.5 }
     }
@@ -269,13 +324,14 @@ Item {
             model:Engine.directions
             delegate:UI.GameButton {
                 required property string modelData
-                theme:uiTheme;text:Engine.glyph(modelData);width:52;height:44;enabled:root.playing
-                onPressed:root.input(modelData,true)
-                onReleased:root.input(modelData,false)
+                objectName:"rhythmInput_"+modelData;highlighted:root.directionPressed(modelData);theme:uiTheme;text:Engine.glyph(modelData);width:52;height:44;enabled:root.playing
+                onPressed:root.input(modelData,true,"mouse")
+                onReleased:root.input(modelData,false,"mouse")
             }
         }
     }
-    Text { visible:!root.stacked;x:root.inset+248;y:parent.height-57;width:Math.max(0,parent.width-root.inset-310-x-12);text:"方向键 / WASD · 持续音符需保持";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
+    Text { visible:!root.stacked;x:root.inset+248;y:parent.height-57;width:Math.max(0,parent.width-root.inset-310-x-12);text:root.inputFeedback+" · 方向键 / WASD";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
+    Text { visible:root.stacked;x:root.inset;y:root.height-22;width:root.width-2*root.inset;text:root.inputFeedback;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
     Row { x:root.stacked?root.inset:parent.width-root.inset-310;y:root.stacked?parent.height-115:parent.height-67;spacing:6
         UI.GameButton { theme:uiTheme;width:root.stacked?(root.width-2*root.inset-12)/3:98;height:44;text:root.musicEnabled?"音乐：开":"音乐：关";onClicked:root.toggleMusic() }
         UI.GameButton { theme:uiTheme;width:root.stacked?(root.width-2*root.inset-12)/3:98;height:44;text:root.beatCueEnabled?"节拍：开":"节拍：关";onClicked:root.toggleBeatCue() }

@@ -70,6 +70,7 @@ function outcome(s,n,status){
     var v={id:n.id,dir:n.dir,targetTime:n.time,duration:n.duration,outcome:status,delta:n.delta,coverage:n.coverage,round:s.round+1}
     s.outcomes.push(v);emit(s,"note_result",v)
     if(status==="miss"){s.feedback="这次未完成 · 继续下一拍";s.feedbackKind="warning";s.feedbackDir="";s.feedbackUntil=s.t+1.1}
+    else if(status==="hold_complete"){s.feedback="长音完成 · 保持覆盖 "+Math.round(n.coverage*100)+"%";s.feedbackKind="success";s.feedbackDir=n.dir;s.feedbackUntil=s.t+1.1}
     else if(status==="hold_incomplete"){s.feedback="保持有间断 · 继续练习";s.feedbackKind="warning";s.feedbackDir="";s.feedbackUntil=s.t+1.1}
 }
 function count(s,status){return s.outcomes.filter(function(n){return n.outcome===status}).length}
@@ -155,7 +156,7 @@ function input(s,name,pressed){
             else{
                 s.correctInputs++;n.delta=s.t-n.time;raw.classification="matched";raw.expected=n.dir;raw.note=n.id;raw.delta=n.delta
                 s.feedbackDir=name;s.feedbackKind="success"
-                if(n.duration>0){n.status="holding";n.until=s.t+s.cfg.pulseValidity;s.feedback=s.cfg.inputMode==="held"?"保持方向，直到长尾结束":"继续发送同方向脉冲"}
+                if(n.duration>0){n.status="holding";n.until=s.t+s.cfg.pulseValidity;s.feedback=(s.cfg.inputMode==="held"?"保持方向，直到长尾结束":"继续发送同方向脉冲")+" · "+(n.delta<0?"提前 ":"延后 ")+Math.round(Math.abs(n.delta)*1000)+" ms"}
                 else{outcome(s,n,"hit");s.feedback="方向匹配 · "+(n.delta<-.05?"提前 ":n.delta>.05?"延后 ":"贴近节拍 ")+Math.round(Math.abs(n.delta)*1000)+" ms"}
             }
             s.feedbackUntil=s.t+1.3

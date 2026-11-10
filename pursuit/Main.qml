@@ -110,7 +110,7 @@ Item {
         return true
     }
     function syncLocalMouse() {
-        if (brainInput || keyboardOwnsInput || !pointerArea.containsMouse || !mousePositionKnown) return
+        if ((brainInput && !mouseOwnsInput) || keyboardOwnsInput || !pointerArea.containsMouse || !mousePositionKnown) return
         var p = scene.mapFromGlobal(mouseGlobalX, mouseGlobalY)
         setPointerScene(p.x, p.y, "mouse")
     }
@@ -241,7 +241,7 @@ Item {
     }
     function setPointerScene(x, y, source) {
         if (isPaused || sessionStopped || sessionFinished || scene.width <= 0 || scene.height <= 0) return
-        if (source === "mouse") { if (brainInput) return; mouseOwnsInput = true; keyboardOwnsInput = false; clearKeyboard() }
+        if (source === "mouse") { inputReady = true; mouseOwnsInput = true; keyboardOwnsInput = false; clearKeyboard() }
         else if (source === "keyboard") { keyboardOwnsInput = true; mouseOwnsInput = false }
         else if (mouseOwnsInput || keyboardOwnsInput) return
         var pointer = scene.mapToItem(root, x, y)
@@ -399,7 +399,7 @@ Item {
         }
         return { renderedSeconds: estimate("x", "y"), rawSeconds: estimate("rx", "ry"),
             method: "minimum_visible_2d_mse_discrete_lags", stepSeconds: sampleInterval,
-            maxLagSeconds: 2, samples: lagSamples.length, includesSoftwareSmoothing: brainInput }
+            maxLagSeconds: 2, samples: lagSamples.length, includesSoftwareSmoothing: lagSamples.some(function(s) { return s.smoothed === true }) }
     }
 
     function roundMetrics() {
@@ -495,7 +495,7 @@ Item {
         sampleCount++
         var history = lagSamples.slice()
         history.push({ t: roundElapsed, x: ballX, y: ballY, rx: rawX, ry: rawY,
-            tx: targetX, ty: targetY, visible: targetVisible })
+            tx: targetX, ty: targetY, visible: targetVisible, smoothed: brainInput && !mouseOwnsInput })
         lagSamples = history
         game.record("pursuit.sample", {
             sampleIndex: sampleCount,
