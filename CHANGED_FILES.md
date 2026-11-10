@@ -19,3 +19,5 @@
 当前适配源码提交为 `fb5fae6`，统一测试 15/15、七游戏十画布 70/70 通过，原始命令日志与测试报告见 `tests/results/v5-run-scenarios/`、`tests/results/v5-adaptive/`。
 
 真实 Neuralife 客户端的截图、录屏、Windows DPI 实测与旧入口正式退役尚未执行；Linux Qt 截图只证明当前窗口渲染。
+
+后续分支 `fix/v5-retest-20261110`：4805d0c 实现复测增量，8ac5f03/7fb8821 补充高级关卡与组件身份测试，386a747 同步三轮标题，24e3b4b 增加只读安装哈希核对。当前统一回归16/16；详细差异见 docs/RETEST_20261110.md。

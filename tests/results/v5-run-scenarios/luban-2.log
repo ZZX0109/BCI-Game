@@ -71,14 +71,14 @@ Fontconfig error: No writable cache directories
       "name": "left_drag_on_wood_orbits_without_extracting",
       "passed": true,
       "detail": [
-        40.72,
+        39.88,
         0
       ]
     },
     {
       "name": "axis_arrow_partial_drag",
       "passed": true,
-      "detail": 0.5517363702001691
+      "detail": 0.5629871330909261
     },
     {
       "name": "keyboard_undo_partial_drag",
@@ -211,7 +211,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "mouse_selected_p4",
+      "name": "mouse_selected_p1",
       "passed": true,
       "detail": null
     },
@@ -221,7 +221,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p4",
+      "name": "continuous_no_penetration_p1",
       "passed": true,
       "detail": null
     },
@@ -246,6 +246,21 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
+      "name": "mouse_selected_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L3_2_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
       "name": "mouse_selected_p2",
       "passed": true,
       "detail": null
@@ -256,7 +271,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "mouse_L3_2_move_kind",
+      "name": "mouse_L3_3_move_kind",
       "passed": true,
       "detail": null
     },
@@ -271,7 +286,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "mouse_L3_3_move_kind",
+      "name": "mouse_L3_4_move_kind",
       "passed": true,
       "detail": null
     },
@@ -326,6 +341,21 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
+      "name": "mouse_selected_p4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L4_2_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
       "name": "mouse_selected_p1",
       "passed": true,
       "detail": null
@@ -336,7 +366,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "mouse_L4_2_move_kind",
+      "name": "mouse_L4_3_move_kind",
       "passed": true,
       "detail": null
     },
@@ -351,7 +381,22 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "mouse_L4_3_move_kind",
+      "name": "mouse_L4_4_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L4_5_move_kind",
       "passed": true,
       "detail": null
     },
@@ -366,7 +411,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "mouse_L4_4_move_kind",
+      "name": "mouse_L4_6_move_kind",
       "passed": true,
       "detail": null
     },
@@ -621,7 +666,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p4",
+      "name": "continuous_no_penetration_p1",
       "passed": true,
       "detail": null
     },
@@ -641,7 +686,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p2",
+      "name": "continuous_no_penetration_p1",
       "passed": true,
       "detail": null
     },
@@ -651,12 +696,22 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p1",
+      "name": "continuous_no_penetration_p2",
       "passed": true,
       "detail": null
     },
     {
       "name": "keyboard_L3_3_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L3_4_move_kind",
       "passed": true,
       "detail": null
     },
@@ -701,7 +756,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p1",
+      "name": "continuous_no_penetration_p4",
       "passed": true,
       "detail": null
     },
@@ -711,7 +766,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p2",
+      "name": "continuous_no_penetration_p1",
       "passed": true,
       "detail": null
     },
@@ -721,12 +776,32 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p1",
+      "name": "continuous_no_penetration_p2",
       "passed": true,
       "detail": null
     },
     {
       "name": "keyboard_L4_4_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_5_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_6_move_kind",
       "passed": true,
       "detail": null
     },
@@ -941,7 +1016,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p4",
+      "name": "continuous_no_penetration_p1",
       "passed": true,
       "detail": null
     },
@@ -961,7 +1036,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p2",
+      "name": "continuous_no_penetration_p1",
       "passed": true,
       "detail": null
     },
@@ -971,12 +1046,22 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p1",
+      "name": "continuous_no_penetration_p2",
       "passed": true,
       "detail": null
     },
     {
       "name": "bci_L3_3_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L3_4_move_kind",
       "passed": true,
       "detail": null
     },
@@ -1021,7 +1106,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p1",
+      "name": "continuous_no_penetration_p4",
       "passed": true,
       "detail": null
     },
@@ -1031,7 +1116,7 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p2",
+      "name": "continuous_no_penetration_p1",
       "passed": true,
       "detail": null
     },
@@ -1041,12 +1126,32 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_p1",
+      "name": "continuous_no_penetration_p2",
       "passed": true,
       "detail": null
     },
     {
       "name": "bci_L4_4_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_5_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_6_move_kind",
       "passed": true,
       "detail": null
     },
@@ -1171,6 +1276,11 @@ Fontconfig error: No writable cache directories
       "detail": null
     },
     {
+      "name": "advanced_level_has_no_auto_selection",
+      "passed": true,
+      "detail": null
+    },
+    {
       "name": "quarter_unit_micro_move",
       "passed": true,
       "detail": null
@@ -1217,6 +1327,6 @@ Fontconfig error: No writable cache directories
     }
   ],
   "messages": [],
-  "passed": 241,
-  "total": 241
+  "passed": 263,
+  "total": 263
 }

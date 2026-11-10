@@ -1,6 +1,6 @@
 qt.multimedia.ffmpeg: Using Qt multimedia with FFmpeg version 7.1.2 LGPL version 2.1 or later
-[W][06:18:53.240207] pw.conf      | [          conf.c: 1182 try_load_conf()] can't load config client.conf: No such file or directory
-[E][06:18:53.240233] pw.conf      | [          conf.c: 1215 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+[W][08:19:42.870642] pw.conf      | [          conf.c: 1182 try_load_conf()] can't load config client.conf: No such file or directory
+[E][08:19:42.870669] pw.conf      | [          conf.c: 1215 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
 Failed to create secure directory (/home/agent/.config/pulse): Read-only file system
 PulseAudioService: pa_context_connect() failed
 No audio device detected
@@ -20,4 +20,4 @@ qt.multimedia.soundeffect: Failed to update audio output. No audio devices avail
 qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
 qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
 No audio device detected
-{"passed": 22, "total": 22}
+{"passed": 26, "total": 26}

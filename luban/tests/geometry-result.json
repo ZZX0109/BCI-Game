@@ -2,9 +2,9 @@
   "summary": {
     "status": "PASS",
     "levels": 5,
-    "total_states": 2693
+    "total_states": 3365
   },
-  "geometry_sha256": "ae25d974448fd7556de9b78c14557f8f35b6aee76f49b1b21d5a7c43d50fd1c7",
+  "geometry_sha256": "602f319eaf736fb97ee5fd1113b3aaf400e718820f122cbaa51649decbe29f33",
   "model": "connected ideal rigid solids; only own-axis translations; macro states at exact contacts/removal",
   "levels": [
     {
@@ -31,7 +31,37 @@
           "distance": 6.9,
           "kind": "extract"
         }
-      ]
+      ],
+      "reference_action_count": 2,
+      "state_trace": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "reverse_state_trace": [
+        [
+          null,
+          null
+        ],
+        [
+          0,
+          null
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "inverse_note": "Reverse each collision-free sweep from its recorded end position; removed pieces re-enter from that same endpoint."
     },
     {
       "level": "L2",
@@ -63,48 +93,56 @@
           "distance": 6.9,
           "kind": "extract"
         }
-      ]
+      ],
+      "reference_action_count": 3,
+      "state_trace": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          null
+        ],
+        [
+          0,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null
+        ]
+      ],
+      "reverse_state_trace": [
+        [
+          null,
+          null,
+          null
+        ],
+        [
+          0,
+          null,
+          null
+        ],
+        [
+          0,
+          0,
+          null
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "inverse_note": "Reverse each collision-free sweep from its recorded end position; removed pieces re-enter from that same endpoint."
     },
     {
       "level": "L3",
-      "pieces": 4,
-      "connected": true,
-      "zero_overlap": true,
-      "reachable_macro_states": 5,
-      "all_reachable_macro_states_solvable": true,
-      "initial_whole_piece_moves": 2,
-      "maximum_extraction_branches": 2,
-      "partial_moves_in_solution": 0,
-      "continuous_sweep_replay": true,
-      "solution": [
-        {
-          "piece": "p4",
-          "direction": "-x",
-          "distance": 6.9,
-          "kind": "extract"
-        },
-        {
-          "piece": "p3",
-          "direction": "-z",
-          "distance": 6.9,
-          "kind": "extract"
-        },
-        {
-          "piece": "p2",
-          "direction": "-y",
-          "distance": 6.9,
-          "kind": "extract"
-        },
-        {
-          "piece": "p1",
-          "direction": "-x",
-          "distance": 6.9,
-          "kind": "extract"
-        }
-      ]
-    },
-    {
-      "level": "L4",
       "pieces": 3,
       "connected": true,
       "zero_overlap": true,
@@ -145,7 +183,247 @@
           "distance": 3.15,
           "kind": "extract"
         }
-      ]
+      ],
+      "reference_action_count": 5,
+      "state_trace": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          null
+        ],
+        [
+          -3.75,
+          0,
+          null
+        ],
+        [
+          -3.75,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null
+        ]
+      ],
+      "reverse_state_trace": [
+        [
+          null,
+          null,
+          null
+        ],
+        [
+          -3.75,
+          null,
+          null
+        ],
+        [
+          -3.75,
+          0,
+          null
+        ],
+        [
+          -0.75,
+          0,
+          null
+        ],
+        [
+          -0.75,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "inverse_note": "Reverse each collision-free sweep from its recorded end position; removed pieces re-enter from that same endpoint."
+    },
+    {
+      "level": "L4",
+      "pieces": 5,
+      "connected": true,
+      "zero_overlap": true,
+      "reachable_macro_states": 677,
+      "all_reachable_macro_states_solvable": true,
+      "initial_whole_piece_moves": 0,
+      "maximum_extraction_branches": 4,
+      "partial_moves_in_solution": 2,
+      "continuous_sweep_replay": true,
+      "solution": [
+        {
+          "piece": "p1",
+          "direction": "-x",
+          "distance": 0.75,
+          "kind": "partial"
+        },
+        {
+          "piece": "p3",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p4",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p1",
+          "direction": "+x",
+          "distance": 1.5,
+          "kind": "partial"
+        },
+        {
+          "piece": "p2",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p5",
+          "direction": "-y",
+          "distance": 6.9,
+          "kind": "extract"
+        },
+        {
+          "piece": "p1",
+          "direction": "-x",
+          "distance": 10.65,
+          "kind": "extract"
+        }
+      ],
+      "reference_action_count": 7,
+      "state_trace": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          null,
+          0,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          null,
+          null,
+          0
+        ],
+        [
+          0.75,
+          0,
+          null,
+          null,
+          0
+        ],
+        [
+          0.75,
+          null,
+          null,
+          null,
+          0
+        ],
+        [
+          0.75,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      ],
+      "reverse_state_trace": [
+        [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          0.75,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          0.75,
+          null,
+          null,
+          null,
+          0
+        ],
+        [
+          0.75,
+          0,
+          null,
+          null,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          null,
+          null,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          null,
+          0,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "inverse_note": "Reverse each collision-free sweep from its recorded end position; removed pieces re-enter from that same endpoint."
     },
     {
       "level": "L5",
@@ -207,7 +485,157 @@
           "distance": 10.65,
           "kind": "extract"
         }
-      ]
+      ],
+      "reference_action_count": 8,
+      "state_trace": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          null,
+          0,
+          null,
+          0
+        ],
+        [
+          0.75,
+          0,
+          null,
+          0,
+          null,
+          0
+        ],
+        [
+          0.75,
+          null,
+          null,
+          0,
+          null,
+          0
+        ],
+        [
+          0.75,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        [
+          0.75,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      ],
+      "reverse_state_trace": [
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          0.75,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          0.75,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        [
+          0.75,
+          null,
+          null,
+          0,
+          null,
+          0
+        ],
+        [
+          0.75,
+          0,
+          null,
+          0,
+          null,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          null,
+          0,
+          null,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        [
+          -0.75,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "inverse_note": "Reverse each collision-free sweep from its recorded end position; removed pieces re-enter from that same endpoint."
     }
   ]
 }

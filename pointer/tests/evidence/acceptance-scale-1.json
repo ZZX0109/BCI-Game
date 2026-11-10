@@ -10,6 +10,14 @@
       "passed": true
     },
     {
+      "name": "local: pursuit runtime identity and source",
+      "passed": true
+    },
+    {
+      "name": "local: full child canvas",
+      "passed": true
+    },
+    {
       "name": "local: Loader receives started exactly once",
       "passed": true
     },
@@ -18,7 +26,7 @@
       "passed": true
     },
     {
-      "name": "local: full five-round pursuit returns result",
+      "name": "local: full three-round pursuit returns result",
       "passed": true,
       "detail": "result"
     },
@@ -36,6 +44,10 @@
     },
     {
       "name": "local: repeated confirm cannot leak across return",
+      "passed": true
+    },
+    {
+      "name": "local: target runtime identity and source",
       "passed": true
     },
     {
@@ -79,6 +91,14 @@
       "passed": true
     },
     {
+      "name": "bci: pursuit runtime identity and source",
+      "passed": true
+    },
+    {
+      "name": "bci: full child canvas",
+      "passed": true
+    },
+    {
       "name": "bci: Loader receives started exactly once",
       "passed": true
     },
@@ -87,7 +107,7 @@
       "passed": true
     },
     {
-      "name": "bci: full five-round pursuit returns result",
+      "name": "bci: full three-round pursuit returns result",
       "passed": true,
       "detail": "result"
     },
@@ -105,6 +125,10 @@
     },
     {
       "name": "bci: repeated confirm cannot leak across return",
+      "passed": true
+    },
+    {
+      "name": "bci: target runtime identity and source",
       "passed": true
     },
     {
@@ -148,6 +172,14 @@
       "passed": true
     },
     {
+      "name": "mouse: pursuit runtime identity and source",
+      "passed": true
+    },
+    {
+      "name": "mouse: full child canvas",
+      "passed": true
+    },
+    {
       "name": "mouse: Loader receives started exactly once",
       "passed": true
     },
@@ -156,7 +188,7 @@
       "passed": true
     },
     {
-      "name": "mouse: full five-round pursuit returns result",
+      "name": "mouse: full three-round pursuit returns result",
       "passed": true,
       "detail": "result"
     },
@@ -170,6 +202,10 @@
     },
     {
       "name": "mouse: result returns to selection",
+      "passed": true
+    },
+    {
+      "name": "mouse: target runtime identity and source",
       "passed": true
     },
     {
@@ -549,6 +585,6 @@
       "passed": true
     }
   ],
-  "passed": 110,
-  "total": 110
+  "passed": 119,
+  "total": 119
 }

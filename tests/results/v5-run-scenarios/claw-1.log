@@ -8,6 +8,10 @@ PASS no_error_feedback_before_release
 PASS pause_freezes_every_stage
 PASS autorepeat_cannot_grab_next_trial
 PASS stop_cannot_restart_or_finish
+PASS bci_native_space_no_grab_16777220
+PASS bci_native_enter_and_host_single_grab_16777220
+PASS bci_native_space_no_grab_16777221
+PASS bci_native_enter_and_host_single_grab_16777221
 PASS keyboard_five_progressive_targets
 PASS keyboard_trial1_device_only_alignment: 0.4
 PASS keyboard_trial1_consistent_projection
@@ -63,7 +67,7 @@ PASS mouse_finish_exactly_once
 PASS mouse_metrics_complete
 PASS mouse_every_execution_phase_logged
 PASS mouse_completed_session_ignores_inputs_and_duplicate_start
-PASS bci_input_not_overridden_by_native_keys
+PASS bci_movement_not_overridden_by_native_arrows
 PASS bci_five_progressive_targets
 PASS bci_trial1_device_only_alignment
 PASS bci_trial1_consistent_projection
@@ -109,4 +113,4 @@ PASS lost_focus_clears_latched_direction
 PASS same_trigger_offsets_give_same_deterministic_outcome
 PASS assist_is_explicit_separate_and_snapshot_based
 PASS no_qml_runtime_errors
-{"passed": 110, "total": 110}
+{"passed": 114, "total": 114}

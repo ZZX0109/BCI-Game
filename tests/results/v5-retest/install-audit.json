@@ -1,0 +1,6 @@
+{
+  "scope": "temporary package, no real host",
+  "matchedPackage": true,
+  "detectsChangedPointer": true,
+  "readOnly": true
+}

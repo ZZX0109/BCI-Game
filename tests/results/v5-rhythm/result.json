@@ -2,6 +2,11 @@
   "environment": "Linux PySide6 actual QQuickView; synthetic visual note and simulated host",
   "checks": [
     {
+      "name": "label_gap_1280",
+      "passed": true,
+      "actual": 20.0
+    },
+    {
       "name": "note_size_1280",
       "passed": true,
       "actual": 60.0
@@ -10,6 +15,11 @@
       "name": "board_centered_1280",
       "passed": true,
       "actual": 32.0
+    },
+    {
+      "name": "label_gap_1920",
+      "passed": true,
+      "actual": 26.459999999999997
     },
     {
       "name": "note_size_1920",
@@ -22,6 +32,11 @@
       "actual": 32.0
     },
     {
+      "name": "label_gap_2560",
+      "passed": true,
+      "actual": 30.0
+    },
+    {
       "name": "note_size_2560",
       "passed": true,
       "actual": 96.0
@@ -30,6 +45,11 @@
       "name": "board_centered_2560",
       "passed": true,
       "actual": 200.5
+    },
+    {
+      "name": "label_gap_3440",
+      "passed": true,
+      "actual": 30.0
     },
     {
       "name": "note_size_3440",
@@ -54,22 +74,22 @@
     {
       "name": "tail_0",
       "passed": true,
-      "actual": 376.5
+      "actual": 347.94
     },
     {
       "name": "tail_25",
       "passed": true,
-      "actual": 282.375
+      "actual": 260.955
     },
     {
       "name": "tail_50",
       "passed": true,
-      "actual": 188.25
+      "actual": 173.97
     },
     {
       "name": "tail_75",
       "passed": true,
-      "actual": 94.125
+      "actual": 86.985
     },
     {
       "name": "tail_100",
@@ -80,10 +100,10 @@
       "name": "tail_monotonic",
       "passed": true,
       "actual": [
-        376.5,
-        282.375,
-        188.25,
-        94.125,
+        347.94,
+        260.955,
+        173.97,
+        86.985,
         0.0
       ]
     },
@@ -123,6 +143,6 @@
       "actual": 0.21600000000000014
     }
   ],
-  "passed": 22,
-  "total": 22
+  "passed": 26,
+  "total": 26
 }

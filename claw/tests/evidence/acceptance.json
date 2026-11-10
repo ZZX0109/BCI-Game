@@ -8,8 +8,8 @@
     "bci": "simulated commands",
     "input": "native QTest keys/mouse plus host signals"
   },
-  "passed": 110,
-  "total": 110,
+  "passed": 114,
+  "total": 114,
   "checks": [
     {
       "name": "native_qml_loaded",
@@ -53,6 +53,26 @@
     },
     {
       "name": "stop_cannot_restart_or_finish",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_native_space_no_grab_16777220",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_native_enter_and_host_single_grab_16777220",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_native_space_no_grab_16777221",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_native_enter_and_host_single_grab_16777221",
       "passed": true,
       "detail": null
     },
@@ -332,7 +352,7 @@
       "detail": null
     },
     {
-      "name": "bci_input_not_overridden_by_native_keys",
+      "name": "bci_movement_not_overridden_by_native_arrows",
       "passed": true,
       "detail": null
     },

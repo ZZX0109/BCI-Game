@@ -3,13 +3,16 @@ QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus i
 QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
 QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
 PASS local: selection ready before task clock
+PASS local: pursuit runtime identity and source
+PASS local: full child canvas
 PASS local: Loader receives started exactly once
 PASS local: suite pause freezes child time
-PASS local: full five-round pursuit returns result
+PASS local: full three-round pursuit returns result
 PASS local: child finish never calls real finish
 PASS local: pursuit metrics remain independent
 PASS local: result returns to selection
 PASS local: repeated confirm cannot leak across return
+PASS local: target runtime identity and source
 PASS local: target gets fresh lifecycle and clock
 PASS local: task starts without inherited confirm shot
 PASS local: target eight shots complete
@@ -20,13 +23,16 @@ PASS local: legacy event namespace plus source metadata
 PASS local: one real final finish despite repeated inputs/start
 PASS local: final result retains both tasks without merged accuracy
 PASS bci: selection ready before task clock
+PASS bci: pursuit runtime identity and source
+PASS bci: full child canvas
 PASS bci: Loader receives started exactly once
 PASS bci: suite pause freezes child time
-PASS bci: full five-round pursuit returns result
+PASS bci: full three-round pursuit returns result
 PASS bci: child finish never calls real finish
 PASS bci: pursuit metrics remain independent
 PASS bci: result returns to selection
 PASS bci: repeated confirm cannot leak across return
+PASS bci: target runtime identity and source
 PASS bci: target gets fresh lifecycle and clock
 PASS bci: task starts without inherited confirm shot
 PASS bci: target eight shots complete
@@ -37,12 +43,15 @@ PASS bci: legacy event namespace plus source metadata
 PASS bci: one real final finish despite repeated inputs/start
 PASS bci: final result retains both tasks without merged accuracy
 PASS mouse: selection ready before task clock
+PASS mouse: pursuit runtime identity and source
+PASS mouse: full child canvas
 PASS mouse: Loader receives started exactly once
 PASS mouse: suite pause freezes child time
-PASS mouse: full five-round pursuit returns result
+PASS mouse: full three-round pursuit returns result
 PASS mouse: child finish never calls real finish
 PASS mouse: pursuit metrics remain independent
 PASS mouse: result returns to selection
+PASS mouse: target runtime identity and source
 PASS mouse: target gets fresh lifecycle and clock
 PASS mouse: task starts without inherited confirm shot
 PASS mouse: target eight shots complete
@@ -112,4 +121,4 @@ PASS deployment: one discoverable TaskDefinition at every depth
 PASS deployment: legacy source descriptors untouched
 PASS deployment: packaged pursuit loads and starts
 PASS deployment: packaged target loads and starts
-110/110 checks passed; scale=1
+119/119 checks passed; scale=1
