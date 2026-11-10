@@ -1,0 +1,101 @@
+Fontconfig error: No writable cache directories
+    [PASS] repeated_started_does_not_reset_session — 实际=1 期望=1
+    [PASS] BFS_current_board_S01
+    [PASS] completed_S01 — 实际='S01' 期望='S01'
+    [PASS] minimum_moves_S01 — 实际=1 期望=1
+    [PASS] BFS_current_board_S02
+    [PASS] completed_S02 — 实际='S02' 期望='S02'
+    [PASS] minimum_moves_S02 — 实际=10 期望=10
+    [PASS] BFS_current_board_S03
+    [PASS] completed_S03 — 实际='S03' 期望='S03'
+    [PASS] minimum_moves_S03 — 实际=8 期望=8
+    [PASS] BFS_current_board_S04
+    [PASS] completed_S04 — 实际='S04' 期望='S04'
+    [PASS] minimum_moves_S04 — 实际=10 期望=10
+    [PASS] BFS_current_board_S05
+    [PASS] completed_S05 — 实际='S05' 期望='S05'
+    [PASS] minimum_moves_S05 — 实际=7 期望=7
+    [PASS] five_levels — 实际=5 期望=5
+    [PASS] finish_once — 实际=1 期望=1
+    [PASS] complete_ignores_input — 实际=84 期望=84
+    [PASS] session_moves_recompute — 实际=36 期望=36
+    [PASS] session_pushes_recompute — 实际=18 期望=18
+    [PASS] no_double_finish — 实际=0 期望=0
+    [PASS] late_start_cannot_repeat_finish — 实际=1 期望=1
+    [PASS] late_start_cannot_restart — 实际=1 期望=1
+    [PASS] repeated_started_does_not_reset_session — 实际=1 期望=1
+    [PASS] BFS_current_board_S01
+    [PASS] completed_S01 — 实际='S01' 期望='S01'
+    [PASS] minimum_moves_S01 — 实际=1 期望=1
+    [PASS] BFS_current_board_S02
+    [PASS] completed_S02 — 实际='S02' 期望='S02'
+    [PASS] minimum_moves_S02 — 实际=10 期望=10
+    [PASS] BFS_current_board_S03
+    [PASS] completed_S03 — 实际='S03' 期望='S03'
+    [PASS] minimum_moves_S03 — 实际=8 期望=8
+    [PASS] BFS_current_board_S04
+    [PASS] completed_S04 — 实际='S04' 期望='S04'
+    [PASS] minimum_moves_S04 — 实际=10 期望=10
+    [PASS] BFS_current_board_S05
+    [PASS] completed_S05 — 实际='S05' 期望='S05'
+    [PASS] minimum_moves_S05 — 实际=7 期望=7
+    [PASS] five_levels — 实际=5 期望=5
+    [PASS] finish_once — 实际=1 期望=1
+    [PASS] complete_ignores_input — 实际=84 期望=84
+    [PASS] session_moves_recompute — 实际=36 期望=36
+    [PASS] session_pushes_recompute — 实际=18 期望=18
+    [PASS] no_double_finish — 实际=0 期望=0
+    [PASS] late_start_cannot_repeat_finish — 实际=1 期望=1
+    [PASS] late_start_cannot_restart — 实际=1 期望=1
+    [PASS] repeated_started_does_not_reset_session — 实际=1 期望=1
+    [PASS] BFS_current_board_S01
+    [PASS] completed_S01 — 实际='S01' 期望='S01'
+    [PASS] minimum_moves_S01 — 实际=1 期望=1
+    [PASS] BFS_current_board_S02
+    [PASS] completed_S02 — 实际='S02' 期望='S02'
+    [PASS] minimum_moves_S02 — 实际=10 期望=10
+    [PASS] BFS_current_board_S03
+    [PASS] completed_S03 — 实际='S03' 期望='S03'
+    [PASS] minimum_moves_S03 — 实际=8 期望=8
+    [PASS] BFS_current_board_S04
+    [PASS] completed_S04 — 实际='S04' 期望='S04'
+    [PASS] minimum_moves_S04 — 实际=10 期望=10
+    [PASS] BFS_current_board_S05
+    [PASS] completed_S05 — 实际='S05' 期望='S05'
+    [PASS] minimum_moves_S05 — 实际=7 期望=7
+    [PASS] five_levels — 实际=5 期望=5
+    [PASS] finish_once — 实际=1 期望=1
+    [PASS] complete_ignores_input — 实际=84 期望=84
+    [PASS] session_moves_recompute — 实际=36 期望=36
+    [PASS] session_pushes_recompute — 实际=18 期望=18
+    [PASS] no_double_finish — 实际=0 期望=0
+    [PASS] late_start_cannot_repeat_finish — 实际=1 期望=1
+    [PASS] late_start_cannot_restart — 实际=1 期望=1
+    [PASS] wall_does_not_push_undo — 实际=1 期望=1
+    [PASS] wall_no_deadlock_countdown — 实际=False 期望=False
+    [PASS] wall_count_separate — 实际=1 期望=1
+    [PASS] host_repeat_ignored — 实际=(1, 2, ('2,3',)) 期望=(1, 2, ('2,3',))
+    [PASS] keyboard_menu_undo — 实际=(2, 2) 期望=(2, 2)
+    [PASS] adjacent_cell_click — 实际=(1, 2) 期望=(1, 2)
+    [PASS] mouse_undo — 实际=(2, 2) 期望=(2, 2)
+    [PASS] confirmed_static_corner — 实际=True 期望=True
+    [PASS] countdown_rule — 实际='static_corner' 期望='static_corner'
+    [PASS] pause_freezes_countdown — 实际=2.1839999999999993 期望=2.1839999999999993
+    [PASS] undo_cancels_countdown — 实际=False 期望=False
+    [PASS] undo_resolves_corner — 实际=[] 期望=[]
+    [PASS] undo_prevents_auto_restart — 实际=0 期望=0
+    [PASS] mouse_restart_restores_board — 实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))
+    [PASS] not_before_three_seconds — 实际=0 期望=0
+    [PASS] three_seconds_restarts_once — 实际=1 期望=1
+    [PASS] auto_restart_same_level — 实际='S02' 期望='S02'
+    [PASS] auto_restart_not_finish — 实际=0 期望=0
+    [PASS] auto_restart_restores_board — 实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))
+    [PASS] cumulative_metrics_survive_restart
+    [PASS] resize_keeps_board_1000 — 实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))
+    [PASS] resize_keeps_board_1280 — 实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))
+    [PASS] resize_keeps_board_1920 — 实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))
+    [PASS] resize_keeps_board_700 — 实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))
+    [PASS] screenshot
+    [PASS] stop_ignores_input_step — 实际=(5, 3, ('2,2',)) 期望=(5, 3, ('2,2',))
+    [PASS] stop_late_start_not_recreated — 实际=1 期望=1
+Sokoban: 99/99 passed

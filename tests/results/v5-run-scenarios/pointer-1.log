@@ -1,0 +1,115 @@
+Fontconfig error: No writable cache directories
+QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
+QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
+QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
+PASS local: selection ready before task clock
+PASS local: Loader receives started exactly once
+PASS local: suite pause freezes child time
+PASS local: full five-round pursuit returns result
+PASS local: child finish never calls real finish
+PASS local: pursuit metrics remain independent
+PASS local: result returns to selection
+PASS local: repeated confirm cannot leak across return
+PASS local: target gets fresh lifecycle and clock
+PASS local: task starts without inherited confirm shot
+PASS local: target eight shots complete
+PASS local: all static shots hit at visible aim
+PASS local: native/forwarded Enter does not double shoot
+PASS local: taskMode routes separate result schemas
+PASS local: legacy event namespace plus source metadata
+PASS local: one real final finish despite repeated inputs/start
+PASS local: final result retains both tasks without merged accuracy
+PASS bci: selection ready before task clock
+PASS bci: Loader receives started exactly once
+PASS bci: suite pause freezes child time
+PASS bci: full five-round pursuit returns result
+PASS bci: child finish never calls real finish
+PASS bci: pursuit metrics remain independent
+PASS bci: result returns to selection
+PASS bci: repeated confirm cannot leak across return
+PASS bci: target gets fresh lifecycle and clock
+PASS bci: task starts without inherited confirm shot
+PASS bci: target eight shots complete
+PASS bci: all static shots hit at visible aim
+PASS bci: native/forwarded Enter does not double shoot
+PASS bci: taskMode routes separate result schemas
+PASS bci: legacy event namespace plus source metadata
+PASS bci: one real final finish despite repeated inputs/start
+PASS bci: final result retains both tasks without merged accuracy
+PASS mouse: selection ready before task clock
+PASS mouse: Loader receives started exactly once
+PASS mouse: suite pause freezes child time
+PASS mouse: full five-round pursuit returns result
+PASS mouse: child finish never calls real finish
+PASS mouse: pursuit metrics remain independent
+PASS mouse: result returns to selection
+PASS mouse: target gets fresh lifecycle and clock
+PASS mouse: task starts without inherited confirm shot
+PASS mouse: target eight shots complete
+PASS mouse: all static shots hit at visible aim
+PASS mouse: native/forwarded Enter does not double shoot
+PASS mouse: taskMode routes separate result schemas
+PASS mouse: legacy event namespace plus source metadata
+PASS mouse: one real final finish despite repeated inputs/start
+PASS mouse: final result retains both tasks without merged accuracy
+PASS pursuit: (1000, 700) BCI center/corners/edges round trip
+PASS pursuit: (1000, 700) window relocation preserves pointer space
+PASS pursuit: (1000, 700) BCI cannot be overwritten by local mouse
+PASS pursuit: (1000, 700) native mouse center/corners/edges align
+PASS pursuit: (1000, 700) native mouse screen position survives window move
+PASS pursuit: (1280, 800) BCI center/corners/edges round trip
+PASS pursuit: (1280, 800) window relocation preserves pointer space
+PASS pursuit: (1280, 800) BCI cannot be overwritten by local mouse
+PASS pursuit: (1280, 800) native mouse center/corners/edges align
+PASS pursuit: (1280, 800) native mouse screen position survives window move
+PASS pursuit: (1920, 1080) BCI center/corners/edges round trip
+PASS pursuit: (1920, 1080) window relocation preserves pointer space
+PASS pursuit: (1920, 1080) BCI cannot be overwritten by local mouse
+PASS pursuit: (1920, 1080) native mouse center/corners/edges align
+PASS pursuit: (1920, 1080) native mouse screen position survives window move
+PASS target: (1000, 700) BCI center/corners/edges round trip
+PASS target: (1000, 700) window relocation preserves pointer space
+PASS target: (1000, 700) BCI cannot be overwritten by local mouse
+PASS target: (1000, 700) native mouse center/corners/edges align
+PASS target: (1000, 700) native mouse screen position survives window move
+PASS target: (1280, 800) BCI center/corners/edges round trip
+PASS target: (1280, 800) window relocation preserves pointer space
+PASS target: (1280, 800) BCI cannot be overwritten by local mouse
+PASS target: (1280, 800) native mouse center/corners/edges align
+PASS target: (1280, 800) native mouse screen position survives window move
+PASS target: (1920, 1080) BCI center/corners/edges round trip
+PASS target: (1920, 1080) window relocation preserves pointer space
+PASS target: (1920, 1080) BCI cannot be overwritten by local mouse
+PASS target: (1920, 1080) native mouse center/corners/edges align
+PASS target: (1920, 1080) native mouse screen position survives window move
+PASS pursuit: native mouse and actual control point coincide
+PASS pursuit: native and host key paths share one movement
+PASS pursuit: release stops virtual cursor
+PASS pursuit: pause/resume retains keyboard pointer ownership
+PASS pursuit: resize hover replay cannot steal keyboard ownership
+PASS target: native mouse and actual control point coincide
+PASS target: actual Qt mouse click uses displayed aim for hit
+PASS target: deliberate feedback trigger is counted without extra shot
+PASS target: native and host key paths share one movement
+PASS target: release stops virtual cursor
+PASS target: pause/resume retains keyboard pointer ownership
+PASS target: resize hover replay cannot steal keyboard ownership
+PASS pursuit: lag estimate recovers independent 300ms trace
+PASS pursuit: late started cannot revive stopped standalone task
+PASS target: late started cannot revive stopped standalone task
+PASS suite: host-first native/host navigation advances once
+PASS suite: native-first native/host navigation advances once
+PASS suite: host-first task start cannot leak native Enter as shot
+PASS suite: target receives namespaced config without pursuit leakage
+PASS suite: config write preserves other child namespace
+PASS suite: stopped session cannot revive and does not finish
+PASS suite: rejects BCI pointer with invalid upstream geometry 0/0
+PASS suite: rejects BCI pointer with invalid upstream geometry nan/700
+PASS suite: rejects BCI pointer with invalid upstream geometry 1000/inf
+PASS suite: rejects BCI pointer with invalid upstream geometry -10/700
+PASS suite: valid upstream geometry restores BCI readiness
+PASS deployment: one discoverable TaskDefinition at every depth
+PASS deployment: legacy source descriptors untouched
+PASS deployment: packaged pursuit loads and starts
+PASS deployment: packaged target loads and starts
+110/110 checks passed; scale=1

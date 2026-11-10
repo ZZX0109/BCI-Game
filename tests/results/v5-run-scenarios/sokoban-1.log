@@ -1,0 +1,5 @@
+[OK]   S01 Guide      5x8  min_moves= 1 pushes= 1  R
+[OK]   S02 Corner     7x8  min_moves=10 pushes= 3  RUUULLULDD
+[OK]   S03 Route      6x8  min_moves= 8 pushes= 4  LURRRURD
+[OK]   S04 TwoBoxes   6x9  min_moves=10 pushes= 6  RRRLLLURRR
+[OK]   S05 Challenge  7x8  min_moves= 7 pushes= 4  LURRDRU

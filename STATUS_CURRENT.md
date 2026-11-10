@@ -50,3 +50,5 @@ L3 及后续关卡已移植多阶段互锁和连续扫掠几何验证；L1/L2 �
 用户确认之后只可能部署到此前提供的 Neuralife Windows 客户端分包，当前没有可访问的 Windows/macOS 运行环境。Linux Qt 多窗口截图可验证布局计算与实际 Qt 渲染，但不作为 Windows DPI、macOS 原生窗口或正式客户端录屏证据。上传的 Demo 分包缺少 Quick3D DLL/QML 模块，正式鲁班锁 RHI 验收仍需完整客户端运行时。`V5_ACCEPTANCE.csv` 中没有实际证据的条目继续保留 `NOT_TESTED`。本分支没有合并 main、写入宿主或退役旧入口。
 
 当前活动模块版本：hanoi 1.1.0、sokoban 0.4.2、pointer 1.0.0、claw 0.5.0、traffic 0.6.0、luban 0.7.0、rhythm 1.2.0。当前本地统一测试以 `tests/results/v5-run-scenarios/result.json` 中的 `sourceHead` 为实际已提交源码基线，测试失败不得从历史结果继承。
+
+最终本地源码基线 `889ad3d33b684897ffd6067c76d9653d05dcefa2`：使用 `/workspace/.venvs/bci-game/bin/python3 tools/run_scenarios.py all` 跑完七个活动游戏及发布预检，14/14 命令组通过；红绿灯专项 12/12。逐项 61 条验收中仅 6 条有足够证据标为 PASS，其余 55 条保持 NOT_TESTED（其中多数要求正式 Neuralife 宿主操作、DPI、录屏或完整时序验证）。已在工作区生成 `/workspace/Neuralife-V5-candidate.zip` 供审阅，尚未写入正式客户端或推送 GitHub。

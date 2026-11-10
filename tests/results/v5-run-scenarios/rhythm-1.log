@@ -1,0 +1,127 @@
+{
+  "engine": "Node VM independent checks",
+  "passed": 30,
+  "total": 30,
+  "checks": [
+    {
+      "name": "deterministic chart from seed",
+      "passed": true
+    },
+    {
+      "name": "five curricula and balanced directions",
+      "passed": true
+    },
+    {
+      "name": "config clamps invalid numeric and input aliases",
+      "passed": true
+    },
+    {
+      "name": "exact early and late boundary allowed",
+      "passed": true
+    },
+    {
+      "name": "outside early does not consume note",
+      "passed": true
+    },
+    {
+      "name": "outside late produces one miss and one stray",
+      "passed": true
+    },
+    {
+      "name": "wrong direction can be corrected inside same window",
+      "passed": true
+    },
+    {
+      "name": "duplicate held true cannot score twice",
+      "passed": true
+    },
+    {
+      "name": "held must be released for next same-direction note",
+      "passed": true
+    },
+    {
+      "name": "pulse treats every true as command, no duplicate reward",
+      "passed": true
+    },
+    {
+      "name": "full held note coverage is one",
+      "passed": true
+    },
+    {
+      "name": "released hold cannot recover past coverage",
+      "passed": true
+    },
+    {
+      "name": "pulse single command expires, not held forever",
+      "passed": true
+    },
+    {
+      "name": "pulse gap contributes no coverage",
+      "passed": true
+    },
+    {
+      "name": "pulse frequent renewal covers entire duration",
+      "passed": true
+    },
+    {
+      "name": "held wrong simultaneous direction excludes its overlap only",
+      "passed": true
+    },
+    {
+      "name": "pulse wrong direction immediately invalidates prior renewal",
+      "passed": true
+    },
+    {
+      "name": "early hold does not count pretarget time",
+      "passed": true
+    },
+    {
+      "name": "late hold does not backfill uncovered beginning",
+      "passed": true
+    },
+    {
+      "name": "pause freezes clock and expires held/pulse intent",
+      "passed": true
+    },
+    {
+      "name": "stop freezes and finish refuses incomplete session",
+      "passed": true
+    },
+    {
+      "name": "large step crosses all five rounds without lost misses",
+      "passed": true
+    },
+    {
+      "name": "bad dt values ignored safely",
+      "passed": true
+    },
+    {
+      "name": "direction confusion and outcome metrics recompute from logs",
+      "passed": true
+    },
+    {
+      "name": "miss without attempts has null direction and timing sample",
+      "passed": true
+    },
+    {
+      "name": "sequence and switching denominators explicit",
+      "passed": true
+    },
+    {
+      "name": "all note target times coincide with beat plan",
+      "passed": true
+    },
+    {
+      "name": "all output events carry consistent active time",
+      "passed": true
+    },
+    {
+      "name": "miss wrong direction and incomplete hold never show success",
+      "passed": true
+    },
+    {
+      "name": "intentActive follows pulse validity and clears on wrong direction",
+      "passed": true
+    }
+  ]
+}
