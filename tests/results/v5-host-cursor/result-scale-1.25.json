@@ -1,0 +1,747 @@
+{
+  "environment": "Linux Xorg, QCursor.setPos actual OS cursor + actual drawn QQuickItem center; simulated consuming host overlay",
+  "sourceRoot": "/workspace/BCI-Game-V5",
+  "scaleFactor": "1.25",
+  "checks": [
+    {
+      "name": "local: actual ball vs OS cursor, overlay=False",
+      "passed": true,
+      "detail": [
+        0.4000000000000057,
+        5.684341886080802e-14,
+        0.40000000000009095,
+        0.4000000000000057,
+        0.0,
+        0.40000000000009095,
+        0.4000000000000057,
+        0.0,
+        0.40000000000009095
+      ]
+    },
+    {
+      "name": "local: actual ball vs OS cursor, overlay=True",
+      "passed": true,
+      "detail": [
+        0.4000000000000057,
+        5.684341886080802e-14,
+        0.40000000000009095,
+        0.4000000000000057,
+        0.0,
+        0.40000000000009095,
+        0.4000000000000057,
+        0.0,
+        0.40000000000009095
+      ]
+    },
+    {
+      "name": "local: gameplay visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local: stationary cursor survives ancestor transform",
+      "passed": true,
+      "detail": {
+        "source": "local",
+        "label": "ancestor_transform",
+        "cursorGlobal": [
+          640,
+          460
+        ],
+        "ballGlobal": [
+          640.0,
+          459.99999999999994
+        ],
+        "errorLogicalPx": 5.684341886080802e-14
+      }
+    },
+    {
+      "name": "local: stationary cursor survives window move",
+      "passed": true,
+      "detail": {
+        "source": "local",
+        "label": "window_move",
+        "cursorGlobal": [
+          640,
+          460
+        ],
+        "ballGlobal": [
+          640.0000000000001,
+          459.99999999999994
+        ],
+        "errorLogicalPx": 1.2710574864626038e-13
+      }
+    },
+    {
+      "name": "local: pause/resume maintains actual hotspot",
+      "passed": true,
+      "detail": {
+        "source": "local",
+        "label": "resume",
+        "cursorGlobal": [
+          531,
+          393
+        ],
+        "ballGlobal": [
+          531.1999999999999,
+          392.79999999999995
+        ],
+        "errorLogicalPx": 0.2828427124746029
+      }
+    },
+    {
+      "name": "local: mouse return unloads window observer",
+      "passed": true,
+      "detail": {
+        "before": 1,
+        "after": 0,
+        "phase": "menu"
+      }
+    },
+    {
+      "name": "bci: actual ball vs OS cursor, overlay=False",
+      "passed": true,
+      "detail": [
+        0.4000000000000057,
+        5.684341886080802e-14,
+        0.40000000000009095,
+        0.4000000000000057,
+        0.0,
+        0.40000000000009095,
+        0.4000000000000057,
+        0.0,
+        0.40000000000009095
+      ]
+    },
+    {
+      "name": "bci: actual ball vs OS cursor, overlay=True",
+      "passed": true,
+      "detail": [
+        0.4000000000000057,
+        5.684341886080802e-14,
+        0.40000000000009095,
+        0.4000000000000057,
+        0.0,
+        0.40000000000009095,
+        0.4000000000000057,
+        0.0,
+        0.40000000000009095
+      ]
+    },
+    {
+      "name": "bci: gameplay visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci: stationary cursor survives ancestor transform",
+      "passed": true,
+      "detail": {
+        "source": "bci",
+        "label": "ancestor_transform",
+        "cursorGlobal": [
+          640,
+          460
+        ],
+        "ballGlobal": [
+          640.0,
+          459.99999999999994
+        ],
+        "errorLogicalPx": 5.684341886080802e-14
+      }
+    },
+    {
+      "name": "bci: stationary cursor survives window move",
+      "passed": true,
+      "detail": {
+        "source": "bci",
+        "label": "window_move",
+        "cursorGlobal": [
+          640,
+          460
+        ],
+        "ballGlobal": [
+          640.0000000000001,
+          459.99999999999994
+        ],
+        "errorLogicalPx": 1.2710574864626038e-13
+      }
+    },
+    {
+      "name": "bci: pause/resume maintains actual hotspot",
+      "passed": true,
+      "detail": {
+        "source": "bci",
+        "label": "resume",
+        "cursorGlobal": [
+          531,
+          393
+        ],
+        "ballGlobal": [
+          531.1999999999999,
+          392.79999999999995
+        ],
+        "errorLogicalPx": 0.2828427124746029
+      }
+    },
+    {
+      "name": "bci: mouse return unloads window observer",
+      "passed": true,
+      "detail": {
+        "before": 1,
+        "after": 0,
+        "phase": "menu"
+      }
+    }
+  ],
+  "samples": [
+    {
+      "source": "local",
+      "label": "overlay=False,point=250/240",
+      "cursorGlobal": [
+        250,
+        240
+      ],
+      "ballGlobal": [
+        250.4,
+        240.00000000000006
+      ],
+      "errorLogicalPx": 0.4000000000000057
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=640/240",
+      "cursorGlobal": [
+        640,
+        240
+      ],
+      "ballGlobal": [
+        640.0,
+        240.00000000000006
+      ],
+      "errorLogicalPx": 5.684341886080802e-14
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=1010/240",
+      "cursorGlobal": [
+        1010,
+        240
+      ],
+      "ballGlobal": [
+        1010.4000000000001,
+        240.00000000000006
+      ],
+      "errorLogicalPx": 0.40000000000009095
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=250/460",
+      "cursorGlobal": [
+        250,
+        460
+      ],
+      "ballGlobal": [
+        250.4,
+        460.0
+      ],
+      "errorLogicalPx": 0.4000000000000057
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=640/460",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        460.0
+      ],
+      "errorLogicalPx": 0.0
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=1010/460",
+      "cursorGlobal": [
+        1010,
+        460
+      ],
+      "ballGlobal": [
+        1010.4000000000001,
+        460.0
+      ],
+      "errorLogicalPx": 0.40000000000009095
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=250/680",
+      "cursorGlobal": [
+        250,
+        680
+      ],
+      "ballGlobal": [
+        250.4,
+        680.0
+      ],
+      "errorLogicalPx": 0.4000000000000057
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=640/680",
+      "cursorGlobal": [
+        640,
+        680
+      ],
+      "ballGlobal": [
+        640.0,
+        680.0
+      ],
+      "errorLogicalPx": 0.0
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=1010/680",
+      "cursorGlobal": [
+        1010,
+        680
+      ],
+      "ballGlobal": [
+        1010.4000000000001,
+        680.0
+      ],
+      "errorLogicalPx": 0.40000000000009095
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=250/240",
+      "cursorGlobal": [
+        250,
+        240
+      ],
+      "ballGlobal": [
+        250.4,
+        240.00000000000006
+      ],
+      "errorLogicalPx": 0.4000000000000057
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=640/240",
+      "cursorGlobal": [
+        640,
+        240
+      ],
+      "ballGlobal": [
+        640.0,
+        240.00000000000006
+      ],
+      "errorLogicalPx": 5.684341886080802e-14
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=1010/240",
+      "cursorGlobal": [
+        1010,
+        240
+      ],
+      "ballGlobal": [
+        1010.4000000000001,
+        240.00000000000006
+      ],
+      "errorLogicalPx": 0.40000000000009095
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=250/460",
+      "cursorGlobal": [
+        250,
+        460
+      ],
+      "ballGlobal": [
+        250.4,
+        460.0
+      ],
+      "errorLogicalPx": 0.4000000000000057
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=640/460",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        460.0
+      ],
+      "errorLogicalPx": 0.0
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=1010/460",
+      "cursorGlobal": [
+        1010,
+        460
+      ],
+      "ballGlobal": [
+        1010.4000000000001,
+        460.0
+      ],
+      "errorLogicalPx": 0.40000000000009095
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=250/680",
+      "cursorGlobal": [
+        250,
+        680
+      ],
+      "ballGlobal": [
+        250.4,
+        680.0
+      ],
+      "errorLogicalPx": 0.4000000000000057
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=640/680",
+      "cursorGlobal": [
+        640,
+        680
+      ],
+      "ballGlobal": [
+        640.0,
+        680.0
+      ],
+      "errorLogicalPx": 0.0
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=1010/680",
+      "cursorGlobal": [
+        1010,
+        680
+      ],
+      "ballGlobal": [
+        1010.4000000000001,
+        680.0
+      ],
+      "errorLogicalPx": 0.40000000000009095
+    },
+    {
+      "source": "local",
+      "label": "ancestor_transform",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        459.99999999999994
+      ],
+      "errorLogicalPx": 5.684341886080802e-14
+    },
+    {
+      "source": "local",
+      "label": "window_move",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0000000000001,
+        459.99999999999994
+      ],
+      "errorLogicalPx": 1.2710574864626038e-13
+    },
+    {
+      "source": "local",
+      "label": "resume",
+      "cursorGlobal": [
+        531,
+        393
+      ],
+      "ballGlobal": [
+        531.1999999999999,
+        392.79999999999995
+      ],
+      "errorLogicalPx": 0.2828427124746029
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=250/240",
+      "cursorGlobal": [
+        250,
+        240
+      ],
+      "ballGlobal": [
+        250.4,
+        240.00000000000006
+      ],
+      "errorLogicalPx": 0.4000000000000057
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=640/240",
+      "cursorGlobal": [
+        640,
+        240
+      ],
+      "ballGlobal": [
+        640.0,
+        240.00000000000006
+      ],
+      "errorLogicalPx": 5.684341886080802e-14
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=1010/240",
+      "cursorGlobal": [
+        1010,
+        240
+      ],
+      "ballGlobal": [
+        1010.4000000000001,
+        240.00000000000006
+      ],
+      "errorLogicalPx": 0.40000000000009095
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=250/460",
+      "cursorGlobal": [
+        250,
+        460
+      ],
+      "ballGlobal": [
+        250.4,
+        460.0
+      ],
+      "errorLogicalPx": 0.4000000000000057
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=640/460",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        460.0
+      ],
+      "errorLogicalPx": 0.0
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=1010/460",
+      "cursorGlobal": [
+        1010,
+        460
+      ],
+      "ballGlobal": [
+        1010.4000000000001,
+        460.0
+      ],
+      "errorLogicalPx": 0.40000000000009095
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=250/680",
+      "cursorGlobal": [
+        250,
+        680
+      ],
+      "ballGlobal": [
+        250.4,
+        680.0
+      ],
+      "errorLogicalPx": 0.4000000000000057
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=640/680",
+      "cursorGlobal": [
+        640,
+        680
+      ],
+      "ballGlobal": [
+        640.0,
+        680.0
+      ],
+      "errorLogicalPx": 0.0
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=1010/680",
+      "cursorGlobal": [
+        1010,
+        680
+      ],
+      "ballGlobal": [
+        1010.4000000000001,
+        680.0
+      ],
+      "errorLogicalPx": 0.40000000000009095
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=250/240",
+      "cursorGlobal": [
+        250,
+        240
+      ],
+      "ballGlobal": [
+        250.4,
+        240.00000000000006
+      ],
+      "errorLogicalPx": 0.4000000000000057
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=640/240",
+      "cursorGlobal": [
+        640,
+        240
+      ],
+      "ballGlobal": [
+        640.0,
+        240.00000000000006
+      ],
+      "errorLogicalPx": 5.684341886080802e-14
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=1010/240",
+      "cursorGlobal": [
+        1010,
+        240
+      ],
+      "ballGlobal": [
+        1010.4000000000001,
+        240.00000000000006
+      ],
+      "errorLogicalPx": 0.40000000000009095
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=250/460",
+      "cursorGlobal": [
+        250,
+        460
+      ],
+      "ballGlobal": [
+        250.4,
+        460.0
+      ],
+      "errorLogicalPx": 0.4000000000000057
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=640/460",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        460.0
+      ],
+      "errorLogicalPx": 0.0
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=1010/460",
+      "cursorGlobal": [
+        1010,
+        460
+      ],
+      "ballGlobal": [
+        1010.4000000000001,
+        460.0
+      ],
+      "errorLogicalPx": 0.40000000000009095
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=250/680",
+      "cursorGlobal": [
+        250,
+        680
+      ],
+      "ballGlobal": [
+        250.4,
+        680.0
+      ],
+      "errorLogicalPx": 0.4000000000000057
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=640/680",
+      "cursorGlobal": [
+        640,
+        680
+      ],
+      "ballGlobal": [
+        640.0,
+        680.0
+      ],
+      "errorLogicalPx": 0.0
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=1010/680",
+      "cursorGlobal": [
+        1010,
+        680
+      ],
+      "ballGlobal": [
+        1010.4000000000001,
+        680.0
+      ],
+      "errorLogicalPx": 0.40000000000009095
+    },
+    {
+      "source": "bci",
+      "label": "ancestor_transform",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        459.99999999999994
+      ],
+      "errorLogicalPx": 5.684341886080802e-14
+    },
+    {
+      "source": "bci",
+      "label": "window_move",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0000000000001,
+        459.99999999999994
+      ],
+      "errorLogicalPx": 1.2710574864626038e-13
+    },
+    {
+      "source": "bci",
+      "label": "resume",
+      "cursorGlobal": [
+        531,
+        393
+      ],
+      "ballGlobal": [
+        531.1999999999999,
+        392.79999999999995
+      ],
+      "errorLogicalPx": 0.2828427124746029
+    }
+  ],
+  "passed": 14,
+  "total": 14
+}

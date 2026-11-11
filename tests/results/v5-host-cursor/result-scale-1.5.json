@@ -1,0 +1,747 @@
+{
+  "environment": "Linux Xorg, QCursor.setPos actual OS cursor + actual drawn QQuickItem center; simulated consuming host overlay",
+  "sourceRoot": "/workspace/BCI-Game-V5",
+  "scaleFactor": "1.5",
+  "checks": [
+    {
+      "name": "local: actual ball vs OS cursor, overlay=False",
+      "passed": true,
+      "detail": [
+        4.0194366942304644e-14,
+        2.842170943040401e-14,
+        0.33333333333325754,
+        2.842170943040401e-14,
+        0.0,
+        0.33333333333325754,
+        0.33333333333325754,
+        0.33333333333325754,
+        0.4714045207909245
+      ]
+    },
+    {
+      "name": "local: actual ball vs OS cursor, overlay=True",
+      "passed": true,
+      "detail": [
+        4.0194366942304644e-14,
+        2.842170943040401e-14,
+        0.33333333333325754,
+        2.842170943040401e-14,
+        0.0,
+        0.33333333333325754,
+        0.33333333333325754,
+        0.33333333333325754,
+        0.4714045207909245
+      ]
+    },
+    {
+      "name": "local: gameplay visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local: stationary cursor survives ancestor transform",
+      "passed": true,
+      "detail": {
+        "source": "local",
+        "label": "ancestor_transform",
+        "cursorGlobal": [
+          640,
+          460
+        ],
+        "ballGlobal": [
+          640.0,
+          459.9999999999998
+        ],
+        "errorLogicalPx": 2.2737367544323206e-13
+      }
+    },
+    {
+      "name": "local: stationary cursor survives window move",
+      "passed": true,
+      "detail": {
+        "source": "local",
+        "label": "window_move",
+        "cursorGlobal": [
+          640,
+          460
+        ],
+        "ballGlobal": [
+          640.0,
+          459.9999999999998
+        ],
+        "errorLogicalPx": 2.2737367544323206e-13
+      }
+    },
+    {
+      "name": "local: pause/resume maintains actual hotspot",
+      "passed": true,
+      "detail": {
+        "source": "local",
+        "label": "resume",
+        "cursorGlobal": [
+          531,
+          393
+        ],
+        "ballGlobal": [
+          531.3333333333331,
+          393.33333333333314
+        ],
+        "errorLogicalPx": 0.4714045207907637
+      }
+    },
+    {
+      "name": "local: mouse return unloads window observer",
+      "passed": true,
+      "detail": {
+        "before": 1,
+        "after": 0,
+        "phase": "menu"
+      }
+    },
+    {
+      "name": "bci: actual ball vs OS cursor, overlay=False",
+      "passed": true,
+      "detail": [
+        4.0194366942304644e-14,
+        2.842170943040401e-14,
+        0.33333333333325754,
+        2.842170943040401e-14,
+        0.0,
+        0.33333333333325754,
+        0.33333333333325754,
+        0.33333333333325754,
+        0.4714045207909245
+      ]
+    },
+    {
+      "name": "bci: actual ball vs OS cursor, overlay=True",
+      "passed": true,
+      "detail": [
+        4.0194366942304644e-14,
+        2.842170943040401e-14,
+        0.33333333333325754,
+        2.842170943040401e-14,
+        0.0,
+        0.33333333333325754,
+        0.33333333333325754,
+        0.33333333333325754,
+        0.4714045207909245
+      ]
+    },
+    {
+      "name": "bci: gameplay visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci: stationary cursor survives ancestor transform",
+      "passed": true,
+      "detail": {
+        "source": "bci",
+        "label": "ancestor_transform",
+        "cursorGlobal": [
+          640,
+          460
+        ],
+        "ballGlobal": [
+          640.0,
+          459.9999999999998
+        ],
+        "errorLogicalPx": 2.2737367544323206e-13
+      }
+    },
+    {
+      "name": "bci: stationary cursor survives window move",
+      "passed": true,
+      "detail": {
+        "source": "bci",
+        "label": "window_move",
+        "cursorGlobal": [
+          640,
+          460
+        ],
+        "ballGlobal": [
+          640.0,
+          459.9999999999998
+        ],
+        "errorLogicalPx": 2.2737367544323206e-13
+      }
+    },
+    {
+      "name": "bci: pause/resume maintains actual hotspot",
+      "passed": true,
+      "detail": {
+        "source": "bci",
+        "label": "resume",
+        "cursorGlobal": [
+          531,
+          393
+        ],
+        "ballGlobal": [
+          531.3333333333331,
+          393.33333333333314
+        ],
+        "errorLogicalPx": 0.4714045207907637
+      }
+    },
+    {
+      "name": "bci: mouse return unloads window observer",
+      "passed": true,
+      "detail": {
+        "before": 1,
+        "after": 0,
+        "phase": "menu"
+      }
+    }
+  ],
+  "samples": [
+    {
+      "source": "local",
+      "label": "overlay=False,point=250/240",
+      "cursorGlobal": [
+        250,
+        240
+      ],
+      "ballGlobal": [
+        250.00000000000003,
+        240.00000000000003
+      ],
+      "errorLogicalPx": 4.0194366942304644e-14
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=640/240",
+      "cursorGlobal": [
+        640,
+        240
+      ],
+      "ballGlobal": [
+        640.0,
+        240.00000000000003
+      ],
+      "errorLogicalPx": 2.842170943040401e-14
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=1010/240",
+      "cursorGlobal": [
+        959,
+        240
+      ],
+      "ballGlobal": [
+        959.3333333333333,
+        240.00000000000003
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=250/460",
+      "cursorGlobal": [
+        250,
+        460
+      ],
+      "ballGlobal": [
+        250.00000000000003,
+        460.0
+      ],
+      "errorLogicalPx": 2.842170943040401e-14
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=640/460",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        460.0
+      ],
+      "errorLogicalPx": 0.0
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=1010/460",
+      "cursorGlobal": [
+        959,
+        460
+      ],
+      "ballGlobal": [
+        959.3333333333333,
+        460.0
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=250/680",
+      "cursorGlobal": [
+        250,
+        599
+      ],
+      "ballGlobal": [
+        250.00000000000003,
+        599.3333333333333
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=640/680",
+      "cursorGlobal": [
+        640,
+        599
+      ],
+      "ballGlobal": [
+        640.0,
+        599.3333333333333
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "local",
+      "label": "overlay=False,point=1010/680",
+      "cursorGlobal": [
+        959,
+        599
+      ],
+      "ballGlobal": [
+        959.3333333333333,
+        599.3333333333333
+      ],
+      "errorLogicalPx": 0.4714045207909245
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=250/240",
+      "cursorGlobal": [
+        250,
+        240
+      ],
+      "ballGlobal": [
+        250.00000000000003,
+        240.00000000000003
+      ],
+      "errorLogicalPx": 4.0194366942304644e-14
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=640/240",
+      "cursorGlobal": [
+        640,
+        240
+      ],
+      "ballGlobal": [
+        640.0,
+        240.00000000000003
+      ],
+      "errorLogicalPx": 2.842170943040401e-14
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=1010/240",
+      "cursorGlobal": [
+        959,
+        240
+      ],
+      "ballGlobal": [
+        959.3333333333333,
+        240.00000000000003
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=250/460",
+      "cursorGlobal": [
+        250,
+        460
+      ],
+      "ballGlobal": [
+        250.00000000000003,
+        460.0
+      ],
+      "errorLogicalPx": 2.842170943040401e-14
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=640/460",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        460.0
+      ],
+      "errorLogicalPx": 0.0
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=1010/460",
+      "cursorGlobal": [
+        959,
+        460
+      ],
+      "ballGlobal": [
+        959.3333333333333,
+        460.0
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=250/680",
+      "cursorGlobal": [
+        250,
+        599
+      ],
+      "ballGlobal": [
+        250.00000000000003,
+        599.3333333333333
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=640/680",
+      "cursorGlobal": [
+        640,
+        599
+      ],
+      "ballGlobal": [
+        640.0,
+        599.3333333333333
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "local",
+      "label": "overlay=True,point=1010/680",
+      "cursorGlobal": [
+        959,
+        599
+      ],
+      "ballGlobal": [
+        959.3333333333333,
+        599.3333333333333
+      ],
+      "errorLogicalPx": 0.4714045207909245
+    },
+    {
+      "source": "local",
+      "label": "ancestor_transform",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        459.9999999999998
+      ],
+      "errorLogicalPx": 2.2737367544323206e-13
+    },
+    {
+      "source": "local",
+      "label": "window_move",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        459.9999999999998
+      ],
+      "errorLogicalPx": 2.2737367544323206e-13
+    },
+    {
+      "source": "local",
+      "label": "resume",
+      "cursorGlobal": [
+        531,
+        393
+      ],
+      "ballGlobal": [
+        531.3333333333331,
+        393.33333333333314
+      ],
+      "errorLogicalPx": 0.4714045207907637
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=250/240",
+      "cursorGlobal": [
+        250,
+        240
+      ],
+      "ballGlobal": [
+        250.00000000000003,
+        240.00000000000003
+      ],
+      "errorLogicalPx": 4.0194366942304644e-14
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=640/240",
+      "cursorGlobal": [
+        640,
+        240
+      ],
+      "ballGlobal": [
+        640.0,
+        240.00000000000003
+      ],
+      "errorLogicalPx": 2.842170943040401e-14
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=1010/240",
+      "cursorGlobal": [
+        959,
+        240
+      ],
+      "ballGlobal": [
+        959.3333333333333,
+        240.00000000000003
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=250/460",
+      "cursorGlobal": [
+        250,
+        460
+      ],
+      "ballGlobal": [
+        250.00000000000003,
+        460.0
+      ],
+      "errorLogicalPx": 2.842170943040401e-14
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=640/460",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        460.0
+      ],
+      "errorLogicalPx": 0.0
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=1010/460",
+      "cursorGlobal": [
+        959,
+        460
+      ],
+      "ballGlobal": [
+        959.3333333333333,
+        460.0
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=250/680",
+      "cursorGlobal": [
+        250,
+        599
+      ],
+      "ballGlobal": [
+        250.00000000000003,
+        599.3333333333333
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=640/680",
+      "cursorGlobal": [
+        640,
+        599
+      ],
+      "ballGlobal": [
+        640.0,
+        599.3333333333333
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "bci",
+      "label": "overlay=False,point=1010/680",
+      "cursorGlobal": [
+        959,
+        599
+      ],
+      "ballGlobal": [
+        959.3333333333333,
+        599.3333333333333
+      ],
+      "errorLogicalPx": 0.4714045207909245
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=250/240",
+      "cursorGlobal": [
+        250,
+        240
+      ],
+      "ballGlobal": [
+        250.00000000000003,
+        240.00000000000003
+      ],
+      "errorLogicalPx": 4.0194366942304644e-14
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=640/240",
+      "cursorGlobal": [
+        640,
+        240
+      ],
+      "ballGlobal": [
+        640.0,
+        240.00000000000003
+      ],
+      "errorLogicalPx": 2.842170943040401e-14
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=1010/240",
+      "cursorGlobal": [
+        959,
+        240
+      ],
+      "ballGlobal": [
+        959.3333333333333,
+        240.00000000000003
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=250/460",
+      "cursorGlobal": [
+        250,
+        460
+      ],
+      "ballGlobal": [
+        250.00000000000003,
+        460.0
+      ],
+      "errorLogicalPx": 2.842170943040401e-14
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=640/460",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        460.0
+      ],
+      "errorLogicalPx": 0.0
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=1010/460",
+      "cursorGlobal": [
+        959,
+        460
+      ],
+      "ballGlobal": [
+        959.3333333333333,
+        460.0
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=250/680",
+      "cursorGlobal": [
+        250,
+        599
+      ],
+      "ballGlobal": [
+        250.00000000000003,
+        599.3333333333333
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=640/680",
+      "cursorGlobal": [
+        640,
+        599
+      ],
+      "ballGlobal": [
+        640.0,
+        599.3333333333333
+      ],
+      "errorLogicalPx": 0.33333333333325754
+    },
+    {
+      "source": "bci",
+      "label": "overlay=True,point=1010/680",
+      "cursorGlobal": [
+        959,
+        599
+      ],
+      "ballGlobal": [
+        959.3333333333333,
+        599.3333333333333
+      ],
+      "errorLogicalPx": 0.4714045207909245
+    },
+    {
+      "source": "bci",
+      "label": "ancestor_transform",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        459.9999999999998
+      ],
+      "errorLogicalPx": 2.2737367544323206e-13
+    },
+    {
+      "source": "bci",
+      "label": "window_move",
+      "cursorGlobal": [
+        640,
+        460
+      ],
+      "ballGlobal": [
+        640.0,
+        459.9999999999998
+      ],
+      "errorLogicalPx": 2.2737367544323206e-13
+    },
+    {
+      "source": "bci",
+      "label": "resume",
+      "cursorGlobal": [
+        531,
+        393
+      ],
+      "ballGlobal": [
+        531.3333333333331,
+        393.33333333333314
+      ],
+      "errorLogicalPx": 0.4714045207907637
+    }
+  ],
+  "passed": 14,
+  "total": 14
+}

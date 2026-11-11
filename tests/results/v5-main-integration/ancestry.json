@@ -1,0 +1,21 @@
+{
+  "mergedMain": "68faf07",
+  "testedSource": "620bdebecba68208378d60aef88d531bb57f186b",
+  "branches": [
+    {
+      "branch": "origin/feat/neuralife-v5-interaction",
+      "commit": "dc31070024936142bfcbb492a6e9d4ce9e5150f7",
+      "included": true
+    },
+    {
+      "branch": "origin/fix/v5-retest-20261110",
+      "commit": "a9a91a94b2aec885002372ad19109b27b3c8cc7a",
+      "included": true
+    },
+    {
+      "branch": "origin/fix/v5-mouse-rhythm-feedback",
+      "commit": "74f0d08a0355fe330b5892d3d8e92bbe81a07988",
+      "included": true
+    }
+  ]
+}

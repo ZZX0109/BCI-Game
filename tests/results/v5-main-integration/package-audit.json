@@ -1,0 +1,566 @@
+{
+  "hostRoot": "/workspace/Neuralife-V5-main-20261111",
+  "readOnly": true,
+  "allMatch": true,
+  "files": [
+    {
+      "path": "claw/ClawView.qml",
+      "expectedSha256": "0d797a45c9584265bb70d341293d4060f94e200c1c96f3fadebb6abcebaf1d7a",
+      "actualSha256": "0d797a45c9584265bb70d341293d4060f94e200c1c96f3fadebb6abcebaf1d7a",
+      "status": "MATCH"
+    },
+    {
+      "path": "claw/Main.qml",
+      "expectedSha256": "534178bb1a114e7ab5693b81e10031421f5c0eb207e8039904bf642acc2b20e5",
+      "actualSha256": "534178bb1a114e7ab5693b81e10031421f5c0eb207e8039904bf642acc2b20e5",
+      "status": "MATCH"
+    },
+    {
+      "path": "claw/README.md",
+      "expectedSha256": "9ffa760eab56c166b65e6882d29526580683eda2d59fde4c9d8fe0fee5c2664b",
+      "actualSha256": "9ffa760eab56c166b65e6882d29526580683eda2d59fde4c9d8fe0fee5c2664b",
+      "status": "MATCH"
+    },
+    {
+      "path": "claw/TaskDefinition.qml",
+      "expectedSha256": "a898aa9faf21abb26544a6d7982478d2c931a48e030f2205fa3b50f653553b54",
+      "actualSha256": "a898aa9faf21abb26544a6d7982478d2c931a48e030f2205fa3b50f653553b54",
+      "status": "MATCH"
+    },
+    {
+      "path": "claw/assets/icon.png",
+      "expectedSha256": "fc8eded2b023b696a3fff6ddff4aa8e583ee014fe62c7a9283686162a3d7cfc8",
+      "actualSha256": "fc8eded2b023b696a3fff6ddff4aa8e583ee014fe62c7a9283686162a3d7cfc8",
+      "status": "MATCH"
+    },
+    {
+      "path": "claw/assets/icon.svg",
+      "expectedSha256": "c55a93b46035aff52384084c090a7b601162b221cd8711dbed858c9e87d48f81",
+      "actualSha256": "c55a93b46035aff52384084c090a7b601162b221cd8711dbed858c9e87d48f81",
+      "status": "MATCH"
+    },
+    {
+      "path": "hanoi/GoalPreview.qml",
+      "expectedSha256": "4af12896122ab68b5d1418b0ecda6dc942363b7f3467c249ad005b7dbd384ced",
+      "actualSha256": "4af12896122ab68b5d1418b0ecda6dc942363b7f3467c249ad005b7dbd384ced",
+      "status": "MATCH"
+    },
+    {
+      "path": "hanoi/HanoiDisc.qml",
+      "expectedSha256": "22e9c83ba24c72b33d51e363b2681c41f3c057f317d296be3872276e1f270331",
+      "actualSha256": "22e9c83ba24c72b33d51e363b2681c41f3c057f317d296be3872276e1f270331",
+      "status": "MATCH"
+    },
+    {
+      "path": "hanoi/LondonBall.qml",
+      "expectedSha256": "abaf1676ddc56f651a9848c17d4fdfd1f7f1940642359dae1eed1dc9cbdf9ef4",
+      "actualSha256": "abaf1676ddc56f651a9848c17d4fdfd1f7f1940642359dae1eed1dc9cbdf9ef4",
+      "status": "MATCH"
+    },
+    {
+      "path": "hanoi/Main.qml",
+      "expectedSha256": "c7243769c39b98b05f3c6b3c5f1eece290812a6c956513920ca81cd6302dabfc",
+      "actualSha256": "c7243769c39b98b05f3c6b3c5f1eece290812a6c956513920ca81cd6302dabfc",
+      "status": "MATCH"
+    },
+    {
+      "path": "hanoi/README.md",
+      "expectedSha256": "26a4e4cd27f861f7acb40adf8481c4faa481a2d5de3f33ec6aa6f3a7f3139a7b",
+      "actualSha256": "26a4e4cd27f861f7acb40adf8481c4faa481a2d5de3f33ec6aa6f3a7f3139a7b",
+      "status": "MATCH"
+    },
+    {
+      "path": "hanoi/TaskDefinition.qml",
+      "expectedSha256": "5fcf4ff52198985a2766fa22578a1e6944a7dd49702f4d1b8ca72a9c73dc1539",
+      "actualSha256": "5fcf4ff52198985a2766fa22578a1e6944a7dd49702f4d1b8ca72a9c73dc1539",
+      "status": "MATCH"
+    },
+    {
+      "path": "hanoi/assets/icon.png",
+      "expectedSha256": "7c99e5cecdd15700d39f3bd2a88c2cb4d3600e7af922ee0ae29ad8811d435fe6",
+      "actualSha256": "7c99e5cecdd15700d39f3bd2a88c2cb4d3600e7af922ee0ae29ad8811d435fe6",
+      "status": "MATCH"
+    },
+    {
+      "path": "hanoi/assets/icon.svg",
+      "expectedSha256": "75edcc3d2685492699ab36b0ca94981ea7802eb1cd800082aaae53bc8296700e",
+      "actualSha256": "75edcc3d2685492699ab36b0ca94981ea7802eb1cd800082aaae53bc8296700e",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/LegacyWindowFill.qml",
+      "expectedSha256": "28b5006ea1569ba9d5f44b85c3f7b85d41f62c48b6031155d158f2a982d82252",
+      "actualSha256": "28b5006ea1569ba9d5f44b85c3f7b85d41f62c48b6031155d158f2a982d82252",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/LevelData.js",
+      "expectedSha256": "602f319eaf736fb97ee5fd1113b3aaf400e718820f122cbaa51649decbe29f33",
+      "actualSha256": "602f319eaf736fb97ee5fd1113b3aaf400e718820f122cbaa51649decbe29f33",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/LubanButton.qml",
+      "expectedSha256": "33ce1e5f4f2f41a65ae86c8aa6929c103a821dc28fe62572cc88171b9c210abc",
+      "actualSha256": "33ce1e5f4f2f41a65ae86c8aa6929c103a821dc28fe62572cc88171b9c210abc",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/LubanScene.qml",
+      "expectedSha256": "084b5b93061dab907118a56a365711079c9d94c2a196e8b2e4a6eff628472c2c",
+      "actualSha256": "084b5b93061dab907118a56a365711079c9d94c2a196e8b2e4a6eff628472c2c",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/Main.qml",
+      "expectedSha256": "95b4a3fa0b2aa96848dc8663a3a027bfed93133f64422a2bff458f1143786303",
+      "actualSha256": "95b4a3fa0b2aa96848dc8663a3a027bfed93133f64422a2bff458f1143786303",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/README.md",
+      "expectedSha256": "84144424e0cba22fb11043e1dab7861ed7e025b594caba7b7b791ee49ae54716",
+      "actualSha256": "84144424e0cba22fb11043e1dab7861ed7e025b594caba7b7b791ee49ae54716",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/SHA256.json",
+      "expectedSha256": "90b8fe9c039e9ec92cd15fbc61a21a5db6bed9574315d3caed2f23676f98d096",
+      "actualSha256": "90b8fe9c039e9ec92cd15fbc61a21a5db6bed9574315d3caed2f23676f98d096",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/TaskDefinition.qml",
+      "expectedSha256": "afe4508bc16c34ee9e13a9c8252c98288066f4543c39781432f853297376a239",
+      "actualSha256": "afe4508bc16c34ee9e13a9c8252c98288066f4543c39781432f853297376a239",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/beam_A.png",
+      "expectedSha256": "dbd7ae7ca17a507ad25dbe9ce5ea4d63926e3f19db27b4d0c76ab7254bb72eb4",
+      "actualSha256": "dbd7ae7ca17a507ad25dbe9ce5ea4d63926e3f19db27b4d0c76ab7254bb72eb4",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/beam_A.svg",
+      "expectedSha256": "c3f9d479f6d68bc279b13933dfc6ea6640c35ebee093d4e4f49af5200514e921",
+      "actualSha256": "c3f9d479f6d68bc279b13933dfc6ea6640c35ebee093d4e4f49af5200514e921",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/beam_B.png",
+      "expectedSha256": "d82d6f20affdc7374ed22da9c1b801c95f86203fbcfd8bfc33b1f2571ec7e05f",
+      "actualSha256": "d82d6f20affdc7374ed22da9c1b801c95f86203fbcfd8bfc33b1f2571ec7e05f",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/beam_B.svg",
+      "expectedSha256": "afc470c13b7406c2381e759978abde82e3400d7b584d7d76b56ac8b20fdcddfa",
+      "actualSha256": "afc470c13b7406c2381e759978abde82e3400d7b584d7d76b56ac8b20fdcddfa",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/beam_C.png",
+      "expectedSha256": "9b4282e7ec32f0b79cd9aeba9a34e85805a4126cdae3e6085de46f82cea05492",
+      "actualSha256": "9b4282e7ec32f0b79cd9aeba9a34e85805a4126cdae3e6085de46f82cea05492",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/beam_C.svg",
+      "expectedSha256": "b75ef6f8f2045ea774b64ac4d3293ff5876423a38a50adb198f43090bb8b1aa1",
+      "actualSha256": "b75ef6f8f2045ea774b64ac4d3293ff5876423a38a50adb198f43090bb8b1aa1",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/beam_D.png",
+      "expectedSha256": "ecca1f788627c20692ac7016721a4659314dae0bfd4a6e7b9603e5c08b3070cb",
+      "actualSha256": "ecca1f788627c20692ac7016721a4659314dae0bfd4a6e7b9603e5c08b3070cb",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/beam_D.svg",
+      "expectedSha256": "2019a5bdf3a5ccbc13ba1af114aa190895218cc807c32a8ba793379fed51ceef",
+      "actualSha256": "2019a5bdf3a5ccbc13ba1af114aa190895218cc807c32a8ba793379fed51ceef",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/icon.png",
+      "expectedSha256": "812ab21d07e0afdc50e20ae5ee028e5d6bdd904bda965717ffc2ec3c3a9882b2",
+      "actualSha256": "812ab21d07e0afdc50e20ae5ee028e5d6bdd904bda965717ffc2ec3c3a9882b2",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/icon.svg",
+      "expectedSha256": "373e9c9ae8317cba1e94451198be26ebb6d0b35496855de4a53ea1ccb902e93a",
+      "actualSha256": "373e9c9ae8317cba1e94451198be26ebb6d0b35496855de4a53ea1ccb902e93a",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/luban_workbench_bg.png",
+      "expectedSha256": "a9c1ffe7ecadb175f0b44f36970cca457725260e34c76aff7ce6c702b0dfd582",
+      "actualSha256": "a9c1ffe7ecadb175f0b44f36970cca457725260e34c76aff7ce6c702b0dfd582",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/luban_workbench_bg.svg",
+      "expectedSha256": "8f322270ded126ea9f05e58b391dcc369873221169ae33062a6e4b350f84bb36",
+      "actualSha256": "8f322270ded126ea9f05e58b391dcc369873221169ae33062a6e4b350f84bb36",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/assets/wood.png",
+      "expectedSha256": "e428634c5862c40493136bef66186c1d98ea0364364a2845183dc9d76ce10686",
+      "actualSha256": "e428634c5862c40493136bef66186c1d98ea0364364a2845183dc9d76ce10686",
+      "status": "MATCH"
+    },
+    {
+      "path": "luban/适配验证.json",
+      "expectedSha256": "cc49e171f32ab0a4406eb520affcc4160054f9ffe07a8e7160a16a7b94f4edb0",
+      "actualSha256": "cc49e171f32ab0a4406eb520affcc4160054f9ffe07a8e7160a16a7b94f4edb0",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/Main.qml",
+      "expectedSha256": "e1c32be3057699db02d889d7fcd57877caa53f3220bcb9c64655b4052af22e00",
+      "actualSha256": "e1c32be3057699db02d889d7fcd57877caa53f3220bcb9c64655b4052af22e00",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/README.md",
+      "expectedSha256": "12a8b75c1761eaf7b6d16ce21fdb52cda089ee01bbdfece9cda7e3099fb42574",
+      "actualSha256": "12a8b75c1761eaf7b6d16ce21fdb52cda089ee01bbdfece9cda7e3099fb42574",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/TaskDefinition.qml",
+      "expectedSha256": "8976c07cc5631e1ec11a8ad4c45928bf78fa1f97561d851d883c5f2c3a47de4a",
+      "actualSha256": "8976c07cc5631e1ec11a8ad4c45928bf78fa1f97561d851d883c5f2c3a47de4a",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/assets/icon.svg",
+      "expectedSha256": "f8f55144e45bd7b23fd7c2a426da6e75854f1617e5dbaf4287a26cad9de22799",
+      "actualSha256": "f8f55144e45bd7b23fd7c2a426da6e75854f1617e5dbaf4287a26cad9de22799",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/tasks/pursuit/Main.qml",
+      "expectedSha256": "c020872cf6250ef9a4f6e227c9c55d49c634a9f5dca31d44f96933d66146f477",
+      "actualSha256": "c020872cf6250ef9a4f6e227c9c55d49c634a9f5dca31d44f96933d66146f477",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/tasks/pursuit/README.md",
+      "expectedSha256": "dd47f8dd869e16b521e98a79af0b6524c690cd4cab143c3a775a58fab1ded4f2",
+      "actualSha256": "dd47f8dd869e16b521e98a79af0b6524c690cd4cab143c3a775a58fab1ded4f2",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/tasks/pursuit/RandomPath.js",
+      "expectedSha256": "d2be55e86d072a079dc1d91da0a033e6dc9505e65fbd3277aacbea442011b53a",
+      "actualSha256": "d2be55e86d072a079dc1d91da0a033e6dc9505e65fbd3277aacbea442011b53a",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/tasks/pursuit/assets/icon.png",
+      "expectedSha256": "5db6e07716278acfd8216540b634d877fcd020a89aece0d471b873333dabf6f8",
+      "actualSha256": "5db6e07716278acfd8216540b634d877fcd020a89aece0d471b873333dabf6f8",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/tasks/pursuit/assets/icon.svg",
+      "expectedSha256": "4e3ee0fc00a32486da18f42bce1359291dd52b3df9593edd645fcb02712ab044",
+      "actualSha256": "4e3ee0fc00a32486da18f42bce1359291dd52b3df9593edd645fcb02712ab044",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/tasks/target/Main.qml",
+      "expectedSha256": "901edf12e3bdb195eb27f4220f18edd812a01ac2e0e5f0249554dca92324de3b",
+      "actualSha256": "901edf12e3bdb195eb27f4220f18edd812a01ac2e0e5f0249554dca92324de3b",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/tasks/target/README.md",
+      "expectedSha256": "5c9d8ebf6a4cb5a0d34bf00085007479f7dc8dffd1d0458101433c3e8e09636c",
+      "actualSha256": "5c9d8ebf6a4cb5a0d34bf00085007479f7dc8dffd1d0458101433c3e8e09636c",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/tasks/target/assets/icon.png",
+      "expectedSha256": "75530a9d05ac076f1d700bd5582a9efa5b516b1146afcba560915c68fcd63898",
+      "actualSha256": "75530a9d05ac076f1d700bd5582a9efa5b516b1146afcba560915c68fcd63898",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer/tasks/target/assets/icon.svg",
+      "expectedSha256": "c3c2bbd582ba729e95d065c33d1984082d53268d3cf26d28de6f6728e3dc5a11",
+      "actualSha256": "c3c2bbd582ba729e95d065c33d1984082d53268d3cf26d28de6f6728e3dc5a11",
+      "status": "MATCH"
+    },
+    {
+      "path": "pointer-manifest.json",
+      "expectedSha256": "648e8e902497fe68c774cbaef79dfd292b67e8854397d2681c396f3de147fc69",
+      "actualSha256": "648e8e902497fe68c774cbaef79dfd292b67e8854397d2681c396f3de147fc69",
+      "status": "MATCH"
+    },
+    {
+      "path": "rhythm/LegacyWindowFill.qml",
+      "expectedSha256": "28b5006ea1569ba9d5f44b85c3f7b85d41f62c48b6031155d158f2a982d82252",
+      "actualSha256": "28b5006ea1569ba9d5f44b85c3f7b85d41f62c48b6031155d158f2a982d82252",
+      "status": "MATCH"
+    },
+    {
+      "path": "rhythm/Main.qml",
+      "expectedSha256": "9c6aa06520e65f6e72aaaf956ced4fa26ab22528769a66286f4874c6611c2dde",
+      "actualSha256": "9c6aa06520e65f6e72aaaf956ced4fa26ab22528769a66286f4874c6611c2dde",
+      "status": "MATCH"
+    },
+    {
+      "path": "rhythm/README.md",
+      "expectedSha256": "bb06b6a40ab7dc8476c9f6273684ac72f71390309f99036a45272c1e8e5e6a84",
+      "actualSha256": "bb06b6a40ab7dc8476c9f6273684ac72f71390309f99036a45272c1e8e5e6a84",
+      "status": "MATCH"
+    },
+    {
+      "path": "rhythm/RhythmEngine.js",
+      "expectedSha256": "cb9d7f49829866a13d705ab7f1b89023e003e6187fd6ebd9a956cb8be3d40b05",
+      "actualSha256": "cb9d7f49829866a13d705ab7f1b89023e003e6187fd6ebd9a956cb8be3d40b05",
+      "status": "MATCH"
+    },
+    {
+      "path": "rhythm/TaskDefinition.qml",
+      "expectedSha256": "42bacb14c90d155681fe0b735c6b9f99a84c1a4ca05c601fe8f396413e75d92e",
+      "actualSha256": "42bacb14c90d155681fe0b735c6b9f99a84c1a4ca05c601fe8f396413e75d92e",
+      "status": "MATCH"
+    },
+    {
+      "path": "rhythm/audio/background-90bpm.wav",
+      "expectedSha256": "66824c40e06a6b6211d50adba849d4995929a69e2a767cc6a38256f09c25ae27",
+      "actualSha256": "66824c40e06a6b6211d50adba849d4995929a69e2a767cc6a38256f09c25ae27",
+      "status": "MATCH"
+    },
+    {
+      "path": "rhythm/audio/chord-1.wav",
+      "expectedSha256": "de0882f9f5161de7a158e25b91f9c658b3f4366972df02f0041a90db6bdf4254",
+      "actualSha256": "de0882f9f5161de7a158e25b91f9c658b3f4366972df02f0041a90db6bdf4254",
+      "status": "MATCH"
+    },
+    {
+      "path": "rhythm/audio/chord-2.wav",
+      "expectedSha256": "425769d278d29cd8dac26c7de8ed438d41e0ed41ec0ea2adaf0cc98a3d9ea923",
+      "actualSha256": "425769d278d29cd8dac26c7de8ed438d41e0ed41ec0ea2adaf0cc98a3d9ea923",
+      "status": "MATCH"
+    },
+    {
+      "path": "rhythm/audio/chord-3.wav",
+      "expectedSha256": "3e36914bc9d4929c7ddd979c1baf6cb47bb247945dee0d0388eb1debe6129b22",
+      "actualSha256": "3e36914bc9d4929c7ddd979c1baf6cb47bb247945dee0d0388eb1debe6129b22",
+      "status": "MATCH"
+    },
+    {
+      "path": "rhythm/audio/chord-4.wav",
+      "expectedSha256": "45df607147b3e1cef6df44804b22f62b0a6361f79cc3571bceba4c3a2a846b26",
+      "actualSha256": "45df607147b3e1cef6df44804b22f62b0a6361f79cc3571bceba4c3a2a846b26",
+      "status": "MATCH"
+    },
+    {
+      "path": "rhythm/audio/pulse.wav",
+      "expectedSha256": "2207e1464d6f58a2a82a62072083e618d8df78c521c453036c82bac352b909a5",
+      "actualSha256": "2207e1464d6f58a2a82a62072083e618d8df78c521c453036c82bac352b909a5",
+      "status": "MATCH"
+    },
+    {
+      "path": "rhythm/audio/success.wav",
+      "expectedSha256": "c9dd5dd4aaac8c50b91754697de6b498f374f6dce0d167867e9448d3f38bc7c1",
+      "actualSha256": "c9dd5dd4aaac8c50b91754697de6b498f374f6dce0d167867e9448d3f38bc7c1",
+      "status": "MATCH"
+    },
+    {
+      "path": "shared-ui/FeedbackToast.qml",
+      "expectedSha256": "f07d2a19856cbe2ab69a353745a50f790a4361614cb8e4069f52aa9ac1315be2",
+      "actualSha256": "f07d2a19856cbe2ab69a353745a50f790a4361614cb8e4069f52aa9ac1315be2",
+      "status": "MATCH"
+    },
+    {
+      "path": "shared-ui/GameButton.qml",
+      "expectedSha256": "5b1ab28e393d66e48ed8d7221530d382f9cce79cd5ebb57167fb7dde59a500ae",
+      "actualSha256": "5b1ab28e393d66e48ed8d7221530d382f9cce79cd5ebb57167fb7dde59a500ae",
+      "status": "MATCH"
+    },
+    {
+      "path": "shared-ui/GameDialog.qml",
+      "expectedSha256": "87c76131549148f142a94df0ec5c0a4b14a783e16c7da7c29453dfbf8070aa05",
+      "actualSha256": "87c76131549148f142a94df0ec5c0a4b14a783e16c7da7c29453dfbf8070aa05",
+      "status": "MATCH"
+    },
+    {
+      "path": "shared-ui/GameFrame.qml",
+      "expectedSha256": "136aecdbea2bf6cd65bb08a6ffc8fa93a29dcbb7a06beee9874060ae3b856d69",
+      "actualSha256": "136aecdbea2bf6cd65bb08a6ffc8fa93a29dcbb7a06beee9874060ae3b856d69",
+      "status": "MATCH"
+    },
+    {
+      "path": "shared-ui/GameTheme.qml",
+      "expectedSha256": "428597471be81bb38b6184e62bfca5fdff45862f323dd1c9ba33ee4b648166ec",
+      "actualSha256": "428597471be81bb38b6184e62bfca5fdff45862f323dd1c9ba33ee4b648166ec",
+      "status": "MATCH"
+    },
+    {
+      "path": "shared-ui/InputHint.qml",
+      "expectedSha256": "2308259e0427f7e0d3d945014fcef8fbc5af460e7d3d55e02ef6d819fd54028d",
+      "actualSha256": "2308259e0427f7e0d3d945014fcef8fbc5af460e7d3d55e02ef6d819fd54028d",
+      "status": "MATCH"
+    },
+    {
+      "path": "shared-ui/LayoutProbe.qml",
+      "expectedSha256": "00cb4312cb56b8fc4b6bc04ec9c6922ce9b619c854bad88cea26dc84ef44300f",
+      "actualSha256": "00cb4312cb56b8fc4b6bc04ec9c6922ce9b619c854bad88cea26dc84ef44300f",
+      "status": "MATCH"
+    },
+    {
+      "path": "shared-ui/LegacyWindowFill.qml",
+      "expectedSha256": "28b5006ea1569ba9d5f44b85c3f7b85d41f62c48b6031155d158f2a982d82252",
+      "actualSha256": "28b5006ea1569ba9d5f44b85c3f7b85d41f62c48b6031155d158f2a982d82252",
+      "status": "MATCH"
+    },
+    {
+      "path": "shared-ui/LevelSelector.qml",
+      "expectedSha256": "5a7f73f8e5794a145930ea1a4c4d04c3ef4e1a9f9d2c3e08f9ad01eb8abb327f",
+      "actualSha256": "5a7f73f8e5794a145930ea1a4c4d04c3ef4e1a9f9d2c3e08f9ad01eb8abb327f",
+      "status": "MATCH"
+    },
+    {
+      "path": "shared-ui/MetricSummary.qml",
+      "expectedSha256": "7bf93bd8ffc230fb91d2aa185ead6f1db08e16d5a748b92838b52b264fa5bfce",
+      "actualSha256": "7bf93bd8ffc230fb91d2aa185ead6f1db08e16d5a748b92838b52b264fa5bfce",
+      "status": "MATCH"
+    },
+    {
+      "path": "shared-ui/SceneViewport.qml",
+      "expectedSha256": "500ed9646ac33b1030fb65bac3e6a835c67a6c31b0433341be754dd8bfe42559",
+      "actualSha256": "500ed9646ac33b1030fb65bac3e6a835c67a6c31b0433341be754dd8bfe42559",
+      "status": "MATCH"
+    },
+    {
+      "path": "shared-ui/qmldir",
+      "expectedSha256": "cd9e37275ef3d793e1c9479d6001e31097f33cbe1c0c9affcbbf49cefb1fd273",
+      "actualSha256": "cd9e37275ef3d793e1c9479d6001e31097f33cbe1c0c9affcbbf49cefb1fd273",
+      "status": "MATCH"
+    },
+    {
+      "path": "sokoban/LevelData.js",
+      "expectedSha256": "873f722cce73e32655cff0356f2aeeccb4a2f2cbd71da21b3f28c446b060c675",
+      "actualSha256": "873f722cce73e32655cff0356f2aeeccb4a2f2cbd71da21b3f28c446b060c675",
+      "status": "MATCH"
+    },
+    {
+      "path": "sokoban/Main.qml",
+      "expectedSha256": "152a13bc539daec466d5883ccc596d67a0d2df8a3f4c6eacd7d493a7e3b85222",
+      "actualSha256": "152a13bc539daec466d5883ccc596d67a0d2df8a3f4c6eacd7d493a7e3b85222",
+      "status": "MATCH"
+    },
+    {
+      "path": "sokoban/README.md",
+      "expectedSha256": "8bf9a71ec999e6b98e9ddfab014582bc6bff97d00e7f06d7bc795b8282a36683",
+      "actualSha256": "8bf9a71ec999e6b98e9ddfab014582bc6bff97d00e7f06d7bc795b8282a36683",
+      "status": "MATCH"
+    },
+    {
+      "path": "sokoban/TaskDefinition.qml",
+      "expectedSha256": "15223943d91632c172b562ca04a643d693640a01011bce5e8b9720148b607e33",
+      "actualSha256": "15223943d91632c172b562ca04a643d693640a01011bce5e8b9720148b607e33",
+      "status": "MATCH"
+    },
+    {
+      "path": "sokoban/assets/icon.png",
+      "expectedSha256": "e4740771e6cf19e0693fcfcc4e6571e4c1832501bbd68eab12080cce953802c1",
+      "actualSha256": "e4740771e6cf19e0693fcfcc4e6571e4c1832501bbd68eab12080cce953802c1",
+      "status": "MATCH"
+    },
+    {
+      "path": "sokoban/assets/icon.svg",
+      "expectedSha256": "2f7d93059e2812ccfc768897038a4bb028e83348f55d6fb0dd38c9039dd2b306",
+      "actualSha256": "2f7d93059e2812ccfc768897038a4bb028e83348f55d6fb0dd38c9039dd2b306",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/Main.qml",
+      "expectedSha256": "41a93a2829a2b3935b051d78f9b5a38ed5c446885f6c703ff94a46972cc1c433",
+      "actualSha256": "41a93a2829a2b3935b051d78f9b5a38ed5c446885f6c703ff94a46972cc1c433",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/README.md",
+      "expectedSha256": "408e693bcc3462d3ea852f83d45c9bedac6a5ddf7abab116affd3060f744220f",
+      "actualSha256": "408e693bcc3462d3ea852f83d45c9bedac6a5ddf7abab116affd3060f744220f",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/TaskDefinition.qml",
+      "expectedSha256": "dc8f60d1b4a2302ebb393493540eb5731b0d7fb86869bd2852b22e176124f48f",
+      "actualSha256": "dc8f60d1b4a2302ebb393493540eb5731b0d7fb86869bd2852b22e176124f48f",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/assets/icon.png",
+      "expectedSha256": "e169f7367ad82936c58ae20302f7d52434a789401933afeea9c4601e16349f33",
+      "actualSha256": "e169f7367ad82936c58ae20302f7d52434a789401933afeea9c4601e16349f33",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/assets/icon.svg",
+      "expectedSha256": "b8426534be707b0a75324013cebe3fa91367c7b00f6bd2173b2f8f1a2427bbf2",
+      "actualSha256": "b8426534be707b0a75324013cebe3fa91367c7b00f6bd2173b2f8f1a2427bbf2",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/assets/traffic_car_blue.png",
+      "expectedSha256": "988137e5006e24bd6a13bb656294bf6fbf20f220b978be61432797ae1034eaaf",
+      "actualSha256": "988137e5006e24bd6a13bb656294bf6fbf20f220b978be61432797ae1034eaaf",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/assets/traffic_car_blue.svg",
+      "expectedSha256": "7fb3ade5e6de316cd7254c6f66b3e11cec14b1cdfa72406c8f79da299dcea3f9",
+      "actualSha256": "7fb3ade5e6de316cd7254c6f66b3e11cec14b1cdfa72406c8f79da299dcea3f9",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/assets/traffic_car_coral.png",
+      "expectedSha256": "0940516bd7b73161b0dc9936dafbcb7354d91cc83a24b7745f10583c2b470085",
+      "actualSha256": "0940516bd7b73161b0dc9936dafbcb7354d91cc83a24b7745f10583c2b470085",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/assets/traffic_car_coral.svg",
+      "expectedSha256": "6fc718acd431c03424a18a85891c18130cfcf1f46ab3bf69f74080fc0448df36",
+      "actualSha256": "6fc718acd431c03424a18a85891c18130cfcf1f46ab3bf69f74080fc0448df36",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/assets/traffic_city_bg.png",
+      "expectedSha256": "c0c1560755b2e530e705c1281000fd643278385a7ae49f67978957c71c3743f0",
+      "actualSha256": "c0c1560755b2e530e705c1281000fd643278385a7ae49f67978957c71c3743f0",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/assets/traffic_city_bg.svg",
+      "expectedSha256": "da0bff7239227a8232d1f69ddb55769915b18a5f9a9ecb322001dd93cc3b4b33",
+      "actualSha256": "da0bff7239227a8232d1f69ddb55769915b18a5f9a9ecb322001dd93cc3b4b33",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/assets/traffic_pedestrian.png",
+      "expectedSha256": "7e63f3fcf5ebcaa803c4fba3f89c0bb16454498a8e4774c6010bd7539cb2e3bb",
+      "actualSha256": "7e63f3fcf5ebcaa803c4fba3f89c0bb16454498a8e4774c6010bd7539cb2e3bb",
+      "status": "MATCH"
+    },
+    {
+      "path": "traffic/assets/traffic_pedestrian.svg",
+      "expectedSha256": "645f3fdac6a064b0a5bdcbc40170f149d48cae28ba656571d10d230628465f34",
+      "actualSha256": "645f3fdac6a064b0a5bdcbc40170f149d48cae28ba656571d10d230628465f34",
+      "status": "MATCH"
+    }
+  ],
+  "legacyEntriesPresent": []
+}

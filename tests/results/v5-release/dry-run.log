@@ -1,5 +1,5 @@
-源运行包: /tmp/bci-v5-runtime-v3xjqh2g
-目标: /tmp/bci-v5-host-preview-vzzhctao/games
+源运行包: /tmp/bci-v5-runtime-fs1q_jm2
+目标: /tmp/bci-v5-host-preview-vvqmfujy/games
 活动入口: hanoi, sokoban, pointer, claw, traffic, luban, rhythm
 新增 hanoi/GoalPreview.qml sha256=4af12896122ab68b5d1418b0ecda6dc942363b7f3467c249ad005b7dbd384ced
 新增 hanoi/HanoiDisc.qml sha256=22e9c83ba24c72b33d51e363b2681c41f3c057f317d296be3872276e1f270331
@@ -15,11 +15,11 @@
 新增 sokoban/TaskDefinition.qml sha256=15223943d91632c172b562ca04a643d693640a01011bce5e8b9720148b607e33
 新增 sokoban/assets/icon.png sha256=e4740771e6cf19e0693fcfcc4e6571e4c1832501bbd68eab12080cce953802c1
 新增 sokoban/assets/icon.svg sha256=2f7d93059e2812ccfc768897038a4bb028e83348f55d6fb0dd38c9039dd2b306
-新增 pointer/Main.qml sha256=458ba9a0068af94949a2b3d7600cd9a04ffed7de392645c9b134967618a3a29c
-新增 pointer/README.md sha256=f5cdf55bf5ca9eedd563e25aa5c5eeedbd31b34a527a6c66022112d2dbadc808
+新增 pointer/Main.qml sha256=e1c32be3057699db02d889d7fcd57877caa53f3220bcb9c64655b4052af22e00
+新增 pointer/README.md sha256=12a8b75c1761eaf7b6d16ce21fdb52cda089ee01bbdfece9cda7e3099fb42574
 新增 pointer/TaskDefinition.qml sha256=8976c07cc5631e1ec11a8ad4c45928bf78fa1f97561d851d883c5f2c3a47de4a
 新增 pointer/assets/icon.svg sha256=f8f55144e45bd7b23fd7c2a426da6e75854f1617e5dbaf4287a26cad9de22799
-新增 pointer/tasks/pursuit/Main.qml sha256=0eff1a8c2f66fe64af6cc72734bc146d8bce3abeeb3a33fee8f7504d347cd7c5
+新增 pointer/tasks/pursuit/Main.qml sha256=c020872cf6250ef9a4f6e227c9c55d49c634a9f5dca31d44f96933d66146f477
 新增 pointer/tasks/pursuit/README.md sha256=dd47f8dd869e16b521e98a79af0b6524c690cd4cab143c3a775a58fab1ded4f2
 新增 pointer/tasks/pursuit/RandomPath.js sha256=d2be55e86d072a079dc1d91da0a033e6dc9505e65fbd3277aacbea442011b53a
 新增 pointer/tasks/pursuit/assets/icon.png sha256=5db6e07716278acfd8216540b634d877fcd020a89aece0d471b873333dabf6f8
@@ -93,7 +93,7 @@
 新增 shared-ui/MetricSummary.qml sha256=7bf93bd8ffc230fb91d2aa185ead6f1db08e16d5a748b92838b52b264fa5bfce
 新增 shared-ui/SceneViewport.qml sha256=500ed9646ac33b1030fb65bac3e6a835c67a6c31b0433341be754dd8bfe42559
 新增 shared-ui/qmldir sha256=cd9e37275ef3d793e1c9479d6001e31097f33cbe1c0c9affcbbf49cefb1fd273
-旧入口待退役: /tmp/bci-v5-host-preview-vzzhctao/games/pursuit sha256=387a793e137796c8158ca7678c8fd613ecd063b619ea1fd5dffafc6ac36f4592
-旧入口待退役: /tmp/bci-v5-host-preview-vzzhctao/games/target sha256=23446c9c375f248b29cee2a3e3ef5678bd099248435ff8aac71ec215d539e4ed
+旧入口待退役: /tmp/bci-v5-host-preview-vvqmfujy/games/pursuit sha256=387a793e137796c8158ca7678c8fd613ecd063b619ea1fd5dffafc6ac36f4592
+旧入口待退役: /tmp/bci-v5-host-preview-vvqmfujy/games/target sha256=23446c9c375f248b29cee2a3e3ef5678bd099248435ff8aac71ec215d539e4ed
 文件总数 92，需新增/替换 92；旧入口 2
 只读预览：未写入宿主；退役旧入口需要用户明确授权。

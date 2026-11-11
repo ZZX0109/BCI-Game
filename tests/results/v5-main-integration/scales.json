@@ -1,0 +1,26 @@
+{
+  "sourceHead": "620bdebecba68208378d60aef88d531bb57f186b",
+  "environment": "Linux Xorg actual Qt + OS cursor; Windows/macOS native DPI NOT_TESTED",
+  "checks": [
+    {
+      "script": "pointer/tests/verify_1106.py",
+      "scale": "1.25",
+      "passed": true
+    },
+    {
+      "script": "pointer/tests/verify_host_cursor.py",
+      "scale": "1.25",
+      "passed": true
+    },
+    {
+      "script": "pointer/tests/verify_1106.py",
+      "scale": "1.5",
+      "passed": true
+    },
+    {
+      "script": "pointer/tests/verify_host_cursor.py",
+      "scale": "1.5",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+Failed to create /home/agent/.cache/mesa_shader_cache for shader cache (Read-only file system)---disabling.
+Failed to create /home/agent/.cache/mesa_shader_cache_db for shader cache (Read-only file system)---disabling.
+Fontconfig error: No writable cache directories
+PASS local: actual ball vs OS cursor, overlay=False
+PASS local: actual ball vs OS cursor, overlay=True
+PASS local: gameplay visible
+PASS local: stationary cursor survives ancestor transform
+PASS local: stationary cursor survives window move
+PASS local: pause/resume maintains actual hotspot
+QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
+PASS local: mouse return unloads window observer
+PASS bci: actual ball vs OS cursor, overlay=False
+PASS bci: actual ball vs OS cursor, overlay=True
+PASS bci: gameplay visible
+PASS bci: stationary cursor survives ancestor transform
+PASS bci: stationary cursor survives window move
+PASS bci: pause/resume maintains actual hotspot
+QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
+PASS bci: mouse return unloads window observer
+14/14

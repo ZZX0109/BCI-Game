@@ -1,6 +1,6 @@
 {
-  "utc": "2026-11-10T09:01:49.972161+00:00",
-  "sourceHead": "1c67e91530dc607b54474d9f8d77eff336ad07ef",
+  "utc": "2026-11-11T01:33:29.913465+00:00",
+  "sourceHead": "620bdebecba68208378d60aef88d531bb57f186b",
   "activeGames": [
     "hanoi",
     "sokoban",
@@ -50,6 +50,16 @@
       "exitCode": 0,
       "passed": true,
       "log": "tests/results/v5-run-scenarios/pointer-1.log"
+    },
+    {
+      "game": "pointer",
+      "command": [
+        "/workspace/.venvs/bci-game/bin/python3",
+        "pointer/tests/verify_host_cursor.py"
+      ],
+      "exitCode": 0,
+      "passed": true,
+      "log": "tests/results/v5-run-scenarios/pointer-2.log"
     },
     {
       "game": "claw",
@@ -182,6 +192,6 @@
       "log": "tests/results/v5-run-scenarios/adaptive-viewports.log"
     }
   ],
-  "passed": 17,
-  "total": 17
+  "passed": 18,
+  "total": 18
 }

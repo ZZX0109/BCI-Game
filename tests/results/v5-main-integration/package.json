@@ -1,0 +1,16 @@
+{
+  "sourceCommit": "620bdebecba68208378d60aef88d531bb57f186b",
+  "fileName": "Neuralife-V5-main-20261111.zip",
+  "sha256": "8339655d32762e9eade5202a3d1246dcc9cbf3250c71860ec2edbfb9c4b76fc3",
+  "bytes": 1519661,
+  "modules": [
+    "claw",
+    "hanoi",
+    "luban",
+    "pointer",
+    "rhythm",
+    "sokoban",
+    "traffic"
+  ],
+  "runtimeFiles": 93
+}
