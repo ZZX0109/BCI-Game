@@ -6,7 +6,7 @@ FocusScope {
     required property var game
     required property var taskContext
     focus: true
-    SharedUI.LegacyWindowFill { id: suiteFill; gameRoot: root; autoFillEnabled: false }
+    SharedUI.LegacyWindowFill { id: suiteFill; gameRoot: root }
     readonly property bool brainInput: game && game.inputSource === "bci"
     property string phase: "menu" // menu -> running -> result -> menu -> finished
     property bool started: false
@@ -98,15 +98,19 @@ FocusScope {
         if (!started || stopped || finished || paused || !isFinite(x) || !isFinite(y)) return
         if (brainInput && (typeof game.width !== "number" || typeof game.height !== "number"
                 || !isFinite(game.width) || !isFinite(game.height) || game.width <= 0 || game.height <= 0)) return
-        // Host feeds coordinates in its current game viewport (hostW x hostH).
-        // Normalise to 0..1, then place onto root's LOCAL frame. When
-        // LegacyWindowFill has lifted the fixed 1000x700 canvas, root already
-        // covers the real window, so normalised mapping stays correct in both
-        // adapted and non-adated layouts.
+        // Host feeds onPointer(x,y) in the 1000x700 logical canvas it renders
+        // (letterboxed: scale = min(winW/1000, winH/700), centered). When
+        // LegacyWindowFill lifted that canvas, root spans the real window, so
+        // invert the host transform: screen = canvas*scale + offset.
         var hostW = game.width > 0 ? game.width : width
         var hostH = game.height > 0 ? game.height : height
-        var p = root.mapFromItem(null, 0, 0)  // anchor: forces scene graph sync
-        p = Qt.point(x / hostW * width, y / hostH * height)
+        var p
+        if (suiteFill.adapted) {
+            var sx = suiteFill.canvasScale, ox = suiteFill.canvasOffsetX, oy = suiteFill.canvasOffsetY
+            p = Qt.point(x * sx + ox, y * sy + oy)
+        } else {
+            p = Qt.point(x / hostW * width, y / hostH * height)
+        }
         if (phase === "running") {
             var q = childLoader.mapFromItem(root, p.x, p.y)
             if (q.x >= 0 && q.x <= childLoader.width && q.y >= 0 && q.y <= childLoader.height)

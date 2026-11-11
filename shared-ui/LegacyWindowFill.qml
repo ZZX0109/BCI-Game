@@ -14,6 +14,12 @@ Item {
     property int attempts: 0
     property bool verified: false
     readonly property bool adapted: adaptedTarget !== null && !failed && autoFillEnabled
+    // Host-side letterbox transform of the 1000x700 logical canvas, exposed so
+    // integrators can inverse-map onPointer(x,y) canvas coordinates back to the
+    // real window while the fill is active.
+    readonly property real canvasScale: adapted && actualWindow ? Math.min(actualWindow.width/1000, actualWindow.height/700) : 1
+    readonly property real canvasOffsetX: adapted && actualWindow ? (actualWindow.width - 1000*canvasScale)/2 : 0
+    readonly property real canvasOffsetY: adapted && actualWindow ? (actualWindow.height - 700*canvasScale)/2 : 0
     readonly property var actualWindow: Window.window
     property string statusText: "等待画布布局"
     function near(a,b,tolerance) { return typeof a === "number" && isFinite(a) && Math.abs(a-b)<=tolerance }
