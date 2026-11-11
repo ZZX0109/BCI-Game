@@ -89,7 +89,7 @@ Item {
         var p = pointerArea.mapToGlobal(x, y)
         // Resizing can replay an unchanged mouse screen point. It is geometry
         // synchronization, not an intentional switch away from the keyboard.
-        if (keyboardOwnsInput && mousePositionKnown
+        if ((keyboardOwnsInput || (brainInput && !mouseOwnsInput)) && mousePositionKnown
                 && Math.abs(p.x - mouseGlobalX) <= .5 && Math.abs(p.y - mouseGlobalY) <= .5) return false
         var content = root.Window.window ? root.Window.window.contentItem : root
         var local = pointerArea.mapToItem(content, x, y)
@@ -109,8 +109,26 @@ Item {
         lastMouseOriginX = origin.x; lastMouseOriginY = origin.y
         return true
     }
+    // Observe the window before any host MouseArea consumes the event. The
+    // handler's scenePosition is the window logical hotspot, not host canvas data.
+    HoverHandler {
+        id: nativeWindowPointer
+        objectName: "pursuitNativeMouseObserver"
+        parent: root.Window.window ? root.Window.window.contentItem : root
+        acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+        blocking: false
+        enabled: !root.isPaused && !root.sessionStopped && !root.sessionFinished
+        onPointChanged: updateHotspot()
+        onHoveredChanged: if (hovered) updateHotspot()
+        function updateHotspot() {
+            if (!hovered || !parent) return
+            var local = pointerArea.mapFromItem(null, point.scenePosition.x, point.scenePosition.y)
+            if (local.x < 0 || local.y < 0 || local.x > pointerArea.width || local.y > pointerArea.height) return
+            if (root.rememberMouse(local.x, local.y) && root.phase !== "idle") root.setPointerScene(local.x, local.y, "mouse")
+        }
+    }
     function syncLocalMouse() {
-        if ((brainInput && !mouseOwnsInput) || keyboardOwnsInput || !pointerArea.containsMouse || !mousePositionKnown) return
+        if ((brainInput && !mouseOwnsInput) || keyboardOwnsInput || !nativeWindowPointer.hovered || !mousePositionKnown) return
         var p = scene.mapFromGlobal(mouseGlobalX, mouseGlobalY)
         setPointerScene(p.x, p.y, "mouse")
     }
@@ -159,7 +177,13 @@ Item {
     // Owned timer is cancelled with this game; no queued callLater survives Loader unload.
     Timer { id: geometryTimer; interval: 1; repeat: false; onTriggered: root.resizeGeometry() }
     Component.onCompleted: geometryTimer.restart()
-    Component.onDestruction: { destroying = true; geometryTimer.stop() }
+    Component.onDestruction: {
+        destroying = true; geometryTimer.stop()
+        // Handler.parent also changes QObject ownership. Return it before the
+        // Loader destroys this game so no observer survives on the host window.
+        nativeWindowPointer.enabled = false
+        nativeWindowPointer.parent = root
+    }
 
     // ------------------------------------------------------------------
     // 三轮计划（固定，无选关）
@@ -532,6 +556,9 @@ Item {
     function advance(dt) {
         if (isPaused || sessionStopped || sessionFinished || !inputReady) return
         moveKeyboardCursor(dt)
+        // A host can transform an ancestor without resizing the game or moving
+        // the OS cursor. Reproject its last screen hotspot before each sample.
+        syncLocalMouse()
         localElapsed += dt
 
         if (phase === "countdown") {
@@ -681,11 +708,12 @@ Item {
                 }
             }
 
-            // 玩家球（青色）
+            // 玩家球（青色），以真实热点为中心，不使用左上角定位。
             Rectangle {
+                objectName: "pursuitPlayerBall"
                 visible: root.phase === "playing"
-                x: root.ballX * scene.width - 16
-                y: root.ballY * scene.height - 16
+                x: root.ballX * scene.width - width / 2
+                y: root.ballY * scene.height - height / 2
                 width: 32; height: 32; radius: 16
                 color: "#DDEBE5"
                 border.width: 2; border.color: root.inZone ? "#FFFFFF" : "#77968B"

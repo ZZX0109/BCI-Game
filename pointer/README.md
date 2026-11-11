@@ -29,27 +29,29 @@ python pointer/tools/package_suite.py /tmp/neuralife-cursor-games
 
 鼠标：点击卡片；追光球移动鼠标跟随；打靶移动准星并左键射击（Fitts 模式先点击蓝色起点）。完成后点击“返回任务选择”，最后点击“结束本次会话”。
 
-键盘：选择页方向键/WASD/Tab 切换、Enter 确认。子游戏方向键/WASD 移动虚拟光标，打靶 Enter 射击。原生键盘和宿主转发共用按住状态，双路不加倍；松键、暂停和失焦清空按住状态。Esc、右键、Space 继续由宿主保留。
+选择页：仅鼠标点击卡片；键盘和宿主方向／确认不会启动任务。
 
-BCI：宿主 `inputSource="bci"`；Cursor 指向卡片再确认，或方向切换再确认。追踪由二维指针控制，打靶由二维指针＋确认控制。BCI 会话忽略本地鼠标/键盘对任务光标的覆盖；二维输出需由宿主和设备确认。
+键盘：子游戏方向键/WASD 移动虚拟光标，打靶 Enter 射击。原生键盘和宿主转发共用按住状态，双路不加倍；松键、暂停和失焦清空按住状态。Esc、右键、Space 继续由宿主保留。
+
+BCI：宿主 `inputSource="bci"`；选择页同样由鼠标点击卡片。追踪接收二维指针，打靶接收二维指针＋确认。追光收到真实鼠标移动后会直接跟随实际热点，宿主转发坐标不会将其移开；输入源切换重置所有权。真实二维脑控输出仍需宿主与设备验证。
 
 ```python
 # 以下为模拟宿主信号，不是EEG采集或解码API。
 game.set_input_source("bci")
 game.started.emit()
-game.action.emit("confirm", True)  # 选追踪，等待Loader Ready与180ms防抖
+# 由鼠标点击追光卡片，等待 Loader Ready 与 180ms 防抖
 game.pointer.emit(500, 350)         # 完整画布逻辑像素
 game.step.emit(0.008)
 game.paused.emit()
 game.resumed.emit()
-# 子任务完成后confirm返回选择，选打靶；最后在选择页结束会话。
+# 子任务完成后可 confirm 返回选择；鼠标点击打靶卡片，最后鼠标结束会话。
 ```
 
 ## 验证
 
 ```bash
-QT_QPA_PLATFORM=offscreen /workspace/.venvs/bci-game/bin/python pointer/tests/verify_1106.py
-QT_QPA_PLATFORM=offscreen QT_SCALE_FACTOR=1.5 /workspace/.venvs/bci-game/bin/python pointer/tests/verify_1106.py
+DISPLAY=:88 QT_QPA_PLATFORM=xcb /workspace/.venvs/bci-game/bin/python pointer/tests/verify_1106.py
+DISPLAY=:88 QT_QPA_PLATFORM=xcb QT_SCALE_FACTOR=1.5 /workspace/.venvs/bci-game/bin/python pointer/tests/verify_1106.py
 ```
 
 真实QML加载、Qt鼠标/键盘与模拟宿主信号覆盖双子任务完整流程、一次最终finish、暂停、确认去重、独立结果、输入所有权、三种分辨率、高DPI、移动窗口及真实分发目录加载。结果、截图、`game.record` 样例在 `tests/evidence/`。通关来自游戏时钟和真实输入，不调用 `finishSession()` 伪造完成。

@@ -286,6 +286,7 @@ FocusScope {
         }
         SharedUI.GameButton {
             anchors { right: parent.right; rightMargin: 12; verticalCenter: parent.verticalCenter }
+            objectName: "cursorInterruptButton"
             height: 36; theme: uiTheme; text: qsTr("返回选择（中断本项）")
             enabled: !root.paused && !root.stopped
             onClicked: root.returnToMenu()

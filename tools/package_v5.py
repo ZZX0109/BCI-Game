@@ -1,6 +1,6 @@
 """Prepare a clean, reviewable runtime tree with one pointer menu entry.
 
-python tools/package_1106.py /tmp/neuralife-v5
+python tools/package_v5.py /tmp/neuralife-v5
 Sources and existing deployments are never overwritten. This is local packaging,
 not installation into a live host or a GitHub push.
 """

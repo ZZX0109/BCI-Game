@@ -12,7 +12,7 @@ PYTHON = sys.executable
 COMMANDS = {
     'hanoi': [[PYTHON, 'hanoi/tests/verify_1106.py']],
     'sokoban': [[PYTHON, 'tools/verify_sokoban_levels.py'], [PYTHON, 'sokoban/tests/verify_1106.py']],
-    'pointer': [[PYTHON, 'pointer/tests/verify_1106.py']],
+    'pointer': [[PYTHON, 'pointer/tests/verify_1106.py'], [PYTHON, 'pointer/tests/verify_host_cursor.py']],
     'claw': [[PYTHON, 'claw/tests/verify_1106.py'], [PYTHON, 'claw/tests/verify_v5_near_miss.py']],
     'traffic': [[PYTHON, 'traffic/tests/verify_v5.py']],
     'luban': [[PYTHON, 'luban/tools/luban_solver.py'], [PYTHON, 'luban/tests/verify_1106.py']],
