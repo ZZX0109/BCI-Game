@@ -122,15 +122,8 @@ FocusScope {
             // forwards via onPointer). Drive hover/selection from the canvas
             // point so the click-to-confirm flow works for mouse users too.
             diagX = p.x; diagY = p.y
-            var cardsRow = null
-            for (var i = 0; i < children.length && !cardsRow; i++) {
-                var c = children[i]
-                if (c.objectName === "menuCardsRow") cardsRow = c
-            }
-            if (cardsRow) {
-                var inRow = cardsRow.mapFromItem(root, p.x, p.y)
-                selection = inRow.x < cardsRow.width / 2 ? 0 : 1
-            }
+            // Cards row spans root width; the two cards split it with 16px gap.
+            selection = p.x < width / 2 ? 0 : 1
         }
     }
 
