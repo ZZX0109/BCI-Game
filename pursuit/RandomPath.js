@@ -20,8 +20,8 @@ function build(seed, round, duration) {
         if(previous)distance+=Math.hypot(p.x-previous.x,p.y-previous.y)
         arc.push({x:p.x,y:p.y,d:distance});previous=p
     }
-    var speeds=[],base=[.055,.075,.095][round]
-    for(var j=0;j<=Math.ceil(duration/4)+1;j++)speeds.push({time:j*4,speed:base*(round===0?1:.65+random()*.7)})
+    var speeds=[],base=[.05,.08,.12][round]
+    for(var j=0;j<=Math.ceil(duration/4)+1;j++)speeds.push({time:j*4,speed:base*(round===0?1:.85+random()*.3)})
     var frames=[],travel=0,idx=0,dt=.01
     for(var n=0;n<=Math.ceil(duration/dt);n++) {
         var t=n*dt,si=Math.min(speeds.length-2,Math.floor(t/4)),f=(t-speeds[si].time)/4

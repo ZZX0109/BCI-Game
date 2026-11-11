@@ -189,9 +189,9 @@ Item {
     // 三轮计划（固定，无选关）
     // ------------------------------------------------------------------
     readonly property var roundPlan: [
-        { key: "basic", name: qsTr("基础自由追踪"), tolerance: .12, occlusion: 0, speed: .055 },
-        { key: "variable", name: qsTr("变速自由追踪"), tolerance: .09, occlusion: 0, speed: .075 },
-        { key: "complex", name: qsTr("复杂自由追踪"), tolerance: .065, occlusion: 1.5, speed: .095 }
+        { key: "basic", name: qsTr("基础自由追踪"), tolerance: 2.2, occlusion: 0, speed: .055 },
+        { key: "variable", name: qsTr("变速自由追踪"), tolerance: 1.6, occlusion: 0, speed: .075 },
+        { key: "complex", name: qsTr("复杂自由追踪"), tolerance: 1.1, occlusion: 1.5, speed: .095 }
     ]
     property var randomPlan: ({})
     property int roundIndex: 0
@@ -251,7 +251,9 @@ Item {
     property var smoothAnchors: []
 
     readonly property real error: distanceError(ballX, ballY)
-    readonly property bool inZone: inputReady && targetVisible && error <= roundCfg.tolerance
+    readonly property real tolerancePx: roundCfg.tolerance * 22
+    readonly property real toleranceNorm: tolerancePx / Math.max(1, Math.min(scene.width, scene.height))
+    readonly property bool inZone: inputReady && targetVisible && error <= toleranceNorm
     readonly property real remaining: Math.max(0, roundDuration - roundElapsed)
 
     // ------------------------------------------------------------------
@@ -319,7 +321,7 @@ Item {
     function targetAt(t) {
         var p = pathAt(t)
         // Entire tolerance circle stays in the real scene, including R1's leftmost point.
-        var r = Math.max(22, roundCfg.tolerance * Math.min(scene.width, scene.height)) + 2
+        var r = tolerancePx + 2
         var mx = Math.min(0.49, r / Math.max(1, scene.width))
         var my = Math.min(0.49, r / Math.max(1, scene.height))
         return { x: Math.max(mx, Math.min(1 - mx, p.x)), y: Math.max(my, Math.min(1 - my, p.y)) }
