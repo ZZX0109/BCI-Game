@@ -100,19 +100,12 @@ FocusScope {
         if (!started || stopped || finished || paused || !isFinite(x) || !isFinite(y)) return
         if (brainInput && (typeof game.width !== "number" || typeof game.height !== "number"
                 || !isFinite(game.width) || !isFinite(game.height) || game.width <= 0 || game.height <= 0)) return
-        // Host feeds onPointer(x,y) in the 1000x700 logical canvas it renders
-        // (letterboxed: scale = min(winW/1000, winH/700), centered). When
-        // LegacyWindowFill lifted that canvas, root spans the real window, so
-        // invert the host transform: screen = canvas*scale + offset.
-        var hostW = game.width > 0 ? game.width : width
-        var hostH = game.height > 0 ? game.height : height
-        var p
-        if (suiteFill.adapted) {
-            var sx = suiteFill.canvasScale, ox = suiteFill.canvasOffsetX, oy = suiteFill.canvasOffsetY
-            p = Qt.point(x * sx + ox, y * oy)
-        } else {
-            p = Qt.point(x / hostW * width, y / hostH * height)
-        }
+        // The host feeds onPointer(x,y) in the 1000x700 logical canvas
+        // (api.md: "原点在画布左上，单位逻辑像素"). root is authored on the
+        // same logical canvas, so forward the point verbatim - the child game
+        // applies its own scene scaling from there. Any host letterbox
+        // transform is already resolved upstream by the host itself.
+        var p = Qt.point(x, y)
         if (phase === "running") {
             var q = childLoader.mapFromItem(root, p.x, p.y)
             if (q.x >= 0 && q.x <= childLoader.width && q.y >= 0 && q.y <= childLoader.height)
