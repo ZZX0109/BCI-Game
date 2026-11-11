@@ -97,6 +97,7 @@ FocusScope {
         game.finish(summary)
     }
     function forwardPointer(x, y) {
+        if (game && typeof game.record === "function") game.record("pointer.forward_called", {x: x, y: y, phase: phase})
         if (!started || stopped || finished || paused || !isFinite(x) || !isFinite(y)) return
         if (brainInput && (typeof game.width !== "number" || typeof game.height !== "number"
                 || !isFinite(game.width) || !isFinite(game.height) || game.width <= 0 || game.height <= 0)) return
@@ -109,7 +110,7 @@ FocusScope {
         var p
         if (suiteFill.adapted) {
             var sx = suiteFill.canvasScale, ox = suiteFill.canvasOffsetX, oy = suiteFill.canvasOffsetY
-            p = Qt.point(x * sx + ox, y * sy + oy)
+            p = Qt.point(x * sx + ox, y * oy)
         } else {
             p = Qt.point(x / hostW * width, y / hostH * height)
         }
