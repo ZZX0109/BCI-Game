@@ -33,9 +33,12 @@ def main():
     for game in games:
         for number, command in enumerate(COMMANDS[game], start=1):
             env = os.environ.copy()
-            if (game == 'luban' and command[-1].endswith('verify_1106.py')) or game == 'pointer' or command[-1].endswith('verify_input_feedback.py'):
-                env.pop('QT_QUICK_BACKEND', None)
-                env.update(DISPLAY=':88', QT_QPA_PLATFORM='xcb', QSG_RHI_BACKEND='opengl', LIBGL_ALWAYS_SOFTWARE='1')
+            if (game == 'luban' and command[-1].endswith('verify_1106.py')) or command[-1].endswith('verify_input_feedback.py'):
+                if sys.platform != 'win32':
+                    env.pop('QT_QUICK_BACKEND', None)
+                    env.update(DISPLAY=':88', QT_QPA_PLATFORM='xcb', QSG_RHI_BACKEND='opengl', LIBGL_ALWAYS_SOFTWARE='1')
+                else:
+                    env['QT_QPA_PLATFORM'] = 'offscreen'
             elif command[0] != 'node':
                 env['QT_QPA_PLATFORM'] = 'offscreen'
             proc = subprocess.run(command, cwd=ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)

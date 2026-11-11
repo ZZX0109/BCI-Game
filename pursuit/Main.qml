@@ -650,6 +650,7 @@ Item {
         inputSource: root.inputSource
 
         Rectangle {
+            objectName: "pursuitScene"
             id: scene
             parent: frame.contentItem
             x: root.sceneInset; y: root.sceneTop

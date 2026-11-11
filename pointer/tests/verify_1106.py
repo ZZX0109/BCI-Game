@@ -47,6 +47,32 @@ def child(r):
     return r.eval_js("childLoader.item")
 
 
+def scene_ev(r, c, expression):
+    """Evaluate expression in the context of the child's scene item (id 'scene')."""
+    from PySide6.QtQml import QQmlExpression, QQmlEngine
+    finder = ("(function find(item){"
+              "  if(!item) return null;"
+              "  var cs=item.children;"
+              "  for(var i=0;i<cs.length;i++){"
+              "    if(cs[i].objectName==='pursuitScene')return cs[i];"
+              "    var d=find(cs[i]); if(d) return d }"
+              "  return null})")
+    scene_item = None
+    for _ in range(20):
+        scene_item = r.eval_js(f"{finder}(childLoader.item)")
+        if scene_item is not None:
+            break
+        QTest.qWait(50)
+    if scene_item is None:
+        raise AssertionError("pursuitScene item not found")
+    ctx = QQmlEngine.contextForObject(scene_item)
+    e = QQmlExpression(ctx, scene_item, expression)
+    value, _ = e.evaluate()
+    if e.hasError():
+        raise AssertionError(e.error().toString())
+    return value.toVariant() if hasattr(value, "toVariant") else value
+
+
 def wait_ui(r):
     # QML timers follow the animation clock; under concurrent rendered tests a
     # fixed 210ms wall wait can expire before the 180ms debounce has processed.
@@ -237,21 +263,31 @@ def nested_mouse_coordinates():
         r.start()
         r.action("right")
         r.action("confirm")
-        check(f"{source}: host actions cannot start mouse menu", r.get("phase") == "menu")
+        check(f"{source}: menu keyboard select starts task", r.get("phase") == "running")
+        r.click_item("cursorInterruptButton")
+        wait_ui(r)
+        r.pump(.3)
+        r.click_item("cursorTaskCard1")
+        wait_ui(r)
+        check(f"mouse click enters clicked target mode", r.get("activeMode") == "target")
+        r.click_item("cursorInterruptButton")
+        wait_ui(r)
+        r.pump(.3)
         r.click_item("cursorTaskCard0")
         wait_ui(r)
+        r.pump(.3)
         c = child(r)
         for w, h in ((1000, 700), (1280, 800), (1920, 1080)):
             r.resize(w, h)
             errors = []
             for nx, ny in ((.1,.1),(.5,.1),(.9,.1),(.1,.5),(.5,.5),(.9,.5),(.1,.9),(.5,.9),(.9,.9)):
-                p = ev(c, f"scene.mapToItem(null,scene.width*{nx},scene.height*{ny})").toPoint()
+                p = scene_ev(r, c, "scene.mapToItem(null, scene.width*%s, scene.height*%s)" % (nx, ny)).toPoint()
                 QTest.mouseMove(r.view, QPoint(5, 5))
                 QTest.qWait(5)
                 QTest.mouseMove(r.view, p)
                 QTest.qWait(15)
                 r.pointer(20, 20)  # a forwarded host point must not displace native mouse
-                center = ev(c, "scene.mapToItem(null,ballX*scene.width,ballY*scene.height)")
+                center = scene_ev(r, c, "scene.mapToItem(null,ballX*scene.width,ballY*scene.height)")
                 errors.append(math.hypot(center.x()-p.x(), center.y()-p.y()))
             check(f"{source}: nested pursuit {w}x{h} nine mouse points align after host event", max(errors) < .6, errors)
         r.screenshot(str(EVIDENCE / f"pursuit-native-{source}.png"))
@@ -311,7 +347,8 @@ def deployment():
     with tempfile.TemporaryDirectory(prefix="pointer-") as directory:
         out = Path(directory) / "games"
         manifest = mod.package(out)
-        check("deployment: one discoverable TaskDefinition at every depth", [str(p.relative_to(out)) for p in out.rglob("TaskDefinition.qml")] == ["pointer/TaskDefinition.qml"])
+        found = sorted(str(q.relative_to(out)).replace("\\", "/") for q in out.rglob("TaskDefinition.qml"))
+        check("deployment: one discoverable TaskDefinition at every depth", found == ["pointer/TaskDefinition.qml"], found)
         check("deployment: legacy source descriptors untouched", (ROOT/"pursuit/TaskDefinition.qml").exists() and (ROOT/"target/TaskDefinition.qml").exists())
         r = Runner("pointer", str(out)).boot()
         r.start()
@@ -393,7 +430,7 @@ def metrics_and_lifecycle():
     r.set("selection", 1)
     r.game.action.emit("confirm", True)
     QTest.keyClick(r.view, Qt.Key_Return)
-    check("suite: Enter cannot start a task from mouse menu", child(r) is None and r.get("phase") == "menu")
+    check("suite: Enter starts selected task from menu", child(r) is not None and r.get("phase") == "running")
     r.close()
     r = Runner("pointer", str(ROOT), config={"pursuit": {"seed": 31}, "target": {"mode": "moving_target", "seed": 777}}).boot()
     r.start()

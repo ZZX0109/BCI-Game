@@ -1,7 +1,7 @@
 {
   "runtime": "PySide6 real Qt / simulated game API",
   "scaleFactor": "1",
-  "platform": "xcb",
+  "platform": "offscreen",
   "windowsHostTested": false,
   "brainHardwareTested": false,
   "checks": [
@@ -271,12 +271,12 @@
       "passed": true,
       "detail": {
         "actual": [
-          0.9663157894736842,
-          0.4625984251968504
+          0.968421052631579,
+          0.46653543307086615
         ],
         "expected": [
-          0.9663157894736842,
-          0.4625984251968504
+          0.968421052631579,
+          0.46653543307086615
         ]
       }
     },
@@ -307,12 +307,12 @@
       "passed": true,
       "detail": {
         "actual": [
-          0.9712171052631579,
-          0.46875
+          0.9728618421052632,
+          0.4720394736842105
         ],
         "expected": [
-          0.9712171052631579,
-          0.46875
+          0.9728618421052632,
+          0.4720394736842105
         ]
       }
     },
@@ -343,12 +343,12 @@
       "passed": true,
       "detail": {
         "actual": [
-          0.9777173913043479,
-          0.4786036036036036
+          0.9788043478260869,
+          0.48085585585585583
         ],
         "expected": [
-          0.9777173913043479,
-          0.4786036036036036
+          0.9788043478260869,
+          0.48085585585585583
         ]
       }
     },
@@ -375,12 +375,12 @@
       "passed": true,
       "detail": {
         "actual": [
-          872.8228346456693,
-          223.43503937007875
+          874.724409448819,
+          225.33661417322833
         ],
         "expected": [
-          872.8228346456693,
-          223.43503937007875
+          874.724409448819,
+          225.33661417322833
         ]
       }
     },
@@ -407,12 +407,12 @@
       "passed": true,
       "detail": {
         "actual": [
-          938.1957236842105,
-          226.40625000000003
+          939.7845394736843,
+          227.99506578947373
         ],
         "expected": [
-          938.1957236842105,
-          226.40625000000003
+          939.7845394736843,
+          227.99506578947373
         ]
       }
     },
@@ -439,17 +439,21 @@
       "passed": true,
       "detail": {
         "actual": [
-          978.5101351351352,
-          231.16554054054055
+          979.597972972973,
+          232.25337837837841
         ],
         "expected": [
-          978.5101351351352,
-          231.16554054054055
+          979.597972972973,
+          232.25337837837841
         ]
       }
     },
     {
-      "name": "local: host actions cannot start mouse menu",
+      "name": "local: menu keyboard select starts task",
+      "passed": true
+    },
+    {
+      "name": "mouse click enters clicked target mode",
       "passed": true
     },
     {
@@ -498,7 +502,11 @@
       ]
     },
     {
-      "name": "bci: host actions cannot start mouse menu",
+      "name": "bci: menu keyboard select starts task",
+      "passed": true
+    },
+    {
+      "name": "mouse click enters clicked target mode",
       "passed": true
     },
     {
@@ -643,7 +651,7 @@
       "passed": true
     },
     {
-      "name": "suite: Enter cannot start a task from mouse menu",
+      "name": "suite: Enter starts selected task from menu",
       "passed": true
     },
     {
@@ -680,7 +688,10 @@
     },
     {
       "name": "deployment: one discoverable TaskDefinition at every depth",
-      "passed": true
+      "passed": true,
+      "detail": [
+        "pointer/TaskDefinition.qml"
+      ]
     },
     {
       "name": "deployment: legacy source descriptors untouched",
@@ -695,6 +706,6 @@
       "passed": true
     }
   ],
-  "passed": 127,
-  "total": 127
+  "passed": 129,
+  "total": 129
 }
