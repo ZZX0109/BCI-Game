@@ -51,7 +51,7 @@ function emit(s,name,data){data=data||{};data.sessionTime=s.elapsed;data.round=s
 function create(v,source){
     var s={cfg:configure(v,source),source:source||"local",phase:"countdown",phaseT:0,round:-1,t:0,elapsed:0,
         notes:[],results:[],events:[],raw:[],outcomes:[],down:{},paused:false,stopped:false,finishSent:false,
-        feedback:"准备跟随节拍",feedbackKind:"neutral",feedbackDir:"",feedbackUntil:0,correctInputs:0,wrongInputs:0,strayInputs:0,ignoredInputs:0,holdContinuations:0,holdWrongInputs:0}
+        feedback:"准备跟随节拍",feedbackKind:"neutral",feedbackDir:"",feedbackSignal:"",feedbackUntil:0,correctInputs:0,wrongInputs:0,strayInputs:0,ignoredInputs:0,holdContinuations:0,holdWrongInputs:0}
     emit(s,"session_started",{version:"1.3.0",config:s.cfg,inputSource:s.source,measurement:"game_commands_only"})
     return s
 }
@@ -59,7 +59,7 @@ function beginRound(s,r){
     s.round=r;s.phase="playing";s.phaseT=0;s.t=0;s.down={};s.notes=chart(s.cfg,r)
     s.beats=beatPlan(s.notes,s.cfg.windowSeconds)
     s.roundBaseline={correct:s.correctInputs,wrong:s.wrongInputs,stray:s.strayInputs,continuations:s.holdContinuations,holdWrong:s.holdWrongInputs}
-    s.feedback=roundHelpFor(s,r);s.feedbackKind="neutral";s.feedbackDir="";s.feedbackUntil=3
+    s.feedback=roundHelpFor(s,r);s.feedbackKind="neutral";s.feedbackDir="";s.feedbackSignal="";s.feedbackUntil=3
     emit(s,"round_started",{name:roundNames[r],difficulty:s.cfg.difficulty,bpm:s.notes.length?s.notes[0].bpm:s.cfg.bpm,
         firstInterval:s.notes.length>1?s.notes[1].time-s.notes[0].time:null,
         chart:s.notes.map(function(n){return {id:n.id,dir:n.dir,time:n.time,duration:n.duration,bpm:n.bpm,sequence:n.sequence}})})
@@ -69,9 +69,9 @@ function outcome(s,n,status){
     if(n.duration>0)n.coverage=Math.min(1,n.covered/n.duration)
     var v={id:n.id,dir:n.dir,targetTime:n.time,duration:n.duration,outcome:status,delta:n.delta,coverage:n.coverage,round:s.round+1}
     s.outcomes.push(v);emit(s,"note_result",v)
-    if(status==="miss"){s.feedback="这次未完成 · 继续下一拍";s.feedbackKind="warning";s.feedbackDir="";s.feedbackUntil=s.t+1.1}
-    else if(status==="hold_complete"){s.feedback="长音完成 · 保持覆盖 "+Math.round(n.coverage*100)+"%";s.feedbackKind="success";s.feedbackDir=n.dir;s.feedbackUntil=s.t+1.1}
-    else if(status==="hold_incomplete"){s.feedback="保持有间断 · 继续练习";s.feedbackKind="warning";s.feedbackDir="";s.feedbackUntil=s.t+1.1}
+    if(status==="miss"){s.feedback="未收到指令 · 等箭头到线再输入";s.feedbackKind="warning";s.feedbackDir="";s.feedbackSignal="miss_none";s.feedbackUntil=s.t+1.1}
+    else if(status==="hold_complete"){s.feedback="长音完成 · 保持覆盖 "+Math.round(n.coverage*100)+"%";s.feedbackKind="success";s.feedbackDir=n.dir;s.feedbackSignal="hit";s.feedbackUntil=s.t+1.1}
+    else if(status==="hold_incomplete"){s.feedback="保持时机不对 · 中途断开了";s.feedbackKind="warning";s.feedbackDir=n.dir;s.feedbackSignal="mistiming";s.feedbackUntil=s.t+1.1}
 }
 function count(s,status){return s.outcomes.filter(function(n){return n.outcome===status}).length}
 function summary(s,notes){
@@ -134,7 +134,13 @@ function step(s,seconds){
 function input(s,name,pressed){
     var raw={name:name,pressed:pressed===true,sessionTime:s.elapsed,round:s.round+1,roundTime:s.t,classification:"ignored"}
     if(directions.indexOf(name)<0){raw.classification="other";s.raw.push(raw);emit(s,"input",raw);return}
-    if(!pressed){s.down[name]=false;raw.classification="release"}
+        if(!pressed){
+        s.down[name]=false;raw.classification="release"
+        var early=s.notes.filter(function(n){return n.status==="holding"&&n.dir===name&&s.cfg.inputMode==="held"&&s.t<n.time+n.duration-1e-8})[0]
+        if(early){raw.note=early.id;raw.classification="early_release"
+            s.feedbackKind="warning";s.feedbackDir=name;s.feedbackSignal="mistiming"
+            s.feedback="保持时机不对 · 提前松开了";s.feedbackUntil=s.t+1.3}
+    }
     else if(s.paused||s.stopped||s.phase!=="playing"){s.ignoredInputs++;raw.classification="inactive"}
     else if(s.cfg.inputMode==="held"&&s.down[name]){s.ignoredInputs++;raw.classification="repeat"}
     else{
@@ -144,18 +150,18 @@ function input(s,name,pressed){
         if(ongoing && ongoing.dir!==name){
             s.holdWrongInputs++;raw.classification="hold_wrong_direction";raw.expected=ongoing.dir;raw.note=ongoing.id
             ongoing.until=Math.min(ongoing.until,s.t)
-            s.feedbackKind="warning";s.feedbackDir="";s.feedback="保持方向发生切换 · 返回 "+glyph(ongoing.dir);s.feedbackUntil=s.t+1.3
+            s.feedbackKind="warning";s.feedbackDir=ongoing.dir;s.feedbackSignal="mistiming";s.feedback="保持被打断 · 回到 "+glyph(ongoing.dir);s.feedbackUntil=s.t+1.3
         }else if(holding){
             holding.until=s.t+s.cfg.pulseValidity;s.holdContinuations++;raw.classification="hold_continuation";raw.note=holding.id
         }else{
             var candidates=s.notes.filter(function(n){return n.status==="pending"&&Math.abs(s.t-n.time)<=s.cfg.windowSeconds+1e-8})
             candidates.sort(function(a,b){return Math.abs(s.t-a.time)-Math.abs(s.t-b.time)})
             var n=candidates[0]
-            if(!n){s.strayInputs++;raw.classification="outside_window";s.feedbackKind="warning";s.feedbackDir="";s.feedback="输入在判定区间外 · 跟随下一拍"}
-            else if(n.dir!==name){s.wrongInputs++;raw.classification="wrong_direction";raw.expected=n.dir;raw.note=n.id;s.feedbackKind="warning";s.feedbackDir="";s.feedback="方向不同 · 试着跟随 "+glyph(n.dir)}
+            if(!n){s.strayInputs++;raw.classification="outside_window";s.feedbackKind="warning";s.feedbackDir="";s.feedbackSignal="mistiming";s.feedback="时机不对 · 输入在判定区间外"}
+            else if(n.dir!==name){s.wrongInputs++;raw.classification="wrong_direction";raw.expected=n.dir;raw.note=n.id;s.feedbackKind="warning";s.feedbackDir=n.dir;s.feedbackSignal="mistiming";s.feedback="时机不对 · 方向不同，箭头到线时输入 "+glyph(n.dir)}
             else{
                 s.correctInputs++;n.delta=s.t-n.time;raw.classification="matched";raw.expected=n.dir;raw.note=n.id;raw.delta=n.delta
-                s.feedbackDir=name;s.feedbackKind="success"
+                s.feedbackDir=name;s.feedbackKind="success";s.feedbackSignal="hit"
                 if(n.duration>0){n.status="holding";n.until=s.t+s.cfg.pulseValidity;s.feedback=(s.cfg.inputMode==="held"?"保持方向，直到长尾结束":"继续发送同方向脉冲")+" · "+(n.delta<0?"提前 ":"延后 ")+Math.round(Math.abs(n.delta)*1000)+" ms"}
                 else{outcome(s,n,"hit");s.feedback="方向匹配 · "+(n.delta<-.05?"提前 ":n.delta>.05?"延后 ":"贴近节拍 ")+Math.round(Math.abs(n.delta)*1000)+" ms"}
             }

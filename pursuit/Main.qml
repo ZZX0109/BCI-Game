@@ -189,9 +189,9 @@ Item {
     // 三轮计划（固定，无选关）
     // ------------------------------------------------------------------
     readonly property var roundPlan: [
-        { key: "basic", name: qsTr("基础自由追踪"), tolerance: .16, occlusion: 0, speed: .055 },
-        { key: "variable", name: qsTr("变速自由追踪"), tolerance: .13, occlusion: 0, speed: .075 },
-        { key: "complex", name: qsTr("复杂自由追踪"), tolerance: .11, occlusion: 1.5, speed: .095 }
+        { key: "basic", name: qsTr("基础自由追踪"), tolerance: .12, occlusion: 0, speed: .055 },
+        { key: "variable", name: qsTr("变速自由追踪"), tolerance: .09, occlusion: 0, speed: .075 },
+        { key: "complex", name: qsTr("复杂自由追踪"), tolerance: .065, occlusion: 1.5, speed: .095 }
     ]
     property var randomPlan: ({})
     property int roundIndex: 0

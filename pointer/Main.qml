@@ -187,6 +187,12 @@ FocusScope {
         function onPointer(x, y) { root.forwardPointer(x, y) }
         function onAction(name, pressed) {
             if (root.paused || root.stopped || root.finished) return
+            if (root.phase === "menu") {
+                if (!pressed || debounce.running) return
+                if (name === "left" || name === "right") { root.selection = root.selection === 0 ? 1 : 0 }
+                else if (name === "confirm") root.selectTask(root.modes[root.selection])
+                return
+            }
             if (root.phase === "running") {
                 if (!pressed || !debounce.running) childGame.action(name, pressed)
             }
@@ -203,7 +209,20 @@ FocusScope {
     }
     Keys.onPressed: function(event) {
         event.accepted = false
-        if (phase === "menu") { event.accepted = true; return }
+        if (phase === "menu") {
+            if (event.isAutoRepeat) return
+            if (event.key === Qt.Key_Left || event.key === Qt.Key_Right) {
+                selection = selection === 0 ? 1 : 0
+                event.accepted = true
+            } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
+                selectTask(modes[selection])
+                event.accepted = true
+            } else if (event.key === Qt.Key_Up || event.key === Qt.Key_Down) {
+                selectTask(modes[selection])
+                event.accepted = true
+            }
+            return
+        }
         if (brainInput || phase === "running") return
         if (phase === "result" && (event.key === Qt.Key_Return || event.key === Qt.Key_Enter)) {
             if (!event.isAutoRepeat) returnToMenu()
@@ -251,7 +270,10 @@ FocusScope {
                     MouseArea {
                         anchors.fill: parent; hoverEnabled: true; enabled: !root.paused && !root.stopped
                         onEntered: root.selection = parent.index
-                        onClicked: root.selectTask(root.modes[parent.index])
+                        onClicked: {
+                            root.selection = parent.index
+                            root.selectTask(root.modes[parent.index])
+                        }
                     }
                 }
             }
@@ -259,7 +281,7 @@ FocusScope {
         Text {
             visible: root.phase === "menu"; width: parent.width; wrapMode: Text.Wrap
             color: uiTheme.secondaryText; font { family: uiTheme.fontFamily; pixelSize: uiTheme.captionPx }
-            text: qsTr("已完成 %1 次任务 · %2").arg(root.results.length).arg(qsTr("鼠标点击卡片选择任务"))
+            text: qsTr("已完成 %1 次任务 · %2").arg(root.results.length).arg(qsTr("←→ 选择 · Enter 确认 · 鼠标点击亦可"))
         }
         SharedUI.GameButton {
             id: finishButton; objectName: "cursorFinishButton"

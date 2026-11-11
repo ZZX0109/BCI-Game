@@ -23,6 +23,7 @@ Item {
     property string feedback: "准备开始"
     property string feedbackDir: ""
     property string feedbackKind: "neutral"
+    property string feedbackSignal: ""
     property real feedbackTime: -1
     property var active: null
     readonly property bool sustaining: revision>=0 && active && active.status==="holding"
@@ -103,7 +104,7 @@ Item {
         if(!state)return
         if(roundIndex!==state.round){roundIndex=state.round;notes=state.notes;beatIndex=0;clearInputFeedback()}
         clock=state.t;sessionClock=state.elapsed;phase=state.phase;paused=state.paused;phaseClock=state.phaseT;finishSent=state.finishSent
-        feedback=state.feedback;feedbackDir=state.feedbackDir;feedbackKind=state.feedbackKind;feedbackTime=state.feedbackUntil
+        feedback=state.feedback;feedbackDir=state.feedbackDir;feedbackKind=state.feedbackKind;feedbackSignal=state.feedbackSignal;feedbackTime=state.feedbackUntil
         active=Engine.activeNote(state);revision++
         if(phase==="results"){resultRows=state.results;stats=Engine.summary(state);stopAudio();backingTrack.stop()}
         flush()
@@ -249,12 +250,32 @@ Item {
                 Rectangle { x:parent.width-1;width:1;height:parent.height;color:uiTheme.panelBorder;opacity:.3;visible:index<3 }
                 Rectangle { anchors.fill:parent;color:root.laneColors[index];opacity:root.feedbackDir===modelData&&root.clock<root.feedbackTime?.045:0 }
                 Text { x:0;y:board.lineY-board.notePx/2-board.labelGap-implicitHeight;width:parent.width;horizontalAlignment:Text.AlignHCenter;text:["左","下","上","右"][index];color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx }
-                Rectangle { objectName:"rhythmReceptor_"+modelData;x:(parent.width-width)/2;y:board.lineY-height/2;width:board.notePx;height:board.notePx;radius:Math.round(width*.18);color:uiTheme.background;border.width:root.directionPressed(modelData)?4:2;border.color:root.laneColors[index];opacity:root.directionPressed(modelData)?1:.45
-                    Text { anchors.centerIn:parent;text:Engine.glyph(modelData);color:root.laneColors[index];font.pixelSize:Math.round(board.notePx*.64);font.family:uiTheme.fontFamily }
+                Rectangle { objectName:"rhythmReceptor_"+modelData;x:(parent.width-width)/2;y:board.lineY-height/2;width:board.notePx;height:board.notePx;radius:Math.round(width*.18);color:uiTheme.background;border.width:root.directionPressed(modelData)?4:(board.signalActive&&board.feedbackDir===modelData?4:2);border.color:board.signalActive&&board.feedbackSignal!=="hit"&&board.feedbackDir===modelData?board.signalColor:root.laneColors[index];opacity:root.directionPressed(modelData)?1:(board.signalActive&&board.feedbackDir===modelData&&board.feedbackSignal!=="hit"?.9:.45)
+                    scale:board.signalActive&&board.feedbackDir===modelData&&board.feedbackSignal==="hit"?1.25:1
+                    Behavior on scale { NumberAnimation { duration:120 } }
+                    Text { anchors.centerIn:parent;text:Engine.glyph(modelData);color:board.signalActive&&board.feedbackDir===modelData?board.signalColor:root.laneColors[index];font.pixelSize:Math.round(board.notePx*.64);font.family:uiTheme.fontFamily }
                 }
             }
         }
         Rectangle { y:board.lineY-1;width:parent.width;height:2;color:uiTheme.primary;opacity:.22 }
+        // 判定强视觉信号：命中亮绿放大 / 无指令灰暗 / 时机不对琥珀闪烁。
+        readonly property bool signalActive: clock < feedbackTime && feedbackSignal !== ""
+        readonly property string signalColor: !signalActive ? "transparent"
+            : feedbackSignal === "hit" ? "#80ff9b"
+            : feedbackSignal === "mistiming" ? uiTheme.warning
+            : uiTheme.secondaryText
+        Rectangle {
+            objectName: "rhythmSignalBanner"
+            visible: board.signalActive
+            x: parent.width/2-140; y: board.lineY-64; width: 280; height: 44; radius: 10
+            color: board.signalActive && board.feedbackSignal === "hit" ? "#1d3a26" : "#2a2a2a"
+            border.width: board.signalActive && board.feedbackSignal === "mistiming" && (board.clock*6%1<.5) ? 3 : 1
+            border.color: board.signalColor; opacity: .95
+            Text {
+                anchors.centerIn: parent; text: root.feedback
+                color: board.signalColor; font { family: uiTheme.fontFamily; pixelSize: 18; bold: true }
+            }
+        }
         Repeater {
             id: noteRepeater
             model:root.notes

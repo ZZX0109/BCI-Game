@@ -315,8 +315,8 @@ Item {
             root.game.record("claw.host_action", {name:name, pressed:pressed, inputSource:root.inputSource, focus:root.activeFocus, phase:root.phase})
             root.directionInput(name, pressed === true, !root.brainInput, root.brainInput ? "bci" : "host_local")
             // Opaque local confirm may originate from the host-reserved Space key.
-            // Only native Enter/mouse owns local grabbing; BCI confirm stays available.
-            if (name === "confirm" && pressed === true && root.brainInput) root.trigger("bci_confirm")
+            // Host confirm joins Enter/mouse as a local grab trigger; BCI confirm stays available.
+            if (name === "confirm" && pressed === true) root.trigger(root.brainInput ? "bci_confirm" : "host_confirm")
         }
         function onPointer(x, y) { }
         function onPaused() { root.clearHeld(); root.isPaused = true }
