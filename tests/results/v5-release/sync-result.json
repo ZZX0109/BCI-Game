@@ -1,0 +1,12 @@
+{
+  "checks": {
+    "dry_run_exits_zero": true,
+    "target_unchanged": true,
+    "both_legacy_entries_listed": true,
+    "sha256_in_plan": true,
+    "seven_active_ids": true,
+    "no_apply_reported": true
+  },
+  "passed": 6,
+  "total": 6
+}

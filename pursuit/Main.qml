@@ -1,14 +1,67 @@
+import "RandomPath.js" as RandomPath
 import QtQuick
 import QtQuick.Window
 import "../shared-ui" as SharedUI
 
-// 追光球 V4：固定五轮 R1–R5 二维自由追踪，onStep 自动推进
-// R1 直线宽转弯 / R2 椭圆 / R3 8字 / R4 种子化平滑自由轨迹 / R5 自由轨迹+遮挡
+// 三轮种子化随机平滑追踪，onStep 自动推进
+// R1 基础自由 / R2 连续变速 / R3 复杂自由与遮挡
 // 评分按整段可见轨迹（MAE/RMSE/区内占比/重捕获），不实时显示误差数值
 Item {
     id: root
+    readonly property string taskIdentity: "pursuit"
     required property var taskContext
     required property var game
+
+
+    // Local keyboard and forwarded host directions share held state, so a physical
+    // key delivered twice does not double movement. Pointer ownership changes only
+    // on intentional movement, never on a resize/resume synchronization event.
+    focus: true
+    property bool keyboardOwnsInput: false
+    property var keyboardDirections: ({ left: false, right: false, up: false, down: false })
+    function keyboardDirection(key) {
+        if (key === Qt.Key_Left || key === Qt.Key_A) return "left"
+        if (key === Qt.Key_Right || key === Qt.Key_D) return "right"
+        if (key === Qt.Key_Up || key === Qt.Key_W) return "up"
+        if (key === Qt.Key_Down || key === Qt.Key_S) return "down"
+        return ""
+    }
+    function clearKeyboard() {
+        keyboardDirections = ({ left: false, right: false, up: false, down: false })
+    }
+    function setKeyboardDirection(name, pressed) {
+        if (brainInput || isPaused || sessionStopped || sessionFinished || phase === "idle" || (game && game.inputBlocked === true)) return
+        if (["left", "right", "up", "down"].indexOf(name) < 0) return
+        var held = Object.assign({}, keyboardDirections)
+        held[name] = !!pressed
+        keyboardDirections = held
+        if (pressed) { keyboardOwnsInput = true; mouseOwnsInput = false; inputReady = true }
+    }
+    Keys.onPressed: function(event) {
+        event.accepted = false
+        if (brainInput || (game && game.inputBlocked === true)) return
+        var dir = keyboardDirection(event.key)
+        if (dir !== "") {
+            if (!event.isAutoRepeat) setKeyboardDirection(dir, true)
+            event.accepted = true
+        }
+    }
+    Keys.onReleased: function(event) {
+        var dir = keyboardDirection(event.key)
+        if (!brainInput && dir !== "") {
+            if (!event.isAutoRepeat) setKeyboardDirection(dir, false)
+            event.accepted = true
+        }
+    }
+    function moveKeyboardCursor(dt) {
+        if (!keyboardOwnsInput || brainInput) return
+        var dx = (keyboardDirections.right ? 1 : 0) - (keyboardDirections.left ? 1 : 0)
+        var dy = (keyboardDirections.down ? 1 : 0) - (keyboardDirections.up ? 1 : 0)
+        if (dx === 0 && dy === 0) return
+        var norm = Math.hypot(dx, dy)
+        setPointerScene(rawX * scene.width + dx / norm * 360 * dt,
+                        rawY * scene.height + dy / norm * 360 * dt, "keyboard")
+    }
 
     readonly property string inputSource: (game && game.inputSource) ? game.inputSource : "local"
     function hostElapsed() {
@@ -33,6 +86,11 @@ Item {
     property real lastMouseOriginX: 0
     property real lastMouseOriginY: 0
     function rememberMouse(x, y) {
+        var p = pointerArea.mapToGlobal(x, y)
+        // Resizing can replay an unchanged mouse screen point. It is geometry
+        // synchronization, not an intentional switch away from the keyboard.
+        if (keyboardOwnsInput && mousePositionKnown
+                && Math.abs(p.x - mouseGlobalX) <= .5 && Math.abs(p.y - mouseGlobalY) <= .5) return false
         var content = root.Window.window ? root.Window.window.contentItem : root
         var local = pointerArea.mapToItem(content, x, y)
         var origin = content.mapToGlobal(0, 0)
@@ -46,14 +104,13 @@ Item {
             syncLocalMouse()
             return false
         }
-        var p = pointerArea.mapToGlobal(x, y)
         mouseGlobalX = p.x; mouseGlobalY = p.y; mousePositionKnown = true
         lastMouseWindowX = local.x; lastMouseWindowY = local.y
         lastMouseOriginX = origin.x; lastMouseOriginY = origin.y
         return true
     }
     function syncLocalMouse() {
-        if (brainInput || !pointerArea.containsMouse || !mousePositionKnown) return
+        if ((brainInput && !mouseOwnsInput) || keyboardOwnsInput || !pointerArea.containsMouse || !mousePositionKnown) return
         var p = scene.mapFromGlobal(mouseGlobalX, mouseGlobalY)
         setPointerScene(p.x, p.y, "mouse")
     }
@@ -61,6 +118,7 @@ Item {
     function resetInputOwnership() {
         var nextBrain = /bci|brain/i.test(inputSource)
         mouseOwnsInput = false
+        keyboardOwnsInput = false; clearKeyboard()
         pointerKnown = false
         inputReady = !nextBrain
         pointerSource = "host_pointer"
@@ -70,6 +128,7 @@ Item {
     onBrainInputChanged: resetInputOwnership()
     Connections {
         target: root.Window.window
+        function onActiveChanged() { if (!root.Window.window.active) root.clearKeyboard() }
         function onXChanged() { root.syncLocalMouse() }
         function onYChanged() { root.syncLocalMouse() }
     }
@@ -103,15 +162,14 @@ Item {
     Component.onDestruction: { destroying = true; geometryTimer.stop() }
 
     // ------------------------------------------------------------------
-    // 五轮计划（固定，无选关）
+    // 三轮计划（固定，无选关）
     // ------------------------------------------------------------------
     readonly property var roundPlan: [
-        { key: "line",    name: qsTr("直线宽转弯"), tolerance: 0.16, occlusion: 0.0, speed: 0.22 },
-        { key: "ellipse", name: qsTr("椭圆"),       tolerance: 0.13, occlusion: 0.0, speed: 0.42 },
-        { key: "figure8", name: qsTr("8 字形"),     tolerance: 0.12, occlusion: 0.0, speed: 0.50 },
-        { key: "roam",    name: qsTr("自由轨迹"),   tolerance: 0.11, occlusion: 0.0, speed: 0.0 },
-        { key: "roamocc", name: qsTr("遮挡恢复"),   tolerance: 0.11, occlusion: 1.5, speed: 0.0 }
+        { key: "basic", name: qsTr("基础自由追踪"), tolerance: .16, occlusion: 0, speed: .055 },
+        { key: "variable", name: qsTr("变速自由追踪"), tolerance: .13, occlusion: 0, speed: .075 },
+        { key: "complex", name: qsTr("复杂自由追踪"), tolerance: .11, occlusion: 1.5, speed: .095 }
     ]
+    property var randomPlan: ({})
     property int roundIndex: 0
     readonly property var roundCfg: roundPlan[Math.min(roundIndex, roundPlan.length - 1)]
 
@@ -120,7 +178,7 @@ Item {
     readonly property real countdownSeconds: 3.0
     readonly property real ballLerp: 6.0
     readonly property real sampleInterval: 0.05
-    readonly property int pathSeed: 12017
+    property int pathSeed: 12017
 
     // ------------------------------------------------------------------
     // 运行状态
@@ -163,6 +221,7 @@ Item {
 
     property int sampleCount: 0
     property real sampleAccum: 0.0
+    property var lagSamples: []
     property var trail: []
     property var roundResults: []
     property var smoothAnchors: []
@@ -182,8 +241,9 @@ Item {
     }
     function setPointerScene(x, y, source) {
         if (isPaused || sessionStopped || sessionFinished || scene.width <= 0 || scene.height <= 0) return
-        if (source === "mouse") { if (brainInput) return; mouseOwnsInput = true }
-        else if (mouseOwnsInput) return
+        if (source === "mouse") { inputReady = true; mouseOwnsInput = true; keyboardOwnsInput = false; clearKeyboard() }
+        else if (source === "keyboard") { keyboardOwnsInput = true; mouseOwnsInput = false }
+        else if (mouseOwnsInput || keyboardOwnsInput) return
         var pointer = scene.mapToItem(root, x, y)
         pointerRootX = pointer.x; pointerRootY = pointer.y; pointerKnown = true
         pointerSource = source
@@ -226,39 +286,11 @@ Item {
     }
 
     function buildSmoothAnchors(seed, round) {
-        var s = (Math.abs(Math.floor(seed)) + 7919 * (round + 1)) % 2147483647
-        if (s < 1) s = 1
-        function rand01() {
-            s = (s * 48271) % 2147483647
-            return s / 2147483647
-        }
-        var corners = [
-            { x: 0.16, y: 0.16 }, { x: 0.81, y: 0.19 },
-            { x: 0.82, y: 0.81 }, { x: 0.17, y: 0.79 },
-            { x: 0.38, y: 0.28 }, { x: 0.69, y: 0.65 }
-        ]
-        var a = []
-        for (var i = 0; i < 14; ++i) {
-            var c = corners[i % corners.length]
-            a.push({
-                x: Math.max(0.10, Math.min(0.90, c.x + (rand01() - 0.5) * 0.12)),
-                y: Math.max(0.10, Math.min(0.90, c.y + (rand01() - 0.5) * 0.12))
-            })
-        }
-        smoothAnchors = a
+        randomPlan = RandomPath.build(seed, round, roundDuration)
+        smoothAnchors = randomPlan.waypoints
+        game.record("pursuit.path_plan", {round:round+1,pathSeed:seed,waypoints:randomPlan.waypoints,speedSchedule:randomPlan.speedSchedule,duration:roundDuration})
     }
-
-    function generatedSmoothPathAt(t, round) {
-        if (smoothAnchors.length < 2) return { x: 0.5, y: 0.5 }
-        var secondsPerSegment = round === 4 ? 2.7 : 3.2
-        var uGlobal = Math.max(0, t) / secondsPerSegment
-        var segment = Math.min(smoothAnchors.length - 2, Math.floor(uGlobal))
-        var u = Math.max(0, Math.min(1, uGlobal - segment))
-        var smooth = u * u * (3 - 2 * u)
-        var p = smoothAnchors[segment]
-        var q = smoothAnchors[segment + 1]
-        return { x: p.x + (q.x - p.x) * smooth, y: p.y + (q.y - p.y) * smooth }
-    }
+    function generatedSmoothPathAt(t, round) { return RandomPath.at(randomPlan,t) }
 
     function targetAt(t) {
         var p = pathAt(t)
@@ -268,24 +300,9 @@ Item {
         var my = Math.min(0.49, r / Math.max(1, scene.height))
         return { x: Math.max(mx, Math.min(1 - mx, p.x)), y: Math.max(my, Math.min(1 - my, p.y)) }
     }
-    function pathAt(t) {
-        var key = roundCfg.key
-        if (key === "line") {
-            return { x: 0.15 + 0.70 * triangle01(t * roundCfg.speed),
-                     y: 0.5 + 0.18 * Math.sin(t * 0.11) }
-        }
-        if (key === "ellipse") {
-            return { x: 0.5 + 0.34 * Math.cos(t * roundCfg.speed),
-                     y: 0.5 + 0.28 * Math.sin(t * roundCfg.speed) }
-        }
-        if (key === "figure8") {
-            return { x: 0.5 + 0.34 * Math.sin(t * roundCfg.speed),
-                     y: 0.5 + 0.26 * Math.sin(t * roundCfg.speed * 2.0) }
-        }
-        return generatedSmoothPathAt(t, roundIndex)
-    }
+    function pathAt(t) { return generatedSmoothPathAt(t, roundIndex) }
 
-    // 遮挡窗口（仅 R5）：每 8 秒遮挡 1.5 秒，位置仍在更新
+    // 遮挡窗口（仅 R3）：每 8 秒遮挡 1.5 秒，位置仍在更新
     function isVisibleNow() {
         if (roundCfg.occlusion <= 0) return true
         var cycle = roundElapsed % 8.0
@@ -296,11 +313,15 @@ Item {
     // 生命周期
     // ------------------------------------------------------------------
     function startSession() {
+        if (phase !== "idle" || sessionStopped || sessionFinished) return
+        forceActiveFocus()
+        clearKeyboard(); keyboardOwnsInput = false
         sessionStopped = false
         inputReady = !brainInput
         sessionFinished = false
         isPaused = false
         localElapsed = 0.0
+        try { var saved = taskContext.config.read({seed:12017}); if(saved && saved.values && isFinite(Number(saved.values.seed))) pathSeed = Number(saved.values.seed) } catch(e) {}
         roundIndex = 0
         roundResults = []
         mouseOwnsInput = false
@@ -309,7 +330,7 @@ Item {
         rawX = 0.5; rawY = 0.5; ballX = 0.5; ballY = 0.5
         phase = "idle"
         game.record("pursuit.attempt_started", {
-            gameVersion: "0.5.2",
+            gameVersion: "0.7.0",
             inputSource: inputSource,
             roundPlan: roundPlan.map(function (r) { return r.key; }),
             geometry: viewportGeometry(),
@@ -337,7 +358,7 @@ Item {
         occludedAbsDt = 0; occludedSqDt = 0; rawAbsDt = 0; rawOccludedAbsDt = 0
         sampleCount = 0
         sampleAccum = 0.0
-        trail = []
+        trail = []; lagSamples = []
         targetVisible = true
         var pos = targetAt(0)
         targetX = clamp01(pos.x); targetY = clamp01(pos.y)
@@ -353,6 +374,32 @@ Item {
             geometry: viewportGeometry(),
             roundDuration: roundDuration
         })
+    }
+
+    function estimateTrackingLag() {
+        // Exploratory software lag estimate, distinct from device/EEG latency.
+        // Match visible rendered/raw positions against earlier target samples.
+        function estimate(fieldX, fieldY) {
+            if (lagSamples.length < 30) return null
+            var best = Infinity, bestLag = null
+            for (var lag = 0; lag <= 40; lag++) {
+                var squared = 0, count = 0
+                for (var i = 40; i < lagSamples.length; i++) {
+                    var now = lagSamples[i], prior = lagSamples[i - lag]
+                    if (!now.visible || !prior.visible) continue
+                    var dx = (now[fieldX] - prior.tx) * scene.width
+                    var dy = (now[fieldY] - prior.ty) * scene.height
+                    squared += dx * dx + dy * dy; count++
+                }
+                if (count >= 20 && squared / count < best) {
+                    best = squared / count; bestLag = lag * sampleInterval
+                }
+            }
+            return bestLag
+        }
+        return { renderedSeconds: estimate("x", "y"), rawSeconds: estimate("rx", "ry"),
+            method: "minimum_visible_2d_mse_discrete_lags", stepSeconds: sampleInterval,
+            maxLagSeconds: 2, samples: lagSamples.length, includesSoftwareSmoothing: lagSamples.some(function(s) { return s.smoothed === true }) }
     }
 
     function roundMetrics() {
@@ -372,7 +419,8 @@ Item {
             occludedMae2d: occludedSeconds > 0 ? occludedAbsDt / occludedSeconds : null,
             occludedRmse2d: occludedSeconds > 0 ? Math.sqrt(occludedSqDt / occludedSeconds) : null,
             rawOccludedMae2d: occludedSeconds > 0 ? rawOccludedAbsDt / occludedSeconds : null,
-            samples: sampleCount
+            samples: sampleCount,
+            trackingLag: estimateTrackingLag()
         }
     }
 
@@ -393,6 +441,7 @@ Item {
             occludedSeconds: m.occludedSeconds,
             recaptureSeconds: m.recaptureSeconds,
             recaptureEvents: m.recaptureEvents,
+            trackingLag: m.trackingLag,
             errorUnit: m.errorUnit,
             rawMae2d: m.rawMae2d,
             occludedMae2d: m.occludedMae2d,
@@ -425,7 +474,7 @@ Item {
         }
 
         var result = {
-            gameVersion: "0.5.2",
+            gameVersion: "0.7.0",
             reason: reason,
             roundsTotal: roundPlan.length,
             roundsCompleted: roundResults.length,
@@ -444,6 +493,10 @@ Item {
 
     function logSample() {
         sampleCount++
+        var history = lagSamples.slice()
+        history.push({ t: roundElapsed, x: ballX, y: ballY, rx: rawX, ry: rawY,
+            tx: targetX, ty: targetY, visible: targetVisible, smoothed: brainInput && !mouseOwnsInput })
+        lagSamples = history
         game.record("pursuit.sample", {
             sampleIndex: sampleCount,
             round: roundIndex + 1,
@@ -478,6 +531,7 @@ Item {
     // ------------------------------------------------------------------
     function advance(dt) {
         if (isPaused || sessionStopped || sessionFinished || !inputReady) return
+        moveKeyboardCursor(dt)
         localElapsed += dt
 
         if (phase === "countdown") {
@@ -548,12 +602,12 @@ Item {
         function onStarted() { root.startSession() }
         function onStep(seconds) { root.advance(seconds) }
         function onPointer(x, y) { root.handlePointer(x, y) }
-        function onAction(name, pressed) { /* 本任务仅指针 */ }
-        function onPaused() { root.isPaused = true }
+        function onAction(name, pressed) { root.setKeyboardDirection(name, pressed) }
+        function onPaused() { root.clearKeyboard(); root.isPaused = true }
         function onResumed() {
             if (!root.sessionStopped) { root.isPaused = false; root.syncLocalMouse() }
         }
-        function onStopping() { root.sessionStopped = true; root.isPaused = true }
+        function onStopping() { root.clearKeyboard(); root.sessionStopped = true; root.isPaused = true }
     }
 
     // ------------------------------------------------------------------

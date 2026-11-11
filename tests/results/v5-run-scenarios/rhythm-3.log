@@ -1,0 +1,79 @@
+Failed to create /home/agent/.cache/mesa_shader_cache for shader cache (Read-only file system)---disabling.
+Failed to create /home/agent/.cache/mesa_shader_cache_db for shader cache (Read-only file system)---disabling.
+qt.multimedia.ffmpeg: Using Qt multimedia with FFmpeg version 7.1.2 LGPL version 2.1 or later
+[W][09:01:07.287994] pw.conf      | [          conf.c: 1182 try_load_conf()] can't load config client.conf: No such file or directory
+[E][09:01:07.288020] pw.conf      | [          conf.c: 1215 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+Failed to create secure directory (/home/agent/.config/pulse): Read-only file system
+PulseAudioService: pa_context_connect() failed
+No audio device detected
+No audio device detected
+No audio device detected
+No audio device detected
+No audio device detected
+No audio device detected
+Input #0, wav, from '/workspace/BCI-Game-V5/rhythm/audio/background-90bpm.wav':
+  Duration: 00:00:21.33, bitrate: 352 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, s16, 352 kb/s
+Fontconfig error: No writable cache directories
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+No audio device detected
+PASS local: no input produces no score
+PASS local: misses produce no success sound request
+PASS local: beat never lights input receptors
+PASS local: idle status explicitly says no input
+PASS local: native key lights only its receptor
+PASS local: key visible as received
+PASS local: timing feedback reports early input
+PASS local: native key generates matched event
+PASS local: duplicate host route cannot create stray input
+PASS local: release clears receptor
+PASS local: release visible in status
+PASS local: one hit requests one success sound
+PASS local: host-first duplicate native route cannot create stray input
+PASS local: window focus loss releases stale input
+PASS hold: early release cannot auto complete
+PASS hold: actual continuous press completes
+PASS local: pause clears input indication
+PASS local: resume does not invent held keys
+PASS local: small window keeps timing feedback visible
+No audio device detected
+No audio device detected
+No audio device detected
+No audio device detected
+No audio device detected
+No audio device detected
+Input #0, wav, from '/workspace/BCI-Game-V5/rhythm/audio/background-90bpm.wav':
+  Duration: 00:00:21.33, bitrate: 352 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, s16, 352 kb/s
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+No audio device detected
+PASS bci: no input produces no score
+PASS bci: misses produce no success sound request
+PASS bci: beat never lights input receptors
+PASS bci: idle status explicitly says no input
+PASS bci: native key lights only its receptor
+PASS bci: key visible as received
+PASS bci: timing feedback reports early input
+PASS bci: native key generates matched event
+PASS bci: duplicate host route cannot create stray input
+PASS bci: release clears receptor
+PASS bci: release visible in status
+PASS bci: one hit requests one success sound
+PASS bci: host-first duplicate native route cannot create stray input
+PASS bci: window focus loss releases stale input
+PASS pulse: received host pulse lights receptor
+PASS pulse: no release required to extinguish indicator
+PASS bci: pause clears input indication
+PASS bci: resume does not invent held keys
+PASS bci: small window keeps timing feedback visible
+38/38

@@ -8,18 +8,16 @@ Item {
     required property var game
     focus: true
     property string localInputMode: "mouse"
-    property string nativeKeyDown: ""
+    property var nativeHeld: ({})
+    property var lastNativeAction: ({})
+    property var hostHeld: ({})
     property var nativeSequences: ({})
     property var pendingHostActions: []
-    property string releasedAction: ""
-    property int releasedSequence: 0
-    Timer {
-        id: keyReleaseTimer; interval: 0; repeat: false
-        onTriggered: if (root.nativeKeyDown === root.releasedAction && (root.nativeSequences[root.releasedAction] || 0) === root.releasedSequence) root.nativeKeyDown = ""
-    }
     function clearHostActions() { hostActionTimer.stop(); pendingHostActions = [] }
+    function clearInput() { clearHostActions(); nativeHeld = ({}); hostHeld = ({}) }
     function dispatchHostAction(name, source) {
-        if (isPaused || sessionStopped || sessionFinished || pointerPressed || dragActive) return
+        if (!sessionStarted || isPaused || sessionStopped || sessionFinished || pointerPressed || dragActive) return
+        if (phase === "preview") { if (name === "confirm") confirmPreview(source); return }
         if (name === "left") moveFocus(-1, source)
         else if (name === "right") moveFocus(1, source)
         else if (name === "confirm") tryConfirm(source)
@@ -34,42 +32,44 @@ Item {
             root.pendingHostActions = []
             for (var i = 0; i < pending.length; ++i) {
                 var entry = pending[i]
-                if ((root.nativeSequences[entry.name] || 0) === entry.sequence)
+                if ((root.nativeSequences[entry.name] || 0) === entry.sequence &&
+                        !root.nativeHeld[entry.name] &&
+                        Date.now() - (root.lastNativeAction[entry.name] || 0) > 80)
                     root.dispatchHostAction(entry.name, entry.source)
             }
         }
     }
-    onInputSourceChanged: clearHostActions()
-    Component.onDestruction: { hostActionTimer.stop(); keyReleaseTimer.stop() }
+    onInputSourceChanged: clearInput()
+    onActiveFocusChanged: if (!activeFocus) {
+        clearInput()
+        if (dragActive || pointerPressed) cancelHeld("focus_lost")
+    }
+    Component.onDestruction: hostActionTimer.stop()
     function keyAction(key) {
         if (key === Qt.Key_Left) return "left"
         if (key === Qt.Key_Right) return "right"
         if (key === Qt.Key_Up) return "up"
         if (key === Qt.Key_Down) return "down"
+        if (key === Qt.Key_Return || key === Qt.Key_Enter) return "confirm"
         return ""
     }
     Keys.onPressed: function(event) {
         var action = keyAction(event.key)
         if (action === "") { event.accepted = false; return }
         event.accepted = true
-        nativeKeyDown = action
-        if (event.isAutoRepeat || isPaused || sessionStopped || sessionFinished || pointerPressed || dragActive) return
+        if (/bci|brain/i.test(inputSource)) return
+        if (event.isAutoRepeat || nativeHeld[action] || isPaused || sessionStopped || sessionFinished || pointerPressed || dragActive) return
+        nativeHeld[action] = true
+        lastNativeAction[action] = Date.now()
         nativeSequences[action] = (nativeSequences[action] || 0) + 1
         localInputMode = "keyboard"
-        if (action === "left") moveFocus(-1, "keyboard")
-        else if (action === "right") moveFocus(1, "keyboard")
-        else if (action === "up" && heldDisc < 0) tryConfirm("keyboard")
-        else if (action === "down" && heldDisc >= 0) tryConfirm("keyboard")
+        dispatchHostAction(action, "keyboard")
     }
     Keys.onReleased: function(event) {
         var action = keyAction(event.key)
         if (action === "") { event.accepted = false; return }
         event.accepted = true
-        if (!event.isAutoRepeat) {
-            releasedAction = action
-            releasedSequence = nativeSequences[action] || 0
-            keyReleaseTimer.start()
-        }
+        if (!event.isAutoRepeat) nativeHeld[action] = false
     }
 
     readonly property string inputSource: (game && game.inputSource) ? game.inputSource : "local"
@@ -105,15 +105,17 @@ Item {
     property int emptyPicks: 0
     property int cancelledPicks: 0
     property bool sessionFinished: false
+    property bool sessionStarted: false
     property bool sessionStopped: false
     property bool isPaused: false
     // select | place | round_feedback | complete
-    property string phase: "select"
+    property string phase: "preview"
     property real localElapsedSec: 0.0
     property real roundTime: 0.0
     property real feedbackRemaining: 0.0
     property var roundResults: []
     property real settleAnim: 0.0
+    property real settleRemaining: 0.0
     property bool dragActive: false
     property bool pointerPressed: false
     property real dragX: 0
@@ -173,7 +175,16 @@ Item {
     readonly property var pegLabels: ["A", "B", "C"]
     readonly property var pegCenterX: [stage.width / 6, stage.width / 2, stage.width * 5 / 6]
 
-    function discWidth(d) { return puzzleType === "london" ? 100 : 60 + d * 40 }
+    readonly property real piecePitch: puzzleType === "london" ? 60 : 36
+    readonly property real pieceHeight: puzzleType === "london" ? 54 : 34
+    readonly property var goalState: puzzleType === "london" && currentRound.target ? currentRound.target : [[], [], initialStack(discCount)]
+    function initialStack(count) {
+        var stack=[]
+        for(var d=count;d>=1;--d) stack.push(d)
+        return stack
+    }
+    function poleHeight(pole) { return puzzleType === "london" ? currentCapacities[pole] * piecePitch + 14 : 239 }
+    function discWidth(d) { return puzzleType === "london" ? 54 : 60 + d * 40 }
     function pieceTint(d) {
         if (puzzleType === "london") return d === 3 ? "#c86d67" : d === 2 ? "#75a987" : "#729fce"
         return discColors[(d - 1) % discColors.length]
@@ -185,7 +196,7 @@ Item {
         return labels.join(" ")
     }
     function goalDescription() {
-        if (puzzleType !== "london") return qsTr("目标：将全部盘移到 C 柱")
+        if (puzzleType !== "london" || !currentRound.target) return qsTr("目标：将全部盘移到 C 柱")
         return qsTr("目标（底→顶）：A [%1]　B [%2]　C [%3]　·　容量 3 / 2 / 1")
             .arg(formatBalls(currentRound.target[0]))
             .arg(formatBalls(currentRound.target[1]))
@@ -229,9 +240,11 @@ Item {
     // 生命周期：整个会话固定五局
     // ------------------------------------------------------------------
     function startSession() {
-        clearHostActions()
+        if (sessionStarted) return
+        sessionStarted = true
+        clearInput()
         sessionStopped = false
-        nativeKeyDown = ""
+        lastNativeAction = ({})
         localInputMode = "mouse"
         forceActiveFocus()
         sessionFinished = false
@@ -241,7 +254,7 @@ Item {
         roundResults = []
         settleAnim = 0.0
         game.record("hanoi.attempt_started", {
-            gameVersion: "1.0.0",
+            gameVersion: "1.1.0",
             roundPlan: roundPlan,
             inputSource: inputSource,
             elapsed: hostElapsed()
@@ -250,13 +263,14 @@ Item {
     }
 
     function startRound(index) {
+        clearInput()
         dragActive = false; pointerPressed = false; dropPole = -1
         roundIndex = index
         var plan=roundPlan[index]
         discCount = plan.discs
         var fresh = [[], [], []]
-        for (var d = discCount; d >= 1; --d) fresh[0].push(d)
-        poles = fresh
+        fresh[0] = initialStack(discCount)
+        for (var p = 0; p < 3; ++p) setPole(p, fresh[p])
         focusPole = 0
         heldDisc = -1
         selectedPole = -1
@@ -264,9 +278,12 @@ Item {
         roundTime = 0.0
         feedbackRemaining = 0.0
         settleAnim = 0.0
-        phase = "select"
-        if (plan.kind === "london")
-            toast.show(qsTr("规则变化：移动顶球，柱容量为 3 / 2 / 1"), "warning")
+        settleRemaining = 0.0
+        phase = "preview"
+        game.record("hanoi.goal_preview_shown", {round:index+1, puzzleType:plan.kind, targetState:goalState})
+        if (plan.kind === "london") {
+            if (index === 3) game.record("hanoi.rule_changed", {fromType:"hanoi", toType:"london", round:4, elapsed:hostElapsed()})
+        }
         game.record("hanoi.round_started", {
             round: index + 1,
             totalRounds: roundPlan.length,
@@ -277,6 +294,14 @@ Item {
             pieceLabels: plan.kind === "london" ? {"1":"B","2":"G","3":"R"} : null,
             optimalMoves: plan.kind === "london" ? londonOptimalDistance(plan.target) : Math.pow(2, discCount) - 1
         })
+    }
+
+    function confirmPreview(source) {
+        if (phase !== "preview" || isPaused || sessionStopped || sessionFinished) return
+        phase = "select"
+        roundTime = 0
+        game.record("hanoi.goal_preview_confirmed", {round:roundIndex+1, source:source, elapsed:hostElapsed()})
+        forceActiveFocus()
     }
 
     function completeRound() {
@@ -301,15 +326,15 @@ Item {
         game.record("hanoi.round_finished", result)
         phase = "round_feedback"
         feedbackRemaining = 1.5
-        settleAnimLoop.start()
+        settleRemaining = 0.3
     }
 
     function finishSession() {
-        if (sessionFinished) return
+        if (sessionFinished || sessionStopped || roundResults.length !== roundPlan.length) return
         sessionFinished = true
         phase = "complete"
         var result = {
-            gameVersion: "1.0.0",
+            gameVersion: "1.1.0",
             totalRounds: roundResults.length,
             rounds: roundResults,
             elapsed: localElapsedSec,
@@ -323,7 +348,7 @@ Item {
     // 统一交互入口：鼠标、键盘、脑控都调用这里
     // ------------------------------------------------------------------
     function selectPoleAndConfirm(pole, source) {
-        if (isPaused || sessionFinished) return
+        if (!sessionStarted || isPaused || sessionStopped || sessionFinished || pole < 0 || pole > 2) return
         if (phase !== "select" && phase !== "place") return
         var oldFocus = focusPole
         focusPole = pole
@@ -337,7 +362,7 @@ Item {
     }
 
     function moveFocus(delta, source) {
-        if (isPaused || sessionFinished) return
+        if (!sessionStarted || isPaused || sessionStopped || sessionFinished) return
         if (phase !== "select" && phase !== "place") return
         var from = focusPole
         focusPole = (focusPole + delta + 3) % 3
@@ -348,7 +373,7 @@ Item {
     }
 
     function tryConfirm(source) {
-        if (isPaused || sessionFinished) return
+        if (!sessionStarted || isPaused || sessionStopped || sessionFinished) return
         if (phase !== "select" && phase !== "place") return
 
         if (heldDisc < 0) {
@@ -410,12 +435,13 @@ Item {
         function onStarted() { root.startSession() }
         function onStep(seconds) { root.advance(seconds) }
         function onAction(name, pressed) {
-            if (pressed !== true) return
+            if (pressed !== true) { root.hostHeld[name] = false; return }
             if (root.isPaused || root.sessionFinished || root.pointerPressed || root.dragActive) return
             var brain = /bci|brain/i.test(root.inputSource)
-            if (!brain && root.nativeKeyDown === name) return
-            if (name === "confirm" && !brain) return
+            if (!brain && name !== "confirm" && root.hostHeld[name]) return
+            root.hostHeld[name] = true
             if (brain) { root.dispatchHostAction(name, root.hostActionSource); return }
+            if (root.nativeHeld[name] || Date.now() - (root.lastNativeAction[name] || 0) <= 80) return
             // Defer only local host delivery; a same-turn native key owns its matching action.
             var next = root.pendingHostActions.slice()
             next.push({name: name, source: root.hostActionSource, sequence: root.nativeSequences[name] || 0})
@@ -423,29 +449,25 @@ Item {
             hostActionTimer.start()
         }
         function onPointer(x, y) { /* GamepadLite 游戏不需要指针 */ }
-        function onPaused() { root.clearHostActions(); if (root.dragActive || root.pointerPressed) root.cancelHeld("paused"); root.isPaused = true }
+        function onPaused() { root.clearInput(); if (root.dragActive || root.pointerPressed) root.cancelHeld("paused"); root.isPaused = true }
         function onResumed() { if (!root.sessionStopped) { root.isPaused = false; root.forceActiveFocus() } }
-        function onStopping() { root.clearHostActions(); root.sessionStopped = true; if (root.dragActive || root.pointerPressed) root.cancelHeld("stopping"); root.isPaused = true }
+        function onStopping() { root.clearInput(); root.sessionStopped = true; if (root.dragActive || root.pointerPressed) root.cancelHeld("stopping"); root.isPaused = true }
     }
 
     // 统一逻辑时钟：暂停时冻结计时与自动推进
     function advance(seconds) {
-        if (isPaused || sessionFinished) return
+        if (!sessionStarted || isPaused || sessionStopped || sessionFinished || !isFinite(seconds) || seconds <= 0) return
         localElapsedSec += seconds
         if (phase === "select" || phase === "place") roundTime += seconds
         if (phase === "round_feedback") {
+            settleRemaining = Math.max(0, settleRemaining - seconds)
+            settleAnim = settleRemaining > 0 ? Math.sin((0.3 - settleRemaining) / 0.3 * Math.PI) * 6 : 0
             feedbackRemaining = Math.max(0, feedbackRemaining - seconds)
             if (feedbackRemaining === 0) {
                 if (roundIndex < roundPlan.length - 1) startRound(roundIndex + 1)
                 else finishSession()
             }
         }
-    }
-
-    SequentialAnimation {
-        id: settleAnimLoop
-        NumberAnimation { target: root; property: "settleAnim"; from: 0; to: 6; duration: 120; easing.type: Easing.OutQuad }
-        NumberAnimation { target: root; property: "settleAnim"; from: 6; to: 0; duration: 180; easing.type: Easing.OutBounce }
     }
 
     // ------------------------------------------------------------------
@@ -456,7 +478,7 @@ Item {
         anchors.fill: parent
         theme: uiTheme
         title: qsTr("汉诺塔与伦敦塔")
-        subtitle: root.puzzleType === "london" ? qsTr("伦敦塔规则：只移动顶球，目标柱受容量限制；不使用大小盘规则") : qsTr("汉诺塔规则：只移动顶盘，大盘不能压小盘")
+        subtitle: root.puzzleType === "london" ? qsTr("规则已改变：只移动顶球，柱容量3/2/1；不使用大小规则") : qsTr("汉诺塔规则：只移动顶盘，大盘不能压小盘")
         mode: qsTr("第 %1/5 局 · %2").arg(root.roundIndex + 1).arg(root.currentRound.name)
         inputSource: root.inputSource
 
@@ -476,14 +498,23 @@ Item {
                 height: Math.max(1, parent.height - frame.sceneTop - frame.sceneBottom)
                 // Space expands independently of object size: ultrawide screens spread the
                 // three towers, without turning their bases into a full-width backdrop.
-                readonly property real unit: Math.max(0.25, Math.min(width / 900, height / 410, 1.65))
-                readonly property real baseY: (height + 190 * unit) / 2
+                readonly property real unit: Math.max(0.25, Math.min(width / 900, (height - 130) / 350, 1.65))
+                readonly property real baseY: height - 90 * unit
                 Text {
                     anchors.horizontalCenter:parent.horizontalCenter
-                    y:8;width:parent.width-24
+                    y:108;width:parent.width-24
                     horizontalAlignment:Text.AlignHCenter
                     text:root.goalDescription()
                     color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:14
+                }
+                GoalPreview {
+                    objectName: "hanoiGoalPreview"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: Math.min(320, parent.width - 16); height: 100
+                    stacks: root.goalState
+                    capacities: root.currentCapacities
+                    london: root.puzzleType === "london"
+                    theme: uiTheme
                 }
                 onWidthChanged: if (root.dragActive || root.pointerPressed) root.cancelHeld("resized")
                 onHeightChanged: if (root.dragActive || root.pointerPressed) root.cancelHeld("resized")
@@ -498,9 +529,6 @@ Item {
                     readonly property bool isLegalTarget: root.canDrop(index)
                     readonly property color accent: root.heldDisc >= 0
                         ? (isLegalTarget ? "#8ac69a" : uiTheme.danger) : "#d7bd87"
-                    // London Tower: rod height mirrors the peg capacity (36 per ball + tip clearance).
-                    readonly property real rodHeight: root.puzzleType === "london"
-                        ? root.currentCapacities[index] * 36 + 24 : 239
                     x: root.pegCenterX[index] - 130 * stage.unit; y: stage.baseY - 278 * stage.unit
                     scale: stage.unit; transformOrigin: Item.TopLeft
                     width: 260; height: 335
@@ -520,7 +548,8 @@ Item {
                         color: "#363a35"; border.width: 1; border.color: "#55584f"
                     }
                     Rectangle {
-                        x: 124; y: 279 - pegItem.rodHeight; width: 12; height: pegItem.rodHeight; radius: 6
+                        x: 124; y: 278 - root.poleHeight(pegItem.index)
+                        width: 12; height: root.poleHeight(pegItem.index); radius: 6
                         gradient: Gradient {
                             orientation: Gradient.Horizontal
                             GradientStop { position: 0; color: "#363a35" }
@@ -538,7 +567,7 @@ Item {
                     }
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        y: 316; text: root.pegLabels[pegItem.index]
+                        y: 316; text: root.pegLabels[pegItem.index] + (root.puzzleType === "london" ? qsTr(" · 容量 %1").arg(root.currentCapacities[pegItem.index]) : "")
                         color: pegItem.isFocused ? "#e2d4b5" : "#737b73"
                         font.pixelSize: 17; font.letterSpacing: 2
                         font.family: uiTheme.fontFamily
@@ -569,10 +598,11 @@ Item {
                             width: root.discWidth(discSize)
                             x: root.pegCenterX[outerIndex] - width * stage.unit / 2
                             scale: stage.unit; transformOrigin: Item.TopLeft
-                            y: stage.baseY - (index + 1) * 36 * stage.unit + root.settleAnim
+                            y: stage.baseY - (index + 1) * root.piecePitch * stage.unit + root.settleAnim
                             number: discSize
                             tint: root.pieceTint(discSize)
                             label: root.pieceLabel(discSize)
+                            ball: root.puzzleType === "london"
                         }
                     }
                 }
@@ -583,9 +613,9 @@ Item {
                 objectName: "focusedTopDisc"
                 visible: root.heldDisc < 0 && !root.dragActive && root.phase === "select"
                 x: root.pegCenterX[root.focusPole] - width / 2
-                y: stage.baseY - Math.max(1, root.poles[root.focusPole].length) * 36 * stage.unit - 4
+                y: stage.baseY - Math.max(1, root.poles[root.focusPole].length) * root.piecePitch * stage.unit - 4
                 width: (root.topOf(root.focusPole) > 0 ? root.discWidth(root.topOf(root.focusPole)) : 100) * stage.unit + 8
-                height: 34 * stage.unit + 8
+                height: root.pieceHeight * stage.unit + 8
                 radius: 8
                 color: "transparent"
                 border.color: uiTheme.warning
@@ -599,11 +629,12 @@ Item {
                 width: root.discWidth(Math.max(1, root.heldDisc))
                 x: (root.dragActive ? root.dragX : root.pegCenterX[root.focusPole]) - width * stage.unit / 2
                 scale: stage.unit; transformOrigin: Item.TopLeft
-                y: root.dragActive ? root.dragY : stage.baseY - 290 * stage.unit
+                y: root.dragActive ? root.dragY : Math.max(138, stage.baseY - (root.poleHeight(root.focusPole) + 70) * stage.unit)
                 z: 5
                 tint: root.pieceTint(Math.max(1, root.heldDisc))
                 number: root.heldDisc
                 label: root.pieceLabel(Math.max(1, root.heldDisc))
+                ball: root.puzzleType === "london"
                 lifted: true
             }
 
@@ -616,7 +647,7 @@ Item {
                 hoverEnabled: true
                 acceptedButtons: Qt.LeftButton
                 preventStealing: true
-                enabled: !root.isPaused && !root.sessionFinished && (root.phase === "select" || root.phase === "place")
+                enabled: root.sessionStarted && !root.sessionStopped && !root.isPaused && !root.sessionFinished && (root.phase === "select" || root.phase === "place")
                 cursorShape: root.dragActive ? Qt.ClosedHandCursor : Qt.OpenHandCursor
                 property real startX: 0
                 property real startY: 0
@@ -632,12 +663,12 @@ Item {
                     pressedPole = root.poleAt(mouse.x, mouse.y)
                     canStartDrag = false
                     if (pressedPole >= 0 && root.heldDisc < 0 && root.poles[pressedPole].length > 0) {
-                        var topY = stage.baseY - root.poles[pressedPole].length * 36 * stage.unit
+                        var topY = stage.baseY - root.poles[pressedPole].length * root.piecePitch * stage.unit
                         var half = Math.max(22, root.discWidth(root.topOf(pressedPole)) * stage.unit / 2)
-                        var hitHeight = Math.max(44, 34 * stage.unit)
-                        var topMargin = (hitHeight - 34 * stage.unit) / 2
+                        var hitHeight = Math.max(44, root.pieceHeight * stage.unit)
+                        var topMargin = (hitHeight - root.pieceHeight * stage.unit) / 2
                         canStartDrag = Math.abs(mouse.x - root.pegCenterX[pressedPole]) <= half
-                                       && mouse.y >= topY - topMargin && mouse.y <= topY + 34 * stage.unit + topMargin
+                                       && mouse.y >= topY - topMargin && mouse.y <= topY + root.pieceHeight * stage.unit + topMargin
                         grabDX = mouse.x - root.pegCenterX[pressedPole]
                         grabDY = mouse.y - topY
                     }
@@ -659,7 +690,10 @@ Item {
                     root.pointerPressed = false
                     root.lastMouseRelease = Date.now()
                     if (root.dragActive) root.releaseDrag(root.poleAt(mouse.x, mouse.y))
-                    // A click without an actual drag never picks or places a disc.
+                    else if (root.heldDisc >= 0 && root.poleAt(mouse.x, mouse.y) >= 0)
+                        root.selectPoleAndConfirm(root.poleAt(mouse.x, mouse.y), "mouse")
+                    else if (canStartDrag || (pressedPole >= 0 && root.poles[pressedPole].length === 0))
+                        root.selectPoleAndConfirm(pressedPole, "mouse")
                     canStartDrag = false
                 }
                 onCanceled: {
@@ -685,11 +719,34 @@ Item {
                 }
             }
 
+            Rectangle {
+                z: 30
+                anchors.fill: parent
+                visible: root.phase === "preview"
+                color: "#ed050505"
+                MouseArea { anchors.fill: parent }
+                Column {
+                    id: previewContent
+                    objectName: "hanoiPreviewContent"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y: Math.max(0, (parent.height - implicitHeight) / 2)
+                    width: Math.min(650, parent.width - 36)
+                    spacing: 12
+                    Text { anchors.horizontalCenter: parent.horizontalCenter; text: root.currentRound.name + qsTr(" · 目标预览"); color: uiTheme.primaryText; font.family: uiTheme.fontFamily; font.pixelSize: 26; font.bold: true }
+                    Text { text: qsTr("起始状态"); color: uiTheme.secondaryText; font.family: uiTheme.fontFamily; font.pixelSize: 17 }
+                    GoalPreview { width: parent.width; height: Math.max(82, Math.min(150, (stage.height - 244) / 2)); expanded: stage.height >= 500; stacks: [root.initialStack(root.discCount),[],[]]; capacities: root.currentCapacities; london: root.puzzleType === "london"; theme: uiTheme }
+                    Text { text: qsTr("目标状态"); color: uiTheme.secondaryText; font.family: uiTheme.fontFamily; font.pixelSize: 17 }
+                    GoalPreview { width: parent.width; height: Math.max(82, Math.min(150, (stage.height - 244) / 2)); expanded: stage.height >= 500; stacks: root.goalState; capacities: root.currentCapacities; london: root.puzzleType === "london"; theme: uiTheme }
+                    Text { width: parent.width; wrapMode: Text.WordWrap; text: root.puzzleType === "london" ? qsTr("每次只移动顶球；A/B/C 杆容量为 3/2/1，彩球可任意叠放。") : qsTr("每次只移动顶盘；大盘不能压在小盘上。目标是将所有盘移到 C 杆。"); color: uiTheme.secondaryText; font.family: uiTheme.fontFamily; font.pixelSize: 16 }
+                    SharedUI.GameButton { objectName: "hanoiStartRoundButton"; anchors.horizontalCenter: parent.horizontalCenter; theme: uiTheme; text: qsTr("开始本关"); width: 220; height: 50; highlighted: true; onClicked: root.confirmPreview("mouse") }
+                }
+            }
+
             // 局间结算（自动推进，不需任何输入）
             Rectangle {
                 visible: root.phase === "round_feedback"
                 anchors.centerIn: parent
-                width: 380; height: 150
+                width: Math.min(420, parent.width - 24); height: 170
                 radius: 14
                 color: "#ed050505"
                 border.width: 0
@@ -708,11 +765,36 @@ Item {
                     }
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("本轮用时 %1 秒").arg(root.roundTime.toFixed(1))
+                        color: uiTheme.secondaryText; font.pixelSize: 15; font.family: uiTheme.fontFamily
+                    }
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
                         text: root.roundIndex < root.roundPlan.length - 1
                               ? qsTr("即将进入第 %1 局…").arg(root.roundIndex + 2)
                               : qsTr("五局完成…")
                         color: uiTheme.success; font.pixelSize: 14; font.family: uiTheme.fontFamily
                     }
+                }
+            }
+            Rectangle {
+                visible: root.phase === "complete"
+                anchors.centerIn: parent
+                width: Math.min(500, parent.width - 24); height: 290
+                radius: uiTheme.dialogRadius; color: uiTheme.panel
+                border.color: uiTheme.panelBorder
+                Column {
+                    anchors.fill: parent; anchors.margins: 24; spacing: 14
+                    Text { text: qsTr("五局解谜完成"); color: uiTheme.primaryText; font.family: uiTheme.fontFamily; font.pixelSize: 24 }
+                    Repeater {
+                        model: root.roundResults
+                        Text {
+                            required property var modelData
+                            text: qsTr("%1　%2 步 / 最优 %3　%4 秒").arg(modelData.puzzleName).arg(modelData.moves).arg(modelData.optimalMoves).arg(modelData.elapsed.toFixed(1))
+                            color: uiTheme.secondaryText; font.family: uiTheme.fontFamily; font.pixelSize: 15
+                        }
+                    }
+                    Text { text: qsTr("成绩已提交，请从宿主返回"); color: uiTheme.success; font.family: uiTheme.fontFamily; font.pixelSize: 15 }
                 }
             }
             }
@@ -735,13 +817,13 @@ Item {
                 bciHint: root.phase === "select" ? qsTr("左右选柱，确认取盘")
                          : root.phase === "place" ? qsTr("左右选柱，确认放盘；原柱取消") : keyboardHint
                 anchors.verticalCenter: parent.verticalCenter
-                keyboardHint: root.phase === "select" ? qsTr("←→ 选顶盘 · ↑ 取盘")
-                              : root.phase === "place" ? qsTr("←→ 移动 · ↓ 放盘 · 原柱放回取消")
+                keyboardHint: root.phase === "select" ? qsTr("←→ 选柱 · Enter 取起（亦可 ↑）")
+                              : root.phase === "place" ? qsTr("←→ 选柱 · Enter 放下（亦可 ↓）· 原柱取消")
                               : root.phase === "round_feedback" ? qsTr("本局完成，即将自动进入下一局")
                               : qsTr("五局已完成")
-                mouseHint: root.phase === "select" ? qsTr("按住顶盘拖到目标柱，松手放下 · 键盘 ←→ 选盘，↑ 取，↓ 放")
-                           : root.phase === "place" ? qsTr("拖动中松手放下；非法位置退回原柱")
-                           : qsTr("本局完成，自动进入下一局")
+                mouseHint: root.phase === "select" ? qsTr("点击顶部对象，再点击目标柱；也可按住拖放")
+                           : root.phase === "place" ? qsTr("点击目标柱放下；点击原柱取消，拖放非法则退回")
+                           : root.phase === "complete" ? qsTr("五局成绩已提交，请从宿主返回") : qsTr("本局完成，自动进入下一局")
             }
 
             Text {

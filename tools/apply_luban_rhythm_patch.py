@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# LEGACY RESTORE ONLY: historical delivery tool; not a V5 deployment path.
 # -*- coding: utf-8 -*-
 """部署 鲁班锁 0.6.1 + 四向律动 1.0.1 两个补丁，保留 icon 现状。
 

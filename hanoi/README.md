@@ -22,3 +22,9 @@ moduleId=hanoi，effector=2（GamepadLite），Qt Quick 原生模块。会话固
 ## 代码边界
 
 共享状态仍由 setPole() 整组重赋值；HanoiDisc 保留统一的盘宽公式，伦敦塔使用等宽彩球。BCI、患者可用性及正式 Neuralife Windows 宿主需要单独验证。
+
+## V5 目标预览与球体
+
+每局重置后先显示起始和目标状态图，等待鼠标“开始本关”、键盘 Enter 或宿主 `confirm`；预览期间不计本局时间或步数。操作中仍有小目标图。伦敦塔主体球体由独立 `LondonBall.qml` 绘制，汉诺塔继续使用盘式视觉。`hanoi.goal_preview_shown/confirmed` 记录预览和确认来源。
+
+`hanoi/tests/verify_1106.py` 在 Linux Qt 模拟宿主以 1.0/1.5 倍缩放各通过 225/225，含鼠标、键盘、模拟 BCI 五局完整路线；截图和事件见 `tests/evidence/`。Windows Neuralife 正式窗口尚未验收。

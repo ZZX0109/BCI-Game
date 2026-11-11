@@ -28,14 +28,52 @@ Item {
     readonly property bool sustaining: revision>=0 && active && active.status==="holding"
     property int beatIndex: 0
     property real beatGlow: 0
+    property var pressedDirections: ({})
+    property var pulseUntil: ({})
+    property var inputRoutes: ({})
+    property string inputFeedback: "尚未收到方向输入"
+    function directionPressed(name) { return playing && pressedDirections[name] === true && (state.cfg.inputMode === "held" || pulseUntil[name] > sessionClock) }
+    function clearInputFeedback() {
+        pressedDirections=({});pulseUntil=({});inputRoutes=({});inputFeedback="尚未收到方向输入"
+    }
+    function releaseInputs() {
+        if(state) {
+            Engine.directions.forEach(function(d) { if(state.down[d])Engine.input(state,d,false) })
+            sync()
+        }
+        clearInputFeedback()
+    }
+    Connections {
+        target: root.Window.window
+        function onActiveChanged() { if(!root.Window.window.active)root.releaseInputs() }
+    }
+    function keyDirection(key) {
+        if(key===Qt.Key_Left||key===Qt.Key_A)return "left"
+        if(key===Qt.Key_Right||key===Qt.Key_D)return "right"
+        if(key===Qt.Key_Up||key===Qt.Key_W)return "up"
+        if(key===Qt.Key_Down||key===Qt.Key_S)return "down"
+        return ""
+    }
+    Keys.onPressed: function(event) {
+        var direction=keyDirection(event.key)
+        if(direction!=="") { if(!event.isAutoRepeat)root.input(direction,true,"native"); event.accepted=true }
+    }
+    Keys.onReleased: function(event) {
+        var direction=keyDirection(event.key)
+        if(direction!=="") { if(!event.isAutoRepeat)root.input(direction,false,"native"); event.accepted=true }
+    }
+
     property string difficulty: "standard"
     property bool musicEnabled: true
     property bool beatCueEnabled: true
     property bool sfxEnabled: true
-    readonly property bool stacked: width < 720
+    readonly property bool stacked: width < 1120 || height < 660
     readonly property bool tightStack: stacked && height < 650
     readonly property real footerHeight: stacked ? 112 : 92
     readonly property bool compact: width < 1050 || height < 760
+    readonly property real uiScale: Math.max(1, Math.min(1.65, Math.min(width / 1280, height / 720)))
+    readonly property int bodyPx: Math.round(16 * uiScale)
+    readonly property int captionPx: Math.round(14 * uiScale)
     readonly property int inset: width < 900 ? 20 : 32
     readonly property string inputSource: game && game.inputSource ? String(game.inputSource) : "local"
     readonly property bool isBci: /bci|brain/i.test(inputSource)
@@ -54,13 +92,16 @@ Item {
         if(!state)return
         var list=state.events.splice(0)
         for(var i=0;i<list.length;i++){
-            if(list[i].name==="rhythm.note_result"&&sfxEnabled)feedbackFx.play()
+            if(list[i].name==="rhythm.note_result"&&sfxEnabled&&(list[i].data.outcome==="hit"||list[i].data.outcome==="hold_complete")) {
+                feedbackFx.play()
+                if(game && typeof game.record === "function")game.record("rhythm.feedback_sound",{note:list[i].data.id,outcome:list[i].data.outcome})
+            }
             if(game && typeof game.record === "function")game.record(list[i].name,list[i].data)
         }
     }
     function sync() {
         if(!state)return
-        if(roundIndex!==state.round){roundIndex=state.round;notes=state.notes;beatIndex=0}
+        if(roundIndex!==state.round){roundIndex=state.round;notes=state.notes;beatIndex=0;clearInputFeedback()}
         clock=state.t;sessionClock=state.elapsed;phase=state.phase;paused=state.paused;phaseClock=state.phaseT;finishSent=state.finishSent
         feedback=state.feedback;feedbackDir=state.feedbackDir;feedbackKind=state.feedbackKind;feedbackTime=state.feedbackUntil
         active=Engine.activeNote(state);revision++
@@ -75,7 +116,7 @@ Item {
         musicEnabled=saved.musicEnabled!==false
         beatCueEnabled=saved.beatCueEnabled!==false&&saved.audioEnabled!==false
         sfxEnabled=saved.sfxEnabled!==false
-        state=null;roundIndex=-1;notes=[];beatIndex=0;beatGlow=0;paused=false;finishSent=false
+        clearInputFeedback();state=null;roundIndex=-1;notes=[];beatIndex=0;beatGlow=0;paused=false;finishSent=false
         phase="setup";phaseClock=0;feedback="选择难度与声音设置";forceActiveFocus()
         if(musicEnabled)backingTrack.play()
     }
@@ -89,12 +130,29 @@ Item {
         c.difficulty=difficulty;c.bpm=p.bpm;c.beatsPerNote=p.beatsPerNote;c.windowSeconds=p.windowSeconds;c.leadSeconds=p.leadSeconds
         c.musicEnabled=musicEnabled;c.beatCueEnabled=beatCueEnabled;c.sfxEnabled=sfxEnabled;c.audioEnabled=beatCueEnabled
         persistSettings()
-        state=Engine.create(c,inputSource);roundIndex=-1;notes=[];beatIndex=0;beatGlow=0;sync()
+        forceActiveFocus();clearInputFeedback();state=Engine.create(c,inputSource);roundIndex=-1;notes=[];beatIndex=0;beatGlow=0;sync()
     }
-    function input(name,pressed) {
+    function input(name,pressed,origin) {
+        origin=origin||"host"
+        if(Engine.directions.indexOf(name)>=0 && (origin==="native"||origin==="host")) {
+            // One physical key can reach Qt and the host callback in either order.
+            // Pair only opposite routes; independent decoder pulses remain distinct.
+            var token=name+":"+pressed,now=Date.now(),previous=inputRoutes[token]
+            if(previous && !previous.paired && previous.origin!==origin && now-previous.time<120) {
+                previous.paired=true
+                return
+            }
+            inputRoutes[token]={origin:origin,time:now,paired:false}
+        }
         if(phase==="setup"){if(name==="confirm"&&pressed)launchConfiguredSession();return}
         if(!state)return
         if(name==="confirm" && pressed && phase==="results"){finishSession();return}
+        if(Engine.directions.indexOf(name)>=0) {
+            if(pressed && directionPressed(name) && state.cfg.inputMode==="held")return
+            var keys=Object.assign({},pressedDirections);keys[name]=pressed===true && playing;pressedDirections=keys
+            var times=Object.assign({},pulseUntil);times[name]=sessionClock+.18;pulseUntil=times
+            inputFeedback=(pressed?"收到按下：":"收到松开：")+Engine.glyph(name)
+        }
         Engine.input(state,name,pressed);sync()
     }
     function finishSession() {
@@ -142,9 +200,9 @@ Item {
         function onStarted(){root.startSession()}
         function onStep(seconds){root.advance(seconds)}
         function onAction(name,pressed){root.input(name,pressed)}
-        function onPaused(){root.paused=true;root.stopAudio();backingTrack.pause();if(root.state){Engine.pause(root.state);root.sync()}}
+        function onPaused(){root.paused=true;root.clearInputFeedback();root.stopAudio();backingTrack.pause();if(root.state){Engine.pause(root.state);root.sync()}}
         function onResumed(){root.paused=false;if(root.state){Engine.resume(root.state);root.sync()}if(root.musicEnabled&&root.phase!=="results")backingTrack.play()}
-        function onStopping(){root.paused=true;root.stopAudio();backingTrack.stop();if(root.state){Engine.stop(root.state);root.sync()}else root.phase="idle"}
+        function onStopping(){root.paused=true;root.clearInputFeedback();root.stopAudio();backingTrack.stop();if(root.state){Engine.stop(root.state);root.sync()}else root.phase="idle"}
     }
     AudioOutput { id:musicOutput;volume:.22;muted:!root.musicEnabled||root.paused||root.phase==="results" }
     MediaPlayer {
@@ -160,23 +218,26 @@ Item {
     SoundEffect { id:chord2; source:"audio/chord-2.wav"; volume:.32 }
     SoundEffect { id:chord3; source:"audio/chord-3.wav"; volume:.32 }
     SoundEffect { id:chord4; source:"audio/chord-4.wav"; volume:.32 }
-    SoundEffect { id:feedbackFx; source:"audio/pulse.wav"; volume:.18 }
+    SoundEffect { id:feedbackFx; source:"audio/success.wav"; volume:.18 }
     Rectangle { anchors.fill:parent;color:uiTheme.background }
     Text { x:root.inset;y:22;text:"四向律动";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:28;font.bold:true }
     Text { x:root.inset;y:62;text:"运动想象节奏训练";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:14 }
-    Text { x:root.stacked?root.inset:parent.width-root.inset-width;y:root.stacked?87:25;text:root.roundIndex<0?"准备开始":"第 "+(root.roundIndex+1)+" / 5 轮   ·   "+Engine.roundNames[root.roundIndex];color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:16 }
+    Text { x:root.stacked?root.inset:parent.width-root.inset-width;y:root.stacked?87:25;text:root.roundIndex<0?"准备开始":"第 "+(root.roundIndex+1)+" / "+Engine.roundNames.length+" 轮   ·   "+Engine.roundNames[root.roundIndex];color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:16 }
     Row {
         x:parent.width-root.inset-width;y:root.stacked?67:62;spacing:6
-        Repeater { model:5;Rectangle { required property int index;width:32;height:3;radius:1.5;color:index<=root.roundIndex?uiTheme.primary:uiTheme.panelBorder } }
+        Repeater { model:Engine.roundNames.length;Rectangle { required property int index;width:32;height:3;radius:1.5;color:index<=root.roundIndex?uiTheme.primary:uiTheme.panelBorder } }
     }
     Rectangle {
         id:board; objectName:"rhythmBoard"
-        x:root.inset;y:root.stacked?122:106
-        width:parent.width-root.inset*2-(root.stacked?0:side.width+24)
+        x:root.stacked?root.inset:Math.max(root.inset,(root.width-width-side.width-24)/2)
+        y:root.stacked?122:106
+        width:Math.min(1660,parent.width-root.inset*2-(root.stacked?0:side.width+24))
         height:Math.max(180,parent.height-y-root.footerHeight-(root.stacked?330:0))
         color:uiTheme.background;clip:true
         readonly property real laneW:width/4
-        readonly property real lineY:84
+        readonly property int notePx: Math.round(Math.max(56,Math.min(96,laneW*.42,60*root.uiScale)))
+        readonly property real labelGap: Math.max(20, Math.min(30, height * .03))
+        readonly property real lineY: Math.max(notePx/2 + labelGap + root.captionPx + 24, Math.min(160,height*.16))
         readonly property real travel:height-lineY-45
         readonly property real pixelsPerSecond:travel/(root.state?root.state.cfg.leadSeconds:4)
         Repeater {
@@ -187,14 +248,15 @@ Item {
                 x:index*board.laneW;width:board.laneW;height:board.height
                 Rectangle { x:parent.width-1;width:1;height:parent.height;color:uiTheme.panelBorder;opacity:.3;visible:index<3 }
                 Rectangle { anchors.fill:parent;color:root.laneColors[index];opacity:root.feedbackDir===modelData&&root.clock<root.feedbackTime?.045:0 }
-                Text { x:0;y:17;width:parent.width;horizontalAlignment:Text.AlignHCenter;text:["左","下","上","右"][index];color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
-                Rectangle { x:(parent.width-width)/2;y:board.lineY-25;width:50;height:50;radius:9;color:uiTheme.background;border.width:2;border.color:root.laneColors[index];opacity:.65+root.beatGlow*.35
-                    Text { anchors.centerIn:parent;text:Engine.glyph(modelData);color:root.laneColors[index];font.pixelSize:32;font.family:uiTheme.fontFamily }
+                Text { x:0;y:board.lineY-board.notePx/2-board.labelGap-implicitHeight;width:parent.width;horizontalAlignment:Text.AlignHCenter;text:["左","下","上","右"][index];color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx }
+                Rectangle { objectName:"rhythmReceptor_"+modelData;x:(parent.width-width)/2;y:board.lineY-height/2;width:board.notePx;height:board.notePx;radius:Math.round(width*.18);color:uiTheme.background;border.width:root.directionPressed(modelData)?4:2;border.color:root.laneColors[index];opacity:root.directionPressed(modelData)?1:.45
+                    Text { anchors.centerIn:parent;text:Engine.glyph(modelData);color:root.laneColors[index];font.pixelSize:Math.round(board.notePx*.64);font.family:uiTheme.fontFamily }
                 }
             }
         }
-        Rectangle { y:board.lineY-1;width:parent.width;height:2;color:uiTheme.primary;opacity:.22+root.beatGlow*.4 }
+        Rectangle { y:board.lineY-1;width:parent.width;height:2;color:uiTheme.primary;opacity:.22 }
         Repeater {
+            id: noteRepeater
             model:root.notes
             delegate: Item {
                 id:noteView
@@ -202,30 +264,34 @@ Item {
                 required property var modelData
                 readonly property var n:root.noteData(index)
                 readonly property int lane:Engine.directions.indexOf(modelData.dir)
-                readonly property real remaining:modelData.time-root.clock
-                visible:n && (n.status==="pending"||n.status==="holding") && remaining<= (root.state?root.state.cfg.leadSeconds:4)
-                    && remaining+modelData.duration>=-(root.state?root.state.cfg.windowSeconds:.9)
-                x:lane*board.laneW+(board.laneW-48)/2
-                y:board.lineY+(n && n.status==="holding"?0:remaining*board.pixelsPerSecond)-24
-                width:48;height:48+Math.max(0,modelData.duration+(n && n.status==="holding"?remaining:0))*board.pixelsPerSecond
-                Rectangle { visible:modelData.duration>0;x:14;y:24;width:20;height:Math.max(0,noteView.modelData.duration+(noteView.n && noteView.n.status==="holding"?noteView.remaining:0))*board.pixelsPerSecond;radius:10;color:root.laneColors[noteView.lane];opacity:.45 }
-                Rectangle { width:48;height:48;radius:9;color:root.laneColors[noteView.lane];border.color:"#FFFFFF";border.width:1
-                    Text { anchors.centerIn:parent;text:Engine.glyph(noteView.modelData.dir);color:uiTheme.background;font.pixelSize:32;font.family:uiTheme.fontFamily;font.bold:true }
+                readonly property real headRemaining:modelData.time-root.clock
+                readonly property real endRemaining:modelData.time+modelData.duration-root.clock
+                readonly property real tailSeconds:modelData.duration>0?Math.max(0,Math.min(modelData.duration,endRemaining)):0
+                readonly property real tailPx:tailSeconds*board.pixelsPerSecond
+                readonly property int notePx:board.notePx
+                visible:n && (n.status==="pending"||n.status==="holding") && headRemaining<= (root.state?root.state.cfg.leadSeconds:4)
+                    && endRemaining>=-(root.state?root.state.cfg.windowSeconds:.9)
+                x:lane*board.laneW+(board.laneW-notePx)/2
+                y:board.lineY+Math.max(0,headRemaining)*board.pixelsPerSecond-notePx/2
+                width:notePx;height:notePx+tailPx
+                Rectangle { visible:modelData.duration>0 && noteView.tailPx>0;x:noteView.notePx*.32;y:noteView.notePx*.5;width:noteView.notePx*.36;height:noteView.tailPx;radius:width/2;color:root.laneColors[noteView.lane];opacity:.45 }
+                Rectangle { width:noteView.notePx;height:noteView.notePx;radius:Math.round(width*.18);color:root.laneColors[noteView.lane];border.color:"#FFFFFF";border.width:1
+                    Text { anchors.centerIn:parent;text:Engine.glyph(noteView.modelData.dir);color:uiTheme.background;font.pixelSize:Math.round(noteView.notePx*.64);font.family:uiTheme.fontFamily;font.bold:true }
                 }
             }
         }
-        Text { x:12;y:board.height-27;width:board.width-24;horizontalAlignment:Text.AlignHCenter;text:"箭头向上行进，到横线时输入对应方向";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
+        Text { x:12;y:board.height-27;width:board.width-24;horizontalAlignment:Text.AlignHCenter;text:"箭头向上行进，到横线时输入对应方向";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx }
     }
     Column {
-        id:side;x:root.stacked?root.inset:board.x+board.width+24;y:root.stacked?board.y+board.height+16:106;width:root.stacked?root.width-root.inset*2:root.compact?230:288;spacing:root.compact?8:16
-        Text { visible:!root.tightStack;width:parent.width;text:root.state?Engine.roundHelpFor(root.state,root.roundIndex)+(root.roundIndex===2?(root.state.cfg.directionCount===2?"\n本组：← →":"\n本组：← → ↑ ↓"):""):"留意提前出现的箭头，跟随节拍。";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:15;lineHeight:1.3 }
+        id:side;x:root.stacked?root.inset:board.x+board.width+24;y:root.stacked?board.y+board.height+16:106;width:root.stacked?root.width-root.inset*2:Math.round(288*root.uiScale);spacing:root.compact?8:16
+        Text { visible:!root.tightStack;width:parent.width;text:root.state?Engine.roundHelpFor(root.state,root.roundIndex)+(root.roundIndex===2?(root.state.cfg.directionCount===2?"\n本组：← →":"\n本组：← → ↑ ↓"):""):"留意提前出现的箭头，跟随节拍。";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.bodyPx;lineHeight:1.3 }
         Rectangle { visible:!root.tightStack;width:parent.width;height:1;color:uiTheme.panelBorder }
-        Text { visible:!root.tightStack;text:"下一步";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
+        Text { visible:!root.tightStack;text:"下一步";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx }
         Row { spacing:12
-            Text { text:root.active?Engine.glyph(root.active.dir):"—";color:root.active?root.laneColors[Engine.directions.indexOf(root.active.dir)]:uiTheme.disabledText;font.family:uiTheme.fontFamily;font.pixelSize:50;font.bold:true }
+            Text { text:root.active?Engine.glyph(root.active.dir):"—";color:root.active?root.laneColors[Engine.directions.indexOf(root.active.dir)]:uiTheme.disabledText;font.family:uiTheme.fontFamily;font.pixelSize:Math.round(50*root.uiScale);font.bold:true }
             Column { y:9;spacing:4
-                Text { text:root.active?(root.active.duration?"持续 "+root.active.duration.toFixed(1)+" 秒":"一次方向输入"):"本轮即将结束";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:15 }
-                Text { text:root.active?(root.sustaining?"保持中 · 剩余 "+Math.max(0,root.active.time+root.active.duration-root.clock).toFixed(1)+" 秒":Math.max(0,root.active.time-root.clock).toFixed(1)+" 秒后到达"):"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
+                Text { text:root.active?(root.active.duration?"持续 "+root.active.duration.toFixed(1)+" 秒":"一次方向输入"):"本轮即将结束";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.bodyPx }
+                Text { text:root.active?(root.sustaining?"保持中 · 剩余 "+Math.max(0,root.active.time+root.active.duration-root.clock).toFixed(1)+" 秒":Math.max(0,root.active.time-root.clock).toFixed(1)+" 秒后到达"):"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx }
             }
         }
         Rectangle { visible:!root.stacked;width:parent.width;height:root.compact?76:92;radius:8;color:uiTheme.panel;border.color:uiTheme.panelBorder
@@ -244,13 +310,13 @@ Item {
                 }
             }
         }
-        Text { visible:!root.stacked;width:parent.width;text:"方向动作示意反馈";color:uiTheme.disabledText;font.family:uiTheme.fontFamily;font.pixelSize:13;horizontalAlignment:Text.AlignHCenter }
-        Text { visible:!root.tightStack;width:parent.width;height:root.compact?44:60;text:root.feedback;wrapMode:Text.Wrap;color:root.feedbackKind==="warning"?uiTheme.warning:uiTheme.primary;font.family:uiTheme.fontFamily;font.pixelSize:15;lineHeight:1.3 }
+        Text { visible:!root.stacked;width:parent.width;text:"方向动作示意反馈";color:uiTheme.disabledText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx;horizontalAlignment:Text.AlignHCenter }
+        Text { objectName:"rhythmJudgementFeedback";width:parent.width;height:root.compact?44:60;text:root.feedback;wrapMode:Text.Wrap;color:root.feedbackKind==="warning"?uiTheme.warning:uiTheme.primary;font.family:uiTheme.fontFamily;font.pixelSize:root.bodyPx;lineHeight:1.3 }
         Rectangle { width:parent.width;height:5;radius:2.5;color:uiTheme.panelBorder
             Rectangle { width:parent.width*(root.active?root.holdFraction(root.active):0);height:parent.height;radius:2.5;color:uiTheme.primary }
-            visible:root.roundIndex===3
+            visible:root.sustaining
         }
-        Text { visible:!root.tightStack;width:parent.width;text:root.state?(root.state.cfg.inputMode==="pulse"?"保持任务：脉冲续期":"保持任务：按下 / 松开")+"\n判定区间 ±"+root.state.cfg.windowSeconds.toFixed(1)+"s · "+Math.round((root.clock, Engine.currentBpm(root.state)))+" BPM":"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13;lineHeight:1.5 }
+        Text { visible:!root.tightStack;width:parent.width;text:root.state?(root.state.cfg.inputMode==="pulse"?"保持任务：脉冲续期":"保持任务：按下 / 松开")+"\n判定区间 ±"+root.state.cfg.windowSeconds.toFixed(1)+"s · "+(root.clock >= 0 ? Math.round(Engine.currentBpm(root.state)) : 0)+" BPM":"";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:root.captionPx;lineHeight:1.5 }
     }
     Row { x:root.inset;y:parent.height-67;spacing:8
         Repeater {
@@ -258,17 +324,18 @@ Item {
             model:Engine.directions
             delegate:UI.GameButton {
                 required property string modelData
-                theme:uiTheme;text:Engine.glyph(modelData);width:52;height:44;enabled:root.playing
-                onPressed:root.input(modelData,true)
-                onReleased:root.input(modelData,false)
+                objectName:"rhythmInput_"+modelData;highlighted:root.directionPressed(modelData);theme:uiTheme;text:Engine.glyph(modelData);width:52;height:44;enabled:root.playing
+                onPressed:root.input(modelData,true,"mouse")
+                onReleased:root.input(modelData,false,"mouse")
             }
         }
     }
-    Text { visible:!root.stacked;x:root.inset+248;y:parent.height-57;width:Math.max(0,parent.width-root.inset-310-x-12);text:"方向键 / WASD · 持续音符需保持";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
+    Text { visible:!root.stacked;x:root.inset+248;y:parent.height-57;width:Math.max(0,parent.width-root.inset-310-x-12);text:root.inputFeedback+" · 方向键 / WASD";wrapMode:Text.Wrap;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
+    Text { visible:root.stacked;x:root.inset;y:root.height-22;width:root.width-2*root.inset;text:root.inputFeedback;color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:13 }
     Row { x:root.stacked?root.inset:parent.width-root.inset-310;y:root.stacked?parent.height-115:parent.height-67;spacing:6
-        UI.GameButton { theme:uiTheme;width:root.stacked?(parent.width-2*root.inset-12)/3:98;height:44;text:root.musicEnabled?"音乐：开":"音乐：关";onClicked:root.toggleMusic() }
-        UI.GameButton { theme:uiTheme;width:root.stacked?(parent.width-2*root.inset-12)/3:98;height:44;text:root.beatCueEnabled?"节拍：开":"节拍：关";onClicked:root.toggleBeatCue() }
-        UI.GameButton { theme:uiTheme;width:root.stacked?(parent.width-2*root.inset-12)/3:98;height:44;text:root.sfxEnabled?"音效：开":"音效：关";onClicked:root.toggleSfx() }
+        UI.GameButton { theme:uiTheme;width:root.stacked?(root.width-2*root.inset-12)/3:98;height:44;text:root.musicEnabled?"音乐：开":"音乐：关";onClicked:root.toggleMusic() }
+        UI.GameButton { theme:uiTheme;width:root.stacked?(root.width-2*root.inset-12)/3:98;height:44;text:root.beatCueEnabled?"节拍：开":"节拍：关";onClicked:root.toggleBeatCue() }
+        UI.GameButton { theme:uiTheme;width:root.stacked?(root.width-2*root.inset-12)/3:98;height:44;text:root.sfxEnabled?"音效：开":"音效：关";onClicked:root.toggleSfx() }
     }
     Rectangle {
         anchors.fill:parent;z:20;visible:root.phase==="setup";color:"#F0050505"
@@ -280,12 +347,16 @@ Item {
                 Repeater { model:["teaching","standard","challenge"]
                     delegate:UI.GameButton {
                         required property string modelData
+                        objectName: "rhythmDifficultyButton"
                         theme:uiTheme;width:Math.min(180,(parent.width-20)/3);height:74;highlighted:root.difficulty===modelData;enabled:!root.isBci||modelData==="teaching"
-                        text:Engine.difficultyPresets[modelData].title+"\n"+Engine.difficultyPresets[modelData].bpm+" BPM · "+Engine.difficultyPresets[modelData].intervalSeconds.toFixed(2)+"秒/音 · ±"+Engine.difficultyPresets[modelData].windowSeconds.toFixed(2)+"秒"
+                        text:Engine.difficultyPresets[modelData].title+"\n"+Engine.difficultyPresets[modelData].bpm+" BPM"
                         onClicked:root.difficulty=modelData
                     }
                 }
             }
+            Text { width:parent.width;horizontalAlignment:Text.AlignHCenter;wrapMode:Text.Wrap
+                text:{var p=Engine.difficultyPresets[root.difficulty];return p.intervalSeconds.toFixed(2)+"秒/音 · 判定窗口 ±"+p.windowSeconds.toFixed(2)+"秒"}
+                color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:15 }
             Row { width:parent.width;anchors.horizontalCenter:parent.horizontalCenter;spacing:12
                 UI.GameButton { theme:uiTheme;width:(parent.width-24)/3;height:50;text:root.musicEnabled?"音乐：开":"音乐：关";onClicked:root.toggleMusic() }
                 UI.GameButton { theme:uiTheme;width:(parent.width-24)/3;height:50;text:root.beatCueEnabled?"节拍：开":"节拍：关";onClicked:root.toggleBeatCue() }
@@ -310,7 +381,7 @@ Item {
         Flickable { id:resultViewport
         anchors.fill:parent;contentHeight:resultColumn.height+48;clip:true
         Column { id:resultColumn;x:root.inset;y:24;width:parent.width-root.inset*2;spacing:14
-            Text { text:"五轮训练完成";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:28;font.bold:true }
+            Text { text:"三轮训练完成";color:uiTheme.primaryText;font.family:uiTheme.fontFamily;font.pixelSize:28;font.bold:true }
             Text { text:"以下是本次游戏指令表现";color:uiTheme.secondaryText;font.family:uiTheme.fontFamily;font.pixelSize:14 }
             Row { spacing:root.stacked?12:root.compact?24:48
                 Repeater { model:[{label:"任务完成率",value:root.pct(root.stats.completionRate)},{label:"窗内方向匹配率",value:root.pct(root.stats.directionRate)},{label:"平均时序偏差",value:root.stats.meanAbsoluteError!==null&&root.stats.meanAbsoluteError!==undefined?Math.round(root.stats.meanAbsoluteError*1000)+" ms":"—"}]

@@ -1,0 +1,241 @@
+{
+  "platform": "xcb",
+  "scaleFactor": "1.5",
+  "environment": "Linux Qt window, native Qt key events, simulated host; sound requests only, no audible validation",
+  "checks": [
+    {
+      "name": "local: no input produces no score",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "local: misses produce no success sound request",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "local: beat never lights input receptors",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "local: idle status explicitly says no input",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "local: native key lights only its receptor",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "local: key visible as received",
+      "passed": true,
+      "actual": "收到按下：↑"
+    },
+    {
+      "name": "local: timing feedback reports early input",
+      "passed": true,
+      "actual": "方向匹配 · 提前 149 ms"
+    },
+    {
+      "name": "local: native key generates matched event",
+      "passed": true,
+      "actual": {
+        "classification": "matched",
+        "delta": -0.14933333333332932,
+        "expected": "up",
+        "name": "up",
+        "note": "r1n2",
+        "pressed": true,
+        "round": 1,
+        "roundTime": 5.184000000000004,
+        "sessionTime": 8.183999999999983
+      }
+    },
+    {
+      "name": "local: duplicate host route cannot create stray input",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "local: release clears receptor",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "local: release visible in status",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "local: one hit requests one success sound",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "local: host-first duplicate native route cannot create stray input",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "local: window focus loss releases stale input",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "hold: early release cannot auto complete",
+      "passed": true,
+      "actual": {
+        "coverage": 0.17600000000000016,
+        "delta": 0.0026666666659806992,
+        "dir": "up",
+        "duration": 2,
+        "id": "r2n1",
+        "outcome": "hold_incomplete",
+        "round": 2,
+        "roundTime": 6.0026666666659825,
+        "sessionTime": 27.335999999997874,
+        "targetTime": 4
+      }
+    },
+    {
+      "name": "hold: actual continuous press completes",
+      "passed": true,
+      "actual": {
+        "coverage": 0.9999999999999996,
+        "delta": -0.002666666667349382,
+        "dir": "down",
+        "duration": 2,
+        "id": "r2n2",
+        "outcome": "hold_complete",
+        "round": 2,
+        "roundTime": 9.338666666665837,
+        "sessionTime": 30.671999999997507,
+        "targetTime": 7.333333333333333
+      }
+    },
+    {
+      "name": "local: pause clears input indication",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "local: resume does not invent held keys",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "local: small window keeps timing feedback visible",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: no input produces no score",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: misses produce no success sound request",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: beat never lights input receptors",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: idle status explicitly says no input",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: native key lights only its receptor",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: key visible as received",
+      "passed": true,
+      "actual": "收到按下：↑"
+    },
+    {
+      "name": "bci: timing feedback reports early input",
+      "passed": true,
+      "actual": "方向匹配 · 提前 149 ms"
+    },
+    {
+      "name": "bci: native key generates matched event",
+      "passed": true,
+      "actual": {
+        "classification": "matched",
+        "delta": -0.14933333333332932,
+        "expected": "up",
+        "name": "up",
+        "note": "r1n2",
+        "pressed": true,
+        "round": 1,
+        "roundTime": 5.184000000000004,
+        "sessionTime": 8.183999999999983
+      }
+    },
+    {
+      "name": "bci: duplicate host route cannot create stray input",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: release clears receptor",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: release visible in status",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: one hit requests one success sound",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: host-first duplicate native route cannot create stray input",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: window focus loss releases stale input",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "pulse: received host pulse lights receptor",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "pulse: no release required to extinguish indicator",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: pause clears input indication",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: resume does not invent held keys",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "bci: small window keeps timing feedback visible",
+      "passed": true,
+      "actual": null
+    }
+  ],
+  "passed": 38,
+  "total": 38
+}

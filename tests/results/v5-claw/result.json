@@ -1,0 +1,92 @@
+{
+  "environment": "Linux PySide6 QQuickView; simulated host",
+  "checks": [
+    {
+      "name": "success_kind",
+      "passed": true,
+      "actual": "success"
+    },
+    {
+      "name": "success_result",
+      "passed": true,
+      "actual": "success"
+    },
+    {
+      "name": "near_miss_kind",
+      "passed": true,
+      "actual": "near_miss"
+    },
+    {
+      "name": "near_miss_three_visual_phases",
+      "passed": true,
+      "actual": [
+        "partial_lift",
+        "slip",
+        "settle"
+      ]
+    },
+    {
+      "name": "near_miss_visual_tilt",
+      "passed": true,
+      "actual": [
+        [
+          633.5977142857142,
+          7.260000000000003
+        ],
+        [
+          607.5954285714286,
+          11.597142857142858
+        ],
+        [
+          648.0799999999999,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "near_miss_visual_slip_returns_to_floor",
+      "passed": true,
+      "actual": [
+        [
+          633.5977142857142,
+          7.260000000000003
+        ],
+        [
+          607.5954285714286,
+          11.597142857142858
+        ],
+        [
+          648.0799999999999,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "near_miss_tilts",
+      "passed": true,
+      "actual": 16.500000000000004
+    },
+    {
+      "name": "near_miss_lifts",
+      "passed": true,
+      "actual": 0.2142857142857141
+    },
+    {
+      "name": "near_miss_result",
+      "passed": true,
+      "actual": "near_miss"
+    },
+    {
+      "name": "miss_kind",
+      "passed": true,
+      "actual": "miss"
+    },
+    {
+      "name": "miss_result",
+      "passed": true,
+      "actual": "miss"
+    }
+  ],
+  "passed": 11,
+  "total": 11
+}

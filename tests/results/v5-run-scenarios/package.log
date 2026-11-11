@@ -1,0 +1,37 @@
+Fontconfig error: No writable cache directories
+file:///tmp/neuralife-v5-package-djq_3gk5/luban/Main.qml:500: TypeError: Cannot read property 'projectVoxel' of null
+file:///tmp/neuralife-v5-package-djq_3gk5/luban/Main.qml:500: TypeError: Cannot read property 'projectVoxel' of null
+file:///tmp/neuralife-v5-package-djq_3gk5/luban/Main.qml:500: TypeError: Cannot read property 'projectVoxel' of null
+file:///tmp/neuralife-v5-package-djq_3gk5/luban/Main.qml:500: TypeError: Cannot read property 'projectVoxel' of null
+file:///tmp/neuralife-v5-package-djq_3gk5/luban/Main.qml:500: TypeError: Cannot read property 'projectVoxel' of null
+file:///tmp/neuralife-v5-package-djq_3gk5/luban/Main.qml:500: TypeError: Cannot read property 'projectVoxel' of null
+qt.multimedia.ffmpeg: Using Qt multimedia with FFmpeg version 7.1.2 LGPL version 2.1 or later
+[W][09:01:18.042368] pw.conf      | [          conf.c: 1182 try_load_conf()] can't load config client.conf: No such file or directory
+[E][09:01:18.042398] pw.conf      | [          conf.c: 1215 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+Failed to create secure directory (/home/agent/.config/pulse): Read-only file system
+PulseAudioService: pa_context_connect() failed
+No audio device detected
+No audio device detected
+No audio device detected
+No audio device detected
+No audio device detected
+No audio device detected
+Input #0, wav, from '/tmp/neuralife-v5-package-djq_3gk5/rhythm/audio/background-90bpm.wav':
+  Duration: 00:00:21.33, bitrate: 352 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, s16, 352 kb/s
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+qt.multimedia.soundeffect: Failed to update audio output. No audio devices available.
+No audio device detected
+    [PASS] packaged_qml_loaded
+    [PASS] packaged_qml_loaded
+    [PASS] packaged_qml_loaded
+    [PASS] packaged_qml_loaded
+    [PASS] packaged_pursuit_loaded
+    [PASS] packaged_target_loaded
+    [PASS] packaged_qml_loaded
+    [PASS] packaged_qml_loaded
+    [PASS] packaged_qml_loaded

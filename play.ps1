@@ -1,33 +1,18 @@
-param(
-    [string]$Game = ""
-)
-
-$EXE = "D:\program\AIT\Neuralife\bin\Neuralife.exe"
-$DEVROOT = "C:\Users\Ait\Desktop\Neuralife"
-
-$games = @("hanoi","pursuit","target","sokoban","claw","traffic","luban")
-
-if ($Game -eq "") {
-    Write-Host "Available games (run: .\play.ps1 <name>):"
-    Write-Host "  hanoi    - Tower of Hanoi"
-    Write-Host "  pursuit  - Light-chasing ball"
-    Write-Host "  target   - Precision target"
-    Write-Host "  sokoban  - Push box"
-    Write-Host "  claw     - Claw machine"
-    Write-Host "  traffic  - Traffic light crossing"
-    Write-Host "  luban    - Luban lock"
+param([string]$Game = "")
+$ErrorActionPreference = 'Stop'
+$root = Split-Path -Parent $MyInvocation.MyCommand.Path
+$games = @((Get-Content -LiteralPath (Join-Path $root 'config\active_games.json') -Raw | ConvertFrom-Json).games)
+if ($Game -eq '') {
+    Write-Host "Available V5 games: $($games -join ', ')"
     exit 0
 }
-
-if (-not $games.Contains($Game)) {
-    Write-Host "Unknown game: $Game"
-    Write-Host "Available: $($games -join ', ')"
+if ($Game -notin $games) {
+    Write-Error "Not an active V5 game: $Game"
     exit 1
 }
-
-# luban 使用真实 Qt Quick 3D；宿主默认软件渲染后端下 View3D 无法出图，
-# 因此只对 luban 指定 RHI（D3D11/OpenGL）后端，其余游戏行为不变。
-if ($Game -eq "luban") { $env:QT_QUICK_BACKEND = "rhi" }
-
-Write-Host "Launching $Game ..."
-& "$EXE" --game-dev $Game --games-dev-root "$DEVROOT"
+$exe = if ($env:NEURALIFE_EXE) { $env:NEURALIFE_EXE } else { 'D:\program\AIT\Neuralife\bin\Neuralife.exe' }
+$devRoot = if ($env:NEURALIFE_DEVROOT) { $env:NEURALIFE_DEVROOT } else { $root }
+if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) { throw "Neuralife.exe not found: $exe" }
+if ($Game -eq 'luban') { $env:QT_QUICK_BACKEND = 'rhi' }
+& $exe --game-dev $Game --games-dev-root $devRoot
+exit $LASTEXITCODE

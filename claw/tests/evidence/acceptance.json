@@ -1,0 +1,590 @@
+{
+  "environment": {
+    "os": "linux",
+    "pyside6": "6.10.2",
+    "qtPlatform": "offscreen",
+    "scaleFactor": "1",
+    "host": "simulated API 1",
+    "bci": "simulated commands",
+    "input": "native QTest keys/mouse plus host signals"
+  },
+  "passed": 114,
+  "total": 114,
+  "checks": [
+    {
+      "name": "native_qml_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "space_and_opaque_local_confirm_do_not_grab",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native_host_direction_deduplicated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "release_stops_movement",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "return_keypad_and_host_confirm_single_grab",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no_error_feedback_before_release",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause_freezes_every_stage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "autorepeat_cannot_grab_next_trial",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stop_cannot_restart_or_finish",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_native_space_no_grab_16777220",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_native_enter_and_host_single_grab_16777220",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_native_space_no_grab_16777221",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_native_enter_and_host_single_grab_16777221",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_five_progressive_targets",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial1_device_only_alignment",
+      "passed": true,
+      "detail": 0.4
+    },
+    {
+      "name": "keyboard_trial1_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial1_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial1_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_pause_freezes_lowering",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial2_device_only_alignment",
+      "passed": true,
+      "detail": 0.6835
+    },
+    {
+      "name": "keyboard_trial2_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial2_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial2_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial3_device_only_alignment",
+      "passed": true,
+      "detail": 0.804
+    },
+    {
+      "name": "keyboard_trial3_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial3_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial3_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial4_device_only_alignment",
+      "passed": true,
+      "detail": 0.6597
+    },
+    {
+      "name": "keyboard_trial4_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial4_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial4_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial5_device_only_alignment",
+      "passed": true,
+      "detail": 0.5824
+    },
+    {
+      "name": "keyboard_trial5_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial5_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_trial5_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_all_five_successful",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_finish_exactly_once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_metrics_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_every_execution_phase_logged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_completed_session_ignores_inputs_and_duplicate_start",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_five_progressive_targets",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial1_device_only_alignment",
+      "passed": true,
+      "detail": 0.4
+    },
+    {
+      "name": "mouse_trial1_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial1_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial1_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_pause_freezes_lowering",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_then_space_cannot_grab",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial2_device_only_alignment",
+      "passed": true,
+      "detail": 0.6835
+    },
+    {
+      "name": "mouse_trial2_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial2_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial2_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial3_device_only_alignment",
+      "passed": true,
+      "detail": 0.804
+    },
+    {
+      "name": "mouse_trial3_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial3_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial3_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial4_device_only_alignment",
+      "passed": true,
+      "detail": 0.6597
+    },
+    {
+      "name": "mouse_trial4_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial4_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial4_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial5_device_only_alignment",
+      "passed": true,
+      "detail": 0.5824
+    },
+    {
+      "name": "mouse_trial5_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial5_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_trial5_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_all_five_successful",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_finish_exactly_once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_metrics_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_every_execution_phase_logged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_completed_session_ignores_inputs_and_duplicate_start",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_movement_not_overridden_by_native_arrows",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_five_progressive_targets",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial1_device_only_alignment",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "bci_trial1_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial1_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial1_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_pause_freezes_lowering",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial2_device_only_alignment",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "bci_trial2_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial2_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial2_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial3_device_only_alignment",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "bci_trial3_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial3_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial3_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial4_device_only_alignment",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "bci_trial4_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial4_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial4_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial5_device_only_alignment",
+      "passed": true,
+      "detail": 0.0
+    },
+    {
+      "name": "bci_trial5_consistent_projection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial5_rendered_target_center_matches_world",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_trial5_one_trigger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_all_five_successful",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_finish_exactly_once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_metrics_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_every_execution_phase_logged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_completed_session_ignores_inputs_and_duplicate_start",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_physical_keys_record_actual_held_mode",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_held_mode_moves_until_release",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_held_release_stops",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "seed_reproduces_entire_plan",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_targets_reachable_on_bci_pulse_grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resize_preserves_state_1000",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "controls_inside_window_1000",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resize_preserves_state_1280",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "controls_inside_window_1280",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resize_preserves_state_1920",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "controls_inside_window_1920",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resize_preserves_state_640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "controls_inside_window_640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "boundary_clamps_and_records_misoperation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lost_focus_clears_latched_direction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_trigger_offsets_give_same_deterministic_outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "assist_is_explicit_separate_and_snapshot_based",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no_qml_runtime_errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "limitations": [
+    "Windows Neuralife host not available",
+    "Physical EEG decoder and latency not tested",
+    "Deterministic simulated clock does not establish real-time hand feel"
+  ]
+}

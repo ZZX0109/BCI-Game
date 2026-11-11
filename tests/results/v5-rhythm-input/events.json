@@ -1,0 +1,1029 @@
+[
+  {
+    "source": "local",
+    "name": "rhythm.session_started",
+    "data": {
+      "config": {
+        "audioEnabled": true,
+        "beatCueEnabled": true,
+        "beatsPerNote": 2.0,
+        "bpm": 90,
+        "difficulty": "standard",
+        "difficultyTitle": "标准",
+        "directionCount": 4,
+        "holdSeconds": 2,
+        "holdThreshold": 0.75,
+        "inputMode": "held",
+        "leadSeconds": 3,
+        "musicEnabled": true,
+        "notesPerRound": 8.0,
+        "pulseValidity": 0.8,
+        "restSeconds": 4,
+        "seed": 42,
+        "sfxEnabled": true,
+        "windowSeconds": 0.4
+      },
+      "inputSource": "local",
+      "measurement": "game_commands_only",
+      "round": 0,
+      "roundTime": 0,
+      "sessionTime": 0,
+      "version": "1.3.0"
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.round_started",
+    "data": {
+      "bpm": 90,
+      "chart": [
+        {
+          "bpm": 90,
+          "dir": "right",
+          "duration": 0,
+          "id": "r1n1",
+          "sequence": -1,
+          "time": 4
+        },
+        {
+          "bpm": 90,
+          "dir": "up",
+          "duration": 0,
+          "id": "r1n2",
+          "sequence": -1,
+          "time": 5.333333333333333
+        },
+        {
+          "bpm": 90,
+          "dir": "down",
+          "duration": 0,
+          "id": "r1n3",
+          "sequence": -1,
+          "time": 6.666666666666666
+        },
+        {
+          "bpm": 90,
+          "dir": "left",
+          "duration": 0,
+          "id": "r1n4",
+          "sequence": -1,
+          "time": 7.999999999999999
+        },
+        {
+          "bpm": 90,
+          "dir": "up",
+          "duration": 0,
+          "id": "r1n5",
+          "sequence": -1,
+          "time": 9.333333333333332
+        },
+        {
+          "bpm": 90,
+          "dir": "left",
+          "duration": 0,
+          "id": "r1n6",
+          "sequence": -1,
+          "time": 10.666666666666666
+        },
+        {
+          "bpm": 90,
+          "dir": "right",
+          "duration": 0,
+          "id": "r1n7",
+          "sequence": -1,
+          "time": 12.0
+        },
+        {
+          "bpm": 90,
+          "dir": "down",
+          "duration": 0,
+          "id": "r1n8",
+          "sequence": -1,
+          "time": 13.333333333333334
+        }
+      ],
+      "difficulty": "standard",
+      "firstInterval": 1.333333333333333,
+      "name": "四方向教学",
+      "round": 1,
+      "roundTime": 0,
+      "sessionTime": 3.0
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": null,
+      "dir": "right",
+      "duration": 0,
+      "id": "r1n1",
+      "outcome": "miss",
+      "round": 1,
+      "roundTime": 4.408000000000003,
+      "sessionTime": 7.408000000000004,
+      "targetTime": 4
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.feedback_sound",
+    "data": {
+      "note": "r1n2",
+      "outcome": "hit"
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": -0.14933333333332932,
+      "dir": "up",
+      "duration": 0,
+      "id": "r1n2",
+      "outcome": "hit",
+      "round": 1,
+      "roundTime": 5.184000000000004,
+      "sessionTime": 8.183999999999983,
+      "targetTime": 5.333333333333333
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "matched",
+      "delta": -0.14933333333332932,
+      "expected": "up",
+      "name": "up",
+      "note": "r1n2",
+      "pressed": true,
+      "round": 1,
+      "roundTime": 5.184000000000004,
+      "sessionTime": 8.183999999999983
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "release",
+      "name": "up",
+      "pressed": false,
+      "round": 1,
+      "roundTime": 5.200000000000004,
+      "sessionTime": 8.199999999999982
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.feedback_sound",
+    "data": {
+      "note": "r1n3",
+      "outcome": "hit"
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": -0.002666666666661044,
+      "dir": "down",
+      "duration": 0,
+      "id": "r1n3",
+      "outcome": "hit",
+      "round": 1,
+      "roundTime": 6.664000000000005,
+      "sessionTime": 9.66399999999982,
+      "targetTime": 6.666666666666666
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "matched",
+      "delta": -0.002666666666661044,
+      "expected": "down",
+      "name": "down",
+      "note": "r1n3",
+      "pressed": true,
+      "round": 1,
+      "roundTime": 6.664000000000005,
+      "sessionTime": 9.66399999999982
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "release",
+      "name": "down",
+      "pressed": false,
+      "round": 1,
+      "roundTime": 6.680000000000005,
+      "sessionTime": 9.679999999999819
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "outside_window",
+      "name": "left",
+      "pressed": true,
+      "round": 1,
+      "roundTime": 6.696000000000005,
+      "sessionTime": 9.695999999999817
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "release",
+      "name": "left",
+      "pressed": false,
+      "round": 1,
+      "roundTime": 6.696000000000005,
+      "sessionTime": 9.695999999999817
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "release",
+      "name": "left",
+      "pressed": false,
+      "round": 1,
+      "roundTime": 6.696000000000005,
+      "sessionTime": 9.695999999999817
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": null,
+      "dir": "left",
+      "duration": 0,
+      "id": "r1n4",
+      "outcome": "miss",
+      "round": 1,
+      "roundTime": 8.40799999999996,
+      "sessionTime": 11.407999999999628,
+      "targetTime": 7.999999999999999
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": null,
+      "dir": "up",
+      "duration": 0,
+      "id": "r1n5",
+      "outcome": "miss",
+      "round": 1,
+      "roundTime": 9.735999999999814,
+      "sessionTime": 12.735999999999482,
+      "targetTime": 9.333333333333332
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": null,
+      "dir": "left",
+      "duration": 0,
+      "id": "r1n6",
+      "outcome": "miss",
+      "round": 1,
+      "roundTime": 11.071999999999667,
+      "sessionTime": 14.071999999999335,
+      "targetTime": 10.666666666666666
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": null,
+      "dir": "right",
+      "duration": 0,
+      "id": "r1n7",
+      "outcome": "miss",
+      "round": 1,
+      "roundTime": 12.40799999999952,
+      "sessionTime": 15.407999999999188,
+      "targetTime": 12.0
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": null,
+      "dir": "down",
+      "duration": 0,
+      "id": "r1n8",
+      "outcome": "miss",
+      "round": 1,
+      "roundTime": 13.735999999999374,
+      "sessionTime": 16.73599999999904,
+      "targetTime": 13.333333333333334
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.round_completed",
+    "data": {
+      "completed": 2,
+      "correct": 2,
+      "holdWrong": 0,
+      "name": "四方向教学",
+      "outsideWindow": 1,
+      "presented": 8,
+      "round": 1,
+      "roundTime": 14.333333333333334,
+      "seconds": 14.333333333333334,
+      "sessionTime": 17.333333333333,
+      "wrong": 0
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.round_started",
+    "data": {
+      "bpm": 90,
+      "chart": [
+        {
+          "bpm": 90,
+          "dir": "up",
+          "duration": 2,
+          "id": "r2n1",
+          "sequence": -1,
+          "time": 4
+        },
+        {
+          "bpm": 90,
+          "dir": "down",
+          "duration": 2,
+          "id": "r2n2",
+          "sequence": -1,
+          "time": 7.333333333333333
+        },
+        {
+          "bpm": 90,
+          "dir": "right",
+          "duration": 2,
+          "id": "r2n3",
+          "sequence": -1,
+          "time": 10.666666666666666
+        },
+        {
+          "bpm": 90,
+          "dir": "left",
+          "duration": 2,
+          "id": "r2n4",
+          "sequence": -1,
+          "time": 14.0
+        },
+        {
+          "bpm": 90,
+          "dir": "down",
+          "duration": 2,
+          "id": "r2n5",
+          "sequence": -1,
+          "time": 17.333333333333332
+        },
+        {
+          "bpm": 90,
+          "dir": "right",
+          "duration": 2,
+          "id": "r2n6",
+          "sequence": -1,
+          "time": 20.666666666666664
+        },
+        {
+          "bpm": 90,
+          "dir": "up",
+          "duration": 2,
+          "id": "r2n7",
+          "sequence": -1,
+          "time": 23.999999999999996
+        },
+        {
+          "bpm": 90,
+          "dir": "left",
+          "duration": 2,
+          "id": "r2n8",
+          "sequence": -1,
+          "time": 27.33333333333333
+        }
+      ],
+      "difficulty": "standard",
+      "firstInterval": 3.333333333333333,
+      "name": "长按教学",
+      "round": 2,
+      "roundTime": 0,
+      "sessionTime": 21.333333333332558
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "matched",
+      "delta": 0.0026666666659806992,
+      "expected": "up",
+      "name": "up",
+      "note": "r2n1",
+      "pressed": true,
+      "round": 2,
+      "roundTime": 4.002666666665981,
+      "sessionTime": 25.335999999998094
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "release",
+      "name": "up",
+      "pressed": false,
+      "round": 2,
+      "roundTime": 4.354666666665981,
+      "sessionTime": 25.687999999998056
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": 0.17600000000000016,
+      "delta": 0.0026666666659806992,
+      "dir": "up",
+      "duration": 2,
+      "id": "r2n1",
+      "outcome": "hold_incomplete",
+      "round": 2,
+      "roundTime": 6.0026666666659825,
+      "sessionTime": 27.335999999997874,
+      "targetTime": 4
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "matched",
+      "delta": -0.002666666667349382,
+      "expected": "down",
+      "name": "down",
+      "note": "r2n2",
+      "pressed": true,
+      "round": 2,
+      "roundTime": 7.330666666665984,
+      "sessionTime": 28.663999999997728
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.feedback_sound",
+    "data": {
+      "note": "r2n2",
+      "outcome": "hold_complete"
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": 0.9999999999999996,
+      "delta": -0.002666666667349382,
+      "dir": "down",
+      "duration": 2,
+      "id": "r2n2",
+      "outcome": "hold_complete",
+      "round": 2,
+      "roundTime": 9.338666666665837,
+      "sessionTime": 30.671999999997507,
+      "targetTime": 7.333333333333333
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "release",
+      "name": "down",
+      "pressed": false,
+      "round": 2,
+      "roundTime": 9.378666666665833,
+      "sessionTime": 30.711999999997502
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.paused@PAUSED",
+    "data": {
+      "round": 2,
+      "roundTime": 9.378666666665833,
+      "sessionTime": 30.711999999997502
+    }
+  },
+  {
+    "source": "local",
+    "name": "rhythm.resumed",
+    "data": {
+      "round": 2,
+      "roundTime": 9.378666666665833,
+      "sessionTime": 30.711999999997502
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.session_started",
+    "data": {
+      "config": {
+        "audioEnabled": true,
+        "beatCueEnabled": true,
+        "beatsPerNote": 2.0,
+        "bpm": 90,
+        "difficulty": "standard",
+        "difficultyTitle": "标准",
+        "directionCount": 4,
+        "holdSeconds": 2,
+        "holdThreshold": 0.75,
+        "inputMode": "pulse",
+        "leadSeconds": 3,
+        "musicEnabled": true,
+        "notesPerRound": 8.0,
+        "pulseValidity": 0.8,
+        "restSeconds": 4,
+        "seed": 42,
+        "sfxEnabled": true,
+        "windowSeconds": 0.4
+      },
+      "inputSource": "bci",
+      "measurement": "game_commands_only",
+      "round": 0,
+      "roundTime": 0,
+      "sessionTime": 0,
+      "version": "1.3.0"
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.round_started",
+    "data": {
+      "bpm": 90,
+      "chart": [
+        {
+          "bpm": 90,
+          "dir": "right",
+          "duration": 0,
+          "id": "r1n1",
+          "sequence": -1,
+          "time": 4
+        },
+        {
+          "bpm": 90,
+          "dir": "up",
+          "duration": 0,
+          "id": "r1n2",
+          "sequence": -1,
+          "time": 5.333333333333333
+        },
+        {
+          "bpm": 90,
+          "dir": "down",
+          "duration": 0,
+          "id": "r1n3",
+          "sequence": -1,
+          "time": 6.666666666666666
+        },
+        {
+          "bpm": 90,
+          "dir": "left",
+          "duration": 0,
+          "id": "r1n4",
+          "sequence": -1,
+          "time": 7.999999999999999
+        },
+        {
+          "bpm": 90,
+          "dir": "up",
+          "duration": 0,
+          "id": "r1n5",
+          "sequence": -1,
+          "time": 9.333333333333332
+        },
+        {
+          "bpm": 90,
+          "dir": "left",
+          "duration": 0,
+          "id": "r1n6",
+          "sequence": -1,
+          "time": 10.666666666666666
+        },
+        {
+          "bpm": 90,
+          "dir": "right",
+          "duration": 0,
+          "id": "r1n7",
+          "sequence": -1,
+          "time": 12.0
+        },
+        {
+          "bpm": 90,
+          "dir": "down",
+          "duration": 0,
+          "id": "r1n8",
+          "sequence": -1,
+          "time": 13.333333333333334
+        }
+      ],
+      "difficulty": "standard",
+      "firstInterval": 1.333333333333333,
+      "name": "四方向教学",
+      "round": 1,
+      "roundTime": 0,
+      "sessionTime": 3.0
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": null,
+      "dir": "right",
+      "duration": 0,
+      "id": "r1n1",
+      "outcome": "miss",
+      "round": 1,
+      "roundTime": 4.408000000000003,
+      "sessionTime": 7.408000000000004,
+      "targetTime": 4
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.feedback_sound",
+    "data": {
+      "note": "r1n2",
+      "outcome": "hit"
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": -0.14933333333332932,
+      "dir": "up",
+      "duration": 0,
+      "id": "r1n2",
+      "outcome": "hit",
+      "round": 1,
+      "roundTime": 5.184000000000004,
+      "sessionTime": 8.183999999999983,
+      "targetTime": 5.333333333333333
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "matched",
+      "delta": -0.14933333333332932,
+      "expected": "up",
+      "name": "up",
+      "note": "r1n2",
+      "pressed": true,
+      "round": 1,
+      "roundTime": 5.184000000000004,
+      "sessionTime": 8.183999999999983
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "release",
+      "name": "up",
+      "pressed": false,
+      "round": 1,
+      "roundTime": 5.200000000000004,
+      "sessionTime": 8.199999999999982
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.feedback_sound",
+    "data": {
+      "note": "r1n3",
+      "outcome": "hit"
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": -0.002666666666661044,
+      "dir": "down",
+      "duration": 0,
+      "id": "r1n3",
+      "outcome": "hit",
+      "round": 1,
+      "roundTime": 6.664000000000005,
+      "sessionTime": 9.66399999999982,
+      "targetTime": 6.666666666666666
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "matched",
+      "delta": -0.002666666666661044,
+      "expected": "down",
+      "name": "down",
+      "note": "r1n3",
+      "pressed": true,
+      "round": 1,
+      "roundTime": 6.664000000000005,
+      "sessionTime": 9.66399999999982
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "release",
+      "name": "down",
+      "pressed": false,
+      "round": 1,
+      "roundTime": 6.680000000000005,
+      "sessionTime": 9.679999999999819
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "outside_window",
+      "name": "left",
+      "pressed": true,
+      "round": 1,
+      "roundTime": 6.696000000000005,
+      "sessionTime": 9.695999999999817
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "release",
+      "name": "left",
+      "pressed": false,
+      "round": 1,
+      "roundTime": 6.696000000000005,
+      "sessionTime": 9.695999999999817
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "release",
+      "name": "left",
+      "pressed": false,
+      "round": 1,
+      "roundTime": 6.696000000000005,
+      "sessionTime": 9.695999999999817
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": null,
+      "dir": "left",
+      "duration": 0,
+      "id": "r1n4",
+      "outcome": "miss",
+      "round": 1,
+      "roundTime": 8.40799999999996,
+      "sessionTime": 11.407999999999628,
+      "targetTime": 7.999999999999999
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": null,
+      "dir": "up",
+      "duration": 0,
+      "id": "r1n5",
+      "outcome": "miss",
+      "round": 1,
+      "roundTime": 9.735999999999814,
+      "sessionTime": 12.735999999999482,
+      "targetTime": 9.333333333333332
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": null,
+      "dir": "left",
+      "duration": 0,
+      "id": "r1n6",
+      "outcome": "miss",
+      "round": 1,
+      "roundTime": 11.071999999999667,
+      "sessionTime": 14.071999999999335,
+      "targetTime": 10.666666666666666
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": null,
+      "dir": "right",
+      "duration": 0,
+      "id": "r1n7",
+      "outcome": "miss",
+      "round": 1,
+      "roundTime": 12.40799999999952,
+      "sessionTime": 15.407999999999188,
+      "targetTime": 12.0
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.note_result",
+    "data": {
+      "coverage": null,
+      "delta": null,
+      "dir": "down",
+      "duration": 0,
+      "id": "r1n8",
+      "outcome": "miss",
+      "round": 1,
+      "roundTime": 13.735999999999374,
+      "sessionTime": 16.73599999999904,
+      "targetTime": 13.333333333333334
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.round_completed",
+    "data": {
+      "completed": 2,
+      "correct": 2,
+      "holdWrong": 0,
+      "name": "四方向教学",
+      "outsideWindow": 1,
+      "presented": 8,
+      "round": 1,
+      "roundTime": 14.333333333333334,
+      "seconds": 14.333333333333334,
+      "sessionTime": 17.333333333333,
+      "wrong": 0
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.round_started",
+    "data": {
+      "bpm": 90,
+      "chart": [
+        {
+          "bpm": 90,
+          "dir": "up",
+          "duration": 2,
+          "id": "r2n1",
+          "sequence": -1,
+          "time": 4
+        },
+        {
+          "bpm": 90,
+          "dir": "down",
+          "duration": 2,
+          "id": "r2n2",
+          "sequence": -1,
+          "time": 7.333333333333333
+        },
+        {
+          "bpm": 90,
+          "dir": "right",
+          "duration": 2,
+          "id": "r2n3",
+          "sequence": -1,
+          "time": 10.666666666666666
+        },
+        {
+          "bpm": 90,
+          "dir": "left",
+          "duration": 2,
+          "id": "r2n4",
+          "sequence": -1,
+          "time": 14.0
+        },
+        {
+          "bpm": 90,
+          "dir": "down",
+          "duration": 2,
+          "id": "r2n5",
+          "sequence": -1,
+          "time": 17.333333333333332
+        },
+        {
+          "bpm": 90,
+          "dir": "right",
+          "duration": 2,
+          "id": "r2n6",
+          "sequence": -1,
+          "time": 20.666666666666664
+        },
+        {
+          "bpm": 90,
+          "dir": "up",
+          "duration": 2,
+          "id": "r2n7",
+          "sequence": -1,
+          "time": 23.999999999999996
+        },
+        {
+          "bpm": 90,
+          "dir": "left",
+          "duration": 2,
+          "id": "r2n8",
+          "sequence": -1,
+          "time": 27.33333333333333
+        }
+      ],
+      "difficulty": "standard",
+      "firstInterval": 3.333333333333333,
+      "name": "长按教学",
+      "round": 2,
+      "roundTime": 0,
+      "sessionTime": 21.333333333332558
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.input",
+    "data": {
+      "classification": "matched",
+      "delta": 0.0026666666659806992,
+      "expected": "up",
+      "name": "up",
+      "note": "r2n1",
+      "pressed": true,
+      "round": 2,
+      "roundTime": 4.002666666665981,
+      "sessionTime": 25.335999999998094
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.paused@PAUSED",
+    "data": {
+      "round": 2,
+      "roundTime": 4.218666666665981,
+      "sessionTime": 25.55199999999807
+    }
+  },
+  {
+    "source": "bci",
+    "name": "rhythm.resumed",
+    "data": {
+      "round": 2,
+      "roundTime": 4.218666666665981,
+      "sessionTime": 25.55199999999807
+    }
+  }
+]

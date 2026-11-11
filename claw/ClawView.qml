@@ -9,7 +9,7 @@ Item {
     readonly property real rail: sideView ? 52 : 64
     readonly property real floor: height - 42
     readonly property real innerLeft: sideView ? 22 : 38
-    readonly property real innerRight: sideView ? width - 22 : width - 154
+    readonly property real innerRight: sideView ? width - 22 : width - Math.min(154, width * 0.24)
     function project(value) {
         var low = sideView ? simulation.zMin : simulation.xMin
         var high = sideView ? simulation.zMax : simulation.xMax
@@ -19,14 +19,14 @@ Item {
         return innerLeft + (value - low) / (high - low) * (innerRight - innerLeft)
     }
     readonly property real clawPX: project(sideView ? simulation.clawZ : simulation.clawX)
-    readonly property real progress: Math.max(0, Math.min(1, (simulation.clawY - simulation.clawTopY) / (simulation.floorY - 66 - simulation.clawTopY)))
-    readonly property real detailScale: sideView ? 1 : Math.max(1, Math.min(1.4, height / 428))
-    readonly property real toyScale: sideView ? 0.68 : detailScale
+    readonly property real progress: Math.max(0, Math.min(1, (simulation.clawY - simulation.clawTopY) / (simulation.contactY - simulation.clawTopY)))
+    readonly property real detailScale: sideView ? 1 : Math.max(1, Math.min(2.0, height / 390))
+    readonly property real toyScale: (sideView ? 0.68 : detailScale) * simulation.targetSize
     readonly property real toyHeight: 58 * toyScale
     readonly property real clawPY: rail + 17 + progress * (floor - toyHeight - 28 * detailScale - rail - 17)
     readonly property real binX: sideView ? clawPX : project(simulation.dropX)
 
-    Text { font.family: uiTheme.fontFamily; x: 0; y: 0; text: view.sideView ? qsTr("02  /  侧视") : qsTr("01  /  正视"); color: "#a4ad9c"; font.pixelSize: 14; font.letterSpacing: 1 }
+    Text { font.family: uiTheme.fontFamily; x: 0; y: 0; text: view.sideView ? qsTr("02  /  Z 侧视") : qsTr("01  /  X 正视"); color: "#a4ad9c"; font.pixelSize: 14; font.letterSpacing: 1 }
     Text { font.family: uiTheme.fontFamily; anchors.right: parent.right; y: 1; text: view.sideView ? qsTr("前后位置") : qsTr("左右位置"); color: "#929b89"; font.pixelSize: 14 }
 
     // Open rail, with discrete fasteners and a restrained brushed-metal face.
@@ -74,35 +74,57 @@ Item {
         y: view.floor - 3; width: 68 * view.toyScale; height: 8; radius: width / 2
         color: "#493923"; opacity: 0.5
     }
-    // One plush renderer per projection, both derived from the shared physical state.
+    // Non-target objects use the same X/Z projection; their shape never changes the target.
+    Repeater {
+        model: simulation.distractors
+        Rectangle {
+            required property var modelData
+            x: view.project(view.sideView ? modelData.z : modelData.x) - width / 2
+            y: view.floor - height
+            width: (view.sideView ? 26 : 42); height: width
+            radius: modelData.kind === "ball" ? width / 2 : 5
+            color: "#566e77"; border.color: "#93a6ab"; opacity: 0.8
+            Text { anchors.centerIn: parent; text: "×"; color: "#b4c1c2"; font.pixelSize: 18 }
+        }
+    }
+    // One target renderer per projection; no separate floor/carried toy copies.
     Item {
         id: toy
+        objectName: view.sideView ? "clawSideTarget" : "clawFrontTarget"
         readonly property bool attached: simulation.toyState === "attached"
         readonly property bool binned: simulation.toyState === "binned"
+        readonly property bool nearMiss: simulation.toyState === "near_miss"
+        readonly property real nearProgress: simulation.phase === "partial_lift" ? Math.min(1, simulation.phaseTimer / .35)
+            : simulation.phase === "slip" ? Math.max(0, 1 - simulation.phaseTimer / .35) : 0
         readonly property real releaseT: simulation.phase === "release" ? Math.min(1, simulation.phaseTimer / 0.5) : 0
         visible: !(view.sideView && binned)
         x: (attached ? view.clawPX : binned ? view.binX : view.project(view.sideView ? simulation.toyFloorZ : simulation.toyFloorX)) - 26 * view.toyScale
-        y: binned ? view.floor - view.toyHeight : attached ? view.clawPY + 28 * view.detailScale + releaseT * (view.floor - view.toyHeight - view.clawPY - 28 * view.detailScale) : view.floor - view.toyHeight
+        y: binned ? view.floor - view.toyHeight : attached ? view.clawPY + 28 * view.detailScale + releaseT * (view.floor - view.toyHeight - view.clawPY - 28 * view.detailScale) : view.floor - view.toyHeight - (nearMiss ? nearProgress * simulation.nearLiftHeight * 120 * view.toyScale : 0)
         width: 52; height: 58; scale: view.toyScale; transformOrigin: Item.TopLeft
-        Rectangle { x: 3; y: 1; width: 16; height: 17; radius: 8; color: "#b7813c"; border.color: "#ddaf61"; Rectangle { x: 4; y: 4; width: 8; height: 9; radius: 5; color: "#764f2e" } }
-        Rectangle { x: 33; y: 1; width: 16; height: 17; radius: 8; color: "#b7813c"; border.color: "#ddaf61"; Rectangle { x: 4; y: 4; width: 8; height: 9; radius: 5; color: "#764f2e" } }
-        Rectangle { x: 7; y: 28; width: 38; height: 28; radius: 15; color: "#b7813c" }
-        Rectangle { x: 2; y: 30; width: 12; height: 20; radius: 6; rotation: 24; color: "#d6a759" }
-        Rectangle { x: 38; y: 30; width: 12; height: 20; radius: 6; rotation: -24; color: "#c49750" }
-        Rectangle { x: 10; y: 47; width: 14; height: 11; radius: 5; color: "#dfa95c" }
-        Rectangle { x: 28; y: 47; width: 14; height: 11; radius: 5; color: "#c69247" }
-        Rectangle { x: 18; y: 32; width: 17; height: 19; radius: 9; color: "#f0ce8b" }
+        rotation: nearMiss ? simulation.tiltDirection * (simulation.phase === "partial_lift" ? Math.min(1, simulation.phaseTimer / .2) : nearProgress) : 0
         Rectangle {
-            x: 6; y: 7; width: 40; height: 32; radius: 15
-            gradient: Gradient { GradientStop { position: 0; color: "#f6d594" } GradientStop { position: 1; color: "#cb9146" } }
-            border.color: "#e0b46a"
-            Rectangle { x: 8; y: 10; width: 5; height: 6; radius: 3; color: "#2b2117"; Rectangle { x: 1; y: 1; width: 2; height: 2; radius: 1; color: "#fbefda" } }
-            Rectangle { x: 27; y: 10; width: 5; height: 6; radius: 3; color: "#2b2117"; Rectangle { x: 1; y: 1; width: 2; height: 2; radius: 1; color: "#fbefda" } }
-            Rectangle { x: 12; y: 17; width: 17; height: 11; radius: 6; color: "#f2d5a3" }
-            Rectangle { x: 17; y: 17; width: 7; height: 5; radius: 3; color: "#4c3521" }
-            Rectangle { x: 20; y: 21; width: 1; height: 4; color: "#815b38" }
+            x: 0; y: 6; width: 52; height: 52
+            radius: simulation.targetKind === "ball" ? 26 : 7
+            gradient: Gradient {
+                GradientStop { position: 0; color: "#ffe4a0" }
+                GradientStop { position: 0.5; color: "#edb854" }
+                GradientStop { position: 1; color: "#a66b29" }
+            }
+            border.color: "#ffdd90"; border.width: 1.5
+            Rectangle { x: 8; y: 7; width: 20; height: 10; radius: 5; rotation: -20; color: "#fff6cf"; opacity: 0.5 }
+            Rectangle { x: 14; y: 24; width: 5; height: 6; radius: 3; color: "#59452c" }
+            Rectangle { x: 33; y: 24; width: 5; height: 6; radius: 3; color: "#59452c" }
+            Rectangle { x: 22; y: 36; width: 9; height: 2; radius: 1; color: "#72502b" }
         }
-        Rectangle { x: 15; y: 35; width: 22; height: 3; radius: 1; color: "#7e9e72" }
+    }
+    // Partial foreground obstruction belongs to the trial plan, identically projected in both views.
+    Rectangle {
+        visible: simulation.occluder !== null && simulation.toyState === "floor"
+        x: simulation.occluder ? view.project(view.sideView ? simulation.occluder.z : simulation.occluder.x) - width / 2 : 0
+        y: view.floor - height
+        width: view.sideView ? 22 : 36; height: view.sideView ? 22 : 34
+        radius: 3; color: "#41483c"; border.color: "#7a846e"
+        Rectangle { anchors.centerIn: parent; width: parent.width - 6; height: 2; rotation: -35; color: "#68715b" }
     }
     // Twin cable and articulated steel jaws.
     Rectangle { x: view.clawPX - 19; y: view.rail - 10; width: 38; height: 20; radius: 3; color: "#aeb8a6"; border.color: "#e4e8d9" }

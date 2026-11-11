@@ -1,0 +1,26 @@
+{
+  "sourceHead": "1c67e91530dc607b54474d9f8d77eff336ad07ef",
+  "environment": "Linux Xorg Qt native event tests; not OS-specific DPI validation",
+  "checks": [
+    {
+      "module": "pointer",
+      "scale": "1.25",
+      "passed": true
+    },
+    {
+      "module": "rhythm",
+      "scale": "1.25",
+      "passed": true
+    },
+    {
+      "module": "pointer",
+      "scale": "1.5",
+      "passed": true
+    },
+    {
+      "module": "rhythm",
+      "scale": "1.5",
+      "passed": true
+    }
+  ]
+}

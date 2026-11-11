@@ -1,297 +1,1319 @@
 {
+  "environment": "Linux Xorg :88 / PySide6 6.10.2 / OpenGL Mesa / real Quick3D / mock Neuralife signals",
+  "scaleFactor": "1",
+  "windows_host": "NOT_TESTED",
+  "physical_bci": "NOT_TESTED",
   "checks": [
     {
       "name": "main_loaded",
       "passed": true,
-      "detail": null
+      "detail": []
     },
     {
       "name": "real_quick3d_ready",
       "passed": true,
-      "detail": null
+      "detail": []
     },
     {
-      "name": "L1_only_key_free",
+      "name": "five_geometric_levels",
       "passed": true,
       "detail": null
     },
     {
-      "name": "L1_blocked_reason",
+      "name": "default_first_piece_not_answer",
       "passed": true,
       "detail": null
     },
     {
-      "name": "L1_blocked_does_not_move",
+      "name": "default_assembly_view",
       "passed": true,
       "detail": null
     },
     {
-      "name": "inspection_disables_move_0",
+      "name": "hint_gesture_only",
       "passed": true,
       "detail": null
     },
     {
-      "name": "pickable_geometry_0",
+      "name": "hint_directions_second",
       "passed": true,
       "detail": null
     },
     {
-      "name": "native_mouse_select_0",
+      "name": "hint_blocker_third",
       "passed": true,
       "detail": null
     },
     {
-      "name": "pause_freezes_0_2",
+      "name": "hint_events_have_tier",
       "passed": true,
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_0_2",
+      "name": "actual_3d_pick",
       "passed": true,
       "detail": null
     },
     {
-      "name": "extracted_0_2",
+      "name": "hover_highlight",
       "passed": true,
       "detail": null
     },
     {
-      "name": "undo_restores_key_0",
+      "name": "native_mouse_select",
       "passed": true,
       "detail": null
     },
     {
-      "name": "opposite_end_valid_0",
+      "name": "left_drag_on_wood_orbits_without_extracting",
+      "passed": true,
+      "detail": [
+        39.88,
+        0
+      ]
+    },
+    {
+      "name": "axis_arrow_partial_drag",
+      "passed": true,
+      "detail": 0.5629871330909261
+    },
+    {
+      "name": "keyboard_undo_partial_drag",
       "passed": true,
       "detail": null
     },
     {
-      "name": "pause_freezes_0_1",
+      "name": "inspection_blocks_actions",
       "passed": true,
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_0_1",
+      "name": "keyboard_camera_mode",
       "passed": true,
       "detail": null
     },
     {
-      "name": "extracted_0_1",
+      "name": "native_host_duplicate_suppressed",
       "passed": true,
       "detail": null
     },
     {
-      "name": "level_complete_0",
+      "name": "mouse_L1_loaded",
       "passed": true,
       "detail": null
     },
     {
-      "name": "L2_only_key_free",
+      "name": "mouse_selected_p2",
       "passed": true,
       "detail": null
     },
     {
-      "name": "L2_blocked_reason",
+      "name": "mouse_L1_pause_freezes",
       "passed": true,
       "detail": null
     },
     {
-      "name": "L2_blocked_does_not_move",
+      "name": "continuous_no_penetration_p2",
       "passed": true,
       "detail": null
     },
     {
-      "name": "inspection_disables_move_1",
+      "name": "mouse_L1_0_move_kind",
       "passed": true,
       "detail": null
     },
     {
-      "name": "pickable_geometry_1",
+      "name": "mouse_selected_p1",
       "passed": true,
       "detail": null
     },
     {
-      "name": "native_mouse_select_1",
+      "name": "continuous_no_penetration_p1",
       "passed": true,
       "detail": null
     },
     {
-      "name": "pause_freezes_1_3",
+      "name": "mouse_L1_1_move_kind",
       "passed": true,
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_1_3",
+      "name": "mouse_L1_complete",
       "passed": true,
       "detail": null
     },
     {
-      "name": "extracted_1_3",
+      "name": "mouse_L2_loaded",
       "passed": true,
       "detail": null
     },
     {
-      "name": "undo_restores_key_1",
+      "name": "mouse_selected_p3",
       "passed": true,
       "detail": null
     },
     {
-      "name": "opposite_end_valid_1",
+      "name": "mouse_L2_pause_freezes",
       "passed": true,
       "detail": null
     },
     {
-      "name": "pause_freezes_1_2",
+      "name": "continuous_no_penetration_p3",
       "passed": true,
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_1_2",
+      "name": "mouse_L2_0_move_kind",
       "passed": true,
       "detail": null
     },
     {
-      "name": "extracted_1_2",
+      "name": "mouse_selected_p2",
       "passed": true,
       "detail": null
     },
     {
-      "name": "pause_freezes_1_1",
+      "name": "continuous_no_penetration_p2",
       "passed": true,
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_1_1",
+      "name": "mouse_L2_1_move_kind",
       "passed": true,
       "detail": null
     },
     {
-      "name": "extracted_1_1",
+      "name": "mouse_selected_p1",
       "passed": true,
       "detail": null
     },
     {
-      "name": "level_complete_1",
+      "name": "continuous_no_penetration_p1",
       "passed": true,
       "detail": null
     },
     {
-      "name": "L3_only_key_free",
+      "name": "mouse_L2_2_move_kind",
       "passed": true,
       "detail": null
     },
     {
-      "name": "L3_blocked_reason",
+      "name": "mouse_L2_complete",
       "passed": true,
       "detail": null
     },
     {
-      "name": "L3_blocked_does_not_move",
+      "name": "mouse_L3_loaded",
       "passed": true,
       "detail": null
     },
     {
-      "name": "inspection_disables_move_2",
+      "name": "mouse_selected_p1",
       "passed": true,
       "detail": null
     },
     {
-      "name": "pickable_geometry_2",
+      "name": "mouse_L3_pause_freezes",
       "passed": true,
       "detail": null
     },
     {
-      "name": "native_mouse_select_2",
+      "name": "continuous_no_penetration_p1",
       "passed": true,
       "detail": null
     },
     {
-      "name": "pause_freezes_2_4",
+      "name": "mouse_L3_0_move_kind",
       "passed": true,
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_2_4",
+      "name": "mouse_selected_p3",
       "passed": true,
       "detail": null
     },
     {
-      "name": "extracted_2_4",
+      "name": "continuous_no_penetration_p3",
       "passed": true,
       "detail": null
     },
     {
-      "name": "undo_restores_key_2",
+      "name": "mouse_L3_1_move_kind",
       "passed": true,
       "detail": null
     },
     {
-      "name": "opposite_end_valid_2",
+      "name": "mouse_selected_p1",
       "passed": true,
       "detail": null
     },
     {
-      "name": "pause_freezes_2_3",
+      "name": "continuous_no_penetration_p1",
       "passed": true,
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_2_3",
+      "name": "mouse_L3_2_move_kind",
       "passed": true,
       "detail": null
     },
     {
-      "name": "extracted_2_3",
+      "name": "mouse_selected_p2",
       "passed": true,
       "detail": null
     },
     {
-      "name": "pause_freezes_2_2",
+      "name": "continuous_no_penetration_p2",
       "passed": true,
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_2_2",
+      "name": "mouse_L3_3_move_kind",
       "passed": true,
       "detail": null
     },
     {
-      "name": "extracted_2_2",
+      "name": "mouse_selected_p1",
       "passed": true,
       "detail": null
     },
     {
-      "name": "pause_freezes_2_1",
+      "name": "continuous_no_penetration_p1",
       "passed": true,
       "detail": null
     },
     {
-      "name": "continuous_no_penetration_2_1",
+      "name": "mouse_L3_4_move_kind",
       "passed": true,
       "detail": null
     },
     {
-      "name": "extracted_2_1",
+      "name": "mouse_L3_complete",
       "passed": true,
       "detail": null
     },
     {
-      "name": "level_complete_2",
+      "name": "mouse_L4_loaded",
       "passed": true,
       "detail": null
     },
     {
-      "name": "finish_once",
+      "name": "mouse_L4_no_initial_whole_piece_move",
       "passed": true,
       "detail": null
     },
     {
-      "name": "half_drag_never_removes",
+      "name": "mouse_selected_p1",
       "passed": true,
       "detail": null
     },
     {
-      "name": "view_mode_returns",
+      "name": "mouse_L4_pause_freezes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L4_0_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L4_1_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L4_2_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L4_3_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L4_4_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L4_5_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L4_6_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L4_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L5_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L5_no_initial_whole_piece_move",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L5_pause_freezes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L5_0_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L5_1_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L5_2_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L5_3_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L5_4_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L5_5_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p6",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p6",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L5_6_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_selected_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L5_7_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_L5_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_finish_exactly_once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_five_results",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouse_finished_instance_never_restarts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L1_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L1_pause_freezes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L1_0_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L1_1_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L1_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L2_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L2_pause_freezes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L2_0_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L2_1_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L2_2_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L2_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L3_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L3_pause_freezes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L3_0_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L3_1_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L3_2_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L3_3_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L3_4_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L3_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_no_initial_whole_piece_move",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_pause_freezes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_0_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_1_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_2_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_3_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_4_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_5_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_6_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L4_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L5_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L5_no_initial_whole_piece_move",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L5_pause_freezes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L5_0_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L5_1_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L5_2_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L5_3_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L5_4_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L5_5_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p6",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L5_6_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L5_7_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_L5_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_finish_exactly_once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_five_results",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard_finished_instance_never_restarts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L1_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L1_pause_freezes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L1_0_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L1_1_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L1_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L2_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L2_pause_freezes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L2_0_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L2_1_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L2_2_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L2_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L3_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L3_pause_freezes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L3_0_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L3_1_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L3_2_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L3_3_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L3_4_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L3_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_no_initial_whole_piece_move",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_pause_freezes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_0_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_1_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_2_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_3_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_4_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_5_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_6_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L4_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L5_loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L5_no_initial_whole_piece_move",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L5_pause_freezes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L5_0_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p3",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L5_1_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L5_2_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L5_3_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p2",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L5_4_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L5_5_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p6",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L5_6_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous_no_penetration_p1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L5_7_move_kind",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_L5_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_finish_exactly_once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_five_results",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bci_finished_instance_never_restarts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "advanced_level_has_no_auto_selection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "quarter_unit_micro_move",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "reverse_push_returns",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "whole_level_reset",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "viewport_positive_1000",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "viewport_positive_1280",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "viewport_positive_1920",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "viewport_positive_640",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stop_freezes_and_blocks_late_signals",
       "passed": true,
       "detail": null
     },
@@ -302,5 +1324,6 @@
     }
   ],
   "messages": [],
-  "environment": "macOS PySide6 6.12 actual QQuickView with mock host; no Windows/BCI hardware"
+  "passed": 263,
+  "total": 263
 }

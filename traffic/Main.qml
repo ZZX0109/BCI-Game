@@ -7,35 +7,34 @@ Item {
     required property var taskContext
     required property var game
 
-    readonly property string gameVersion: "0.5.1"
+    readonly property string gameVersion: "0.6.1"
     readonly property string inputSource: (game && game.inputSource) ? String(game.inputSource) : "local"
     readonly property bool isBci: /bci|brain/i.test(inputSource)
 
     // ------------------------------------------------------------------
-    // 世界尺度与投影基向量（像素/世界单位）
-    //   横穿方向 u：每车道右移 UX、上移 UY  → 前进在屏幕上向右上，符合 §8.2
-    //   车流方向 v：近似水平，仅轻微下倾，保证车头方向可读
-    // ------------------------------------------------------------------
-    readonly property real crossDx: 38.0
-    readonly property real crossDy: 265.0 / (laneCount + 1)
-    readonly property real carDx: 43.0
-    readonly property real carDy: 1.5
-    readonly property real originX: 292.0
-    readonly property real originY: 402.0
-    readonly property real sceneW: 700
-    readonly property real sceneH: 470
+    // 行人从左向右穿过六车道，车辆沿画面纵向行驶。
+    readonly property real islandWidth: 0.8
+    readonly property real totalU: 6 + islandWidth
+    readonly property real crossDx: 94.0
+    readonly property real carDy: 72.0
+    readonly property real originX: 120.0
+    readonly property real sceneW: 1000
+    readonly property real sceneH: 500
+    function laneLeft(i) { return i + (i >= 3 ? islandWidth : 0) }
+    function laneRight(i) { return laneLeft(i) + 1 }
+    function isOnIsland(u) { return u >= 3 && u <= 3 + islandWidth }
 
     // 实体尺寸（世界单位）
     readonly property real pedHalfWidth: 0.17   // 横穿方向半宽
     readonly property real pedHalfDepth: 0.22   // 车流方向半深
     readonly property real crossSpeed: 1.55     // 世界单位/秒
     readonly property real bciStepUnit: 0.5     // 脑控离散步长
-    readonly property real bciCarSpeedScale: 0.62
+    readonly property real trafficSpeedScale: 1.0
     readonly property real passMinClear: 1.05
-    readonly property real sceneScale: Math.max(0.55, Math.min((height - 170) / 470, width / 800, 2.4))
-    readonly property real sceneOffsetX: width / 2 - (originX + laneCount * crossDx / 2) * sceneScale
-    readonly property real sceneOffsetY: height - 125 - (originY + crossDy * 0.65) * sceneScale
-    readonly property real visibleVRadius: width / (2 * sceneScale * carDx) + laneCount * crossDx / (2 * carDx) + 3
+    readonly property real sceneScale: Math.max(0.45, Math.min(width / 1000, (height - 175) / 500, 2.4))
+    readonly property real sceneOffsetX: width / 2 - (originX + totalU * crossDx / 2) * sceneScale
+    readonly property real sceneOffsetY: height * 0.55
+    readonly property real visibleVRadius: height / (2 * sceneScale * carDy) + 3
     // Boundary only grows within a loaded instance: resizing narrower never culls existing cars.
     property real trafficBoundary: 12
     readonly property real vCull: trafficBoundary
@@ -46,8 +45,8 @@ Item {
     readonly property int maxCars: 0 // Renderer draws every active physical vehicle; no fixed pool
     readonly property real substep: 0.008
 
-    function projX(u, v) { return originX + u * crossDx + v * carDx }
-    function projY(u, v) { return originY - u * crossDy + v * carDy }
+    function projX(u, v) { return originX + u * crossDx }
+    function projY(u, v) { return v * carDy }
     function projScale(u) { return 1.0 / (1.0 + Math.max(0, u) * 0.055) }
     function clampNum(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v) }
     function r2(v) { return Math.round(v * 100) / 100 }
@@ -78,9 +77,11 @@ Item {
     property real phaseTimer: 0
     property real simTime: 0
     property real sessionTime: 0
+    property real islandWaitSeconds: 0
+    property bool islandOccupied: false
     property real crossingX: -0.6
-    property real finishX: 2.45
-    property int laneCount: 2
+    property real finishX: 7.25
+    property int laneCount: 6
     property var lanes: []
     property var cars: []
     property var carSlots: []
@@ -121,36 +122,19 @@ Item {
     // 关卡配置（V4 §8.2 五组可测难度）
     // ------------------------------------------------------------------
     function buildLevels() {
-        return [
-            { id: "C01", lanes: [
-                { dir: 1,  s0: 1.5, s1: 1.9, g0: 3.0, g1: 4.2, truckRatio: 0.0 },
-                { dir: -1, s0: 1.4, s1: 1.8, g0: 3.2, g1: 4.4, truckRatio: 0.0 }
-            ] },
-            { id: "C02", lanes: [
-                { dir: 1,  s0: 1.9, s1: 2.4, g0: 2.7, g1: 3.6, truckRatio: 0.0 },
-                { dir: -1, s0: 1.6, s1: 2.0, g0: 2.9, g1: 3.8, truckRatio: 0.0 },
-                { dir: 1,  s0: 2.2, s1: 2.6, g0: 2.6, g1: 3.4, truckRatio: 0.0 }
-            ] },
-            { id: "C03", lanes: [
-                { dir: -1, s0: 2.2, s1: 3.0, g0: 2.3, g1: 3.1, truckRatio: 0.0 },
-                { dir: 1,  s0: 2.6, s1: 3.2, g0: 2.2, g1: 2.9, truckRatio: 0.0 },
-                { dir: -1, s0: 2.0, s1: 2.6, g0: 2.4, g1: 3.2, truckRatio: 0.0 },
-                { dir: 1,  s0: 2.4, s1: 3.0, g0: 2.3, g1: 3.0, truckRatio: 0.0 }
-            ] },
-            { id: "C04", lanes: [
-                { dir: 1,  s0: 1.8, s1: 2.3, g0: 2.7, g1: 3.5, truckRatio: 0.30 },
-                { dir: -1, s0: 2.0, s1: 2.6, g0: 2.5, g1: 3.3, truckRatio: 0.75 },
-                { dir: 1,  s0: 2.3, s1: 2.9, g0: 2.4, g1: 3.1, truckRatio: 0.55 },
-                { dir: -1, s0: 1.9, s1: 2.4, g0: 2.6, g1: 3.4, truckRatio: 0.25 }
-            ] },
-            { id: "C05", lanes: [
-                { dir: 1,  s0: 2.4, s1: 3.0, g0: 2.1, g1: 2.8, truckRatio: 0.10 },
-                { dir: -1, s0: 2.2, s1: 2.8, g0: 2.2, g1: 2.9, truckRatio: 0.10 },
-                { dir: 1,  s0: 2.6, s1: 3.2, g0: 2.0, g1: 2.7, truckRatio: 0.10 },
-                { dir: -1, s0: 2.3, s1: 2.9, g0: 2.1, g1: 2.8, truckRatio: 0.10 },
-                { dir: 1,  s0: 2.5, s1: 3.1, g0: 2.1, g1: 2.8, truckRatio: 0.10 }
-            ] }
-        ]
+        var result = []
+        for (var round = 0; round < 5; ++round) {
+            var lanesForRound = []
+            for (var lane = 0; lane < 6; ++lane) {
+                var low = 1.35 + round * 0.24 + (lane % 3) * 0.13
+                var gap = 3.6 - round * 0.27 + (lane % 2) * 0.15
+                lanesForRound.push({dir: lane % 2 ? -1 : 1,
+                    s0: low, s1: low + 0.37, g0: gap, g1: gap + 1.0,
+                    truckRatio: round < 3 ? 0 : (round === 3 ? 0.25 : 0.38)})
+            }
+            result.push({id: "C0" + (round + 1), lanes: lanesForRound})
+        }
+        return result
     }
 
     // ------------------------------------------------------------------
@@ -182,7 +166,7 @@ Item {
             guard++
             var isTruck = rngNext(st) < laneCfg.truckRatio
             var len = isTruck ? 2.5 : (1.55 + rngNext(st) * 0.35)
-            var spd = rngRange(st, laneCfg.s0, laneCfg.s1) * (isBci ? bciCarSpeedScale : 1.0)
+            var spd = rngRange(st, laneCfg.s0, laneCfg.s1) * 1.0
             var kind = isTruck ? "truck" : (rngNext(st) < 0.3 ? "van" : "sedan")
             evs.push({ tc: t, speed: spd, len: len, kind: kind })
             t = t + rngRange(st, laneCfg.g0, laneCfg.g1)
@@ -256,7 +240,7 @@ Item {
             inputSource: inputSource,
             seed: seed,
             levelPlan: levelPlans.map(function (l) { return l.id }),
-            bciCarSpeedScale: isBci ? bciCarSpeedScale : 1.0,
+            trafficSpeedScale: trafficSpeedScale,
             crossSpeed: crossSpeed,
             pedHalfWidth: pedHalfWidth,
             pedHalfDepth: pedHalfDepth,
@@ -278,7 +262,8 @@ Item {
         levelIndex = idx
         var lv = levelPlans[idx]
         laneCount = lv.lanes.length
-        finishX = laneCount + 0.45
+        finishX = totalU + 0.45
+        islandWaitSeconds = 0; islandOccupied = false
         crossingX = -0.6
         bciTargetX = -0.6
         simTime = 0
@@ -304,8 +289,8 @@ Item {
             laneDesc.push({
                 lane: i,
                 dir: lv.lanes[i].dir,
-                speedRange: [r2(lv.lanes[i].s0 * (isBci ? bciCarSpeedScale : 1.0)),
-                             r2(lv.lanes[i].s1 * (isBci ? bciCarSpeedScale : 1.0))],
+                speedRange: [r2(lv.lanes[i].s0),
+                             r2(lv.lanes[i].s1)],
                 gapRange: [lv.lanes[i].g0, lv.lanes[i].g1],
                 minClearSec: r2(sch.minClear),
                 fairnessFix: sch.fairnessFix,
@@ -323,6 +308,8 @@ Item {
             attempt: attemptNo,
             seed: levelSeed,
             laneCount: laneCount,
+            islandWidth: islandWidth,
+            trafficSpeedScale: trafficSpeedScale,
             finishX: r2(finishX),
             startX: -0.6,
             lanes: laneDesc,
@@ -374,7 +361,7 @@ Item {
             inputSource: inputSource,
             elapsed: hostElapsed()
         })
-        toast.show(qsTr("被车撞到，本关重试"), "danger")
+        toast.show(qsTr("第 %1 车道碰撞，注意%2方来车").arg(car.lane+1).arg(car.dir>0?"上":"下"), "danger")
     }
 
     function onCrossingSuccess() {
@@ -507,6 +494,13 @@ Item {
     }
 
     function stepSim(dt) {
+        var safe = crossingX - pedHalfWidth >= 3 && crossingX + pedHalfWidth <= 3 + islandWidth
+        if (safe !== islandOccupied) {
+            game.record("traffic.island_transition", {inside:safe, t:simTime, waited:islandWaitSeconds, levelId:levelId})
+            islandOccupied = safe
+            if(safe) toast.show(qsTr("已到安全岛，可以停下观察"), "success")
+        }
+        if(safe && axisInput()===0) islandWaitSeconds += dt
         simTime += dt
         phaseTimer += dt
 
@@ -565,7 +559,7 @@ Item {
                 var prev = ln.events[ln.events.length-1], cfg=ln.cfg, st=ln.rng
                 var truck=rngNext(st)<cfg.truckRatio
                 var len=truck?2.5:1.55+rngNext(st)*0.35
-                var speed=rngRange(st,cfg.s0,cfg.s1)*(isBci?bciCarSpeedScale:1)
+                var speed=rngRange(st,cfg.s0,cfg.s1)*trafficSpeedScale
                 var kind=truck?"truck":(rngNext(st)<0.3?"van":"sedan")
                 var evNew={tc:ln.nextTime,speed:speed,len:len,kind:kind}
                 ln.nextTime += rngRange(st,cfg.g0,cfg.g1)
@@ -613,8 +607,8 @@ Item {
         var pHi = crossingX + pedHalfWidth
         for (var i = 0; i < cars.length; ++i) {
             var c = cars[i]
-            var laneLo = c.lane
-            var laneHi = c.lane + 1
+            var laneLo = laneLeft(c.lane)
+            var laneHi = laneRight(c.lane)
             if (pHi <= laneLo || pLo >= laneHi) continue
             if (Math.abs(c.v) <= c.len * 0.5 + pedHalfDepth) return c
         }
@@ -742,7 +736,7 @@ Item {
             if(!occupied) { signalState="walk"; signalTime=0; game.record("traffic.signal",{state:"walk",t:simTime,levelId:levelId}) }
         } else if(signalState === "walk" && signalTime >= walkDuration) {
             // A pedestrian already on the crossing retains clearance, including paused pulse input.
-            if(crossingX+pedHalfWidth<=0 || crossingX-pedHalfWidth>=laneCount) {
+            if(crossingX+pedHalfWidth<=0 || crossingX-pedHalfWidth>=totalU) {
                 signalState="drive"; signalTime=0; game.record("traffic.signal",{state:"drive",t:simTime,levelId:levelId})
             }
         }
@@ -754,116 +748,48 @@ Item {
         ctx.lineTo(projX(u1,v0),projY(u1,v0));ctx.lineTo(projX(u1,v1),projY(u1,v1));ctx.lineTo(projX(u0,v1),projY(u0,v1));ctx.closePath();ctx.fill()
     }
     function paintRoad(ctx) {
-        ctx.reset();ctx.fillStyle="#050505";ctx.fillRect(0,0,width,height)
-        ctx.translate(sceneOffsetX,sceneOffsetY);ctx.scale(sceneScale,sceneScale)
-        var worldLeft=-sceneOffsetX/sceneScale,worldRight=(width-sceneOffsetX)/sceneScale
-        var extent=visibleVRadius+5
-        // Calm architectural backdrop, storefronts and a planted destination promenade.
-        var top=projY(laneCount+1,0)
-        for(var b=Math.floor(worldLeft/85)-1;b<Math.ceil(worldRight/85)+1;b++) {
-            var bx=b*85-25, bh=52+(Math.abs(b)*31)%55
-            ctx.fillStyle=b%2?"#141a1a":"#101616";ctx.fillRect(bx,top-bh-20,77,bh)
-            for(var w=0;w<3;w++) for(var h=0;h<3;h++) {
-                ctx.fillStyle=(b+w+h)%4===0?"#605d43":"#242e2b"
-                ctx.fillRect(bx+10+w*21,top-bh-10+h*17,9,13)
-            }
-            ctx.fillStyle="#364039";ctx.fillRect(bx,top-bh-21,77,1)
-            ctx.fillStyle="#202e28";ctx.fillRect(bx+3,top-31,70,9)
+        ctx.reset()
+        ctx.fillStyle = "#0b1110"
+        ctx.fillRect(0, 0, width, height)
+        ctx.translate(sceneOffsetX, sceneOffsetY)
+        ctx.scale(sceneScale, sceneScale)
+        var extent = visibleVRadius + 3
+        quad(ctx, -1, 0, -extent, extent, "#34483d")
+        quad(ctx, totalU, totalU + 1, -extent, extent, "#34483d")
+        quad(ctx, 0, totalU, -extent, extent, "#182124")
+        for (var lane = 0; lane < 6; ++lane) {
+            var left = laneLeft(lane), right = laneRight(lane)
+            quad(ctx, left + .04, right - .04, -extent, extent, lane % 2 ? "#202b2d" : "#1b2527")
+            quad(ctx, left + .02, left + .035, -extent, extent, "#6a7772")
+            var x = projX(left + .5, 0)
+            ctx.fillStyle = "#a4b2aa"
+            ctx.font = uiTheme.canvasFont(19, true)
+            ctx.fillText(lanes.length > lane && lanes[lane].dir > 0 ? "↓" : "↑", x - 9, -2.35 * carDy)
+            ctx.fillText(String(lane + 1), x - 6, 2.45 * carDy)
+            // Mark the horizontal pedestrian route without changing collision geometry.
+            for (var stripe = 0; stripe < 5; ++stripe)
+                quad(ctx, left + .12 + stripe * .17, left + .20 + stripe * .17, -.42, .42, "#b6c0b1")
         }
-        quad(ctx,-2,0,-extent,extent,"#242927");quad(ctx,laneCount,laneCount+1.7,-extent,extent,"#292e2a")
-        for(var p=-extent;p<extent;p+=0.65){quad(ctx,-1.6,-0.03,p,p+0.018,"#353c36");quad(ctx,laneCount+0.05,laneCount+1.5,p,p+0.018,"#353c36")}
-        quad(ctx,0,laneCount,-extent,extent,"#101719")
-        for(var lane=0;lane<laneCount;lane++) {
-            quad(ctx,lane+0.06,lane+0.94,-extent,extent,lane%2?"#171e20":"#1a2122")
-            if(lane>0)for(var v=-extent;v<extent;v+=1.4)quad(ctx,lane-.012,lane+.012,v,v+.7,"#58625f")
-            // Broad zebra stripes span the entire road, each projected from world coordinates.
-            for(var u=lane+.07;u<lane+.96;u+=.25)quad(ctx,u,u+.14,-.73,.73,"#d6d7c9")
-            var dir=lanes.length>lane?lanes[lane].dir:1
-            quad(ctx,lane+.06,lane+.94,-dir*1.06-.035,-dir*1.06+.035,"#a4ad9e")
-            ctx.fillStyle="#717e77";ctx.font=uiTheme.canvasFont(21,false);ctx.fillText(dir>0?"→":"←",projX(lane+.5,3),projY(lane+.5,3)+5)
+        quad(ctx, 3, 3 + islandWidth, -extent, extent, "#496b50")
+        quad(ctx, 3.08, 3 + islandWidth - .08, -.75, .75, "#89ab77")
+        ctx.fillStyle = "#f0ead3"
+        ctx.font = uiTheme.canvasFont(15, true)
+        ctx.fillText("安全岛", projX(3.08,0), -1.0 * carDy)
+        ctx.fillText("起点", projX(-.75,0), -1.0 * carDy)
+        ctx.fillText("终点", projX(totalU+.15,0), -1.0 * carDy)
+        for (var i = 0; i < cars.length; ++i) {
+            var c = cars[i], cx = projX(laneLeft(c.lane) + .5, 0), cy = projY(0, c.v)
+            var cw = crossDx * .65, ch = c.len * carDy
+            ctx.fillStyle = "rgba(0,0,0,.25)"
+            ctx.fillRect(cx-cw/2+5, cy-ch/2+5, cw, ch)
+            ctx.fillStyle = c.kind === "truck" ? "#b4bcb2" : (c.lane % 2 ? "#8aa4a0" : "#d1ba86")
+            ctx.fillRect(cx-cw/2, cy-ch/2, cw, ch)
+            ctx.fillStyle = "#37535c"
+            ctx.fillRect(cx-cw*.34, cy-ch*.22, cw*.68, ch*.24)
+            ctx.fillStyle = c.dir > 0 ? "#fff0bf" : "#d36e68"
+            ctx.fillRect(cx-cw*.29, cy+(c.dir>0?ch*.38:-ch*.42), cw*.58, 5)
         }
-        quad(ctx,-.055,0,-extent,extent,"#7c877c");quad(ctx,laneCount,laneCount+.055,-extent,extent,"#7c877c")
-        quad(ctx,-.9,-.16,-.9,.9,"#35483d");quad(ctx,laneCount+.16,laneCount+.9,-.9,.9,"#3b5746")
-        ctx.fillStyle="#c6d9bf";ctx.font=uiTheme.canvasFont(14,true);ctx.fillText("安全等候",projX(-.65,-.65),projY(-.65,-.65)+4)
-        ctx.fillText("到岸目标",projX(laneCount+.65,-.65),projY(laneCount+.65,-.65)+4)
-        for(var tree=Math.floor(worldLeft/112)-1;tree<Math.ceil(worldRight/112)+1;tree++) {
-            var tx=tree*112+15,ty=top-9
-            ctx.fillStyle="#404b3a";ctx.fillRect(tx-3,ty-12,6,27)
-            ctx.fillStyle="#263c2c";ctx.beginPath();ctx.arc(tx,ty-21,19,0,Math.PI*2);ctx.fill()
-            ctx.fillStyle="#354d38";ctx.beginPath();ctx.arc(tx-6,ty-27,12,0,Math.PI*2);ctx.fill()
-        }
-        // Quiet pavement furniture, drainage and road-surface grain, all deterministic.
-        for(var g=0;g<190;g++) {
-            var gu=((g*137)%997)/997*laneCount,gv=((g*73)%911)/911*extent*2-extent
-            quad(ctx,gu,gu+.008,gv,gv+.05,g%2?"#242c2b":"#141b1d")
-        }
-        for(var gr=-extent;gr<extent;gr+=4) {
-            quad(ctx,-.08,-.02,gr,gr+.4,"#0b1111")
-            for(var slit=0;slit<4;slit++)quad(ctx,-.08,-.02,gr+.04+slit*.09,gr+.06+slit*.09,"#46514a")
-        }
-        // Depth-sort pedestrians and cars by road coordinate.
-        var objects=cars.slice();objects.push({ped:true,lane:crossingX-.5})
-        objects.sort(function(a,b){return b.lane-a.lane})
-        for(var i=0;i<objects.length;i++) {
-            var c=objects[i]
-            if(c.ped){ paintPerson(ctx);continue }
-            var x=projX(c.lane+.5,c.v),y=projY(c.lane+.5,c.v),len=c.len*carDx, hh=25
-            ctx.fillStyle="rgba(17,30,38,.25)";ctx.beginPath();ctx.ellipse(x+4,y+7,len*.55,13,0,0,Math.PI*2);ctx.fill()
-            // Tires, curved bodywork, cabin glass and directional lamps.
-            ctx.fillStyle="#202c33"
-            for(var wheel=0;wheel<2;wheel++) {
-                var wx=x+(wheel?1:-1)*len*.31
-                ctx.beginPath();ctx.arc(wx,y+1,7,0,Math.PI*2);ctx.fill()
-                ctx.fillStyle="#91a1a6";ctx.beginPath();ctx.arc(wx,y+1,3,0,Math.PI*2);ctx.fill();ctx.fillStyle="#202c33"
-            }
-            var colors=["#c4b384","#83998f","#7c9293","#bfc4b5","#788785"]
-            var colorIndex=(parseInt(String(c.id).split("-")[1]) || c.lane)%5
-            var body=ctx.createLinearGradient(0,y-26,0,y+1);body.addColorStop(0,colors[colorIndex]);body.addColorStop(1,Qt.darker(colors[colorIndex],1.25))
-            ctx.fillStyle=body
-            ctx.beginPath();ctx.moveTo(x-len/2+5,y-25);ctx.lineTo(x+len/2-8,y-25);ctx.quadraticCurveTo(x+len/2,y-23,x+len/2,y-14);ctx.lineTo(x+len/2,y-4);ctx.lineTo(x-len/2,y-4);ctx.lineTo(x-len/2,y-18);ctx.quadraticCurveTo(x-len/2,y-25,x-len/2+5,y-25);ctx.fill()
-            ctx.fillStyle=c.kind==="truck"?"#ece7da":colors[colorIndex]
-            ctx.beginPath();ctx.moveTo(x-len*.31,y-25);ctx.lineTo(x-len*.21,y-39);ctx.quadraticCurveTo(x,y-43,x+len*.21,y-38);ctx.lineTo(x+len*.33,y-25);ctx.closePath();ctx.fill()
-            ctx.fillStyle="#2d4b5d"
-            ctx.beginPath();ctx.moveTo(x-len*.25,y-27);ctx.lineTo(x-len*.17,y-36);ctx.lineTo(x-2,y-37);ctx.lineTo(x-2,y-27);ctx.closePath();ctx.fill()
-            ctx.beginPath();ctx.moveTo(x+2,y-27);ctx.lineTo(x+2,y-37);ctx.lineTo(x+len*.17,y-35);ctx.lineTo(x+len*.25,y-27);ctx.closePath();ctx.fill()
-            ctx.strokeStyle="rgba(234,249,251,.55)";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x-len*.16,y-34);ctx.lineTo(x-5,y-35);ctx.stroke()
-            ctx.fillStyle="rgba(255,255,255,.35)";ctx.fillRect(x-len/2+6,y-23,len-14,2)
-            ctx.fillStyle="#fff1c1";ctx.fillRect(x+c.dir*(len/2-5)-2,y-19,4,7)
-            ctx.fillStyle="#a94e45";ctx.fillRect(x-c.dir*(len/2-4)-2,y-18,3,6)
-            ctx.strokeStyle="rgba(36,61,72,.4)";ctx.beginPath();ctx.moveTo(x,y-24);ctx.lineTo(x,y-7);ctx.stroke()
-            ctx.fillStyle="#40565d";ctx.fillRect(x+3,y-20,6,2)
-            if(c.kind==="truck") {
-                var cargoX=c.dir>0?x-len*.46:x-len*.04
-                var cargo=ctx.createLinearGradient(0,y-49,0,y-7);cargo.addColorStop(0,"#a9b2a2");cargo.addColorStop(1,"#66776d")
-                ctx.fillStyle=cargo;ctx.fillRect(cargoX,y-49,len*.5,38)
-                ctx.strokeStyle="#c2c7b7";ctx.lineWidth=.7;ctx.strokeRect(cargoX+.5,y-48.5,len*.5-1,37)
-                for(var rib=1;rib<5;rib++){ctx.strokeStyle="#56695f";ctx.beginPath();ctx.moveTo(cargoX+rib*len*.1,y-46);ctx.lineTo(cargoX+rib*len*.1,y-13);ctx.stroke()}
-            }
-        }
-        // Vehicle signals are distinct from the pedestrian signals at the zebra crossing.
-        for(var vs=0;vs<2;vs++) {
-            var vx=projX(vs?laneCount+.12:-.15,vs?-3.2:3.2),vy=projY(vs?laneCount+.12:-.15,vs?-3.2:3.2)
-            ctx.fillStyle="#6d7b70";ctx.fillRect(vx-2,vy-58,4,58)
-            ctx.fillStyle="#141f1d";ctx.fillRect(vx-13,vy-89,26,65)
-            var lampColors=["#ff7f70","#f4cc71","#6bdc9f"]
-            var lamp=signalState==="drive"?2:signalState==="clear"?1:0
-            for(var l=0;l<3;l++){ctx.fillStyle=l===lamp?lampColors[l]:"#2e3931";ctx.beginPath();ctx.arc(vx,vy-77+l*17,5.5,0,Math.PI*2);ctx.fill()}
-        }
-        for(var side=0;side<2;side++) {
-            var su=side?laneCount+.19:-.22,sv=side?1.55:-1.55,sx=projX(su,sv),sy=projY(su,sv)
-            ctx.fillStyle="#6d7b70";ctx.fillRect(sx-3,sy-58,6,58)
-            ctx.fillStyle="#141f1d";ctx.fillRect(sx-13,sy-78,26,41)
-            ctx.fillStyle=walkGreen?"#59e7a8":"#f7766d";ctx.beginPath();ctx.arc(sx,sy-64,7,0,Math.PI*2);ctx.fill()
-            ctx.fillStyle="#e9f2ef";ctx.font=uiTheme.canvasFont(14,true);ctx.fillText(walkGreen?"行":"停",sx-7,sy-43)
-        }
-        // Atmosphere dissolves the street into the open black field; no panel boundary.
-        ctx.resetTransform()
-        var skyFade=ctx.createLinearGradient(0,82,0,Math.max(190,sceneOffsetY+137*sceneScale))
-        skyFade.addColorStop(0,"#050505");skyFade.addColorStop(1,"rgba(5,5,5,0)")
-        ctx.fillStyle=skyFade;ctx.fillRect(0,0,width,Math.max(190,sceneOffsetY+137*sceneScale))
-        var foregroundFade=ctx.createLinearGradient(0,height-126,0,height-8)
-        foregroundFade.addColorStop(0,"rgba(5,5,5,0)");foregroundFade.addColorStop(1,"#050505")
-        ctx.fillStyle=foregroundFade;ctx.fillRect(0,height-126,width,126)
+        paintPerson(ctx)
     }
     function paintPerson(ctx) {
         var x=projX(crossingX,0),y=projY(crossingX,0),stride=movingNow?Math.sin(walkPhase)*5:0

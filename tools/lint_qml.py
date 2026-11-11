@@ -11,6 +11,7 @@ qmllint 来自 PySide6（pip install PySide6 后位于 Scripts/pyside6-qmllint.e
 它和游戏运行时的 Qt 版本不必一致，检查的是 QML 语法与属性解析。
 """
 import os
+import json
 import re
 import shutil
 import subprocess
@@ -18,7 +19,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-GAMES = ["hanoi", "sokoban", "target", "pursuit", "claw", "traffic", "luban", "rhythm"]
+GAMES = json.loads(open(os.path.join(ROOT, "config", "active_games.json"), encoding="utf-8").read())["games"]
 
 # qmllint 报 <file>:<line>:<col>: <msg> [<category>]
 LINE_RE = re.compile(r"^(Warning|Error|Info): (.+?):(\d+):(\d+): (.+?)(?: \[([a-z-]+)\])?$")

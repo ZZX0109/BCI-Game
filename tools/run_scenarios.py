@@ -1,126 +1,67 @@
-"""批量跑自动取证场景。
-
-用法：
-    python tools/run_scenarios.py hanoi [场景名过滤]
-    python tools/run_scenarios.py all
-
-产出：docs/logs/autoplay/<game>__<场景>.json（含事件流与逐条断言）
-"""
-import importlib.util
-import io
+"""Run every V5 active game's real QML/logic verifier and save this run's logs."""
 import json
 import os
+from pathlib import Path
+import subprocess
 import sys
-import traceback
+from datetime import datetime, timezone
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(HERE)
-sys.path.insert(0, HERE)
-
-import fake_host  # noqa: E402
-
-OUT_DIR = os.path.join(ROOT, "docs", "logs", "autoplay")
-GAMES = ["hanoi", "sokoban", "pursuit", "target", "claw", "traffic", "luban"]
-
-
-def load_scenarios(game):
-    path = os.path.join(HERE, "scenarios", f"{game}.py")
-    if not os.path.exists(path):
-        return {}
-    spec = importlib.util.spec_from_file_location(f"scen_{game}", path)
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return getattr(mod, "SCENARIOS", {})
-
-
-def slug(name):
-    return "".join(ch if ch.isalnum() else "_" for ch in name).strip("_")
-
-
-def run_one(game, name, func):
-    # 场景可写成 (函数, {"input_source": "bci"})，用于验证脑控专用通道。
-    opts = {}
-    if isinstance(func, tuple):
-        func, opts = func
-    buf = io.StringIO()
-    old = sys.stdout
-    sys.stdout = buf
-    runner = None
-    error = None
-    try:
-        print(f"\n--- {game} / {name} ---")
-        runner = fake_host.Runner(game, ROOT, input_source=opts.get("input_source", "local"))
-        runner.boot()
-        if runner.errors:
-            raise RuntimeError("; ".join(runner.errors))
-        func(runner)
-    except Exception:
-        error = traceback.format_exc()
-        print(error)
-    finally:
-        sys.stdout = old
-
-    text = buf.getvalue()
-    print(text)
-    checks = runner.checks if runner else []
-    passed = sum(1 for c in checks if c["ok"])
-    ok = error is None and checks and passed == len(checks)
-
-    record = {
-        "game": game,
-        "scenario": name,
-        "ok": ok,
-        "passed": passed,
-        "total": len(checks),
-        "error": error,
-        "checks": checks,
-    }
-    if runner is not None:
-        transcript = runner.transcript()
-        record["simSeconds"] = transcript["simSeconds"]
-        record["finished"] = transcript["finished"] is not None
-        record["eventCount"] = len(transcript["events"])
-        record["events"] = transcript["events"]
-    os.makedirs(OUT_DIR, exist_ok=True)
-    out = os.path.join(OUT_DIR, f"{game}__{slug(name)}.json")
-    with open(out, "w", encoding="utf-8") as f:
-        json.dump(record, f, ensure_ascii=False, indent=2)
-    return record, out
-
+ROOT = Path(__file__).resolve().parents[1]
+GAMES = json.loads((ROOT / 'config/active_games.json').read_text(encoding='utf-8'))['games']
+PYTHON = sys.executable
+COMMANDS = {
+    'hanoi': [[PYTHON, 'hanoi/tests/verify_1106.py']],
+    'sokoban': [[PYTHON, 'tools/verify_sokoban_levels.py'], [PYTHON, 'sokoban/tests/verify_1106.py']],
+    'pointer': [[PYTHON, 'pointer/tests/verify_1106.py']],
+    'claw': [[PYTHON, 'claw/tests/verify_1106.py'], [PYTHON, 'claw/tests/verify_v5_near_miss.py']],
+    'traffic': [[PYTHON, 'traffic/tests/verify_v5.py']],
+    'luban': [[PYTHON, 'luban/tools/luban_solver.py'], [PYTHON, 'luban/tests/verify_1106.py']],
+    'rhythm': [['node', 'rhythm/tests/test_engine.js'], [PYTHON, 'rhythm/tests/verify_v5_visual.py'], [PYTHON, 'rhythm/tests/verify_input_feedback.py']],
+}
 
 def main():
-    targets = sys.argv[1:] or ["all"]
-    if targets == ["all"]:
-        games = GAMES
-        filt = ""
-    else:
-        games = [targets[0]]
-        filt = targets[1] if len(targets) > 1 else ""
-
-    rows = []
+    if len(sys.argv) > 1 and sys.argv[1] == '--legacy':
+        return subprocess.call([PYTHON, 'tools/legacy_run_scenarios.py', *(sys.argv[2:] or ['all'])], cwd=ROOT)
+    target = sys.argv[1] if len(sys.argv)>1 else 'all'
+    games = GAMES if target == 'all' else [target]
+    if any(game not in GAMES for game in games):
+        print('未知活动游戏: ' + target, file=sys.stderr)
+        return 2
+    out = ROOT / 'tests/results/v5-run-scenarios'
+    out.mkdir(parents=True, exist_ok=True)
+    checks = []
     for game in games:
-        scenarios = load_scenarios(game)
-        if not scenarios:
-            print(f"!! {game} 暂无场景")
-            continue
-        for name, func in scenarios.items():
-            if filt and filt not in name:
-                continue
-            rec, path = run_one(game, name, func)
-            rows.append((game, name, rec, path))
+        for number, command in enumerate(COMMANDS[game], start=1):
+            env = os.environ.copy()
+            if (game == 'luban' and command[-1].endswith('verify_1106.py')) or game == 'pointer' or command[-1].endswith('verify_input_feedback.py'):
+                env.pop('QT_QUICK_BACKEND', None)
+                env.update(DISPLAY=':88', QT_QPA_PLATFORM='xcb', QSG_RHI_BACKEND='opengl', LIBGL_ALWAYS_SOFTWARE='1')
+            elif command[0] != 'node':
+                env['QT_QPA_PLATFORM'] = 'offscreen'
+            proc = subprocess.run(command, cwd=ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+            log = out / f'{game}-{number}.log'
+            log.write_text(proc.stdout)
+            checks.append({'game':game,'command':command,'exitCode':proc.returncode,'passed':proc.returncode==0,'log':str(log.relative_to(ROOT))})
+            print(f'{game} {number}: {"PASS" if proc.returncode==0 else "FAIL"} ({log.relative_to(ROOT)})', flush=True)
+    if target == 'all':
+        for name, command in (
+            ('path-replay',['node','tests/test_random_path.js']),
+            ('package',[PYTHON,'tests/package_v5.py']),
+            ('sync-preview',[PYTHON,'tests/test_sync_v5.py']),
+            ('qml-lint',[PYTHON,'tools/lint_qml.py']),
+            ('adaptive-viewports',[PYTHON,'tests/verify_adaptive_viewports.py']),
+        ):
+            env = {**os.environ, 'QT_QPA_PLATFORM': 'offscreen'}
+            if name == 'adaptive-viewports':
+                env.update(DISPLAY=':88', QT_QPA_PLATFORM='xcb', QSG_RHI_BACKEND='opengl', LIBGL_ALWAYS_SOFTWARE='1')
+            proc = subprocess.run(command,cwd=ROOT,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
+            log=out/f'{name}.log';log.write_text(proc.stdout)
+            checks.append({'game':name,'command':command,'exitCode':proc.returncode,'passed':proc.returncode==0,'log':str(log.relative_to(ROOT))})
+            print(f'{name}: {"PASS" if proc.returncode==0 else "FAIL"}', flush=True)
+    source = subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    report={'utc':datetime.now(timezone.utc).isoformat(),'sourceHead':source,'activeGames':GAMES,'checks':checks,'passed':sum(c['passed'] for c in checks),'total':len(checks)}
+    (out/'result.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+    return 0 if report['passed']==report['total'] else 1
 
-    print("\n" + "=" * 78)
-    print(f"{'游戏':<10}{'场景':<26}{'断言':<10}结果")
-    print("-" * 78)
-    for game, name, rec, _ in rows:
-        flag = "PASS" if rec["ok"] else "FAIL"
-        extra = "" if rec["error"] is None else "  ← 异常"
-        print(f"{game:<10}{name:<26}{rec['passed']}/{rec['total']:<8}{flag}{extra}")
-    bad = [r for r in rows if not r[2]["ok"]]
-    print("-" * 78)
-    print(f"合计 {len(rows)} 个场景，{len(rows) - len(bad)} 个全绿，{len(bad)} 个有问题")
-    return 1 if bad else 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+if __name__ == '__main__':
+    raise SystemExit(main())

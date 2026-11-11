@@ -1,0 +1,7 @@
+hanoi: PASS
+sokoban: PASS
+claw: PASS
+pursuit: PASS
+target: PASS
+traffic: PASS
+luban: PASS

@@ -50,3 +50,5 @@
 - 开发启动：`Neuralife.exe --game-dev <id> --games-dev-root "C:\Users\Ait\Desktop\Neuralife" --game-smoke --game-screenshot <png>`。
 - 语法检查：`python tools/check_qml.py <qml>`（括号平衡）。
 - 玩法级验收（多步操作序列）无法由 smoke 代替，需人工键鼠或脚本输入 —— 验收表如实标注 PASS / PARTIAL / NOT_TESTED。
+
+> V5 提醒（2026-11-10）：本表记录 2026-11-02 的旧目标环境，后续补装见 `docs/luban_3d_deployment.md`。用户本轮上传的精简 Demo 包仍未包含完整 Quick3D。请以实际待部署客户端重新核对，不能把历史宿主 PASS 当作 V5 通过。

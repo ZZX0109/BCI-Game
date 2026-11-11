@@ -1,6 +1,6 @@
 # 四向律动 1.1
 
-Native Qt Quick game module; moduleId=rhythm, effector=2. The session begins with a settings screen and then runs the existing five rounds.
+Native Qt Quick game module; moduleId=rhythm, effector=2. The session begins with a settings screen and then runs the three rounds: four-direction teaching, hold teaching, and mixed practice.
 
 ## Difficulty presets
 
