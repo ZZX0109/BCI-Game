@@ -660,7 +660,7 @@ Item {
             height: Math.max(1, root.height - root.sceneTop - root.sceneBottom)
             color: "transparent"
             clip: false
-            readonly property real tolPx: root.roundCfg.tolerance * Math.min(width, height)
+            readonly property real tolPx: root.tolerancePx
 
             // 容差圈（目标可见时）
             Rectangle {
