@@ -267,13 +267,14 @@ Item {
         Rectangle {
             objectName: "rhythmSignalBanner"
             visible: board.signalActive
-            x: parent.width/2-140; y: board.lineY-64; width: 280; height: 44; radius: 10
+            x: parent.width/2-170; y: board.lineY-64; width: 340; height: 44; radius: 10
             color: board.signalActive && board.feedbackSignal === "hit" ? "#1d3a26" : "#2a2a2a"
             border.width: board.signalActive && board.feedbackSignal === "mistiming" && (board.clock*6%1<.5) ? 3 : 1
             border.color: board.signalColor; opacity: .95
             Text {
                 anchors.centerIn: parent; text: root.feedback
-                color: board.signalColor; font { family: uiTheme.fontFamily; pixelSize: 18; bold: true }
+                elide: Text.ElideRight; maximumLineCount: 1
+                color: board.signalColor; font { family: uiTheme.fontFamily; pixelSize: root.feedback.length > 22 ? 14 : 18; bold: true }
             }
         }
         Repeater {

@@ -126,10 +126,10 @@ Item {
         for (var round = 0; round < 5; ++round) {
             var lanesForRound = []
             for (var lane = 0; lane < 6; ++lane) {
-                var low = 1.35 + round * 0.24 + lane * 0.17
+                var low = 1.35 + round * 0.24 + lane * 0.38
                 var gap = 3.6 - round * 0.27 + (lane % 2) * 0.15
                 lanesForRound.push({dir: lane % 2 ? -1 : 1,
-                    s0: low, s1: low + 0.22, g0: gap, g1: gap + 1.0,
+                    s0: low, s1: low + 0.08, g0: gap, g1: gap + 1.0,
                     truckRatio: round < 3 ? 0 : (round === 3 ? 0.25 : 0.38)})
             }
             result.push({id: "C0" + (round + 1), lanes: lanesForRound})

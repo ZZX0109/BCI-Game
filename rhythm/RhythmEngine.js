@@ -162,7 +162,7 @@ function input(s,name,pressed){
             else{
                 s.correctInputs++;n.delta=s.t-n.time;raw.classification="matched";raw.expected=n.dir;raw.note=n.id;raw.delta=n.delta
                 s.feedbackDir=name;s.feedbackKind="success";s.feedbackSignal="hit"
-                if(n.duration>0){n.status="holding";n.until=s.t+s.cfg.pulseValidity;s.feedback=(s.cfg.inputMode==="held"?"保持方向，直到长尾结束":"继续发送同方向脉冲")+" · "+(n.delta<0?"提前 ":"延后 ")+Math.round(Math.abs(n.delta)*1000)+" ms"}
+                if(n.duration>0){n.status="holding";n.until=s.t+s.cfg.pulseValidity;s.feedback=(s.cfg.inputMode==="held"?"保持住":"脉冲续持")+" · "+(n.delta<0?"提前 ":"延后 ")+Math.round(Math.abs(n.delta)*1000)+" ms"}
                 else{outcome(s,n,"hit");s.feedback="方向匹配 · "+(n.delta<-.05?"提前 ":n.delta>.05?"延后 ":"贴近节拍 ")+Math.round(Math.abs(n.delta)*1000)+" ms"}
             }
             s.feedbackUntil=s.t+1.3
