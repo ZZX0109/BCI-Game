@@ -21,8 +21,7 @@ FocusScope {
     property var latestResult: ({})
     property var configs: ({ pursuit: {}, target: {} })
     property string errorText: ""
-    property real diagX: -100
-    property real diagY: -100
+
     readonly property var modes: ["pursuit", "target"]
     readonly property var names: [qsTr("追光球 · 持续追踪"), qsTr("精准打靶 · 目标定位")]
     SharedUI.GameTheme { id: uiTheme }
@@ -122,7 +121,6 @@ FocusScope {
             // Native MouseAreas never see the OS cursor (host intercepts and
             // forwards via onPointer). Drive hover/selection from the canvas
             // point so the click-to-confirm flow works for mouse users too.
-            diagX = p.x; diagY = p.y
             // Cards row spans root width; the two cards split it with 16px gap.
             selection = p.x < width / 2 ? 0 : 1
         }
@@ -250,29 +248,8 @@ FocusScope {
         }
     }
 
-    MouseArea {
-        anchors.fill: parent; hoverEnabled: true; z: -5
-        propagateComposedEvents: true
-        onPositionChanged: function(m) { root.diagX = m.x; root.diagY = m.y }
-    }
     Rectangle { anchors.fill: parent; color: uiTheme.background; z: -1 }
-    // 诊断：真实鼠标事件的落点可视化（菜单阶段）。红点=QML MouseArea 收到的位置。
-    Rectangle {
-        objectName: "diagMouseDot"
-        visible: root.phase === "menu"
-        z: 999
-        width: 24; height: 24; radius: 12
-        color: "#ff3355"
-        border.color: "white"; border.width: 2
-        x: root.diagX - 12; y: root.diagY - 12
-    }
-    Text {
-        visible: root.phase === "menu"
-        z: 999
-        x: 20; y: 20
-        color: "#ff3355"; font { family: uiTheme.fontFamily; pixelSize: 16; bold: true }
-        text: "鼠标: %1,%2".arg(Math.round(root.diagX)).arg(Math.round(root.diagY))
-    }
+
     Column {
         visible: root.phase !== "running"
         anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter; margins: Math.max(20, root.width * 0.05) }
