@@ -251,7 +251,7 @@ Item {
     property var smoothAnchors: []
 
     readonly property real error: distanceError(ballX, ballY)
-    readonly property real tolerancePx: roundCfg.tolerance * 22
+    readonly property real tolerancePx: roundCfg.tolerance * 26
     readonly property real toleranceNorm: tolerancePx / Math.max(1, Math.min(scene.width, scene.height))
     readonly property bool inZone: inputReady && targetVisible && error <= toleranceNorm
     readonly property real remaining: Math.max(0, roundDuration - roundElapsed)
@@ -678,9 +678,9 @@ Item {
                 // 目标球（琥珀色，与玩家球区分）
                 Rectangle {
                     visible: root.targetVisible && root.phase === "playing"
-                    x: root.targetX * scene.width - 22
-                    y: root.targetY * scene.height - 22
-                    width: 44; height: 44; radius: 22
+                    x: root.targetX * scene.width - 26
+                    y: root.targetY * scene.height - 26
+                    width: 52; height: 52; radius: 26
                     color: "#D7C4A0"
                     border.width: 1; border.color: "#F0E5CE"
                     Rectangle { anchors.centerIn: parent; width: 28; height: 28; radius: 14; color: "transparent"; border.width: 1; border.color: "#A58E65" }
@@ -717,11 +717,11 @@ Item {
                 visible: root.phase === "playing"
                 x: root.ballX * scene.width - width / 2
                 y: root.ballY * scene.height - height / 2
-                width: 32; height: 32; radius: 16
+                width: 38; height: 38; radius: 19
                 color: "#DDEBE5"
                 border.width: 2; border.color: root.inZone ? "#FFFFFF" : "#77968B"
-                Rectangle { anchors.centerIn: parent; width: 12; height: 12; radius: 6; color: "#648277" }
-                Rectangle { x: 8; y: 6; width: 6; height: 3; radius: 1.5; color: "#FFFFFF"; opacity: 0.7 }
+                Rectangle { anchors.centerIn: parent; width: 14; height: 14; radius: 7; color: "#648277" }
+                Rectangle { x: 9; y: 7; width: 7; height: 4; radius: 2; color: "#FFFFFF"; opacity: 0.7 }
             }
 
             // 倒计时
