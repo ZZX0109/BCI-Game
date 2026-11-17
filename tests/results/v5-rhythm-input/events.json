@@ -459,8 +459,9 @@
     "source": "local",
     "name": "rhythm.input",
     "data": {
-      "classification": "release",
+      "classification": "early_release",
       "name": "up",
+      "note": "r2n1",
       "pressed": false,
       "round": 2,
       "roundTime": 4.354666666665981,

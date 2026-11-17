@@ -1,11 +1,20 @@
-Failed to create /home/agent/.cache/mesa_shader_cache for shader cache (Read-only file system)---disabling.
-Failed to create /home/agent/.cache/mesa_shader_cache_db for shader cache (Read-only file system)---disabling.
-Fontconfig error: No writable cache directories
+QFontDatabase: Cannot find font directory D:/SoftwareManagement/dev/Python312/Lib/site-packages/PySide6/lib/fonts.
+Note that Qt no longer ships fonts. Deploy some (from https://dejavu-fonts.github.io/ for example) or switch to fontconfig.
+qt.qml.context: file:///C:/Users/Ait/Desktop/Neuralife/pointer/Main.qml:292:25 Parameter "mouse" is not declared. Injection of parameters into signal handlers is deprecated. Use JavaScript functions with formal parameters instead.
+QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
+qt.qml.context: file:///C:/Users/Ait/Desktop/Neuralife/pointer/Main.qml:292:25 Parameter "mouse" is not declared. Injection of parameters into signal handlers is deprecated. Use JavaScript functions with formal parameters instead.
+QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
+qt.qml.context: file:///C:/Users/Ait/Desktop/Neuralife/pointer/Main.qml:292:25 Parameter "mouse" is not declared. Injection of parameters into signal handlers is deprecated. Use JavaScript functions with formal parameters instead.
 QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
 QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
 QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
 QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
+qt.qml.context: file:///C:/Users/Ait/Desktop/Neuralife/pointer/Main.qml:292:25 Parameter "mouse" is not declared. Injection of parameters into signal handlers is deprecated. Use JavaScript functions with formal parameters instead.
 QQuickItem: Cannot set activeFocusOnTab to false once item is the active focus item.
+qt.qml.context: file:///C:/Users/Ait/Desktop/Neuralife/pointer/Main.qml:292:25 Parameter "mouse" is not declared. Injection of parameters into signal handlers is deprecated. Use JavaScript functions with formal parameters instead.
+qt.qml.context: file:///C:/Users/Ait/Desktop/Neuralife/pointer/Main.qml:292:25 Parameter "mouse" is not declared. Injection of parameters into signal handlers is deprecated. Use JavaScript functions with formal parameters instead.
+qt.qml.context: file:///C:/Users/Ait/Desktop/Neuralife/pointer/Main.qml:292:25 Parameter "mouse" is not declared. Injection of parameters into signal handlers is deprecated. Use JavaScript functions with formal parameters instead.
+qt.qml.context: file:///C:/Users/Ait/AppData/Local/Temp/pointer-llmiaad6/games/pointer/Main.qml:292:25 Parameter "mouse" is not declared. Injection of parameters into signal handlers is deprecated. Use JavaScript functions with formal parameters instead.
 PASS local: selection ready before task clock
 PASS local: pursuit runtime identity and source
 PASS local: full child canvas
@@ -95,11 +104,13 @@ PASS target: (1920, 1080) window relocation preserves pointer space
 PASS target: (1920, 1080) BCI cannot be overwritten by local mouse
 PASS target: (1920, 1080) native mouse center/corners/edges align
 PASS target: (1920, 1080) native mouse screen position survives window move
-PASS local: host actions cannot start mouse menu
+PASS local: menu keyboard select starts task
+PASS mouse click enters clicked target mode
 PASS local: nested pursuit 1000x700 nine mouse points align after host event
 PASS local: nested pursuit 1280x800 nine mouse points align after host event
 PASS local: nested pursuit 1920x1080 nine mouse points align after host event
-PASS bci: host actions cannot start mouse menu
+PASS bci: menu keyboard select starts task
+PASS mouse click enters clicked target mode
 PASS bci: nested pursuit 1000x700 nine mouse points align after host event
 PASS bci: nested pursuit 1280x800 nine mouse points align after host event
 PASS bci: nested pursuit 1920x1080 nine mouse points align after host event
@@ -120,7 +131,7 @@ PASS pursuit: late started cannot revive stopped standalone task
 PASS target: late started cannot revive stopped standalone task
 PASS suite: host-first native/host cannot change mouse menu
 PASS suite: native-first native/host cannot change mouse menu
-PASS suite: Enter cannot start a task from mouse menu
+PASS suite: Enter starts selected task from menu
 PASS suite: target receives namespaced config without pursuit leakage
 PASS suite: config write preserves other child namespace
 PASS suite: stopped session cannot revive and does not finish
@@ -133,4 +144,4 @@ PASS deployment: one discoverable TaskDefinition at every depth
 PASS deployment: legacy source descriptors untouched
 PASS deployment: packaged pursuit loads and starts
 PASS deployment: packaged target loads and starts
-127/127 checks passed; scale=1
+129/129 checks passed; scale=1

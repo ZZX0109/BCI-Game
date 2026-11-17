@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-16",
+  "checks": {
+    "all_25_cleanup_paths_absent": true,
+    "all_cleanup_states_complete": true,
+    "root_markdown_only_three": true,
+    "local_preserved_source_and_evidence_hashes": true,
+    "host_130_preserved_hashes": true,
+    "host_discovery_unchanged": true,
+    "changed_document_links_resolve": true
+  },
+  "localPreservedFiles": 170,
+  "linksChecked": 58,
+  "brokenLinks": [],
+  "cleanupCounts": {
+    "deleted-via-source-patch": 13,
+    "recycled": 12
+  },
+  "plannedBytes": 125613352,
+  "restorePreview": "20 items verified; not applied",
+  "unityProcesses": []
+}

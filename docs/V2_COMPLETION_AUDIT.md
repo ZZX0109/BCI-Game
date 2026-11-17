@@ -1,3 +1,0 @@
-# 历史 V2 审查
-
-原文件已归档：[archive/v4_20261105/V2_COMPLETION_AUDIT.md](archive/v4_20261105/V2_COMPLETION_AUDIT.md)。当前状态见 [STATUS_CURRENT.md](../STATUS_CURRENT.md)。

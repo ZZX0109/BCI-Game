@@ -1,0 +1,16 @@
+[submodule "Unity/Game01-Sokoban"]
+	path = Unity/Game01-Sokoban
+	url = https://github.com/ZZX0109/UnityGame-for-BCI.git
+	branch = codex/optimize-game01
+[submodule "Unity/Game02-ClawMachine"]
+	path = Unity/Game02-ClawMachine
+	url = https://github.com/ZZX0109/UnityGame-for-BCI.git
+	branch = codex/optimize-game02
+[submodule "Unity/Game03-StreetCrossing"]
+	path = Unity/Game03-StreetCrossing
+	url = https://github.com/ZZX0109/UnityGame-for-BCI.git
+	branch = codex/optimize-game03
+[submodule "Unity/Game04-VirtualHand"]
+	path = Unity/Game04-VirtualHand
+	url = https://github.com/ZZX0109/UnityGame-for-BCI.git
+	branch = codex/virtual-hand

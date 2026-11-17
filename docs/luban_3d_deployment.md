@@ -1,7 +1,7 @@
 # 宿主 Qt Quick 3D 部署报告（luban 前置条件）
 
 > 状态：**已完成部署并验证**（2026-11-03）
-> 之前 `docs/luban_3d_block_report.md` 记录的 `LUBAN-3D BLOCKED` 由此解除。
+> 之前 [历史阻断报告](archive/v4_20261105/luban_3d_block_report.md) 记录的 `LUBAN-3D BLOCKED` 在当时环境由此解除。此文是 2026-11-03 的部署记录，当前目标机结论以 [STATUS_CURRENT.md](../STATUS_CURRENT.md) 为准。
 
 ## 1. 为什么需要这一步
 

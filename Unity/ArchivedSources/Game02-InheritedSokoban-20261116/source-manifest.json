@@ -1,0 +1,982 @@
+[
+  {
+    "path": "Assets/FirstPersonSokoban/Editor.meta",
+    "bytes": 172,
+    "sha256": "a8e214ce4ff0ebebd1c38b1c635103e4ffc776bf52ab7e1b7abccc3e89e330c2"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources.meta",
+    "bytes": 172,
+    "sha256": "50addf8af7bf0b1e745940f1e1ce51d86ad5b4a1b364e71dff0befbb08ff8a1a"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scenes.meta",
+    "bytes": 172,
+    "sha256": "3bf0ac94ae9086966575e53bdeb5260d036655784a40eda68b91e36e20e50829"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts.meta",
+    "bytes": 172,
+    "sha256": "8d0012942347042594a3a24ade95ab12f9de1250a6238f5f7e01bf98eded2ba3"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests.meta",
+    "bytes": 172,
+    "sha256": "8d37f443dfbef529b9b54483bedb8328bfe42349d69aa0033facb847e5b3f427"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Editor/DeliveryBuild.cs",
+    "bytes": 9191,
+    "sha256": "73b133486b0c1be965ecf741b830745b262fad05ccec4430922b2d63c3d779ac"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Editor/DeliveryBuild.cs.meta",
+    "bytes": 240,
+    "sha256": "2eac8c3139b1ea768493faefc6f9991c7c419791efe28de1e17c714ca8fd97a5"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Editor/FirstPersonSokoban.Editor.asmdef",
+    "bytes": 396,
+    "sha256": "d7f2ba591b82284a909d65b5c3e9e278a8b9fa56664855e693d50701d5384fb0"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Editor/FirstPersonSokoban.Editor.asmdef.meta",
+    "bytes": 166,
+    "sha256": "1158344f4b51ff75c4782cc4a8a51b72cf3a84d01f9a92dccea28b09988473e7"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Editor/LevelValidationMenu.cs",
+    "bytes": 1260,
+    "sha256": "ff9ff14be323491ec76ce260561e4189fa6cfb0caf78a4a8726d4680ddcabed7"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Editor/LevelValidationMenu.cs.meta",
+    "bytes": 243,
+    "sha256": "7f99797fd0b099145474d9a5a88640a0d8a4d865d6734a333e0882501ae79c5e"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Editor/ProjectSetup.cs",
+    "bytes": 10490,
+    "sha256": "bdee54a413a1ce143a6b45e60ecdbb04acf78f65fc5a157442fddd420c577b1a"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Editor/ProjectSetup.cs.meta",
+    "bytes": 243,
+    "sha256": "5950b4477b4c61301e6083e28413b1c125ea5cf4c63086c06821918f61a94c18"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Fonts.meta",
+    "bytes": 169,
+    "sha256": "a5ebb1626fdf13bcc69cd69c92db8aa5f8c9d7d813e3003eadcd628111e7a583"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/LevelCatalog.json",
+    "bytes": 1620,
+    "sha256": "0f19edbae2d7d2693e0952c6908b08bd01a36e0e359ca3dfa6e685304f9ed420"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/LevelCatalog.json.meta",
+    "bytes": 158,
+    "sha256": "34c3fd2904f8aa9b4690c83369f497daf5c74d8d345a1359ed348689452d450c"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels.meta",
+    "bytes": 172,
+    "sha256": "1de631dbc7cb75149949e262d46ce97d1902be26b5042eb4678f8feadc1f1cf5"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials.meta",
+    "bytes": 172,
+    "sha256": "038881d9c7531bc700940a69ea1e10ae7ec7d6fe61964b4f9f4cc1854b3fbbcc"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Prefabs.meta",
+    "bytes": 172,
+    "sha256": "7f88136284d4b59c065797259abfe3948684bb7817440579a5ba400c24e46651"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Fonts/GlyphCoverage.json",
+    "bytes": 9718,
+    "sha256": "6831e209a04cf006b9c142cc327b2252ac26d13712a5c648020f0fc9325880fa"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Fonts/GlyphCoverage.json.meta",
+    "bytes": 155,
+    "sha256": "1afe5b7562c5b9e15c3b96338a49cf003265e9ce55f5367ea55b918480cbac7e"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Fonts/LICENSE.txt",
+    "bytes": 4906,
+    "sha256": "6e2ca6295492a9c3b5d61ef30f19d83a5d9e4fd8a73981a78222b33d8ef3d52f"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Fonts/LICENSE.txt.meta",
+    "bytes": 155,
+    "sha256": "094c2f6999e56566929e7a05b3130d389ca1bc38d97c540a8c52c6d0abd908f0"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Fonts/README.txt",
+    "bytes": 1253,
+    "sha256": "f49f85140ec731996fe7635ddf85601b4f9a08804601498872d3729dc077cfd4"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Fonts/README.txt.meta",
+    "bytes": 155,
+    "sha256": "907d49665ca2b4cff02ba93091d1aad7fa12a63f40679f181544aa2334201d5f"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Fonts/SokobanUISans.otf",
+    "bytes": 271036,
+    "sha256": "8ac696c76a9ae6359d0f30d4577c93bca738354ce688e8ad72a77027fdc014f4"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Fonts/SokobanUISans.otf.meta",
+    "bytes": 504,
+    "sha256": "04e479ed576c9d802ba79fc4ec4a578433b24648d6ea44482e173689a35f3060"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level01.txt",
+    "bytes": 56,
+    "sha256": "140040fe8c41c99edc90660926ef06a0bde334a1f472eef92a54b1a095648c21"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level01.txt.meta",
+    "bytes": 158,
+    "sha256": "9c0e14acfe5c3e6626f2ab9dd4c40443f60a665bf157fca5d2aeca2bbfd01af1"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level02.txt",
+    "bytes": 80,
+    "sha256": "407f35e66a5f8ac6856f3709b58cf6d5b62a1fb7ba2638d1d59af478767061e3"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level02.txt.meta",
+    "bytes": 158,
+    "sha256": "22f9bc4cefe38bcd876bc2a187daf00638e659796ef656edadf1e959d38fd08d"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level03.txt",
+    "bytes": 126,
+    "sha256": "0dab96aee9d3d9854e65013c2baa9702063f9fb72d01b6522509429ba06e6066"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level03.txt.meta",
+    "bytes": 158,
+    "sha256": "efaed5fad00ea15d4e1fcc8920203b28ad82c4f39241d96ecbdf1b8c982a279c"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level04.txt",
+    "bytes": 108,
+    "sha256": "66f26b942afa2e6369ed6f6f1bdc9d2296201b796e87448fde043968b4a03854"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level04.txt.meta",
+    "bytes": 158,
+    "sha256": "984c95837494546e2e92ffa485904650d537ad1a9c404cab564556e09ef22ba9"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level05.txt",
+    "bytes": 80,
+    "sha256": "a435a8c371baa00c55eb8c7fa568e5c8566dd2c319f8d4a25bdfb1d0a6c34e12"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level05.txt.meta",
+    "bytes": 158,
+    "sha256": "974a5f914c99f17687f3a6bbb376ceea109d75b6647cfc95b8894db49b4887a2"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level06.txt",
+    "bytes": 70,
+    "sha256": "f11d51febc0a16cf67dc09fac83f563c0b3b61b74d24f33b483829cd18141724"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level06.txt.meta",
+    "bytes": 158,
+    "sha256": "947b92b623c188715c05d6c3b783db14a5cf8c3e108a34d1bba0eea2716a09f6"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level07.txt",
+    "bytes": 108,
+    "sha256": "553925e52b5219e9527a25591e917f97173277fe8cd82dbbf96d54babbae5552"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level07.txt.meta",
+    "bytes": 158,
+    "sha256": "ecfca0a11c4b05d394e6b82bdc81261e5117c73e5a0573993c91046050c99712"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level08.txt",
+    "bytes": 170,
+    "sha256": "cec780be06829c7a006a4f1dfbd4e3fecf152e24666627606da9a016e2403e55"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Levels/Level08.txt.meta",
+    "bytes": 158,
+    "sha256": "540016a160783f18a2120f59a66d4dd093f022c47b56369e3494a405f8f1e622"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/Box.mat",
+    "bytes": 873,
+    "sha256": "a2d72ca8a95c6fa444eb30e23665bbe11bc8b08d51f0cf165f97e10293ca6ef0"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/Box.mat.meta",
+    "bytes": 188,
+    "sha256": "8da86db0788740fd921c541200ee97c4fc80ad339ce83c506c614e50bee8d7d5"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/BoxComplete.mat",
+    "bytes": 881,
+    "sha256": "a3c7055bfc65c4b52aacbfd22237110d7eea5c88bd04bedf3cd7c899fd48bd4d"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/BoxComplete.mat.meta",
+    "bytes": 188,
+    "sha256": "b089520b881a8a30389c067dbb62873ab74dc6e12aefa5cbd00a3870dcee7ec1"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/BoxDenied.mat",
+    "bytes": 879,
+    "sha256": "1bbabae3308724a3d8f84434b959d3b9582f4505d424221585e475fe57e3554b"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/BoxDenied.mat.meta",
+    "bytes": 188,
+    "sha256": "a81b8a2af0090a8a65a2a5997df7394968f6f19b26d4809382415601633ce341"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/BoxFrame.mat",
+    "bytes": 879,
+    "sha256": "9a928130154117eaf47399445ceb0db362208c892702a5ed275314ee26f22721"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/BoxFrame.mat.meta",
+    "bytes": 188,
+    "sha256": "45d6f75fef5b64d0e625b4f71dd6657dac83aa1271b9fb976ccf5f10fd76bd61"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/Floor.mat",
+    "bytes": 876,
+    "sha256": "6dbfaf94e2bdc8b6200d1572ed851649a7bfbbd995dcbb3e52dd0d935678b861"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/Floor.mat.meta",
+    "bytes": 188,
+    "sha256": "4159c76430adb9c91e419745b152f35cbbf2e83f474be7b53d997d34a0f27498"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/Goal.mat",
+    "bytes": 875,
+    "sha256": "d75e10d19250d5521d2975f943382955ac3abaa98de82329a640f65f13491934"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/Goal.mat.meta",
+    "bytes": 188,
+    "sha256": "71777e70e6874c8a17f791c3cd2ec9de701a4a639efb0501875a20a37a05566c"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/GoalBase.mat",
+    "bytes": 879,
+    "sha256": "30a1d5490dde0dbf69430dd1d60d87e283f01b6eb9fbe3ab6405230bd2c6d213"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/GoalBase.mat.meta",
+    "bytes": 188,
+    "sha256": "2031218fbe4002a0731f6ff651cc8d0dd0d7cd2dbd1107558e5b0254eaa93f53"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/GoalComplete.mat",
+    "bytes": 883,
+    "sha256": "8f4e77a6be6006f6dbb91141056ec1190709cf4266aec18427e9299b301bc2ce"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/GoalComplete.mat.meta",
+    "bytes": 188,
+    "sha256": "52cdd492b85099238b3fe8378737966af8902ac4edeb05170c9c40b0cc0a1b58"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/LabSelectionTemplate.mat",
+    "bytes": 1130,
+    "sha256": "a684dd801bb03b2efb650f04f605ad9ad3b29fc58690c645c93e6f54246542de"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/LabSelectionTemplate.mat.meta",
+    "bytes": 253,
+    "sha256": "bd9cf7b193e9000bf66aa2bf0fee3c602d89d7c8434634856e29ab87047f885c"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/LabSurfaceTemplate.mat",
+    "bytes": 1132,
+    "sha256": "4505e85faaa01f32fb320c37a8f220fb5b8739e9b023418a0c1a98de4aca387d"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/LabSurfaceTemplate.mat.meta",
+    "bytes": 253,
+    "sha256": "0b95512ec2a45640be2c4649f9b9c2c02be6ad56b33145e0d05a2d8c42c4f8ae"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/LabVariantRoughness.png",
+    "bytes": 78,
+    "sha256": "e90b9b2e22b687f0c64f37e637bf5e9b64d1e90860b41b29254f7c5f54212e23"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/LabVariantRoughness.png.meta",
+    "bytes": 641,
+    "sha256": "16c1da51059f86062127339ed29a33ee9de9024ea69e3e0bb227f88b768ff8dd"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/Wall.mat",
+    "bytes": 875,
+    "sha256": "ae917b76efd4fa927f5964fd75cd47b4c90312e56a221cc97471cbeac7b585b3"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/Wall.mat.meta",
+    "bytes": 188,
+    "sha256": "f14ed13fb6264ad8ac8ab5c25db7dd9d3cf789f082a91f82ad657c478cbb0c98"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/WallTrim.mat",
+    "bytes": 878,
+    "sha256": "4b52cca3ad3ade67f658d10c751d02f393ee3a176ff625b78880e09bab177e2a"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Materials/WallTrim.mat.meta",
+    "bytes": 188,
+    "sha256": "b995459feb5226b7fe2b0b146c7ae04304ae6cb6174d56b92b34fa3db03893bc"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Prefabs/Box.prefab",
+    "bytes": 10106,
+    "sha256": "9ad7b175f6cef2f0e515b35ad6f91be414fdac84b544152176d019508f148a7b"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Prefabs/Box.prefab.meta",
+    "bytes": 154,
+    "sha256": "32e2afdad834d0c019af67bbcdbf2d7dba520143a2ed3064ff87798c37210f84"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Prefabs/Floor.prefab",
+    "bytes": 2092,
+    "sha256": "2e6883830c6b8f381a3f891741d526dd07f1df11d0a80678af31952445b595c5"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Prefabs/Floor.prefab.meta",
+    "bytes": 154,
+    "sha256": "a32844e2f9755bb2df32e25790f0e0ad1c7a827f52e76ebdf5144602e54f93f4"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Prefabs/Goal.prefab",
+    "bytes": 7259,
+    "sha256": "bc16e60a473320ed98306ab5eee8f84a3fde672f33fc33ea42fd8af6cca6a7a4"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Prefabs/Goal.prefab.meta",
+    "bytes": 154,
+    "sha256": "cea9cc6df839f99fbf1e26b661ff47eb8e169b97fdacc41ccb12db56293dd5a4"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Prefabs/Player.prefab",
+    "bytes": 2903,
+    "sha256": "71d580a544d8fcc149956e4268c08b856d40ded31474b303875493026db24ede"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Prefabs/Player.prefab.meta",
+    "bytes": 154,
+    "sha256": "d103fedd0b822a0f206cfe500e67e6a0140ae3b3e3a8a30cdda103d9a40b3d1e"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Prefabs/Wall.prefab",
+    "bytes": 4658,
+    "sha256": "299b722ad09709456481480432bfcbb10a4278e5ae354c4120abd877709c823d"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Resources/Prefabs/Wall.prefab.meta",
+    "bytes": 154,
+    "sha256": "6f1bc46d342518ba42821c540da726e37020b7c4b162775028f360cfc8fb5068"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scenes/PuzzleScene.unity",
+    "bytes": 1827,
+    "sha256": "20b149c8a7781bf3b8227f97a6708999610d55efcd10e5643d76f06915cc94f0"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scenes/PuzzleScene.unity.meta",
+    "bytes": 155,
+    "sha256": "5a5fccc01fd5b5ee2757bd39f0d2a6921b292b65c7dc396e605905a3e92188d5"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core.meta",
+    "bytes": 172,
+    "sha256": "51883898b74efcbeb5976c93235dd4776b510c73446d23a5d500c905d89b9439"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/FirstPersonSokoban.Runtime.asmdef",
+    "bytes": 354,
+    "sha256": "e03bdfc55a85c33c0af82a26bb28397facb34b83c947c9309d249d808611c17e"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/FirstPersonSokoban.Runtime.asmdef.meta",
+    "bytes": 166,
+    "sha256": "8f0972fec6fcf82a280318c67721c25727980ce9b2b560688f052b4f722716aa"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Interaction.meta",
+    "bytes": 172,
+    "sha256": "99f8f179de9d0fc488715ef8d3230d9ba74eedce2542bac96e4b5a4dfb0afe64"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Player.meta",
+    "bytes": 172,
+    "sha256": "429989b87672a98d70f8aed852a737cd0accf4021d6261d2d01f0b125964b901"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation.meta",
+    "bytes": 169,
+    "sha256": "05c3624c2e19f3c86f7ee7c2337e0d1076b6022ef3eb935a745a5bf669b5c8ab"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Save.meta",
+    "bytes": 172,
+    "sha256": "c09d480ca56b7c4d06e6ecae2dcfa5ef7befcc51a009e0b6ed57001f28f9b489"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI.meta",
+    "bytes": 172,
+    "sha256": "354edc1d5f0a13edc361f4fff0c461cfd9591e4b2f64bab1a1e015eb0e0bf3ce"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/BoardSnapshot.cs",
+    "bytes": 823,
+    "sha256": "d7c6f87490d53cb14a52c6b5da3648999e6f1ee8e8459642280402118204697c"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/BoardSnapshot.cs.meta",
+    "bytes": 243,
+    "sha256": "57a6e058d09cdc3ce6bd070b764be793d1c5733f855e9a455a1af116bdb06b61"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/BoardState.cs",
+    "bytes": 5382,
+    "sha256": "ca967d36562ebab1cfa909b38894d1bdff788c5ad6939395c862d50212ccad8f"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/BoardState.cs.meta",
+    "bytes": 243,
+    "sha256": "3b8de959a41b7542c350dbf594b4a6c9156987510736416187f25113a1137e32"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/DeadlockDetector.cs",
+    "bytes": 6881,
+    "sha256": "577ba3639e7aaa972289a44a6120f0982d2e73b011dddc1d62d92815d687946e"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/DeadlockDetector.cs.meta",
+    "bytes": 243,
+    "sha256": "70d5af31de4c19a95cdf4e17ca0bca0741cf8169ef4b7fd185a63e66138630bd"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/GameBootstrap.cs",
+    "bytes": 1710,
+    "sha256": "ccf07cc5a1d8e24cb628157e33eedb972c547a38d33d8b2b6f34409b2db89d6e"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/GameBootstrap.cs.meta",
+    "bytes": 243,
+    "sha256": "b031e4d17e52dc3a996b10b295a7e77cc05449a11cc7f0edb9cc823059c9ad73"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/GameSettings.cs",
+    "bytes": 3136,
+    "sha256": "6b7299870a867c09fe28000b63ea4e6018561830915c9e48b67913168c5cb671"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/GameSettings.cs.meta",
+    "bytes": 243,
+    "sha256": "7a0cc2a3267d03dd82710b9ccd08637a11e61c2b9fe3d4ed80a9512a882bc364"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/GridManager.cs",
+    "bytes": 692,
+    "sha256": "db6e713a951a87f08a75e7adc53cef52658cfb201977966d592b2d8dca66d3f9"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/GridManager.cs.meta",
+    "bytes": 243,
+    "sha256": "8069646b7bddad84552123c6b1aef72793fa0cfbc07dc9656d4471bbef5b371a"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/LevelCatalog.cs",
+    "bytes": 2716,
+    "sha256": "bc49bd2969b427c65f3ba673605f002f382d899bf7c8a4c37945ea62a2c5cd76"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/LevelCatalog.cs.meta",
+    "bytes": 243,
+    "sha256": "446ae02a40ef9be37f26462e5b8888f8d33ca3d8c25ed19a090e5659b517754e"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/LevelDefinition.cs",
+    "bytes": 1308,
+    "sha256": "bdc325f8bf37a3abf46c1fc9552dceb4b8f4149aa720f47f3519270bb36f880f"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/LevelDefinition.cs.meta",
+    "bytes": 243,
+    "sha256": "25a2adb35c4d2472d74a81edd28523e0e31ae50a4eba11efd61d75800f2d3692"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/LevelLoader.cs",
+    "bytes": 5750,
+    "sha256": "63d7b740130a3467e00ca1fb73c27f87d4a1a302ba5a1587f585753ec44415d1"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/LevelLoader.cs.meta",
+    "bytes": 243,
+    "sha256": "bcffe8781858577fe00870c6b86f253e4587dce5945519e739f0b9248ae05390"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/LevelSolver.cs",
+    "bytes": 8469,
+    "sha256": "79b9a89213e9284d7b0942e3dcee926d3d32269fe5bf3e6b6705d1be85c5feeb"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/LevelSolver.cs.meta",
+    "bytes": 243,
+    "sha256": "925d69f1829221b84b405d9d3cdb4830d10ff03efc07469d33040ccd46bb6493"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/LevelValidator.cs",
+    "bytes": 3430,
+    "sha256": "b5dc314d2e44839596591f54c0df7dafd096fe04c3511c7328a64b02c0cefc1f"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/LevelValidator.cs.meta",
+    "bytes": 243,
+    "sha256": "2280d7171814a84f82b88fd718b2e895c91b23b7ae3e9294cc0326625ea1e0ac"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/PushDiagnosis.cs",
+    "bytes": 3247,
+    "sha256": "9645bea7ac24423c12dafbb01cda45f2f8b42eaafce9f69e5e87c09d82975582"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/PushDiagnosis.cs.meta",
+    "bytes": 243,
+    "sha256": "5e40dd53fe460bdfad5bed7043c7de149eb6f1e44b1f95a36b194e2ca9cdd1d6"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/PushRules.cs",
+    "bytes": 1439,
+    "sha256": "4f88c512dab23186f1a65544d65b49f25bfffc231fbb2e39208e6a9107cd6306"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/PushRules.cs.meta",
+    "bytes": 243,
+    "sha256": "8b1401e30af894bb549a9ebcc5de4bdc9e8576f07110a582239c1badd809f111"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/PuzzleGameManager.cs",
+    "bytes": 22339,
+    "sha256": "25585ce2800e0867680022e2222c1069662675213ca434f55e775cdf632a75da"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/PuzzleGameManager.cs.meta",
+    "bytes": 243,
+    "sha256": "5f9dc2e34686a7ce9895dc4737140ad6b18ec22ad1fc1d829dcabb5e0280e36b"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/UndoManager.cs",
+    "bytes": 477,
+    "sha256": "4c16bb2e46afebd7cf4297b78fd689732a468360848d30cce0e62b291665e14f"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Core/UndoManager.cs.meta",
+    "bytes": 243,
+    "sha256": "df13eab00942e30b93a761f0198d7b4f1ff1a0dbf09ea19109b234925aa61c00"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Interaction/BoxDimensions.cs",
+    "bytes": 2044,
+    "sha256": "2241255ab69d94129a0f27e4af8162334ca56bf69fa9f5325a8ab06b9833dd2f"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Interaction/BoxDimensions.cs.meta",
+    "bytes": 243,
+    "sha256": "617f5aa126a764982d5e282f70643e86ded7527b67962646ba0601722e1a3a11"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Interaction/BoxInteractor.cs",
+    "bytes": 6667,
+    "sha256": "099400e1f50a607ab1bae9c240330f20eecc33a1265bb30c15d9672282ac375a"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Interaction/BoxInteractor.cs.meta",
+    "bytes": 243,
+    "sha256": "ef33b5d72574f33a8f04d335646507a7f0ac80e0efb7a63b5ea2b5fc93b5d3c7"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Interaction/BoxView.cs",
+    "bytes": 5075,
+    "sha256": "50337c145310c05daf55fc181dad76c18d2c91cd45ed1c7f99b1d8965fdca132"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Interaction/BoxView.cs.meta",
+    "bytes": 243,
+    "sha256": "656a3170d9a18697fa3843be3dd87239763ff97080b7114713449a2a590b8105"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Interaction/GoalView.cs",
+    "bytes": 1474,
+    "sha256": "25e4a8fe71cefa4cd6e70ca1acc6d33d392370a308a2d640f8c07647ed13fdb8"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Interaction/GoalView.cs.meta",
+    "bytes": 243,
+    "sha256": "ec0613e29b2f749c9f97accb9fbae840ca5b288b1b7a7ca8ce990f967dfaa0d7"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Interaction/PushPreviewView.cs",
+    "bytes": 1907,
+    "sha256": "72c43eea2638231226469de6200886541a5b691117595d14ac48758e4b4024ac"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Interaction/PushPreviewView.cs.meta",
+    "bytes": 243,
+    "sha256": "c27deec05b2d81d24cd1cf54d32eaaa3ab0626cc75fdfd48d60157c125c07288"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Player/FirstPersonController.cs",
+    "bytes": 4707,
+    "sha256": "a0d707044886631b3324bd15b925e6c7113ff04a6e1a33f917b5b8695a2eba53"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Player/FirstPersonController.cs.meta",
+    "bytes": 243,
+    "sha256": "d1f71ffc7a578c519db6966e04d9522c7f2809c94156c61bbcbde99fa30a232e"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation/LabAudio.cs",
+    "bytes": 7119,
+    "sha256": "1f7a0b1172a5520afe03068ea6b52410b1ddc8f4dbe6b133559c5437594dc905"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation/LabAudio.cs.meta",
+    "bytes": 240,
+    "sha256": "9674f652cf6c2bf95954a5a3e52c85987f50dcc10e62a3afc0b83be3f0e343a5"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation/LabEnvironment.cs",
+    "bytes": 19562,
+    "sha256": "5bab5f2d7539341cd92e0be9ddbfcbefba044e696fb5ed22249e99624ca85956"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation/LabEnvironment.cs.meta",
+    "bytes": 240,
+    "sha256": "b7807b8fb3a4bcf7d4596cb7b11b5a4b6d926408f1daf2b06c34772da2b4df58"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation/LabMaterials.cs",
+    "bytes": 8399,
+    "sha256": "389220527819e590d1e62d9c8b8eec50aec4d165dabb0d8f06425fd76eee683d"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation/LabMaterials.cs.meta",
+    "bytes": 240,
+    "sha256": "8bdab37a8224fa77678c2fae3d9e70bf19cf096e5479662b35f3c0f64f90cc62"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation/LabPreviewView.cs",
+    "bytes": 10896,
+    "sha256": "fc84f6a26c1d1ef457aecb5021f0b341391e11baa08023f4e232557c0624c83b"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation/LabPreviewView.cs.meta",
+    "bytes": 240,
+    "sha256": "6a81d55df5e80fc84bb0ec1c9921c5c33db61cf1a8e7bd7f658ab6f36adeed0c"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation/SensorPlatformVisual.cs",
+    "bytes": 6989,
+    "sha256": "c2e78cd2581aa41c5f4b71341f898734f0899ac44ad7518a7cb75dc02749f286"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation/SensorPlatformVisual.cs.meta",
+    "bytes": 240,
+    "sha256": "3f2b30c5dbe8bfcbe972cce02b456072555a9bcc3dfade101379477e0a201945"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation/TrainingModuleVisual.cs",
+    "bytes": 12362,
+    "sha256": "8cc4c6f24ce859b7a64a58931e758ea0ec1321690071c1fc27a7f354dc6408ed"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Presentation/TrainingModuleVisual.cs.meta",
+    "bytes": 240,
+    "sha256": "dadd5bf744545ab3e58593b85345f19fecb3eef802d37dd6719d0c14d16c13ec"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Save/ISaveStore.cs",
+    "bytes": 1594,
+    "sha256": "0882dc25033c575c370ccbce0eb3cea9fa91a383799a7086346222671ab11ccd"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Save/ISaveStore.cs.meta",
+    "bytes": 243,
+    "sha256": "9afde30c1f68296147ecd56a6f51da28c97e0043dd866d10c215fc535c978d1d"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Save/SaveManager.cs",
+    "bytes": 3251,
+    "sha256": "cda9409dc938a2cb48bbae6671130fb9e7aa9f09840c12247a245b02d64623c5"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/Save/SaveManager.cs.meta",
+    "bytes": 243,
+    "sha256": "56203f79ed02c894601107fd6775896305ca6b3c2953c6ecf74c5f251436bf92"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/ButtonFeedback.cs",
+    "bytes": 2166,
+    "sha256": "ac098589d72a901e93b790749a630727e5a98f5fd8a75a400d43601774499390"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/ButtonFeedback.cs.meta",
+    "bytes": 240,
+    "sha256": "20f78343f2d3333c304f9ac8cea1020b675d9324830119f5ee2a3b4fe0c096e0"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/GameUIController.cs",
+    "bytes": 36963,
+    "sha256": "f12a6deffd1997c6be20197e00e18e723fcaf5975e2231f52d874f4c5c8985d7"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/GameUIController.cs.meta",
+    "bytes": 243,
+    "sha256": "8b05d29e269b0a736b3f3f04ca0ef65b7e73a3c67508ffb25be211c58fb2a258"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/LevelLayoutGraphic.cs",
+    "bytes": 2474,
+    "sha256": "7882321b2f17883f2076205fde1efa9b4f9ff4a880389102cb27478f26374772"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/LevelLayoutGraphic.cs.meta",
+    "bytes": 240,
+    "sha256": "ea874041013e077ba943b0a64b16099944e5c38a9bc2660493b149c2468db181"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/MenuLayoutController.cs",
+    "bytes": 8691,
+    "sha256": "42cdd8a20ce490592b1dfa5a9996bebb308e06c08fb72db282242f1732990d75"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/MenuLayoutController.cs.meta",
+    "bytes": 243,
+    "sha256": "0a3659b6c1d90e2e2511d2dcbf5fa3e27490ad70d978262f4c8400578124f3a3"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/OverlayLayoutController.cs",
+    "bytes": 1975,
+    "sha256": "d2b23d0dd310dbc6d7994051f017909ff8bb05cf1c8292a6d68408ee7bb711ea"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/OverlayLayoutController.cs.meta",
+    "bytes": 240,
+    "sha256": "a1a459df6ea48493f3f883606d1de1803e638175f97363df2aecde1e5cc0c89f"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/PanelMotion.cs",
+    "bytes": 1424,
+    "sha256": "90eb3b7cc73c37878510dd8fefc477a9472877fd1e7bb7bf1089d321547e34e9"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/PanelMotion.cs.meta",
+    "bytes": 240,
+    "sha256": "49c62365cf05d1f68bd12e3f98e3199b72df0ce5df6c4d3f9eff4c1e2d39fbd5"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/UIFactory.cs",
+    "bytes": 12024,
+    "sha256": "ea9790c0ae58284579f062d6cd388654855d908f2fd2418c026ff1b4c6b69bff"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Scripts/UI/UIFactory.cs.meta",
+    "bytes": 243,
+    "sha256": "d743b73a0037ea1f68e3c42f8b184ec8a1f39e3aca72b30bc0539183b451d295"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode.meta",
+    "bytes": 172,
+    "sha256": "07baecd3954367db5c310f7d1c6173958e68b4e25ec084c2903fa44858bc04f4"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode.meta",
+    "bytes": 172,
+    "sha256": "7f73d51a141e5c6ce276dd2c0e0b6e9f4f980431e581df167da0543d87a228d9"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/CoreRuleTests.cs",
+    "bytes": 4425,
+    "sha256": "b4cc55b1dede44df91925e9ed689f14152b932c4ce86dbb65d48d85167b9929e"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/CoreRuleTests.cs.meta",
+    "bytes": 243,
+    "sha256": "9d9f1bbed993f36d240b17f4239dbeb99710a41e7b4c24d9bca5a5d4a40cb2d8"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/FirstPersonSokoban.EditModeTests.asmdef",
+    "bytes": 505,
+    "sha256": "77d99e3b3ff98fee10926c90d89cd6fd0c3a44db8f3c7ea92f05aca468ee033f"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/FirstPersonSokoban.EditModeTests.asmdef.meta",
+    "bytes": 166,
+    "sha256": "74cb7be6a460da56cc9234376ac6562083a28e8fa041c21c1cb8090b8626f129"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/LabMaterialOwnershipTests.cs",
+    "bytes": 1547,
+    "sha256": "6ebf7ceb8353d6228953fdaa3e7659cc1796ae9d6de209b6ff025652439d7742"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/LabMaterialOwnershipTests.cs.meta",
+    "bytes": 240,
+    "sha256": "cc0acbe7e3a4e79fe64b5441517a8012c8a896b994db0bfba74ac3a2f5d8fea1"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/LabSettingsTests.cs",
+    "bytes": 1314,
+    "sha256": "323d63cabdf55cbd1b13ca308098fb2c3da1e1726578a198d3fe0b5bafc321b3"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/LabSettingsTests.cs.meta",
+    "bytes": 240,
+    "sha256": "2c5afcee6f08848f220868ca16d462c4a57b469e6a5e9ad7c29d814e53f6a9b5"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/LabShaderTests.cs",
+    "bytes": 895,
+    "sha256": "ecbbd03d39d362104f23a7ab6aacf8336528d2706e783ed0b1055bb465f5e33c"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/LabShaderTests.cs.meta",
+    "bytes": 240,
+    "sha256": "63d56cf3826c6b83a34db5e3889deb31b5bf18cb047c8bf5a80eaad892f33058"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/LevelSolvabilityTests.cs",
+    "bytes": 1394,
+    "sha256": "d0f183f075ac04ce89b4e3d448ee0c2b139efdda25db035b2762823b7c4071e0"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/LevelSolvabilityTests.cs.meta",
+    "bytes": 243,
+    "sha256": "96c9f059e04337b3e6b322acd650d52adc4e613911a11539bf3419cce877805b"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/MapRevisionSaveTests.cs",
+    "bytes": 3425,
+    "sha256": "1b54c08a23e41379d0f6cec8ca00833a3fe25afb26e0ebcdca29e45ab6e6313c"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/MapRevisionSaveTests.cs.meta",
+    "bytes": 240,
+    "sha256": "47226921cb709290aac7267e864501d4d3c363ee3edc9f1dcb7b72b60676e520"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/OptimizationTests.cs",
+    "bytes": 17769,
+    "sha256": "8c61a0b7eb559f62e2a5f447c9bd40d680159afe506935d0c63ba774d8f678e9"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/OptimizationTests.cs.meta",
+    "bytes": 243,
+    "sha256": "554d985ab421dd1e61f96e2b9613a6e32f08207ed4b06f299c2b5e8822b4cfc8"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/UILayoutTests.cs",
+    "bytes": 4679,
+    "sha256": "ca997092b806685e0ee1197719c041032598680c17406f6a38797d036714b7e0"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/EditMode/UILayoutTests.cs.meta",
+    "bytes": 240,
+    "sha256": "8998872ada21515e8a70cb97c3a812b7b332a25c0645b57ddc60fc41fc8b6f8b"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/FirstPersonSokoban.PlayModeTests.asmdef",
+    "bytes": 497,
+    "sha256": "0803d6d001a01775bb089a42d9019af901f38ace372b9770ded59f98dfcda512"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/FirstPersonSokoban.PlayModeTests.asmdef.meta",
+    "bytes": 166,
+    "sha256": "3e0695b6723c1cfd6be1fe72455c85be8e7b5d693ccbc5b2ce4bd70b1248581a"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/LabPresentationTests.cs",
+    "bytes": 9504,
+    "sha256": "cfa6109a1f5af285700783342ff57d71931f82871bd2e8a03ba3e4413c3b2ce5"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/LabPresentationTests.cs.meta",
+    "bytes": 240,
+    "sha256": "e3772a501f632b2ec7209026a2998707971e2a843d7a25c531faa37fe8ff4600"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/LevelWalkthroughTests.cs",
+    "bytes": 14180,
+    "sha256": "07dd8f8a9f9b6c1ba329733464175aa69ff29bf4247ce440939bb60c3e17640a"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/LevelWalkthroughTests.cs.meta",
+    "bytes": 240,
+    "sha256": "f762beda5954df01c8ccc3905767eb2ed83b1336a1ea0fabc7135277f1eb0f1a"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/PlayModeOptimizationTests.cs",
+    "bytes": 29883,
+    "sha256": "94a005784d54c3d2d7bbbce04b71100eb129f6f85d8b390f8031a28db4d9f210"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/PlayModeOptimizationTests.cs.meta",
+    "bytes": 243,
+    "sha256": "d9dfb47cc9a9755fa9e2627f63f1ebc937f6d2eaa3807e0943f3952e792db36b"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/PlayModeSmokeTests.cs",
+    "bytes": 3709,
+    "sha256": "744b4ed974b4630e104adf6a4bab37522e796e6c3a5f4b57e490f18033142dd9"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/PlayModeSmokeTests.cs.meta",
+    "bytes": 243,
+    "sha256": "a8c4188167a567f5af4bf7c6712b4b9b975c749627288ee106122923b50a0b2c"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/UIRegressionTests.cs",
+    "bytes": 5038,
+    "sha256": "4b52b06d8a549b6458edc35103278fccaa09c9527495d6f8f57b9b6b49f475c2"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/UIRegressionTests.cs.meta",
+    "bytes": 240,
+    "sha256": "f72805a9045833fdeca63680ac0253ec43b639ca85b62386a361b669bc47c15e"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/VisualCaptureTests.cs",
+    "bytes": 9019,
+    "sha256": "f136359478dbde1a36dcee5e2d7586eabb5d6b448591580cbc0a3a192b1b1986"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban/Tests/PlayMode/VisualCaptureTests.cs.meta",
+    "bytes": 240,
+    "sha256": "8b39cddd4627c5d8336a204b858709f41b0bf68a15054c17c33e6436d8a818a0"
+  },
+  {
+    "path": "Assets/FirstPersonSokoban.meta",
+    "bytes": 172,
+    "sha256": "ae6d6aaeb65ab582ef7aeb0aad8013ea86de582ef55b6a95178e9850c20d614a"
+  }
+]

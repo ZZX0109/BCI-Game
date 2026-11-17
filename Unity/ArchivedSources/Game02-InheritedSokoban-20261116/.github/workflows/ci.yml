@@ -1,0 +1,87 @@
+name: Source checks and optional Windows delivery
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-checks:
+    name: Static integrity and eight-level solvability
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python Tools/validate_project.py
+      - run: python Tools/validate_levels.py --mechanics
+      - run: python Tools/build_ui_font.py --check
+      - run: python -m unittest discover -s Tools/tests -v
+      - name: State the verification boundary
+        shell: bash
+        run: |
+          echo '### Source checks passed' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Static/GUID checks and Python BFS do not prove Unity compilation, player tests, Windows build or GUI acceptance.' >> "$GITHUB_STEP_SUMMARY"
+
+  unity-delivery:
+    name: Unity tests then Windows build (exact local Editor)
+    needs: source-checks
+    # China Editor 2022.3.62f3c1 has not been verified in GameCI Docker images.
+    # Use a dedicated Windows runner with this exact licensed Editor plus Windows
+    # Build Support. Set UNITY_EDITOR_PATH on that runner, then explicitly enable
+    # repository variable UNITY_CI_ENABLED=true. No guessed international version.
+    # PR code never executes on a persistent self-hosted machine.
+    if: ${{ vars.UNITY_CI_ENABLED == 'true' && github.event_name != 'pull_request' }}
+    runs-on: [self-hosted, Windows, X64, unity-2022.3.62f3c1]
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Require the configured installed Editor
+        shell: pwsh
+        run: |
+          if (-not $env:UNITY_EDITOR_PATH -or -not (Test-Path $env:UNITY_EDITOR_PATH)) {
+            throw 'UNITY_EDITOR_PATH must point to the exact installed and licensed Editor on this runner.'
+          }
+      - name: EditMode, PlayMode, level validation, Windows build and ZIP
+        shell: pwsh
+        # The script stops before building when either XML reports failure or
+        # zero tests, and binds the manifest to the tested source fingerprint.
+        run: python Tools/run_delivery.py --output BuildOutput/CI --timeout 1800
+      - name: Keep real logs even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Unity-evidence-and-Windows-delivery
+          path: BuildOutput/CI
+          if-no-files-found: warn
+          retention-days: 30
+
+  verification-summary:
+    name: Verification status
+    if: always()
+    needs: [source-checks, unity-delivery]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report passed, failed and unverified separately
+        shell: bash
+        env:
+          SOURCE_RESULT: ${{ needs.source-checks.result }}
+          UNITY_RESULT: ${{ needs.unity-delivery.result }}
+        run: |
+          echo '### Verification status' >> "$GITHUB_STEP_SUMMARY"
+          echo "Source integrity / Python levels: $SOURCE_RESULT" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$UNITY_RESULT" = 'success' ]; then
+            echo 'Unity EditMode + PlayMode and Windows ZIP: passed; real XML/logs are in artifacts.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Unity tests and Windows delivery: NOT VERIFIED (job: $UNITY_RESULT)." >> "$GITHUB_STEP_SUMMARY"
+            echo 'To run them, configure a dedicated exact-version Windows runner and UNITY_EDITOR_PATH, enable UNITY_CI_ENABLED, then push main or dispatch this workflow.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo 'GUI playthrough, comfort, visual quality and measured performance: NOT VERIFIED by CI.' >> "$GITHUB_STEP_SUMMARY"

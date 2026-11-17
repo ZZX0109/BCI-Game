@@ -1,0 +1,2300 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-16",
+  "sourceRoot": "C:\\Users\\Ait\\Desktop\\Neuralife",
+  "hostRoot": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games",
+  "hostArchive": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\_development_archive\\directory-layout-20261116-145242\\games",
+  "state": "completed",
+  "moves": [
+    {
+      "kind": "research",
+      "source": "C:\\Users\\Ait\\Desktop\\Neuralife\\Continuous tracking using deep learning-based decoding.pdf",
+      "destination": "C:\\Users\\Ait\\Desktop\\Neuralife\\reference\\research\\Continuous tracking using deep learning-based decoding.pdf",
+      "files": [
+        {
+          "relativePath": "",
+          "bytes": 898352,
+          "sha256": "e57bd957865a10a40ba99d8393b55b804a696c15fe789e466755638c43df75c2"
+        }
+      ]
+    },
+    {
+      "kind": "research",
+      "source": "C:\\Users\\Ait\\Desktop\\Neuralife\\Integrating simultaneous motor imagery and spatial attention for EEG-BCI control.pdf",
+      "destination": "C:\\Users\\Ait\\Desktop\\Neuralife\\reference\\research\\Integrating simultaneous motor imagery and spatial attention for EEG-BCI control.pdf",
+      "files": [
+        {
+          "relativePath": "",
+          "bytes": 1083043,
+          "sha256": "fae61b8e8b14d9a020e239887d8e50c93dfb676f69455d71fd24c3d1586749e5"
+        }
+      ]
+    },
+    {
+      "kind": "research",
+      "source": "C:\\Users\\Ait\\Desktop\\Neuralife\\Internal Models in Biological Control.pdf",
+      "destination": "C:\\Users\\Ait\\Desktop\\Neuralife\\reference\\research\\Internal Models in Biological Control.pdf",
+      "files": [
+        {
+          "relativePath": "",
+          "bytes": 1057975,
+          "sha256": "8bfe74b9be64539d01c4f7b925dc18c99541791854a142f798df8a792dc1f94d"
+        }
+      ]
+    },
+    {
+      "kind": "research",
+      "source": "C:\\Users\\Ait\\Desktop\\Neuralife\\MDPI_A Review of Brain-Computer Interface Games and an Opinion Survey from Researchers, Developers and Users.pdf",
+      "destination": "C:\\Users\\Ait\\Desktop\\Neuralife\\reference\\research\\MDPI_A Review of Brain-Computer Interface Games and an Opinion Survey from Researchers, Developers and Users.pdf",
+      "files": [
+        {
+          "relativePath": "",
+          "bytes": 1596948,
+          "sha256": "2e8d8dc81d94ad13069938308d53e1534542cb57f30549cfa2d10d4d5523fded"
+        }
+      ]
+    },
+    {
+      "kind": "research",
+      "source": "C:\\Users\\Ait\\Desktop\\Neuralife\\Non-Invasive Brain-Computer Interfaces State of the Art and Trends.pdf",
+      "destination": "C:\\Users\\Ait\\Desktop\\Neuralife\\reference\\research\\Non-Invasive Brain-Computer Interfaces State of the Art and Trends.pdf",
+      "files": [
+        {
+          "relativePath": "",
+          "bytes": 1272850,
+          "sha256": "74cc4c671c55164d3d8b1e7cac10b2e79718018095108dd0806b9c23b605e401"
+        }
+      ]
+    },
+    {
+      "kind": "research",
+      "source": "C:\\Users\\Ait\\Desktop\\Neuralife\\_paper_text.txt",
+      "destination": "C:\\Users\\Ait\\Desktop\\Neuralife\\reference\\research\\_paper_text.txt",
+      "files": [
+        {
+          "relativePath": "",
+          "bytes": 110580,
+          "sha256": "225f4579f171eb8d7dc20e38eb5569e0a1e52200fa15dcca69b28440faab5e47"
+        }
+      ]
+    },
+    {
+      "kind": "research",
+      "source": "C:\\Users\\Ait\\Desktop\\Neuralife\\_paper2_text.txt",
+      "destination": "C:\\Users\\Ait\\Desktop\\Neuralife\\reference\\research\\_paper2_text.txt",
+      "files": [
+        {
+          "relativePath": "",
+          "bytes": 185002,
+          "sha256": "488dbc3c0ecea1a2550d76f285b110d89a1a6b2ee05de4fd8a7ea063a30536b1"
+        }
+      ]
+    },
+    {
+      "kind": "research",
+      "source": "C:\\Users\\Ait\\Desktop\\Neuralife\\知识图谱_InternalModels.html",
+      "destination": "C:\\Users\\Ait\\Desktop\\Neuralife\\reference\\research\\知识图谱_InternalModels.html",
+      "files": [
+        {
+          "relativePath": "",
+          "bytes": 15687,
+          "sha256": "c54c4653c0b83d52816c7b1e6e7024ef74e63411b9f96035f93da66f8fd957a1"
+        }
+      ]
+    },
+    {
+      "kind": "historical-import",
+      "source": "C:\\Users\\Ait\\Desktop\\Neuralife\\游戏截图",
+      "destination": "C:\\Users\\Ait\\Desktop\\Neuralife\\archive\\imports\\20261116\\游戏截图",
+      "files": [
+        {
+          "relativePath": "01_抓娃娃.jpg",
+          "bytes": 267071,
+          "sha256": "c2a9f9dc82a2f3425f6680ea87f5216b2342632f47fea9c9238e1da334354bba"
+        },
+        {
+          "relativePath": "02_汉诺塔.jpg",
+          "bytes": 228950,
+          "sha256": "c4a81738005f7c5b22ad14f6094fd6c212fccaa2c3cf08149b2564d97d82d555"
+        },
+        {
+          "relativePath": "03_鲁班锁.jpg",
+          "bytes": 275360,
+          "sha256": "055a949b23106c18d77446996f62dbab39821e55749bf92b6c0e0b701ffe4986"
+        },
+        {
+          "relativePath": "04_追光球.jpg",
+          "bytes": 141716,
+          "sha256": "5e24c2a59d4b8ffd5ae7ee62f1f316fd4727c95c48c778df6c7479b2a3ebdad6"
+        },
+        {
+          "relativePath": "05_推箱子.jpg",
+          "bytes": 263560,
+          "sha256": "67983457ed3d3a885ea87c65986d7c9510ff0cca1a5ee59c71802dace8477550"
+        },
+        {
+          "relativePath": "06_精准打靶.jpg",
+          "bytes": 176325,
+          "sha256": "744571ce3f74acfc5e8ddda3a856543ac203d189ac35501af5a333744425a53a"
+        },
+        {
+          "relativePath": "07_红绿灯过马路.jpg",
+          "bytes": 381423,
+          "sha256": "872b57383df3d19d83514440af7c0c6091e82448c254446f6e823f0c6456a7cc"
+        }
+      ]
+    },
+    {
+      "kind": "historical-import",
+      "source": "C:\\Users\\Ait\\Desktop\\Neuralife\\游戏源码包",
+      "destination": "C:\\Users\\Ait\\Desktop\\Neuralife\\archive\\imports\\20261116\\游戏源码包",
+      "files": [
+        {
+          "relativePath": "1106版本.zip",
+          "bytes": 693194,
+          "sha256": "089e0a75de408d857d6e0463cc941d27d8b12a586cda9c4800010312da44968a"
+        },
+        {
+          "relativePath": "Neuralife_新开发7游戏.zip",
+          "bytes": 97992,
+          "sha256": "0f24d93101088842577dfd05e78b24a9167074e70a4da824d703e3679c8a17fe"
+        },
+        {
+          "relativePath": "Neuralife七款游戏.zip",
+          "bytes": 181911,
+          "sha256": "346a50c568ff0f391d862ff057e60d7c126b5d34d17358014fb8670cc0704020"
+        },
+        {
+          "relativePath": "pong.zip",
+          "bytes": 14317,
+          "sha256": "a91b0abec9ee685e2372bac1ec68a50100a04c4798f45318f20859b9b2526514"
+        }
+      ]
+    },
+    {
+      "kind": "historical-import",
+      "source": "C:\\Users\\Ait\\Desktop\\Neuralife\\游戏源码包.zip",
+      "destination": "C:\\Users\\Ait\\Desktop\\Neuralife\\archive\\imports\\20261116\\游戏源码包.zip",
+      "files": [
+        {
+          "relativePath": "",
+          "bytes": 276793,
+          "sha256": "1bb24cffc637b58da40c1a303969897a82b4ab72283e20090466dc553c0b87f5"
+        }
+      ],
+      "restorable": false,
+      "cleanupReason": "Verified duplicate outer ZIP recycled at explicit user request; remaining inner archives retained"
+    },
+    {
+      "kind": "host-development",
+      "source": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games\\hanoi\\tests",
+      "destination": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\_development_archive\\directory-layout-20261116-145242\\games\\hanoi\\tests",
+      "files": [
+        {
+          "relativePath": "verify_1106.py",
+          "bytes": 15842,
+          "sha256": "9a37c45b36231a2809f8b0b0ef845b3d84546f7ac70963aa1e753135a4311678"
+        },
+        {
+          "relativePath": "evidence\\bci-session.json",
+          "bytes": 44330,
+          "sha256": "d6b1cdadd54a3c94390b4928b811ddd665184ebd881b23d2aaa9a81be756643c"
+        },
+        {
+          "relativePath": "evidence\\hanoi.png",
+          "bytes": 11215,
+          "sha256": "8a5d4e04009d2c9df48958d6c1148249d49261480e308772bc92aaa0baea110f"
+        },
+        {
+          "relativePath": "evidence\\london-playing.png",
+          "bytes": 16644,
+          "sha256": "f69e2dc75b460ecc5748439e8cd958df5b850dba3735c1fa7d3c58b3020dcfc1"
+        },
+        {
+          "relativePath": "evidence\\london.png",
+          "bytes": 16813,
+          "sha256": "8b45b5ff7a003aa20e94db2a7ca0717a606a45fc9fe7c85aba7191bd44b65316"
+        },
+        {
+          "relativePath": "evidence\\preview-round-1.png",
+          "bytes": 11215,
+          "sha256": "8a5d4e04009d2c9df48958d6c1148249d49261480e308772bc92aaa0baea110f"
+        },
+        {
+          "relativePath": "evidence\\preview-round-2.png",
+          "bytes": 14539,
+          "sha256": "ccb2a834ba28a1f15d7dee19516b8c5bcfded330817efee0c208acbc4ca16534"
+        },
+        {
+          "relativePath": "evidence\\preview-round-3.png",
+          "bytes": 20608,
+          "sha256": "ab16c805381d18e0feeb13dab5da91785466f71e16f9063297f814e5fe980f52"
+        },
+        {
+          "relativePath": "evidence\\preview-round-4.png",
+          "bytes": 16813,
+          "sha256": "8b45b5ff7a003aa20e94db2a7ca0717a606a45fc9fe7c85aba7191bd44b65316"
+        },
+        {
+          "relativePath": "evidence\\preview-round-5.png",
+          "bytes": 19250,
+          "sha256": "6025f82b22c6656610c5951c27f1147daa7c1232fd5032f7061ff471d13f1d91"
+        },
+        {
+          "relativePath": "evidence\\results-scale-1.5.json",
+          "bytes": 38740,
+          "sha256": "d9d959be4a30be324d280c98329e21b19ab3678f624c8067df730078bc7b3264"
+        },
+        {
+          "relativePath": "evidence\\results-scale-1.json",
+          "bytes": 38738,
+          "sha256": "10b5440c30592c25a9ff6ec7b813c96546d9b381938c2c5a212f1296ae8cd31e"
+        },
+        {
+          "relativePath": "evidence\\results.png",
+          "bytes": 18044,
+          "sha256": "fd564a4e7ed1782e098b703117d3f54480e032c1656dc14d7462e82d16e026da"
+        }
+      ]
+    },
+    {
+      "kind": "host-development",
+      "source": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games\\sokoban\\tests",
+      "destination": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\_development_archive\\directory-layout-20261116-145242\\games\\sokoban\\tests",
+      "files": [
+        {
+          "relativePath": "verify_1106.py",
+          "bytes": 8101,
+          "sha256": "c94beb6ede998c5a08af5fab2f6ec0bc5edd0b6dc2ed1c2d6e238ffd0c092777"
+        },
+        {
+          "relativePath": "evidence\\five-rounds-bci.json",
+          "bytes": 36716,
+          "sha256": "a3469207803396442daa144ea2aed86483b4d043a297e3a355c8af2a519e42d1"
+        },
+        {
+          "relativePath": "evidence\\five-rounds-keyboard.json",
+          "bytes": 36864,
+          "sha256": "c5facdb697e48821a8976a91f751496954331a9b4f717854648bbbb9eec827a2"
+        },
+        {
+          "relativePath": "evidence\\five-rounds-mouse.json",
+          "bytes": 36864,
+          "sha256": "a2eaa670cfab00166eb58dac3168afa3518148d6646ab64198390b12b3ded631"
+        },
+        {
+          "relativePath": "evidence\\recovery.json",
+          "bytes": 33994,
+          "sha256": "7df91c6d8638e2a5a868650e720d8d8c73ef43d1cde04e7234ca559abd1df728"
+        },
+        {
+          "relativePath": "evidence\\result.json",
+          "bytes": 11382,
+          "sha256": "ddf2646184a6bba1a87afb8d8e1950969099d16d16687ad8f960e4e728338171"
+        },
+        {
+          "relativePath": "evidence\\sokoban.png",
+          "bytes": 18185,
+          "sha256": "94b7c24d57a8c7a5bee96374af21915c4777d12285a4f399236b57c56d3ca53f"
+        }
+      ]
+    },
+    {
+      "kind": "host-development",
+      "source": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games\\pointer\\tests",
+      "destination": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\_development_archive\\directory-layout-20261116-145242\\games\\pointer\\tests",
+      "files": [
+        {
+          "relativePath": "verify_1106.py",
+          "bytes": 24241,
+          "sha256": "0ae4b8798337e5285257e2e0130c1663d57e256b2048c861529366f03d1111a3"
+        },
+        {
+          "relativePath": "verify_host_cursor.py",
+          "bytes": 6961,
+          "sha256": "72c6f8c8e60465816f817c9ebc4b597311b0acf8b1bb4d49ca1ef4c39c339368"
+        },
+        {
+          "relativePath": "evidence\\acceptance-scale-1.25.json",
+          "bytes": 17291,
+          "sha256": "7ae315ab16a02e5abb6711aa7e7dd0b3b5690d33810a9fa8233feccf80d2bf4d"
+        },
+        {
+          "relativePath": "evidence\\acceptance-scale-1.5.json",
+          "bytes": 17294,
+          "sha256": "e1f1780fe18d2d68a090813b50066fc96b53671b683dc28459c8e3c47a54efb1"
+        },
+        {
+          "relativePath": "evidence\\acceptance-scale-1.json",
+          "bytes": 17538,
+          "sha256": "d3887aafcf608000e4d3f02f3054753051707411c4cfb3545600fc011b9dee0d"
+        },
+        {
+          "relativePath": "evidence\\game-record-samples.jsonl",
+          "bytes": 211977,
+          "sha256": "e6c9480fab354d4180259c5c7e20fc55d608e977042b463e76baa510d433ffc8"
+        },
+        {
+          "relativePath": "evidence\\pursuit-native-bci.png",
+          "bytes": 9640,
+          "sha256": "e2819baec34f70eef572d46d1b92b03c21cc1094b07b281b3efc3f3524693bb6"
+        },
+        {
+          "relativePath": "evidence\\pursuit-native-local.png",
+          "bytes": 9650,
+          "sha256": "1e689144b6474c4a3d16541792f46364c07e6c50922941fc8dc6662729b461af"
+        },
+        {
+          "relativePath": "evidence\\pursuit-result.png",
+          "bytes": 4332,
+          "sha256": "de26d64687b1b2842f0c4868ddeaac6bfaebde3dae1f1a24072d48ee6dfce002"
+        },
+        {
+          "relativePath": "evidence\\pursuit-running.png",
+          "bytes": 4707,
+          "sha256": "e2b5f02325c7aed18040cf84ac2c38f8d89be9ef28ff4b9bb40bfbe996710bbb"
+        },
+        {
+          "relativePath": "evidence\\selection.png",
+          "bytes": 5508,
+          "sha256": "9fe34404ac59eeb8e97b83033ec63c7b96ee375acd8c0c7d6846071691f4d7bb"
+        },
+        {
+          "relativePath": "evidence\\target-result.png",
+          "bytes": 4320,
+          "sha256": "bb5d512cfbb89b1296b0a3c8fc7b7971dc221a651ba76a61a04edbf4f122ec99"
+        },
+        {
+          "relativePath": "evidence\\target-running.png",
+          "bytes": 11717,
+          "sha256": "cdbd5e0af4e7f7a0c534d4ccce1c1a6c296aab00e9ecfd6595647594c4d4e2f1"
+        }
+      ]
+    },
+    {
+      "kind": "host-development",
+      "source": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games\\pointer\\tools",
+      "destination": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\_development_archive\\directory-layout-20261116-145242\\games\\pointer\\tools",
+      "files": [
+        {
+          "relativePath": "package_suite.py",
+          "bytes": 3451,
+          "sha256": "cd4db9f0501a719a04cb0d4a95abdebe25ba7f5223513866aeb6be58f2292bd0"
+        }
+      ]
+    },
+    {
+      "kind": "host-development",
+      "source": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games\\claw\\tests",
+      "destination": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\_development_archive\\directory-layout-20261116-145242\\games\\claw\\tests",
+      "files": [
+        {
+          "relativePath": "verify_1106.py",
+          "bytes": 14281,
+          "sha256": "d40c9fd46ce1241ad17a9169284d653e83dc15e7c54f51e3e5e38b05461c88dd"
+        },
+        {
+          "relativePath": "verify_v5_near_miss.py",
+          "bytes": 2553,
+          "sha256": "48f7a4474e13b52bdb3bb0ffb241959393ddadbd156d4740efab98d1b7689712"
+        },
+        {
+          "relativePath": "evidence\\acceptance.json",
+          "bytes": 13407,
+          "sha256": "419c50b8bf685c30109c3bb2e982140009371f7e7c2f52973b0a38f79f0e6eb6"
+        },
+        {
+          "relativePath": "evidence\\claw-clutter.png",
+          "bytes": 66515,
+          "sha256": "fd7d5473acd3b55ad07c838ecd1c87eac34d968510428870a8ffb4ab28848b08"
+        },
+        {
+          "relativePath": "evidence\\claw-ready.png",
+          "bytes": 65986,
+          "sha256": "e11892ec3e82405c60d8beecf8fb81187717d295c5c7d864161c85948de1b0a5"
+        },
+        {
+          "relativePath": "evidence\\claw-results.png",
+          "bytes": 54497,
+          "sha256": "5bb5e422d4ae092738e6a7c0471478eab7b9af917d8170e724747ea11d98d7d2"
+        },
+        {
+          "relativePath": "evidence\\session-events.json",
+          "bytes": 165535,
+          "sha256": "8adb146a6ba25782a096f82eefdde71919fec4a71de36a0d48b34c22e36f1868"
+        }
+      ]
+    },
+    {
+      "kind": "host-development",
+      "source": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games\\traffic\\tests",
+      "destination": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\_development_archive\\directory-layout-20261116-145242\\games\\traffic\\tests",
+      "files": [
+        {
+          "relativePath": "verify_v5.py",
+          "bytes": 4034,
+          "sha256": "633a4e005d9e8201cef194235e1cb490d94bd5cfadc0ae868dd05d176fbb4def"
+        }
+      ]
+    },
+    {
+      "kind": "host-development",
+      "source": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games\\luban\\tests",
+      "destination": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\_development_archive\\directory-layout-20261116-145242\\games\\luban\\tests",
+      "files": [
+        {
+          "relativePath": "geometry-result.json",
+          "bytes": 12341,
+          "sha256": "49597296b38e1c9f680fdf1eabaa29c00ea405934bebc665f7f5a456c82b0e15"
+        },
+        {
+          "relativePath": "HostWrapper.qml",
+          "bytes": 999,
+          "sha256": "ded08aa70d2d475ef8eba5526bcdcb4bb713d153697ed23161adbb3e5471e4f2"
+        },
+        {
+          "relativePath": "runtime-result.json",
+          "bytes": 27058,
+          "sha256": "daadb3a5c1691f88fa5f9cdc55e0e913ca701635293aa54bc952ae467ad13d6b"
+        },
+        {
+          "relativePath": "verify_1106.py",
+          "bytes": 210,
+          "sha256": "9064cd824494579f51b690b55b3c5dc2a2b909dd2f0c6a09bab87dcfeedf005d"
+        },
+        {
+          "relativePath": "verify_revision.py",
+          "bytes": 13632,
+          "sha256": "065ac8e667863a4d389b3206ebd6935c05732366beb89a0b62cd90deb9ec651a"
+        },
+        {
+          "relativePath": "evidence\\bci-events.json",
+          "bytes": 44042,
+          "sha256": "3e33257a66f783336e229ff6c49779a703a0c06cda7b3a673f896468bd1a8bfe"
+        },
+        {
+          "relativePath": "evidence\\keyboard-events.json",
+          "bytes": 44044,
+          "sha256": "27403cf7d6b29efe41d5e924492e216f178ebfacb0d3cc37e2442daa1190fbde"
+        },
+        {
+          "relativePath": "evidence\\l4-partial-contact.png",
+          "bytes": 139973,
+          "sha256": "bd15f594b2153e91e6549fef7eab067812dccf260e400d0c2a1d3bc5152d8e74"
+        },
+        {
+          "relativePath": "evidence\\layout-1000x700.png",
+          "bytes": 140444,
+          "sha256": "de4908ac26480c6e1ffd8c9a8319ddcf34c1036a12ae7e1bb6f157523bc5db1a"
+        },
+        {
+          "relativePath": "evidence\\layout-1280x800.png",
+          "bytes": 179086,
+          "sha256": "da1ff2c1f1926d1363ca2850055d6f6904fa536ce3514fbc815ba30508df1bc3"
+        },
+        {
+          "relativePath": "evidence\\layout-1920x1080.png",
+          "bytes": 312225,
+          "sha256": "9a71d8e6b8df404fdcac17d1d74ecaec4251a1a8589cc6bf0b700288ade6aaa6"
+        },
+        {
+          "relativePath": "evidence\\layout-640x900.png",
+          "bytes": 109842,
+          "sha256": "aeaf3f67eedadd798a721f4147d4cbd36ebc1c575621ad5f1e05db77c2edf795"
+        },
+        {
+          "relativePath": "evidence\\mouse-events.json",
+          "bytes": 44674,
+          "sha256": "354e21ce9dc308537bd26547601b1993b1c6b4138bf08c385255ee11a34eb88a"
+        },
+        {
+          "relativePath": "evidence\\runtime-result.json",
+          "bytes": 27058,
+          "sha256": "daadb3a5c1691f88fa5f9cdc55e0e913ca701635293aa54bc952ae467ad13d6b"
+        }
+      ]
+    },
+    {
+      "kind": "host-development",
+      "source": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games\\luban\\tools",
+      "destination": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\_development_archive\\directory-layout-20261116-145242\\games\\luban\\tools",
+      "files": [
+        {
+          "relativePath": "luban_solver.py",
+          "bytes": 4367,
+          "sha256": "e0c23cce8130a4d267ce7c31662d8ba81050ff5bb7ac666fdc0e3ec6125361d0"
+        },
+        {
+          "relativePath": "verify_geometry.py",
+          "bytes": 7550,
+          "sha256": "59a185d81b53ca0a801be83dc00bc21653d6ce1d00d0f0b52dc2d5113cd1d631"
+        }
+      ]
+    },
+    {
+      "kind": "host-development",
+      "source": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games\\rhythm\\tests",
+      "destination": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\_development_archive\\directory-layout-20261116-145242\\games\\rhythm\\tests",
+      "files": [
+        {
+          "relativePath": "engine-results.json",
+          "bytes": 3148,
+          "sha256": "58bcf8a83485d508c4282fad77d88daa75dd726d0d43fb4d79b84029cba76aa7"
+        },
+        {
+          "relativePath": "qt-results.json",
+          "bytes": 5345,
+          "sha256": "af4bc3e92f03120e57f8ca80dad13001acf87505238144ddbbb8bce0c9e4c6a9"
+        },
+        {
+          "relativePath": "test_engine.js",
+          "bytes": 12016,
+          "sha256": "a38144ac7071cc547cf6ad4d5959c47a221e4c5cfcc611be911d6dd78f442bcf"
+        },
+        {
+          "relativePath": "verify_input_feedback.py",
+          "bytes": 6395,
+          "sha256": "1a4c72aa93eb7396568c022fd49547f8529d2ae5431073fa17a83a41d01be6c5"
+        },
+        {
+          "relativePath": "verify_qt.py",
+          "bytes": 6521,
+          "sha256": "27c721d7a2e1a01c3b8a839c287ee2e99cb688e5275e844aef958b1ec0c47d11"
+        },
+        {
+          "relativePath": "verify_v5_visual.py",
+          "bytes": 3776,
+          "sha256": "4cc6224a7a2ee9c81f7ea97580d5b408df3e6e941b3b210f7794eb9d52a9fc06"
+        }
+      ]
+    },
+    {
+      "kind": "host-development",
+      "source": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games\\rhythm\\tools",
+      "destination": "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\_development_archive\\directory-layout-20261116-145242\\games\\rhythm\\tools",
+      "files": [
+        {
+          "relativePath": "generate_background_music.py",
+          "bytes": 1628,
+          "sha256": "4cc0cf546dda14082fd6a6c5a01874ff85d770ab1dd1bed7a024af1dd3af9107"
+        },
+        {
+          "relativePath": "make_audio.py",
+          "bytes": 1745,
+          "sha256": "c63780502c995f68629416993af37758302683562a22dfa594a79028895bf0e7"
+        }
+      ]
+    }
+  ],
+  "hostBefore": [
+    {
+      "relativePath": "AGENTS.md",
+      "bytes": 3527,
+      "sha256": "1a26fbc54cfb5d6894b489acaf40525e5c13345332881c560a29c7061c84793b"
+    },
+    {
+      "relativePath": "README.md",
+      "bytes": 5088,
+      "sha256": "654e9ac131dfe42a18f68eadd512e745643cc8f3688b48ead1ef308675465b4c"
+    },
+    {
+      "relativePath": "balance\\AGENTS.md",
+      "bytes": 414,
+      "sha256": "cb7439a35e8c38eedeca7b0714c14c475aa071313edcd1f3d79fe54fee5dd0f3"
+    },
+    {
+      "relativePath": "balance\\Main.qml",
+      "bytes": 23534,
+      "sha256": "271e22c55c1c423049d7498af96eb60b873b7bb213e2df0b62b8667feb46ecae"
+    },
+    {
+      "relativePath": "balance\\migration.md",
+      "bytes": 1271,
+      "sha256": "089413dfdb2291663f54ef30200ddbbc149e0bcae5b421c2a3b591acc17b8256"
+    },
+    {
+      "relativePath": "balance\\README.md",
+      "bytes": 1060,
+      "sha256": "ad0d44ad40193b5fe538ae6b2e941427b2f24586ba2cda2f174e028de8229687"
+    },
+    {
+      "relativePath": "balance\\TaskDefinition.qml",
+      "bytes": 727,
+      "sha256": "73f8af0aca76ebed87a00dd78487e198061722d7dd4addc07c688e65d4ddc550"
+    },
+    {
+      "relativePath": "balance\\assets\\icon.svg",
+      "bytes": 310,
+      "sha256": "3e57126a3aff4b755464941addf604e36e66c951fd7bcfc09e7f87cf1793a531"
+    },
+    {
+      "relativePath": "claw\\AGENTS.md",
+      "bytes": 1211,
+      "sha256": "a0903fe797747e36ce252b467513769e1f8b96a81638f394a678e7a0d3ddfa42"
+    },
+    {
+      "relativePath": "claw\\ClawView.qml",
+      "bytes": 10001,
+      "sha256": "7abdb0bcff9b90b8df08fa588993d1f9d8783904dd244ec741c0109064cbee53"
+    },
+    {
+      "relativePath": "claw\\Main.qml",
+      "bytes": 30217,
+      "sha256": "8dbf2a3bac51dba5c451854638c85f4893b9152a4cd55821f5ad76f00393c6aa"
+    },
+    {
+      "relativePath": "claw\\README.md",
+      "bytes": 3068,
+      "sha256": "989c6f636515f62234d5f22ff4ab60ce119310fc0872694f393eaa6ee54307c5"
+    },
+    {
+      "relativePath": "claw\\TaskDefinition.qml",
+      "bytes": 936,
+      "sha256": "c754d693539567a993d99a3a560245957a8888a1d7f7500c15748db8a057ec2d"
+    },
+    {
+      "relativePath": "claw\\assets\\icon.png",
+      "bytes": 3390,
+      "sha256": "fc8eded2b023b696a3fff6ddff4aa8e583ee014fe62c7a9283686162a3d7cfc8"
+    },
+    {
+      "relativePath": "claw\\assets\\icon.svg",
+      "bytes": 929,
+      "sha256": "c55a93b46035aff52384084c090a7b601162b221cd8711dbed858c9e87d48f81"
+    },
+    {
+      "relativePath": "claw\\tests\\verify_1106.py",
+      "bytes": 14281,
+      "sha256": "d40c9fd46ce1241ad17a9169284d653e83dc15e7c54f51e3e5e38b05461c88dd"
+    },
+    {
+      "relativePath": "claw\\tests\\verify_v5_near_miss.py",
+      "bytes": 2553,
+      "sha256": "48f7a4474e13b52bdb3bb0ffb241959393ddadbd156d4740efab98d1b7689712"
+    },
+    {
+      "relativePath": "claw\\tests\\evidence\\acceptance.json",
+      "bytes": 13407,
+      "sha256": "419c50b8bf685c30109c3bb2e982140009371f7e7c2f52973b0a38f79f0e6eb6"
+    },
+    {
+      "relativePath": "claw\\tests\\evidence\\claw-clutter.png",
+      "bytes": 66515,
+      "sha256": "fd7d5473acd3b55ad07c838ecd1c87eac34d968510428870a8ffb4ab28848b08"
+    },
+    {
+      "relativePath": "claw\\tests\\evidence\\claw-ready.png",
+      "bytes": 65986,
+      "sha256": "e11892ec3e82405c60d8beecf8fb81187717d295c5c7d864161c85948de1b0a5"
+    },
+    {
+      "relativePath": "claw\\tests\\evidence\\claw-results.png",
+      "bytes": 54497,
+      "sha256": "5bb5e422d4ae092738e6a7c0471478eab7b9af917d8170e724747ea11d98d7d2"
+    },
+    {
+      "relativePath": "claw\\tests\\evidence\\session-events.json",
+      "bytes": 165535,
+      "sha256": "8adb146a6ba25782a096f82eefdde71919fec4a71de36a0d48b34c22e36f1868"
+    },
+    {
+      "relativePath": "docs\\api.md",
+      "bytes": 5120,
+      "sha256": "9e3479f23f0ef36fa2f590e03b070eb4a8392ef02f0f4cf54298831b014e77d6"
+    },
+    {
+      "relativePath": "hanoi\\AGENTS.md",
+      "bytes": 1186,
+      "sha256": "2656684fbf2a3aaedab9d86ecef649931dc61756bec23f7be70a06128e3b268d"
+    },
+    {
+      "relativePath": "hanoi\\GoalPreview.qml",
+      "bytes": 2492,
+      "sha256": "0bbfb0108772810220d59eeb9c8945efd2fd28c333fef7ad5e3e2f4be933a082"
+    },
+    {
+      "relativePath": "hanoi\\HanoiDisc.qml",
+      "bytes": 2239,
+      "sha256": "e0eb8dcfdc65072cd7dedbbe55d125a877c2c3d25927964fad6f061a90015611"
+    },
+    {
+      "relativePath": "hanoi\\LondonBall.qml",
+      "bytes": 1311,
+      "sha256": "ac062fe12c2f70ee321b0d2e056f121fa2def360ef5bd5a81cd7561b847f0966"
+    },
+    {
+      "relativePath": "hanoi\\Main.qml",
+      "bytes": 43448,
+      "sha256": "9d82cb5df4f49d196c67dee4166712b46733e19be112e1a8a748657bc7f08ed5"
+    },
+    {
+      "relativePath": "hanoi\\README.md",
+      "bytes": 1996,
+      "sha256": "11a14f4cab09bb9ab258457408ba4e1f98506a0a0e6bb94512c935444e7307d4"
+    },
+    {
+      "relativePath": "hanoi\\TaskDefinition.qml",
+      "bytes": 834,
+      "sha256": "e52496b6966104ff67426a1117ff164cfb700c0ea5e99bafff9e2d7b96fb4d9a"
+    },
+    {
+      "relativePath": "hanoi\\assets\\icon.png",
+      "bytes": 5510,
+      "sha256": "7c99e5cecdd15700d39f3bd2a88c2cb4d3600e7af922ee0ae29ad8811d435fe6"
+    },
+    {
+      "relativePath": "hanoi\\assets\\icon.svg",
+      "bytes": 70301,
+      "sha256": "75edcc3d2685492699ab36b0ca94981ea7802eb1cd800082aaae53bc8296700e"
+    },
+    {
+      "relativePath": "hanoi\\tests\\verify_1106.py",
+      "bytes": 15842,
+      "sha256": "9a37c45b36231a2809f8b0b0ef845b3d84546f7ac70963aa1e753135a4311678"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\bci-session.json",
+      "bytes": 44330,
+      "sha256": "d6b1cdadd54a3c94390b4928b811ddd665184ebd881b23d2aaa9a81be756643c"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\hanoi.png",
+      "bytes": 11215,
+      "sha256": "8a5d4e04009d2c9df48958d6c1148249d49261480e308772bc92aaa0baea110f"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\london-playing.png",
+      "bytes": 16644,
+      "sha256": "f69e2dc75b460ecc5748439e8cd958df5b850dba3735c1fa7d3c58b3020dcfc1"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\london.png",
+      "bytes": 16813,
+      "sha256": "8b45b5ff7a003aa20e94db2a7ca0717a606a45fc9fe7c85aba7191bd44b65316"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\preview-round-1.png",
+      "bytes": 11215,
+      "sha256": "8a5d4e04009d2c9df48958d6c1148249d49261480e308772bc92aaa0baea110f"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\preview-round-2.png",
+      "bytes": 14539,
+      "sha256": "ccb2a834ba28a1f15d7dee19516b8c5bcfded330817efee0c208acbc4ca16534"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\preview-round-3.png",
+      "bytes": 20608,
+      "sha256": "ab16c805381d18e0feeb13dab5da91785466f71e16f9063297f814e5fe980f52"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\preview-round-4.png",
+      "bytes": 16813,
+      "sha256": "8b45b5ff7a003aa20e94db2a7ca0717a606a45fc9fe7c85aba7191bd44b65316"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\preview-round-5.png",
+      "bytes": 19250,
+      "sha256": "6025f82b22c6656610c5951c27f1147daa7c1232fd5032f7061ff471d13f1d91"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\results-scale-1.5.json",
+      "bytes": 38740,
+      "sha256": "d9d959be4a30be324d280c98329e21b19ab3678f624c8067df730078bc7b3264"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\results-scale-1.json",
+      "bytes": 38738,
+      "sha256": "10b5440c30592c25a9ff6ec7b813c96546d9b381938c2c5a212f1296ae8cd31e"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\results.png",
+      "bytes": 18044,
+      "sha256": "fd564a4e7ed1782e098b703117d3f54480e032c1656dc14d7462e82d16e026da"
+    },
+    {
+      "relativePath": "luban\\适配验证.json",
+      "bytes": 97862,
+      "sha256": "cc49e171f32ab0a4406eb520affcc4160054f9ffe07a8e7160a16a7b94f4edb0"
+    },
+    {
+      "relativePath": "luban\\AGENTS.md",
+      "bytes": 1192,
+      "sha256": "e8ed917be9a3e38d77205ac19769539c983d60cf494a8362e6375d554ea81c5c"
+    },
+    {
+      "relativePath": "luban\\LegacyWindowFill.qml",
+      "bytes": 7857,
+      "sha256": "28b5006ea1569ba9d5f44b85c3f7b85d41f62c48b6031155d158f2a982d82252"
+    },
+    {
+      "relativePath": "luban\\LevelData.js",
+      "bytes": 24128,
+      "sha256": "adeb15163c05e56191d1b8c557c9da3883a75df312ee96f5daa2477d7d671171"
+    },
+    {
+      "relativePath": "luban\\LubanButton.qml",
+      "bytes": 1549,
+      "sha256": "33ce1e5f4f2f41a65ae86c8aa6929c103a821dc28fe62572cc88171b9c210abc"
+    },
+    {
+      "relativePath": "luban\\LubanScene.qml",
+      "bytes": 4755,
+      "sha256": "7aa6995bcd447ac43dd1915493dd3ba13d8e911b9f00f1f78ec3adcfb5bf6521"
+    },
+    {
+      "relativePath": "luban\\Main.qml",
+      "bytes": 50626,
+      "sha256": "d52dbbed3096e767d78c1b931751b8cf0e28e81a1a68d5008c1ca7b818b1b905"
+    },
+    {
+      "relativePath": "luban\\README.md",
+      "bytes": 4548,
+      "sha256": "a0d23dac906cb031cb3a57305767583208cd80cfe78711673e4c88c999c4c45a"
+    },
+    {
+      "relativePath": "luban\\SHA256.json",
+      "bytes": 2301,
+      "sha256": "90b8fe9c039e9ec92cd15fbc61a21a5db6bed9574315d3caed2f23676f98d096"
+    },
+    {
+      "relativePath": "luban\\TaskDefinition.qml",
+      "bytes": 1010,
+      "sha256": "2961fa3d5260ececfb40f1f3e38227edf02dc0ada29c4bf42345f484664727a4"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_A.png",
+      "bytes": 2168,
+      "sha256": "dbd7ae7ca17a507ad25dbe9ce5ea4d63926e3f19db27b4d0c76ab7254bb72eb4"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_A.svg",
+      "bytes": 817,
+      "sha256": "c3f9d479f6d68bc279b13933dfc6ea6640c35ebee093d4e4f49af5200514e921"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_B.png",
+      "bytes": 2364,
+      "sha256": "d82d6f20affdc7374ed22da9c1b801c95f86203fbcfd8bfc33b1f2571ec7e05f"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_B.svg",
+      "bytes": 787,
+      "sha256": "afc470c13b7406c2381e759978abde82e3400d7b584d7d76b56ac8b20fdcddfa"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_C.png",
+      "bytes": 2165,
+      "sha256": "9b4282e7ec32f0b79cd9aeba9a34e85805a4126cdae3e6085de46f82cea05492"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_C.svg",
+      "bytes": 846,
+      "sha256": "b75ef6f8f2045ea774b64ac4d3293ff5876423a38a50adb198f43090bb8b1aa1"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_D.png",
+      "bytes": 2364,
+      "sha256": "ecca1f788627c20692ac7016721a4659314dae0bfd4a6e7b9603e5c08b3070cb"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_D.svg",
+      "bytes": 786,
+      "sha256": "2019a5bdf3a5ccbc13ba1af114aa190895218cc807c32a8ba793379fed51ceef"
+    },
+    {
+      "relativePath": "luban\\assets\\icon.png",
+      "bytes": 11544,
+      "sha256": "812ab21d07e0afdc50e20ae5ee028e5d6bdd904bda965717ffc2ec3c3a9882b2"
+    },
+    {
+      "relativePath": "luban\\assets\\icon.svg",
+      "bytes": 146913,
+      "sha256": "373e9c9ae8317cba1e94451198be26ebb6d0b35496855de4a53ea1ccb902e93a"
+    },
+    {
+      "relativePath": "luban\\assets\\luban_workbench_bg.png",
+      "bytes": 13971,
+      "sha256": "a9c1ffe7ecadb175f0b44f36970cca457725260e34c76aff7ce6c702b0dfd582"
+    },
+    {
+      "relativePath": "luban\\assets\\luban_workbench_bg.svg",
+      "bytes": 2012,
+      "sha256": "8f322270ded126ea9f05e58b391dcc369873221169ae33062a6e4b350f84bb36"
+    },
+    {
+      "relativePath": "luban\\assets\\wood.png",
+      "bytes": 52425,
+      "sha256": "e428634c5862c40493136bef66186c1d98ea0364364a2845183dc9d76ce10686"
+    },
+    {
+      "relativePath": "luban\\tests\\geometry-result.json",
+      "bytes": 12341,
+      "sha256": "49597296b38e1c9f680fdf1eabaa29c00ea405934bebc665f7f5a456c82b0e15"
+    },
+    {
+      "relativePath": "luban\\tests\\HostWrapper.qml",
+      "bytes": 999,
+      "sha256": "ded08aa70d2d475ef8eba5526bcdcb4bb713d153697ed23161adbb3e5471e4f2"
+    },
+    {
+      "relativePath": "luban\\tests\\runtime-result.json",
+      "bytes": 27058,
+      "sha256": "daadb3a5c1691f88fa5f9cdc55e0e913ca701635293aa54bc952ae467ad13d6b"
+    },
+    {
+      "relativePath": "luban\\tests\\verify_1106.py",
+      "bytes": 210,
+      "sha256": "9064cd824494579f51b690b55b3c5dc2a2b909dd2f0c6a09bab87dcfeedf005d"
+    },
+    {
+      "relativePath": "luban\\tests\\verify_revision.py",
+      "bytes": 13632,
+      "sha256": "065ac8e667863a4d389b3206ebd6935c05732366beb89a0b62cd90deb9ec651a"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\bci-events.json",
+      "bytes": 44042,
+      "sha256": "3e33257a66f783336e229ff6c49779a703a0c06cda7b3a673f896468bd1a8bfe"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\keyboard-events.json",
+      "bytes": 44044,
+      "sha256": "27403cf7d6b29efe41d5e924492e216f178ebfacb0d3cc37e2442daa1190fbde"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\l4-partial-contact.png",
+      "bytes": 139973,
+      "sha256": "bd15f594b2153e91e6549fef7eab067812dccf260e400d0c2a1d3bc5152d8e74"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\layout-1000x700.png",
+      "bytes": 140444,
+      "sha256": "de4908ac26480c6e1ffd8c9a8319ddcf34c1036a12ae7e1bb6f157523bc5db1a"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\layout-1280x800.png",
+      "bytes": 179086,
+      "sha256": "da1ff2c1f1926d1363ca2850055d6f6904fa536ce3514fbc815ba30508df1bc3"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\layout-1920x1080.png",
+      "bytes": 312225,
+      "sha256": "9a71d8e6b8df404fdcac17d1d74ecaec4251a1a8589cc6bf0b700288ade6aaa6"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\layout-640x900.png",
+      "bytes": 109842,
+      "sha256": "aeaf3f67eedadd798a721f4147d4cbd36ebc1c575621ad5f1e05db77c2edf795"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\mouse-events.json",
+      "bytes": 44674,
+      "sha256": "354e21ce9dc308537bd26547601b1993b1c6b4138bf08c385255ee11a34eb88a"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\runtime-result.json",
+      "bytes": 27058,
+      "sha256": "daadb3a5c1691f88fa5f9cdc55e0e913ca701635293aa54bc952ae467ad13d6b"
+    },
+    {
+      "relativePath": "luban\\tools\\luban_solver.py",
+      "bytes": 4367,
+      "sha256": "e0c23cce8130a4d267ce7c31662d8ba81050ff5bb7ac666fdc0e3ec6125361d0"
+    },
+    {
+      "relativePath": "luban\\tools\\verify_geometry.py",
+      "bytes": 7550,
+      "sha256": "59a185d81b53ca0a801be83dc00bc21653d6ce1d00d0f0b52dc2d5113cd1d631"
+    },
+    {
+      "relativePath": "pointer\\Main.qml",
+      "bytes": 18330,
+      "sha256": "bb85325d2a3a86024a47b094b708f2af97f0def3db5e41b2c26a4134688e677a"
+    },
+    {
+      "relativePath": "pointer\\README.md",
+      "bytes": 4541,
+      "sha256": "cbd3d0faecb8f9b8d1f4c9809457cc32ea798e821f8fb2faa621c6512ab5427a"
+    },
+    {
+      "relativePath": "pointer\\TaskDefinition.qml",
+      "bytes": 813,
+      "sha256": "469eb6039d5dc4e0e57a69108470a438c29255fe4d2d740a23588573462a47a9"
+    },
+    {
+      "relativePath": "pointer\\assets\\icon.svg",
+      "bytes": 448,
+      "sha256": "1b5e3433933d8c9789cc641f73bc3823c47672dbc12299c3586ce9a3983bda7b"
+    },
+    {
+      "relativePath": "pointer\\tasks\\pursuit\\Main.qml",
+      "bytes": 37127,
+      "sha256": "71c0cf56b66e10f73b83ffd7aa1a88dc276523228870b3f4a13421614d136854"
+    },
+    {
+      "relativePath": "pointer\\tasks\\pursuit\\RandomPath.js",
+      "bytes": 2539,
+      "sha256": "4d965640f8d99d20e7f70547b9f6d25517ca47b76316fb0b7cf674a72e31d6c6"
+    },
+    {
+      "relativePath": "pointer\\tasks\\pursuit\\README.md",
+      "bytes": 386,
+      "sha256": "e5de515edf22c9eafa3913b02f9f37f1b165e377cec2fe0698f24b5062c85a8d"
+    },
+    {
+      "relativePath": "pointer\\tasks\\pursuit\\assets\\icon.png",
+      "bytes": 4605,
+      "sha256": "5db6e07716278acfd8216540b634d877fcd020a89aece0d471b873333dabf6f8"
+    },
+    {
+      "relativePath": "pointer\\tasks\\pursuit\\assets\\icon.svg",
+      "bytes": 941,
+      "sha256": "4e3ee0fc00a32486da18f42bce1359291dd52b3df9593edd645fcb02712ab044"
+    },
+    {
+      "relativePath": "pointer\\tasks\\target\\Main.qml",
+      "bytes": 42951,
+      "sha256": "a491cd59e1be15e5b796cabdf94dc9d91c706c3f5b02d41fe76f8d4485385472"
+    },
+    {
+      "relativePath": "pointer\\tasks\\target\\README.md",
+      "bytes": 2671,
+      "sha256": "5c9d8ebf6a4cb5a0d34bf00085007479f7dc8dffd1d0458101433c3e8e09636c"
+    },
+    {
+      "relativePath": "pointer\\tasks\\target\\assets\\icon.png",
+      "bytes": 11373,
+      "sha256": "75530a9d05ac076f1d700bd5582a9efa5b516b1146afcba560915c68fcd63898"
+    },
+    {
+      "relativePath": "pointer\\tasks\\target\\assets\\icon.svg",
+      "bytes": 122041,
+      "sha256": "c3c2bbd582ba729e95d065c33d1984082d53268d3cf26d28de6f6728e3dc5a11"
+    },
+    {
+      "relativePath": "pointer\\tests\\verify_1106.py",
+      "bytes": 24241,
+      "sha256": "0ae4b8798337e5285257e2e0130c1663d57e256b2048c861529366f03d1111a3"
+    },
+    {
+      "relativePath": "pointer\\tests\\verify_host_cursor.py",
+      "bytes": 6961,
+      "sha256": "72c6f8c8e60465816f817c9ebc4b597311b0acf8b1bb4d49ca1ef4c39c339368"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\acceptance-scale-1.25.json",
+      "bytes": 17291,
+      "sha256": "7ae315ab16a02e5abb6711aa7e7dd0b3b5690d33810a9fa8233feccf80d2bf4d"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\acceptance-scale-1.5.json",
+      "bytes": 17294,
+      "sha256": "e1f1780fe18d2d68a090813b50066fc96b53671b683dc28459c8e3c47a54efb1"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\acceptance-scale-1.json",
+      "bytes": 17538,
+      "sha256": "d3887aafcf608000e4d3f02f3054753051707411c4cfb3545600fc011b9dee0d"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\game-record-samples.jsonl",
+      "bytes": 211977,
+      "sha256": "e6c9480fab354d4180259c5c7e20fc55d608e977042b463e76baa510d433ffc8"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\pursuit-native-bci.png",
+      "bytes": 9640,
+      "sha256": "e2819baec34f70eef572d46d1b92b03c21cc1094b07b281b3efc3f3524693bb6"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\pursuit-native-local.png",
+      "bytes": 9650,
+      "sha256": "1e689144b6474c4a3d16541792f46364c07e6c50922941fc8dc6662729b461af"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\pursuit-result.png",
+      "bytes": 4332,
+      "sha256": "de26d64687b1b2842f0c4868ddeaac6bfaebde3dae1f1a24072d48ee6dfce002"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\pursuit-running.png",
+      "bytes": 4707,
+      "sha256": "e2b5f02325c7aed18040cf84ac2c38f8d89be9ef28ff4b9bb40bfbe996710bbb"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\selection.png",
+      "bytes": 5508,
+      "sha256": "9fe34404ac59eeb8e97b83033ec63c7b96ee375acd8c0c7d6846071691f4d7bb"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\target-result.png",
+      "bytes": 4320,
+      "sha256": "bb5d512cfbb89b1296b0a3c8fc7b7971dc221a651ba76a61a04edbf4f122ec99"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\target-running.png",
+      "bytes": 11717,
+      "sha256": "cdbd5e0af4e7f7a0c534d4ccce1c1a6c296aab00e9ecfd6595647594c4d4e2f1"
+    },
+    {
+      "relativePath": "pointer\\tools\\package_suite.py",
+      "bytes": 3451,
+      "sha256": "cd4db9f0501a719a04cb0d4a95abdebe25ba7f5223513866aeb6be58f2292bd0"
+    },
+    {
+      "relativePath": "pong\\AGENTS.md",
+      "bytes": 278,
+      "sha256": "2ce219971f1b2bb387a7bc70c90cc61fbca02eb4b1c7c4e70f07f1d50aea0eaf"
+    },
+    {
+      "relativePath": "pong\\Main.qml",
+      "bytes": 4297,
+      "sha256": "f0cc9e2316b57bf13a6ac319bb15b6bf08236c28ef51b5207efcf1a4826eb581"
+    },
+    {
+      "relativePath": "pong\\README.md",
+      "bytes": 799,
+      "sha256": "fa0f6a1a90bfe94348ef3e2ceb86bcf1aa8e43318a31e1d96ac10fce51966490"
+    },
+    {
+      "relativePath": "pong\\TaskDefinition.qml",
+      "bytes": 666,
+      "sha256": "6a16d8e041c5bdd4b617c88e940a8d6b9b31263070b7ad2e116c8cbc2dcfd1a1"
+    },
+    {
+      "relativePath": "pong\\assets\\icon.png",
+      "bytes": 6080,
+      "sha256": "b80f654411b01bd1bf422d502e53912c974682acab8fe397288eb39cf536225d"
+    },
+    {
+      "relativePath": "pursuit\\AGENTS.md",
+      "bytes": 1166,
+      "sha256": "ced58bc17e57a650740c0ad60bb672f37c5b57e6ba1b8613afbdaaafd92e3b70"
+    },
+    {
+      "relativePath": "pursuit\\Main.qml",
+      "bytes": 37121,
+      "sha256": "d2088e1390a9133f3ed98f5ae6195240d5b2f49e4659d3e33431e4762cb3ba39"
+    },
+    {
+      "relativePath": "pursuit\\RandomPath.js",
+      "bytes": 2539,
+      "sha256": "4d965640f8d99d20e7f70547b9f6d25517ca47b76316fb0b7cf674a72e31d6c6"
+    },
+    {
+      "relativePath": "pursuit\\README.md",
+      "bytes": 386,
+      "sha256": "e5de515edf22c9eafa3913b02f9f37f1b165e377cec2fe0698f24b5062c85a8d"
+    },
+    {
+      "relativePath": "pursuit\\TaskDefinition.qml",
+      "bytes": 962,
+      "sha256": "67c7b495b47fb5d47bc77b6ba1140c15098eb97987b5a1cad3802621332e2f41"
+    },
+    {
+      "relativePath": "pursuit\\assets\\icon.png",
+      "bytes": 4605,
+      "sha256": "5db6e07716278acfd8216540b634d877fcd020a89aece0d471b873333dabf6f8"
+    },
+    {
+      "relativePath": "pursuit\\assets\\icon.svg",
+      "bytes": 941,
+      "sha256": "4e3ee0fc00a32486da18f42bce1359291dd52b3df9593edd645fcb02712ab044"
+    },
+    {
+      "relativePath": "rhythm\\AGENTS.md",
+      "bytes": 998,
+      "sha256": "cd4d91b7db6025de793c46e75d2b8c9a7014d7bf3021e3f80f2406be68e3562c"
+    },
+    {
+      "relativePath": "rhythm\\LegacyWindowFill.qml",
+      "bytes": 7857,
+      "sha256": "28b5006ea1569ba9d5f44b85c3f7b85d41f62c48b6031155d158f2a982d82252"
+    },
+    {
+      "relativePath": "rhythm\\Main.qml",
+      "bytes": 34420,
+      "sha256": "fdc1dab30d3a527d9fb0985a521205806797d329523f0124e9dec57d5507266a"
+    },
+    {
+      "relativePath": "rhythm\\README.md",
+      "bytes": 2280,
+      "sha256": "12ead4fc1106ff17eed339820472a0342108f94e85de52c3447bf36daf78e87a"
+    },
+    {
+      "relativePath": "rhythm\\RhythmEngine.js",
+      "bytes": 15192,
+      "sha256": "f75c99e7e8673014aee30b92d30b6aca503661f2fa8b7675e41e489a41ee898d"
+    },
+    {
+      "relativePath": "rhythm\\TaskDefinition.qml",
+      "bytes": 799,
+      "sha256": "169c9013b3b9d5e74f714b09a016438c93838f57c41e1b197f5f6df9c3cb3aab"
+    },
+    {
+      "relativePath": "rhythm\\audio\\background-90bpm.wav",
+      "bytes": 940844,
+      "sha256": "66824c40e06a6b6211d50adba849d4995929a69e2a767cc6a38256f09c25ae27"
+    },
+    {
+      "relativePath": "rhythm\\audio\\chord-1.wav",
+      "bytes": 21212,
+      "sha256": "de0882f9f5161de7a158e25b91f9c658b3f4366972df02f0041a90db6bdf4254"
+    },
+    {
+      "relativePath": "rhythm\\audio\\chord-2.wav",
+      "bytes": 21212,
+      "sha256": "425769d278d29cd8dac26c7de8ed438d41e0ed41ec0ea2adaf0cc98a3d9ea923"
+    },
+    {
+      "relativePath": "rhythm\\audio\\chord-3.wav",
+      "bytes": 21212,
+      "sha256": "3e36914bc9d4929c7ddd979c1baf6cb47bb247945dee0d0388eb1debe6129b22"
+    },
+    {
+      "relativePath": "rhythm\\audio\\chord-4.wav",
+      "bytes": 21212,
+      "sha256": "45df607147b3e1cef6df44804b22f62b0a6361f79cc3571bceba4c3a2a846b26"
+    },
+    {
+      "relativePath": "rhythm\\audio\\pulse.wav",
+      "bytes": 5336,
+      "sha256": "2207e1464d6f58a2a82a62072083e618d8df78c521c453036c82bac352b909a5"
+    },
+    {
+      "relativePath": "rhythm\\audio\\success.wav",
+      "bytes": 9746,
+      "sha256": "c9dd5dd4aaac8c50b91754697de6b498f374f6dce0d167867e9448d3f38bc7c1"
+    },
+    {
+      "relativePath": "rhythm\\tests\\engine-results.json",
+      "bytes": 3148,
+      "sha256": "58bcf8a83485d508c4282fad77d88daa75dd726d0d43fb4d79b84029cba76aa7"
+    },
+    {
+      "relativePath": "rhythm\\tests\\qt-results.json",
+      "bytes": 5345,
+      "sha256": "af4bc3e92f03120e57f8ca80dad13001acf87505238144ddbbb8bce0c9e4c6a9"
+    },
+    {
+      "relativePath": "rhythm\\tests\\test_engine.js",
+      "bytes": 12016,
+      "sha256": "a38144ac7071cc547cf6ad4d5959c47a221e4c5cfcc611be911d6dd78f442bcf"
+    },
+    {
+      "relativePath": "rhythm\\tests\\verify_input_feedback.py",
+      "bytes": 6395,
+      "sha256": "1a4c72aa93eb7396568c022fd49547f8529d2ae5431073fa17a83a41d01be6c5"
+    },
+    {
+      "relativePath": "rhythm\\tests\\verify_qt.py",
+      "bytes": 6521,
+      "sha256": "27c721d7a2e1a01c3b8a839c287ee2e99cb688e5275e844aef958b1ec0c47d11"
+    },
+    {
+      "relativePath": "rhythm\\tests\\verify_v5_visual.py",
+      "bytes": 3776,
+      "sha256": "4cc6224a7a2ee9c81f7ea97580d5b408df3e6e941b3b210f7794eb9d52a9fc06"
+    },
+    {
+      "relativePath": "rhythm\\tools\\generate_background_music.py",
+      "bytes": 1628,
+      "sha256": "4cc0cf546dda14082fd6a6c5a01874ff85d770ab1dd1bed7a024af1dd3af9107"
+    },
+    {
+      "relativePath": "rhythm\\tools\\make_audio.py",
+      "bytes": 1745,
+      "sha256": "c63780502c995f68629416993af37758302683562a22dfa594a79028895bf0e7"
+    },
+    {
+      "relativePath": "shared-ui\\FeedbackToast.qml",
+      "bytes": 1391,
+      "sha256": "f07d2a19856cbe2ab69a353745a50f790a4361614cb8e4069f52aa9ac1315be2"
+    },
+    {
+      "relativePath": "shared-ui\\GameButton.qml",
+      "bytes": 2790,
+      "sha256": "5b1ab28e393d66e48ed8d7221530d382f9cce79cd5ebb57167fb7dde59a500ae"
+    },
+    {
+      "relativePath": "shared-ui\\GameDialog.qml",
+      "bytes": 2585,
+      "sha256": "87c76131549148f142a94df0ec5c0a4b14a783e16c7da7c29453dfbf8070aa05"
+    },
+    {
+      "relativePath": "shared-ui\\GameFrame.qml",
+      "bytes": 4496,
+      "sha256": "388769befe2c284bf7536fd97069675d7527f6935bdc3bdba3a635c4754a3d33"
+    },
+    {
+      "relativePath": "shared-ui\\GameTheme.qml",
+      "bytes": 3020,
+      "sha256": "428597471be81bb38b6184e62bfca5fdff45862f323dd1c9ba33ee4b648166ec"
+    },
+    {
+      "relativePath": "shared-ui\\InputHint.qml",
+      "bytes": 761,
+      "sha256": "2308259e0427f7e0d3d945014fcef8fbc5af460e7d3d55e02ef6d819fd54028d"
+    },
+    {
+      "relativePath": "shared-ui\\LayoutProbe.qml",
+      "bytes": 4708,
+      "sha256": "00cb4312cb56b8fc4b6bc04ec9c6922ce9b619c854bad88cea26dc84ef44300f"
+    },
+    {
+      "relativePath": "shared-ui\\LegacyWindowFill.qml",
+      "bytes": 8581,
+      "sha256": "a04a8d331c2d7d83846e85b77b4fba2e09979cf2e0d4a8c9eec14d2a1c8e12e9"
+    },
+    {
+      "relativePath": "shared-ui\\LevelSelector.qml",
+      "bytes": 2487,
+      "sha256": "5a7f73f8e5794a145930ea1a4c4d04c3ef4e1a9f9d2c3e08f9ad01eb8abb327f"
+    },
+    {
+      "relativePath": "shared-ui\\MetricSummary.qml",
+      "bytes": 2564,
+      "sha256": "7bf93bd8ffc230fb91d2aa185ead6f1db08e16d5a748b92838b52b264fa5bfce"
+    },
+    {
+      "relativePath": "shared-ui\\qmldir",
+      "bytes": 378,
+      "sha256": "cd9e37275ef3d793e1c9479d6001e31097f33cbe1c0c9affcbbf49cefb1fd273"
+    },
+    {
+      "relativePath": "shared-ui\\SceneViewport.qml",
+      "bytes": 605,
+      "sha256": "500ed9646ac33b1030fb65bac3e6a835c67a6c31b0433341be754dd8bfe42559"
+    },
+    {
+      "relativePath": "sokoban\\AGENTS.md",
+      "bytes": 1303,
+      "sha256": "1004843b2f7c73ae77f13e5d1ab72196fd6044f5cd3ce6a4b70b60680897eb6b"
+    },
+    {
+      "relativePath": "sokoban\\LevelData.js",
+      "bytes": 1155,
+      "sha256": "1d2dc7418678fe0b6f1724070d0af73fb0c7304494a0815c41ea6e1e15a7fb17"
+    },
+    {
+      "relativePath": "sokoban\\Main.qml",
+      "bytes": 38837,
+      "sha256": "dcd6bfbad7113f62eca56aeac5c20f5f8b62ebcdf938a1464ccba66181a3659d"
+    },
+    {
+      "relativePath": "sokoban\\README.md",
+      "bytes": 2056,
+      "sha256": "8bf9a71ec999e6b98e9ddfab014582bc6bff97d00e7f06d7bc795b8282a36683"
+    },
+    {
+      "relativePath": "sokoban\\TaskDefinition.qml",
+      "bytes": 914,
+      "sha256": "b6677f3602e17c83dc67436b2b3eeab35f9294538f96e4cb432ebdb9d86ad7b2"
+    },
+    {
+      "relativePath": "sokoban\\assets\\icon.png",
+      "bytes": 3411,
+      "sha256": "e4740771e6cf19e0693fcfcc4e6571e4c1832501bbd68eab12080cce953802c1"
+    },
+    {
+      "relativePath": "sokoban\\assets\\icon.svg",
+      "bytes": 976,
+      "sha256": "2f7d93059e2812ccfc768897038a4bb028e83348f55d6fb0dd38c9039dd2b306"
+    },
+    {
+      "relativePath": "sokoban\\tests\\verify_1106.py",
+      "bytes": 8101,
+      "sha256": "c94beb6ede998c5a08af5fab2f6ec0bc5edd0b6dc2ed1c2d6e238ffd0c092777"
+    },
+    {
+      "relativePath": "sokoban\\tests\\evidence\\five-rounds-bci.json",
+      "bytes": 36716,
+      "sha256": "a3469207803396442daa144ea2aed86483b4d043a297e3a355c8af2a519e42d1"
+    },
+    {
+      "relativePath": "sokoban\\tests\\evidence\\five-rounds-keyboard.json",
+      "bytes": 36864,
+      "sha256": "c5facdb697e48821a8976a91f751496954331a9b4f717854648bbbb9eec827a2"
+    },
+    {
+      "relativePath": "sokoban\\tests\\evidence\\five-rounds-mouse.json",
+      "bytes": 36864,
+      "sha256": "a2eaa670cfab00166eb58dac3168afa3518148d6646ab64198390b12b3ded631"
+    },
+    {
+      "relativePath": "sokoban\\tests\\evidence\\recovery.json",
+      "bytes": 33994,
+      "sha256": "7df91c6d8638e2a5a868650e720d8d8c73ef43d1cde04e7234ca559abd1df728"
+    },
+    {
+      "relativePath": "sokoban\\tests\\evidence\\result.json",
+      "bytes": 11382,
+      "sha256": "ddf2646184a6bba1a87afb8d8e1950969099d16d16687ad8f960e4e728338171"
+    },
+    {
+      "relativePath": "sokoban\\tests\\evidence\\sokoban.png",
+      "bytes": 18185,
+      "sha256": "94b7c24d57a8c7a5bee96374af21915c4777d12285a4f399236b57c56d3ca53f"
+    },
+    {
+      "relativePath": "target\\AGENTS.md",
+      "bytes": 1519,
+      "sha256": "f385bc8dba4bc8de01fd24a18efecd5199f2b39c11e7bf4cdb1fbc4ee69426ee"
+    },
+    {
+      "relativePath": "target\\Main.qml",
+      "bytes": 42945,
+      "sha256": "59291248831f0b0a229aeccb471cf604face3af21f23b630ab35fe8cca353961"
+    },
+    {
+      "relativePath": "target\\README.md",
+      "bytes": 2671,
+      "sha256": "5c9d8ebf6a4cb5a0d34bf00085007479f7dc8dffd1d0458101433c3e8e09636c"
+    },
+    {
+      "relativePath": "target\\TaskDefinition.qml",
+      "bytes": 991,
+      "sha256": "4458e2e9063948c6af2c8e41f8fa50761852217f676b0d2577ee43c94bd4a868"
+    },
+    {
+      "relativePath": "target\\assets\\icon.png",
+      "bytes": 11373,
+      "sha256": "75530a9d05ac076f1d700bd5582a9efa5b516b1146afcba560915c68fcd63898"
+    },
+    {
+      "relativePath": "target\\assets\\icon.svg",
+      "bytes": 122041,
+      "sha256": "c3c2bbd582ba729e95d065c33d1984082d53268d3cf26d28de6f6728e3dc5a11"
+    },
+    {
+      "relativePath": "templates\\minimal\\AGENTS.md",
+      "bytes": 232,
+      "sha256": "abaa73db00abe8edacc108a6af24c2f919d237c4e5b09ff48ccb18006717aa9a"
+    },
+    {
+      "relativePath": "templates\\minimal\\Main.qml",
+      "bytes": 1522,
+      "sha256": "7b6ddb7f2fafd8f905e472a1e86b94af908c52d41b1c572e2c7698dc41f1771a"
+    },
+    {
+      "relativePath": "templates\\minimal\\README.md",
+      "bytes": 289,
+      "sha256": "aaed299c762cb05b4dc92da252c842d6928c4608022751e0c90b3b73695da479"
+    },
+    {
+      "relativePath": "templates\\minimal\\TaskDefinition.qml",
+      "bytes": 633,
+      "sha256": "b6c7e1526195fabd9c5788f4f3ce39488ca1b1ce332eff143cc0abfeafcfe084"
+    },
+    {
+      "relativePath": "tools\\run-game.ps1",
+      "bytes": 682,
+      "sha256": "945a802702929fe672e70c553dfa19d2ee92ac60dcfa69f647f0dd5df5ceb00c"
+    },
+    {
+      "relativePath": "traffic\\AGENTS.md",
+      "bytes": 1958,
+      "sha256": "08446a81ff820d92d6b4eaebf6849dbc788ab68278990f05d3e9783cbf711619"
+    },
+    {
+      "relativePath": "traffic\\Main.qml",
+      "bytes": 39479,
+      "sha256": "3af6be1c4d90b805a8414aaca518788a040277bb1f6e720e07095806e1fa5692"
+    },
+    {
+      "relativePath": "traffic\\README.md",
+      "bytes": 4994,
+      "sha256": "823deedcfb342185f87f3806de9ab796ed0db25ffead687a1dadbb8fad26e7c6"
+    },
+    {
+      "relativePath": "traffic\\TaskDefinition.qml",
+      "bytes": 778,
+      "sha256": "a7ad184bdb2f9fda0755dbe5864e89b532d7ffe523d14fe2be2479c60e036fdc"
+    },
+    {
+      "relativePath": "traffic\\assets\\icon.png",
+      "bytes": 9881,
+      "sha256": "e169f7367ad82936c58ae20302f7d52434a789401933afeea9c4601e16349f33"
+    },
+    {
+      "relativePath": "traffic\\assets\\icon.svg",
+      "bytes": 107257,
+      "sha256": "b8426534be707b0a75324013cebe3fa91367c7b00f6bd2173b2f8f1a2427bbf2"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_car_blue.png",
+      "bytes": 1289,
+      "sha256": "988137e5006e24bd6a13bb656294bf6fbf20f220b978be61432797ae1034eaaf"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_car_blue.svg",
+      "bytes": 1111,
+      "sha256": "7fb3ade5e6de316cd7254c6f66b3e11cec14b1cdfa72406c8f79da299dcea3f9"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_car_coral.png",
+      "bytes": 1287,
+      "sha256": "0940516bd7b73161b0dc9936dafbcb7354d91cc83a24b7745f10583c2b470085"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_car_coral.svg",
+      "bytes": 1111,
+      "sha256": "6fc718acd431c03424a18a85891c18130cfcf1f46ab3bf69f74080fc0448df36"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_city_bg.png",
+      "bytes": 11747,
+      "sha256": "c0c1560755b2e530e705c1281000fd643278385a7ae49f67978957c71c3743f0"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_city_bg.svg",
+      "bytes": 4135,
+      "sha256": "da0bff7239227a8232d1f69ddb55769915b18a5f9a9ecb322001dd93cc3b4b33"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_pedestrian.png",
+      "bytes": 1210,
+      "sha256": "7e63f3fcf5ebcaa803c4fba3f89c0bb16454498a8e4774c6010bd7539cb2e3bb"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_pedestrian.svg",
+      "bytes": 994,
+      "sha256": "645f3fdac6a064b0a5bdcbc40170f149d48cae28ba656571d10d230628465f34"
+    },
+    {
+      "relativePath": "traffic\\tests\\verify_v5.py",
+      "bytes": 4034,
+      "sha256": "633a4e005d9e8201cef194235e1cb490d94bd5cfadc0ae868dd05d176fbb4def"
+    }
+  ],
+  "localBefore": [
+    {
+      "relativePath": "hanoi\\AGENTS.md",
+      "sha256": "2656684fbf2a3aaedab9d86ecef649931dc61756bec23f7be70a06128e3b268d"
+    },
+    {
+      "relativePath": "hanoi\\GoalPreview.qml",
+      "sha256": "0bbfb0108772810220d59eeb9c8945efd2fd28c333fef7ad5e3e2f4be933a082"
+    },
+    {
+      "relativePath": "hanoi\\HanoiDisc.qml",
+      "sha256": "e0eb8dcfdc65072cd7dedbbe55d125a877c2c3d25927964fad6f061a90015611"
+    },
+    {
+      "relativePath": "hanoi\\LondonBall.qml",
+      "sha256": "ac062fe12c2f70ee321b0d2e056f121fa2def360ef5bd5a81cd7561b847f0966"
+    },
+    {
+      "relativePath": "hanoi\\Main.qml",
+      "sha256": "9d82cb5df4f49d196c67dee4166712b46733e19be112e1a8a748657bc7f08ed5"
+    },
+    {
+      "relativePath": "hanoi\\README.md",
+      "sha256": "11a14f4cab09bb9ab258457408ba4e1f98506a0a0e6bb94512c935444e7307d4"
+    },
+    {
+      "relativePath": "hanoi\\TaskDefinition.qml",
+      "sha256": "e52496b6966104ff67426a1117ff164cfb700c0ea5e99bafff9e2d7b96fb4d9a"
+    },
+    {
+      "relativePath": "hanoi\\assets\\icon.png",
+      "sha256": "7c99e5cecdd15700d39f3bd2a88c2cb4d3600e7af922ee0ae29ad8811d435fe6"
+    },
+    {
+      "relativePath": "hanoi\\assets\\icon.svg",
+      "sha256": "75edcc3d2685492699ab36b0ca94981ea7802eb1cd800082aaae53bc8296700e"
+    },
+    {
+      "relativePath": "hanoi\\tests\\verify_1106.py",
+      "sha256": "9a37c45b36231a2809f8b0b0ef845b3d84546f7ac70963aa1e753135a4311678"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\bci-session.json",
+      "sha256": "d6b1cdadd54a3c94390b4928b811ddd665184ebd881b23d2aaa9a81be756643c"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\hanoi.png",
+      "sha256": "8a5d4e04009d2c9df48958d6c1148249d49261480e308772bc92aaa0baea110f"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\london-playing.png",
+      "sha256": "f69e2dc75b460ecc5748439e8cd958df5b850dba3735c1fa7d3c58b3020dcfc1"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\london.png",
+      "sha256": "8b45b5ff7a003aa20e94db2a7ca0717a606a45fc9fe7c85aba7191bd44b65316"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\preview-round-1.png",
+      "sha256": "8a5d4e04009d2c9df48958d6c1148249d49261480e308772bc92aaa0baea110f"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\preview-round-2.png",
+      "sha256": "ccb2a834ba28a1f15d7dee19516b8c5bcfded330817efee0c208acbc4ca16534"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\preview-round-3.png",
+      "sha256": "ab16c805381d18e0feeb13dab5da91785466f71e16f9063297f814e5fe980f52"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\preview-round-4.png",
+      "sha256": "8b45b5ff7a003aa20e94db2a7ca0717a606a45fc9fe7c85aba7191bd44b65316"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\preview-round-5.png",
+      "sha256": "6025f82b22c6656610c5951c27f1147daa7c1232fd5032f7061ff471d13f1d91"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\results-scale-1.5.json",
+      "sha256": "d9d959be4a30be324d280c98329e21b19ab3678f624c8067df730078bc7b3264"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\results-scale-1.json",
+      "sha256": "10b5440c30592c25a9ff6ec7b813c96546d9b381938c2c5a212f1296ae8cd31e"
+    },
+    {
+      "relativePath": "hanoi\\tests\\evidence\\results.png",
+      "sha256": "fd564a4e7ed1782e098b703117d3f54480e032c1656dc14d7462e82d16e026da"
+    },
+    {
+      "relativePath": "sokoban\\AGENTS.md",
+      "sha256": "1004843b2f7c73ae77f13e5d1ab72196fd6044f5cd3ce6a4b70b60680897eb6b"
+    },
+    {
+      "relativePath": "sokoban\\LevelData.js",
+      "sha256": "1d2dc7418678fe0b6f1724070d0af73fb0c7304494a0815c41ea6e1e15a7fb17"
+    },
+    {
+      "relativePath": "sokoban\\Main.qml",
+      "sha256": "dcd6bfbad7113f62eca56aeac5c20f5f8b62ebcdf938a1464ccba66181a3659d"
+    },
+    {
+      "relativePath": "sokoban\\README.md",
+      "sha256": "8bf9a71ec999e6b98e9ddfab014582bc6bff97d00e7f06d7bc795b8282a36683"
+    },
+    {
+      "relativePath": "sokoban\\TaskDefinition.qml",
+      "sha256": "b6677f3602e17c83dc67436b2b3eeab35f9294538f96e4cb432ebdb9d86ad7b2"
+    },
+    {
+      "relativePath": "sokoban\\assets\\icon.png",
+      "sha256": "e4740771e6cf19e0693fcfcc4e6571e4c1832501bbd68eab12080cce953802c1"
+    },
+    {
+      "relativePath": "sokoban\\assets\\icon.svg",
+      "sha256": "2f7d93059e2812ccfc768897038a4bb028e83348f55d6fb0dd38c9039dd2b306"
+    },
+    {
+      "relativePath": "sokoban\\tests\\verify_1106.py",
+      "sha256": "c94beb6ede998c5a08af5fab2f6ec0bc5edd0b6dc2ed1c2d6e238ffd0c092777"
+    },
+    {
+      "relativePath": "sokoban\\tests\\evidence\\five-rounds-bci.json",
+      "sha256": "a3469207803396442daa144ea2aed86483b4d043a297e3a355c8af2a519e42d1"
+    },
+    {
+      "relativePath": "sokoban\\tests\\evidence\\five-rounds-keyboard.json",
+      "sha256": "c5facdb697e48821a8976a91f751496954331a9b4f717854648bbbb9eec827a2"
+    },
+    {
+      "relativePath": "sokoban\\tests\\evidence\\five-rounds-mouse.json",
+      "sha256": "a2eaa670cfab00166eb58dac3168afa3518148d6646ab64198390b12b3ded631"
+    },
+    {
+      "relativePath": "sokoban\\tests\\evidence\\recovery.json",
+      "sha256": "7df91c6d8638e2a5a868650e720d8d8c73ef43d1cde04e7234ca559abd1df728"
+    },
+    {
+      "relativePath": "sokoban\\tests\\evidence\\result.json",
+      "sha256": "ddf2646184a6bba1a87afb8d8e1950969099d16d16687ad8f960e4e728338171"
+    },
+    {
+      "relativePath": "sokoban\\tests\\evidence\\sokoban.png",
+      "sha256": "94b7c24d57a8c7a5bee96374af21915c4777d12285a4f399236b57c56d3ca53f"
+    },
+    {
+      "relativePath": "pointer\\Main.qml",
+      "sha256": "bb85325d2a3a86024a47b094b708f2af97f0def3db5e41b2c26a4134688e677a"
+    },
+    {
+      "relativePath": "pointer\\README.md",
+      "sha256": "cbd3d0faecb8f9b8d1f4c9809457cc32ea798e821f8fb2faa621c6512ab5427a"
+    },
+    {
+      "relativePath": "pointer\\TaskDefinition.qml",
+      "sha256": "469eb6039d5dc4e0e57a69108470a438c29255fe4d2d740a23588573462a47a9"
+    },
+    {
+      "relativePath": "pointer\\assets\\icon.svg",
+      "sha256": "1b5e3433933d8c9789cc641f73bc3823c47672dbc12299c3586ce9a3983bda7b"
+    },
+    {
+      "relativePath": "pointer\\tests\\verify_1106.py",
+      "sha256": "0ae4b8798337e5285257e2e0130c1663d57e256b2048c861529366f03d1111a3"
+    },
+    {
+      "relativePath": "pointer\\tests\\verify_host_cursor.py",
+      "sha256": "72c6f8c8e60465816f817c9ebc4b597311b0acf8b1bb4d49ca1ef4c39c339368"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\acceptance-scale-1.25.json",
+      "sha256": "7ae315ab16a02e5abb6711aa7e7dd0b3b5690d33810a9fa8233feccf80d2bf4d"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\acceptance-scale-1.5.json",
+      "sha256": "e1f1780fe18d2d68a090813b50066fc96b53671b683dc28459c8e3c47a54efb1"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\acceptance-scale-1.json",
+      "sha256": "d3887aafcf608000e4d3f02f3054753051707411c4cfb3545600fc011b9dee0d"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\game-record-samples.jsonl",
+      "sha256": "e6c9480fab354d4180259c5c7e20fc55d608e977042b463e76baa510d433ffc8"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\pursuit-native-bci.png",
+      "sha256": "e2819baec34f70eef572d46d1b92b03c21cc1094b07b281b3efc3f3524693bb6"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\pursuit-native-local.png",
+      "sha256": "1e689144b6474c4a3d16541792f46364c07e6c50922941fc8dc6662729b461af"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\pursuit-result.png",
+      "sha256": "de26d64687b1b2842f0c4868ddeaac6bfaebde3dae1f1a24072d48ee6dfce002"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\pursuit-running.png",
+      "sha256": "e2b5f02325c7aed18040cf84ac2c38f8d89be9ef28ff4b9bb40bfbe996710bbb"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\selection.png",
+      "sha256": "9fe34404ac59eeb8e97b83033ec63c7b96ee375acd8c0c7d6846071691f4d7bb"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\target-result.png",
+      "sha256": "bb5d512cfbb89b1296b0a3c8fc7b7971dc221a651ba76a61a04edbf4f122ec99"
+    },
+    {
+      "relativePath": "pointer\\tests\\evidence\\target-running.png",
+      "sha256": "cdbd5e0af4e7f7a0c534d4ccce1c1a6c296aab00e9ecfd6595647594c4d4e2f1"
+    },
+    {
+      "relativePath": "pointer\\tests\\__pycache__\\verify_1106.cpython-312.pyc",
+      "sha256": "531e59328bd7c631d9f86b8a46e3d87a7f69843d265199ab8d29213110673065"
+    },
+    {
+      "relativePath": "pointer\\tools\\package_suite.py",
+      "sha256": "cd4db9f0501a719a04cb0d4a95abdebe25ba7f5223513866aeb6be58f2292bd0"
+    },
+    {
+      "relativePath": "pointer\\tools\\__pycache__\\package_suite.cpython-312.pyc",
+      "sha256": "f8aca13bcd008ca76e0818bca50915afcbb9ca7328870168c8b4e93ad5901791"
+    },
+    {
+      "relativePath": "claw\\AGENTS.md",
+      "sha256": "a0903fe797747e36ce252b467513769e1f8b96a81638f394a678e7a0d3ddfa42"
+    },
+    {
+      "relativePath": "claw\\ClawView.qml",
+      "sha256": "7abdb0bcff9b90b8df08fa588993d1f9d8783904dd244ec741c0109064cbee53"
+    },
+    {
+      "relativePath": "claw\\Main.qml",
+      "sha256": "8dbf2a3bac51dba5c451854638c85f4893b9152a4cd55821f5ad76f00393c6aa"
+    },
+    {
+      "relativePath": "claw\\README.md",
+      "sha256": "989c6f636515f62234d5f22ff4ab60ce119310fc0872694f393eaa6ee54307c5"
+    },
+    {
+      "relativePath": "claw\\TaskDefinition.qml",
+      "sha256": "c754d693539567a993d99a3a560245957a8888a1d7f7500c15748db8a057ec2d"
+    },
+    {
+      "relativePath": "claw\\assets\\icon.png",
+      "sha256": "fc8eded2b023b696a3fff6ddff4aa8e583ee014fe62c7a9283686162a3d7cfc8"
+    },
+    {
+      "relativePath": "claw\\assets\\icon.svg",
+      "sha256": "c55a93b46035aff52384084c090a7b601162b221cd8711dbed858c9e87d48f81"
+    },
+    {
+      "relativePath": "claw\\tests\\verify_1106.py",
+      "sha256": "d40c9fd46ce1241ad17a9169284d653e83dc15e7c54f51e3e5e38b05461c88dd"
+    },
+    {
+      "relativePath": "claw\\tests\\verify_v5_near_miss.py",
+      "sha256": "48f7a4474e13b52bdb3bb0ffb241959393ddadbd156d4740efab98d1b7689712"
+    },
+    {
+      "relativePath": "claw\\tests\\evidence\\acceptance.json",
+      "sha256": "419c50b8bf685c30109c3bb2e982140009371f7e7c2f52973b0a38f79f0e6eb6"
+    },
+    {
+      "relativePath": "claw\\tests\\evidence\\claw-clutter.png",
+      "sha256": "fd7d5473acd3b55ad07c838ecd1c87eac34d968510428870a8ffb4ab28848b08"
+    },
+    {
+      "relativePath": "claw\\tests\\evidence\\claw-ready.png",
+      "sha256": "e11892ec3e82405c60d8beecf8fb81187717d295c5c7d864161c85948de1b0a5"
+    },
+    {
+      "relativePath": "claw\\tests\\evidence\\claw-results.png",
+      "sha256": "5bb5e422d4ae092738e6a7c0471478eab7b9af917d8170e724747ea11d98d7d2"
+    },
+    {
+      "relativePath": "claw\\tests\\evidence\\session-events.json",
+      "sha256": "8adb146a6ba25782a096f82eefdde71919fec4a71de36a0d48b34c22e36f1868"
+    },
+    {
+      "relativePath": "traffic\\AGENTS.md",
+      "sha256": "08446a81ff820d92d6b4eaebf6849dbc788ab68278990f05d3e9783cbf711619"
+    },
+    {
+      "relativePath": "traffic\\Main.qml",
+      "sha256": "3af6be1c4d90b805a8414aaca518788a040277bb1f6e720e07095806e1fa5692"
+    },
+    {
+      "relativePath": "traffic\\README.md",
+      "sha256": "823deedcfb342185f87f3806de9ab796ed0db25ffead687a1dadbb8fad26e7c6"
+    },
+    {
+      "relativePath": "traffic\\TaskDefinition.qml",
+      "sha256": "a7ad184bdb2f9fda0755dbe5864e89b532d7ffe523d14fe2be2479c60e036fdc"
+    },
+    {
+      "relativePath": "traffic\\assets\\icon.png",
+      "sha256": "e169f7367ad82936c58ae20302f7d52434a789401933afeea9c4601e16349f33"
+    },
+    {
+      "relativePath": "traffic\\assets\\icon.svg",
+      "sha256": "b8426534be707b0a75324013cebe3fa91367c7b00f6bd2173b2f8f1a2427bbf2"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_car_blue.png",
+      "sha256": "988137e5006e24bd6a13bb656294bf6fbf20f220b978be61432797ae1034eaaf"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_car_blue.svg",
+      "sha256": "7fb3ade5e6de316cd7254c6f66b3e11cec14b1cdfa72406c8f79da299dcea3f9"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_car_coral.png",
+      "sha256": "0940516bd7b73161b0dc9936dafbcb7354d91cc83a24b7745f10583c2b470085"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_car_coral.svg",
+      "sha256": "6fc718acd431c03424a18a85891c18130cfcf1f46ab3bf69f74080fc0448df36"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_city_bg.png",
+      "sha256": "c0c1560755b2e530e705c1281000fd643278385a7ae49f67978957c71c3743f0"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_city_bg.svg",
+      "sha256": "da0bff7239227a8232d1f69ddb55769915b18a5f9a9ecb322001dd93cc3b4b33"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_pedestrian.png",
+      "sha256": "7e63f3fcf5ebcaa803c4fba3f89c0bb16454498a8e4774c6010bd7539cb2e3bb"
+    },
+    {
+      "relativePath": "traffic\\assets\\traffic_pedestrian.svg",
+      "sha256": "645f3fdac6a064b0a5bdcbc40170f149d48cae28ba656571d10d230628465f34"
+    },
+    {
+      "relativePath": "traffic\\tests\\verify_v5.py",
+      "sha256": "633a4e005d9e8201cef194235e1cb490d94bd5cfadc0ae868dd05d176fbb4def"
+    },
+    {
+      "relativePath": "luban\\适配验证.json",
+      "sha256": "cc49e171f32ab0a4406eb520affcc4160054f9ffe07a8e7160a16a7b94f4edb0"
+    },
+    {
+      "relativePath": "luban\\AGENTS.md",
+      "sha256": "e8ed917be9a3e38d77205ac19769539c983d60cf494a8362e6375d554ea81c5c"
+    },
+    {
+      "relativePath": "luban\\LegacyWindowFill.qml",
+      "sha256": "28b5006ea1569ba9d5f44b85c3f7b85d41f62c48b6031155d158f2a982d82252"
+    },
+    {
+      "relativePath": "luban\\LevelData.js",
+      "sha256": "adeb15163c05e56191d1b8c557c9da3883a75df312ee96f5daa2477d7d671171"
+    },
+    {
+      "relativePath": "luban\\LubanButton.qml",
+      "sha256": "33ce1e5f4f2f41a65ae86c8aa6929c103a821dc28fe62572cc88171b9c210abc"
+    },
+    {
+      "relativePath": "luban\\LubanScene.qml",
+      "sha256": "7aa6995bcd447ac43dd1915493dd3ba13d8e911b9f00f1f78ec3adcfb5bf6521"
+    },
+    {
+      "relativePath": "luban\\Main.qml",
+      "sha256": "d52dbbed3096e767d78c1b931751b8cf0e28e81a1a68d5008c1ca7b818b1b905"
+    },
+    {
+      "relativePath": "luban\\README.md",
+      "sha256": "a0d23dac906cb031cb3a57305767583208cd80cfe78711673e4c88c999c4c45a"
+    },
+    {
+      "relativePath": "luban\\SHA256.json",
+      "sha256": "90b8fe9c039e9ec92cd15fbc61a21a5db6bed9574315d3caed2f23676f98d096"
+    },
+    {
+      "relativePath": "luban\\TaskDefinition.qml",
+      "sha256": "2961fa3d5260ececfb40f1f3e38227edf02dc0ada29c4bf42345f484664727a4"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_A.png",
+      "sha256": "dbd7ae7ca17a507ad25dbe9ce5ea4d63926e3f19db27b4d0c76ab7254bb72eb4"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_A.svg",
+      "sha256": "c3f9d479f6d68bc279b13933dfc6ea6640c35ebee093d4e4f49af5200514e921"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_B.png",
+      "sha256": "d82d6f20affdc7374ed22da9c1b801c95f86203fbcfd8bfc33b1f2571ec7e05f"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_B.svg",
+      "sha256": "afc470c13b7406c2381e759978abde82e3400d7b584d7d76b56ac8b20fdcddfa"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_C.png",
+      "sha256": "9b4282e7ec32f0b79cd9aeba9a34e85805a4126cdae3e6085de46f82cea05492"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_C.svg",
+      "sha256": "b75ef6f8f2045ea774b64ac4d3293ff5876423a38a50adb198f43090bb8b1aa1"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_D.png",
+      "sha256": "ecca1f788627c20692ac7016721a4659314dae0bfd4a6e7b9603e5c08b3070cb"
+    },
+    {
+      "relativePath": "luban\\assets\\beam_D.svg",
+      "sha256": "2019a5bdf3a5ccbc13ba1af114aa190895218cc807c32a8ba793379fed51ceef"
+    },
+    {
+      "relativePath": "luban\\assets\\icon.png",
+      "sha256": "812ab21d07e0afdc50e20ae5ee028e5d6bdd904bda965717ffc2ec3c3a9882b2"
+    },
+    {
+      "relativePath": "luban\\assets\\icon.svg",
+      "sha256": "373e9c9ae8317cba1e94451198be26ebb6d0b35496855de4a53ea1ccb902e93a"
+    },
+    {
+      "relativePath": "luban\\assets\\luban_workbench_bg.png",
+      "sha256": "a9c1ffe7ecadb175f0b44f36970cca457725260e34c76aff7ce6c702b0dfd582"
+    },
+    {
+      "relativePath": "luban\\assets\\luban_workbench_bg.svg",
+      "sha256": "8f322270ded126ea9f05e58b391dcc369873221169ae33062a6e4b350f84bb36"
+    },
+    {
+      "relativePath": "luban\\assets\\wood.png",
+      "sha256": "e428634c5862c40493136bef66186c1d98ea0364364a2845183dc9d76ce10686"
+    },
+    {
+      "relativePath": "luban\\tests\\geometry-result.json",
+      "sha256": "49597296b38e1c9f680fdf1eabaa29c00ea405934bebc665f7f5a456c82b0e15"
+    },
+    {
+      "relativePath": "luban\\tests\\HostWrapper.qml",
+      "sha256": "ded08aa70d2d475ef8eba5526bcdcb4bb713d153697ed23161adbb3e5471e4f2"
+    },
+    {
+      "relativePath": "luban\\tests\\runtime-result.json",
+      "sha256": "daadb3a5c1691f88fa5f9cdc55e0e913ca701635293aa54bc952ae467ad13d6b"
+    },
+    {
+      "relativePath": "luban\\tests\\verify_1106.py",
+      "sha256": "9064cd824494579f51b690b55b3c5dc2a2b909dd2f0c6a09bab87dcfeedf005d"
+    },
+    {
+      "relativePath": "luban\\tests\\verify_revision.py",
+      "sha256": "065ac8e667863a4d389b3206ebd6935c05732366beb89a0b62cd90deb9ec651a"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\bci-events.json",
+      "sha256": "3e33257a66f783336e229ff6c49779a703a0c06cda7b3a673f896468bd1a8bfe"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\keyboard-events.json",
+      "sha256": "27403cf7d6b29efe41d5e924492e216f178ebfacb0d3cc37e2442daa1190fbde"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\l4-partial-contact.png",
+      "sha256": "bd15f594b2153e91e6549fef7eab067812dccf260e400d0c2a1d3bc5152d8e74"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\layout-1000x700.png",
+      "sha256": "de4908ac26480c6e1ffd8c9a8319ddcf34c1036a12ae7e1bb6f157523bc5db1a"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\layout-1280x800.png",
+      "sha256": "da1ff2c1f1926d1363ca2850055d6f6904fa536ce3514fbc815ba30508df1bc3"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\layout-1920x1080.png",
+      "sha256": "9a71d8e6b8df404fdcac17d1d74ecaec4251a1a8589cc6bf0b700288ade6aaa6"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\layout-640x900.png",
+      "sha256": "aeaf3f67eedadd798a721f4147d4cbd36ebc1c575621ad5f1e05db77c2edf795"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\mouse-events.json",
+      "sha256": "354e21ce9dc308537bd26547601b1993b1c6b4138bf08c385255ee11a34eb88a"
+    },
+    {
+      "relativePath": "luban\\tests\\evidence\\runtime-result.json",
+      "sha256": "daadb3a5c1691f88fa5f9cdc55e0e913ca701635293aa54bc952ae467ad13d6b"
+    },
+    {
+      "relativePath": "luban\\tools\\luban_solver.py",
+      "sha256": "e0c23cce8130a4d267ce7c31662d8ba81050ff5bb7ac666fdc0e3ec6125361d0"
+    },
+    {
+      "relativePath": "luban\\tools\\verify_geometry.py",
+      "sha256": "59a185d81b53ca0a801be83dc00bc21653d6ce1d00d0f0b52dc2d5113cd1d631"
+    },
+    {
+      "relativePath": "luban\\tools\\__pycache__\\verify_geometry.cpython-312.pyc",
+      "sha256": "fe435c0b7ded6f71e92f0d4234c227682daa4b909664a70c92099bf8ee0635e0"
+    },
+    {
+      "relativePath": "rhythm\\AGENTS.md",
+      "sha256": "cd4d91b7db6025de793c46e75d2b8c9a7014d7bf3021e3f80f2406be68e3562c"
+    },
+    {
+      "relativePath": "rhythm\\LegacyWindowFill.qml",
+      "sha256": "28b5006ea1569ba9d5f44b85c3f7b85d41f62c48b6031155d158f2a982d82252"
+    },
+    {
+      "relativePath": "rhythm\\Main.qml",
+      "sha256": "fdc1dab30d3a527d9fb0985a521205806797d329523f0124e9dec57d5507266a"
+    },
+    {
+      "relativePath": "rhythm\\README.md",
+      "sha256": "12ead4fc1106ff17eed339820472a0342108f94e85de52c3447bf36daf78e87a"
+    },
+    {
+      "relativePath": "rhythm\\RhythmEngine.js",
+      "sha256": "f75c99e7e8673014aee30b92d30b6aca503661f2fa8b7675e41e489a41ee898d"
+    },
+    {
+      "relativePath": "rhythm\\TaskDefinition.qml",
+      "sha256": "169c9013b3b9d5e74f714b09a016438c93838f57c41e1b197f5f6df9c3cb3aab"
+    },
+    {
+      "relativePath": "rhythm\\audio\\background-90bpm.wav",
+      "sha256": "66824c40e06a6b6211d50adba849d4995929a69e2a767cc6a38256f09c25ae27"
+    },
+    {
+      "relativePath": "rhythm\\audio\\chord-1.wav",
+      "sha256": "de0882f9f5161de7a158e25b91f9c658b3f4366972df02f0041a90db6bdf4254"
+    },
+    {
+      "relativePath": "rhythm\\audio\\chord-2.wav",
+      "sha256": "425769d278d29cd8dac26c7de8ed438d41e0ed41ec0ea2adaf0cc98a3d9ea923"
+    },
+    {
+      "relativePath": "rhythm\\audio\\chord-3.wav",
+      "sha256": "3e36914bc9d4929c7ddd979c1baf6cb47bb247945dee0d0388eb1debe6129b22"
+    },
+    {
+      "relativePath": "rhythm\\audio\\chord-4.wav",
+      "sha256": "45df607147b3e1cef6df44804b22f62b0a6361f79cc3571bceba4c3a2a846b26"
+    },
+    {
+      "relativePath": "rhythm\\audio\\pulse.wav",
+      "sha256": "2207e1464d6f58a2a82a62072083e618d8df78c521c453036c82bac352b909a5"
+    },
+    {
+      "relativePath": "rhythm\\audio\\success.wav",
+      "sha256": "c9dd5dd4aaac8c50b91754697de6b498f374f6dce0d167867e9448d3f38bc7c1"
+    },
+    {
+      "relativePath": "rhythm\\tests\\engine-results.json",
+      "sha256": "58bcf8a83485d508c4282fad77d88daa75dd726d0d43fb4d79b84029cba76aa7"
+    },
+    {
+      "relativePath": "rhythm\\tests\\qt-results.json",
+      "sha256": "af4bc3e92f03120e57f8ca80dad13001acf87505238144ddbbb8bce0c9e4c6a9"
+    },
+    {
+      "relativePath": "rhythm\\tests\\test_engine.js",
+      "sha256": "a38144ac7071cc547cf6ad4d5959c47a221e4c5cfcc611be911d6dd78f442bcf"
+    },
+    {
+      "relativePath": "rhythm\\tests\\verify_input_feedback.py",
+      "sha256": "1a4c72aa93eb7396568c022fd49547f8529d2ae5431073fa17a83a41d01be6c5"
+    },
+    {
+      "relativePath": "rhythm\\tests\\verify_qt.py",
+      "sha256": "27c721d7a2e1a01c3b8a839c287ee2e99cb688e5275e844aef958b1ec0c47d11"
+    },
+    {
+      "relativePath": "rhythm\\tests\\verify_v5_visual.py",
+      "sha256": "4cc6224a7a2ee9c81f7ea97580d5b408df3e6e941b3b210f7794eb9d52a9fc06"
+    },
+    {
+      "relativePath": "rhythm\\tools\\generate_background_music.py",
+      "sha256": "4cc0cf546dda14082fd6a6c5a01874ff85d770ab1dd1bed7a024af1dd3af9107"
+    },
+    {
+      "relativePath": "rhythm\\tools\\make_audio.py",
+      "sha256": "c63780502c995f68629416993af37758302683562a22dfa594a79028895bf0e7"
+    },
+    {
+      "relativePath": "pursuit\\AGENTS.md",
+      "sha256": "ced58bc17e57a650740c0ad60bb672f37c5b57e6ba1b8613afbdaaafd92e3b70"
+    },
+    {
+      "relativePath": "pursuit\\Main.qml",
+      "sha256": "d2088e1390a9133f3ed98f5ae6195240d5b2f49e4659d3e33431e4762cb3ba39"
+    },
+    {
+      "relativePath": "pursuit\\RandomPath.js",
+      "sha256": "4d965640f8d99d20e7f70547b9f6d25517ca47b76316fb0b7cf674a72e31d6c6"
+    },
+    {
+      "relativePath": "pursuit\\README.md",
+      "sha256": "e5de515edf22c9eafa3913b02f9f37f1b165e377cec2fe0698f24b5062c85a8d"
+    },
+    {
+      "relativePath": "pursuit\\TaskDefinition.qml",
+      "sha256": "67c7b495b47fb5d47bc77b6ba1140c15098eb97987b5a1cad3802621332e2f41"
+    },
+    {
+      "relativePath": "pursuit\\assets\\icon.png",
+      "sha256": "5db6e07716278acfd8216540b634d877fcd020a89aece0d471b873333dabf6f8"
+    },
+    {
+      "relativePath": "pursuit\\assets\\icon.svg",
+      "sha256": "4e3ee0fc00a32486da18f42bce1359291dd52b3df9593edd645fcb02712ab044"
+    },
+    {
+      "relativePath": "target\\AGENTS.md",
+      "sha256": "f385bc8dba4bc8de01fd24a18efecd5199f2b39c11e7bf4cdb1fbc4ee69426ee"
+    },
+    {
+      "relativePath": "target\\Main.qml",
+      "sha256": "59291248831f0b0a229aeccb471cf604face3af21f23b630ab35fe8cca353961"
+    },
+    {
+      "relativePath": "target\\README.md",
+      "sha256": "5c9d8ebf6a4cb5a0d34bf00085007479f7dc8dffd1d0458101433c3e8e09636c"
+    },
+    {
+      "relativePath": "target\\TaskDefinition.qml",
+      "sha256": "4458e2e9063948c6af2c8e41f8fa50761852217f676b0d2577ee43c94bd4a868"
+    },
+    {
+      "relativePath": "target\\assets\\icon.png",
+      "sha256": "75530a9d05ac076f1d700bd5582a9efa5b516b1146afcba560915c68fcd63898"
+    },
+    {
+      "relativePath": "target\\assets\\icon.svg",
+      "sha256": "c3c2bbd582ba729e95d065c33d1984082d53268d3cf26d28de6f6728e3dc5a11"
+    },
+    {
+      "relativePath": "shared-ui\\FeedbackToast.qml",
+      "sha256": "f07d2a19856cbe2ab69a353745a50f790a4361614cb8e4069f52aa9ac1315be2"
+    },
+    {
+      "relativePath": "shared-ui\\GameButton.qml",
+      "sha256": "5b1ab28e393d66e48ed8d7221530d382f9cce79cd5ebb57167fb7dde59a500ae"
+    },
+    {
+      "relativePath": "shared-ui\\GameDialog.qml",
+      "sha256": "87c76131549148f142a94df0ec5c0a4b14a783e16c7da7c29453dfbf8070aa05"
+    },
+    {
+      "relativePath": "shared-ui\\GameFrame.qml",
+      "sha256": "388769befe2c284bf7536fd97069675d7527f6935bdc3bdba3a635c4754a3d33"
+    },
+    {
+      "relativePath": "shared-ui\\GameTheme.qml",
+      "sha256": "428597471be81bb38b6184e62bfca5fdff45862f323dd1c9ba33ee4b648166ec"
+    },
+    {
+      "relativePath": "shared-ui\\InputHint.qml",
+      "sha256": "2308259e0427f7e0d3d945014fcef8fbc5af460e7d3d55e02ef6d819fd54028d"
+    },
+    {
+      "relativePath": "shared-ui\\LayoutProbe.qml",
+      "sha256": "00cb4312cb56b8fc4b6bc04ec9c6922ce9b619c854bad88cea26dc84ef44300f"
+    },
+    {
+      "relativePath": "shared-ui\\LegacyWindowFill.qml",
+      "sha256": "a04a8d331c2d7d83846e85b77b4fba2e09979cf2e0d4a8c9eec14d2a1c8e12e9"
+    },
+    {
+      "relativePath": "shared-ui\\LevelSelector.qml",
+      "sha256": "5a7f73f8e5794a145930ea1a4c4d04c3ef4e1a9f9d2c3e08f9ad01eb8abb327f"
+    },
+    {
+      "relativePath": "shared-ui\\MetricSummary.qml",
+      "sha256": "7bf93bd8ffc230fb91d2aa185ead6f1db08e16d5a748b92838b52b264fa5bfce"
+    },
+    {
+      "relativePath": "shared-ui\\qmldir",
+      "sha256": "cd9e37275ef3d793e1c9479d6001e31097f33cbe1c0c9affcbbf49cefb1fd273"
+    },
+    {
+      "relativePath": "shared-ui\\SceneViewport.qml",
+      "sha256": "500ed9646ac33b1030fb65bac3e6a835c67a6c31b0433341be754dd8bfe42559"
+    },
+    {
+      "relativePath": "shared-ui-test\\Main.qml",
+      "sha256": "33ff966b8eddbcfdd7779b4aeb8f35e1d58f904a58a1defbfe9d876531a125b7"
+    },
+    {
+      "relativePath": "shared-ui-test\\TaskDefinition.qml",
+      "sha256": "b8af4a8a8b365b2f755e20e39d4f05c5c4382897a4a3fb2dbc84c2ad850a036c"
+    }
+  ],
+  "discoverableBefore": [
+    "balance",
+    "claw",
+    "hanoi",
+    "luban",
+    "pointer",
+    "pong",
+    "pursuit",
+    "rhythm",
+    "sokoban",
+    "target",
+    "traffic"
+  ],
+  "verification": {
+    "movedItems": 21,
+    "movedFiles": 86,
+    "hostPreservedFiles": 130,
+    "localPreservedFiles": 173,
+    "discoverableAfter": [
+      "balance",
+      "claw",
+      "hanoi",
+      "luban",
+      "pointer",
+      "pong",
+      "pursuit",
+      "rhythm",
+      "sokoban",
+      "target",
+      "traffic"
+    ],
+    "hashesVerified": true,
+    "hostRuntimeOverwritten": false
+  },
+  "subsequentCleanup": "cleanup.json"
+}

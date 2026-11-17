@@ -1,0 +1,100 @@
+name: Game branches source checks and exact Windows delivery
+
+on:
+  push:
+    branches: ['game02/**', 'game03/**']
+  pull_request:
+    branches: [main, 'game02/**', 'game03/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    outputs:
+      games: ${{ steps.game.outputs.games }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - id: game
+        name: Detect the game present on this branch
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          games = [game for game, folder in [('claw', 'ClawMachine'), ('street', 'StreetCrossing')] if Path('Assets', folder).is_dir()]
+          if not games:
+              raise SystemExit('No requested game exists on this tree.')
+          print('games=' + json.dumps(games))
+          PY
+      - run: python Tools/validate_project.py
+      - run: python Tools/validate_levels.py
+      - run: python Tools/build_ui_font.py --check
+      - run: python -m unittest discover -s Tools/tests -v
+      - name: Game source checks
+        shell: bash
+        run: |
+          if [ -d Assets/ClawMachine ]; then
+            python docs/Game02_ClawMachine/validate_prototype.py
+          fi
+          if [ -d Assets/StreetCrossing ]; then
+            python docs/Game03_StreetCrossing/tools/validate_street.py
+          fi
+      - name: Record verification boundary
+        run: |
+          echo 'Source checks passed. Unity compilation, tests, player build, GUI playthrough, video and performance are separate checks.' >> "$GITHUB_STEP_SUMMARY"
+
+  windows:
+    needs: source
+    if: ${{ vars.UNITY_CI_ENABLED == 'true' && github.event_name != 'pull_request' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        game: ${{ fromJSON(needs.source.outputs.games) }}
+    runs-on: [self-hosted, Windows, X64, unity-2022.3.62f3c1]
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run real scoped tests then build Windows
+        shell: pwsh
+        env:
+          GAME: ${{ matrix.game }}
+        run: |
+          if (-not $env:UNITY_EDITOR_PATH -or -not (Test-Path $env:UNITY_EDITOR_PATH)) {
+            throw 'Configure the licensed exact Editor and Windows Build Support on this runner.'
+          }
+          python Tools/run_game_delivery.py --game $env:GAME --output "BuildOutput/GameCI-$env:GAME" --timeout 2400
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.game }}-tests-and-windows-evidence
+          path: BuildOutput/GameCI-${{ matrix.game }}
+          if-no-files-found: warn
+          retention-days: 30
+
+  evidence-summary:
+    if: always()
+    needs: [source, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Distinguish source checks from real Unity evidence
+        env:
+          SOURCE: ${{ needs.source.result }}
+          UNITY: ${{ needs.windows.result }}
+        run: |
+          echo "Source checks: $SOURCE" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$UNITY" = success ]; then
+            echo 'Scoped Unity acceptance and Windows packaging passed; inspect raw XML/logs/artifact.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Unity tests and Windows delivery: NOT VERIFIED ($UNITY). Configure the exact licensed self-hosted Windows runner and UNITY_CI_ENABLED=true." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo 'Windows manual playthrough, visual quality, comfort, video and performance: NOT VERIFIED by this workflow.' >> "$GITHUB_STEP_SUMMARY"

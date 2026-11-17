@@ -1,0 +1,139 @@
+{
+  "date": "2026-11-16",
+  "scope": "Installed Neuralife offscreen loading only; no gameplay, DPI, EEG or hardware acceptance claimed",
+  "results": [
+    {
+      "game": "hanoi",
+      "exitCode": 0,
+      "seconds": 1.734,
+      "command": [
+        "D:\\program\\AIT\\Neuralife\\bin\\Neuralife.exe",
+        "--game-dev",
+        "hanoi",
+        "--games-dev-root",
+        "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games",
+        "--game-data-root",
+        "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\reports\\directory-layout-20261116-145242\\game-dev-data\\hanoi",
+        "--game-smoke"
+      ],
+      "stdoutLog": "hanoi.stdout.log",
+      "stderrLog": "hanoi.stderr.log",
+      "stderrBytes": 0,
+      "assessment": "CLEAN_EXIT_ZERO"
+    },
+    {
+      "game": "sokoban",
+      "exitCode": 0,
+      "seconds": 1.625,
+      "command": [
+        "D:\\program\\AIT\\Neuralife\\bin\\Neuralife.exe",
+        "--game-dev",
+        "sokoban",
+        "--games-dev-root",
+        "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games",
+        "--game-data-root",
+        "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\reports\\directory-layout-20261116-145242\\game-dev-data\\sokoban",
+        "--game-smoke"
+      ],
+      "stdoutLog": "sokoban.stdout.log",
+      "stderrLog": "sokoban.stderr.log",
+      "stderrBytes": 0,
+      "assessment": "CLEAN_EXIT_ZERO"
+    },
+    {
+      "game": "pointer",
+      "exitCode": 0,
+      "seconds": 1.579,
+      "command": [
+        "D:\\program\\AIT\\Neuralife\\bin\\Neuralife.exe",
+        "--game-dev",
+        "pointer",
+        "--games-dev-root",
+        "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games",
+        "--game-data-root",
+        "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\reports\\directory-layout-20261116-145242\\game-dev-data\\pointer",
+        "--game-smoke"
+      ],
+      "stdoutLog": "pointer.stdout.log",
+      "stderrLog": "pointer.stderr.log",
+      "stderrBytes": 0,
+      "assessment": "CLEAN_EXIT_ZERO"
+    },
+    {
+      "game": "claw",
+      "exitCode": 0,
+      "seconds": 1.593,
+      "command": [
+        "D:\\program\\AIT\\Neuralife\\bin\\Neuralife.exe",
+        "--game-dev",
+        "claw",
+        "--games-dev-root",
+        "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games",
+        "--game-data-root",
+        "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\reports\\directory-layout-20261116-145242\\game-dev-data\\claw",
+        "--game-smoke"
+      ],
+      "stdoutLog": "claw.stdout.log",
+      "stderrLog": "claw.stderr.log",
+      "stderrBytes": 0,
+      "assessment": "CLEAN_EXIT_ZERO"
+    },
+    {
+      "game": "traffic",
+      "exitCode": 0,
+      "seconds": 1.61,
+      "command": [
+        "D:\\program\\AIT\\Neuralife\\bin\\Neuralife.exe",
+        "--game-dev",
+        "traffic",
+        "--games-dev-root",
+        "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games",
+        "--game-data-root",
+        "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\reports\\directory-layout-20261116-145242\\game-dev-data\\traffic",
+        "--game-smoke"
+      ],
+      "stdoutLog": "traffic.stdout.log",
+      "stderrLog": "traffic.stderr.log",
+      "stderrBytes": 0,
+      "assessment": "CLEAN_EXIT_ZERO"
+    },
+    {
+      "game": "luban",
+      "exitCode": 0,
+      "seconds": 1.828,
+      "command": [
+        "D:\\program\\AIT\\Neuralife\\bin\\Neuralife.exe",
+        "--game-dev",
+        "luban",
+        "--games-dev-root",
+        "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games",
+        "--game-data-root",
+        "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\reports\\directory-layout-20261116-145242\\game-dev-data\\luban",
+        "--game-smoke"
+      ],
+      "stdoutLog": "luban.stdout.log",
+      "stderrLog": "luban.stderr.log",
+      "stderrBytes": 3556,
+      "assessment": "EXIT_ZERO_WITH_GRAPHICS_WARNINGS"
+    },
+    {
+      "game": "rhythm",
+      "exitCode": 0,
+      "seconds": 1.75,
+      "command": [
+        "D:\\program\\AIT\\Neuralife\\bin\\Neuralife.exe",
+        "--game-dev",
+        "rhythm",
+        "--games-dev-root",
+        "C:\\Users\\Ait\\AppData\\Local\\AIT\\Neuralife\\modules\\games",
+        "--game-data-root",
+        "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\reports\\directory-layout-20261116-145242\\game-dev-data\\rhythm",
+        "--game-smoke"
+      ],
+      "stdoutLog": "rhythm.stdout.log",
+      "stderrLog": "rhythm.stderr.log",
+      "stderrBytes": 0,
+      "assessment": "CLEAN_EXIT_ZERO"
+    }
+  ]
+}

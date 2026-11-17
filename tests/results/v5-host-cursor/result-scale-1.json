@@ -1,20 +1,20 @@
 {
   "environment": "Linux Xorg, QCursor.setPos actual OS cursor + actual drawn QQuickItem center; simulated consuming host overlay",
-  "sourceRoot": "/workspace/BCI-Game-V5",
+  "sourceRoot": "C:\\Users\\Ait\\Desktop\\Neuralife",
   "scaleFactor": "1",
   "checks": [
     {
       "name": "local: actual ball vs OS cursor, overlay=False",
       "passed": true,
       "detail": [
-        4.0194366942304644e-14,
         2.842170943040401e-14,
-        2.842170943040401e-14,
-        2.842170943040401e-14,
-        0.0,
+        1.1368683772161603e-13,
         0.0,
         2.842170943040401e-14,
+        1.1368683772161603e-13,
         0.0,
+        2.842170943040401e-14,
+        1.1368683772161603e-13,
         0.0
       ]
     },
@@ -22,14 +22,14 @@
       "name": "local: actual ball vs OS cursor, overlay=True",
       "passed": true,
       "detail": [
-        4.0194366942304644e-14,
         2.842170943040401e-14,
-        2.842170943040401e-14,
-        2.842170943040401e-14,
-        0.0,
+        1.1368683772161603e-13,
         0.0,
         2.842170943040401e-14,
+        1.1368683772161603e-13,
         0.0,
+        2.842170943040401e-14,
+        1.1368683772161603e-13,
         0.0
       ]
     },
@@ -45,14 +45,14 @@
         "source": "local",
         "label": "ancestor_transform",
         "cursorGlobal": [
-          640,
-          460
+          642,
+          462
         ],
         "ballGlobal": [
-          640.0,
-          459.9999999999999
+          642.0,
+          461.99999999999994
         ],
-        "errorLogicalPx": 1.1368683772161603e-13
+        "errorLogicalPx": 5.684341886080802e-14
       }
     },
     {
@@ -62,14 +62,14 @@
         "source": "local",
         "label": "window_move",
         "cursorGlobal": [
-          640,
-          460
+          642,
+          462
         ],
         "ballGlobal": [
-          640.0,
-          459.9999999999999
+          642.0,
+          461.99999999999994
         ],
-        "errorLogicalPx": 1.1368683772161603e-13
+        "errorLogicalPx": 5.684341886080802e-14
       }
     },
     {
@@ -102,14 +102,14 @@
       "name": "bci: actual ball vs OS cursor, overlay=False",
       "passed": true,
       "detail": [
-        4.0194366942304644e-14,
         2.842170943040401e-14,
-        2.842170943040401e-14,
-        2.842170943040401e-14,
-        0.0,
+        1.1368683772161603e-13,
         0.0,
         2.842170943040401e-14,
+        1.1368683772161603e-13,
         0.0,
+        2.842170943040401e-14,
+        1.1368683772161603e-13,
         0.0
       ]
     },
@@ -117,14 +117,14 @@
       "name": "bci: actual ball vs OS cursor, overlay=True",
       "passed": true,
       "detail": [
-        4.0194366942304644e-14,
         2.842170943040401e-14,
-        2.842170943040401e-14,
-        2.842170943040401e-14,
-        0.0,
+        1.1368683772161603e-13,
         0.0,
         2.842170943040401e-14,
+        1.1368683772161603e-13,
         0.0,
+        2.842170943040401e-14,
+        1.1368683772161603e-13,
         0.0
       ]
     },
@@ -140,14 +140,14 @@
         "source": "bci",
         "label": "ancestor_transform",
         "cursorGlobal": [
-          640,
-          460
+          642,
+          462
         ],
         "ballGlobal": [
-          640.0,
-          459.99999999999994
+          642.0,
+          461.9999999999999
         ],
-        "errorLogicalPx": 5.684341886080802e-14
+        "errorLogicalPx": 1.1368683772161603e-13
       }
     },
     {
@@ -157,14 +157,14 @@
         "source": "bci",
         "label": "window_move",
         "cursorGlobal": [
-          640,
-          460
+          642,
+          462
         ],
         "ballGlobal": [
-          640.0,
-          459.9999999999999
+          642.0,
+          461.99999999999994
         ],
-        "errorLogicalPx": 1.1368683772161603e-13
+        "errorLogicalPx": 5.684341886080802e-14
       }
     },
     {
@@ -199,51 +199,51 @@
       "source": "local",
       "label": "overlay=False,point=250/240",
       "cursorGlobal": [
-        250,
-        240
+        252,
+        242
       ],
       "ballGlobal": [
-        250.00000000000003,
-        240.00000000000003
+        252.00000000000003,
+        242.0
       ],
-      "errorLogicalPx": 4.0194366942304644e-14
+      "errorLogicalPx": 2.842170943040401e-14
     },
     {
       "source": "local",
       "label": "overlay=False,point=640/240",
       "cursorGlobal": [
-        640,
-        240
+        642,
+        242
       ],
       "ballGlobal": [
-        640.0,
-        240.00000000000003
+        642.0000000000001,
+        242.0
       ],
-      "errorLogicalPx": 2.842170943040401e-14
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "local",
       "label": "overlay=False,point=1010/240",
       "cursorGlobal": [
-        1010,
-        240
+        1012,
+        242
       ],
       "ballGlobal": [
-        1010.0,
-        240.00000000000003
+        1012.0,
+        242.0
       ],
-      "errorLogicalPx": 2.842170943040401e-14
+      "errorLogicalPx": 0.0
     },
     {
       "source": "local",
       "label": "overlay=False,point=250/460",
       "cursorGlobal": [
-        250,
-        460
+        252,
+        462
       ],
       "ballGlobal": [
-        250.00000000000003,
-        460.0
+        252.00000000000003,
+        462.0
       ],
       "errorLogicalPx": 2.842170943040401e-14
     },
@@ -251,25 +251,25 @@
       "source": "local",
       "label": "overlay=False,point=640/460",
       "cursorGlobal": [
-        640,
-        460
+        642,
+        462
       ],
       "ballGlobal": [
-        640.0,
-        460.0
+        642.0000000000001,
+        462.0
       ],
-      "errorLogicalPx": 0.0
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "local",
       "label": "overlay=False,point=1010/460",
       "cursorGlobal": [
-        1010,
-        460
+        1012,
+        462
       ],
       "ballGlobal": [
-        1010.0,
-        460.0
+        1012.0,
+        462.0
       ],
       "errorLogicalPx": 0.0
     },
@@ -277,12 +277,12 @@
       "source": "local",
       "label": "overlay=False,point=250/680",
       "cursorGlobal": [
-        250,
-        680
+        252,
+        682
       ],
       "ballGlobal": [
-        250.00000000000003,
-        680.0
+        252.00000000000003,
+        682.0
       ],
       "errorLogicalPx": 2.842170943040401e-14
     },
@@ -290,25 +290,25 @@
       "source": "local",
       "label": "overlay=False,point=640/680",
       "cursorGlobal": [
-        640,
-        680
+        642,
+        682
       ],
       "ballGlobal": [
-        640.0,
-        680.0
+        642.0000000000001,
+        682.0
       ],
-      "errorLogicalPx": 0.0
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "local",
       "label": "overlay=False,point=1010/680",
       "cursorGlobal": [
-        1010,
-        680
+        1012,
+        682
       ],
       "ballGlobal": [
-        1010.0,
-        680.0
+        1012.0,
+        682.0
       ],
       "errorLogicalPx": 0.0
     },
@@ -316,51 +316,51 @@
       "source": "local",
       "label": "overlay=True,point=250/240",
       "cursorGlobal": [
-        250,
-        240
+        252,
+        242
       ],
       "ballGlobal": [
-        250.00000000000003,
-        240.00000000000003
+        252.00000000000003,
+        242.0
       ],
-      "errorLogicalPx": 4.0194366942304644e-14
+      "errorLogicalPx": 2.842170943040401e-14
     },
     {
       "source": "local",
       "label": "overlay=True,point=640/240",
       "cursorGlobal": [
-        640,
-        240
+        642,
+        242
       ],
       "ballGlobal": [
-        640.0,
-        240.00000000000003
+        642.0000000000001,
+        242.0
       ],
-      "errorLogicalPx": 2.842170943040401e-14
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "local",
       "label": "overlay=True,point=1010/240",
       "cursorGlobal": [
-        1010,
-        240
+        1012,
+        242
       ],
       "ballGlobal": [
-        1010.0,
-        240.00000000000003
+        1012.0,
+        242.0
       ],
-      "errorLogicalPx": 2.842170943040401e-14
+      "errorLogicalPx": 0.0
     },
     {
       "source": "local",
       "label": "overlay=True,point=250/460",
       "cursorGlobal": [
-        250,
-        460
+        252,
+        462
       ],
       "ballGlobal": [
-        250.00000000000003,
-        460.0
+        252.00000000000003,
+        462.0
       ],
       "errorLogicalPx": 2.842170943040401e-14
     },
@@ -368,25 +368,25 @@
       "source": "local",
       "label": "overlay=True,point=640/460",
       "cursorGlobal": [
-        640,
-        460
+        642,
+        462
       ],
       "ballGlobal": [
-        640.0,
-        460.0
+        642.0000000000001,
+        462.0
       ],
-      "errorLogicalPx": 0.0
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "local",
       "label": "overlay=True,point=1010/460",
       "cursorGlobal": [
-        1010,
-        460
+        1012,
+        462
       ],
       "ballGlobal": [
-        1010.0,
-        460.0
+        1012.0,
+        462.0
       ],
       "errorLogicalPx": 0.0
     },
@@ -394,12 +394,12 @@
       "source": "local",
       "label": "overlay=True,point=250/680",
       "cursorGlobal": [
-        250,
-        680
+        252,
+        682
       ],
       "ballGlobal": [
-        250.00000000000003,
-        680.0
+        252.00000000000003,
+        682.0
       ],
       "errorLogicalPx": 2.842170943040401e-14
     },
@@ -407,25 +407,25 @@
       "source": "local",
       "label": "overlay=True,point=640/680",
       "cursorGlobal": [
-        640,
-        680
+        642,
+        682
       ],
       "ballGlobal": [
-        640.0,
-        680.0
+        642.0000000000001,
+        682.0
       ],
-      "errorLogicalPx": 0.0
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "local",
       "label": "overlay=True,point=1010/680",
       "cursorGlobal": [
-        1010,
-        680
+        1012,
+        682
       ],
       "ballGlobal": [
-        1010.0,
-        680.0
+        1012.0,
+        682.0
       ],
       "errorLogicalPx": 0.0
     },
@@ -433,27 +433,27 @@
       "source": "local",
       "label": "ancestor_transform",
       "cursorGlobal": [
-        640,
-        460
+        642,
+        462
       ],
       "ballGlobal": [
-        640.0,
-        459.9999999999999
+        642.0,
+        461.99999999999994
       ],
-      "errorLogicalPx": 1.1368683772161603e-13
+      "errorLogicalPx": 5.684341886080802e-14
     },
     {
       "source": "local",
       "label": "window_move",
       "cursorGlobal": [
-        640,
-        460
+        642,
+        462
       ],
       "ballGlobal": [
-        640.0,
-        459.9999999999999
+        642.0,
+        461.99999999999994
       ],
-      "errorLogicalPx": 1.1368683772161603e-13
+      "errorLogicalPx": 5.684341886080802e-14
     },
     {
       "source": "local",
@@ -472,51 +472,51 @@
       "source": "bci",
       "label": "overlay=False,point=250/240",
       "cursorGlobal": [
-        250,
-        240
+        252,
+        242
       ],
       "ballGlobal": [
-        250.00000000000003,
-        240.00000000000003
+        252.00000000000003,
+        242.0
       ],
-      "errorLogicalPx": 4.0194366942304644e-14
+      "errorLogicalPx": 2.842170943040401e-14
     },
     {
       "source": "bci",
       "label": "overlay=False,point=640/240",
       "cursorGlobal": [
-        640,
-        240
+        642,
+        242
       ],
       "ballGlobal": [
-        640.0,
-        240.00000000000003
+        642.0000000000001,
+        242.0
       ],
-      "errorLogicalPx": 2.842170943040401e-14
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "bci",
       "label": "overlay=False,point=1010/240",
       "cursorGlobal": [
-        1010,
-        240
+        1012,
+        242
       ],
       "ballGlobal": [
-        1010.0,
-        240.00000000000003
+        1012.0,
+        242.0
       ],
-      "errorLogicalPx": 2.842170943040401e-14
+      "errorLogicalPx": 0.0
     },
     {
       "source": "bci",
       "label": "overlay=False,point=250/460",
       "cursorGlobal": [
-        250,
-        460
+        252,
+        462
       ],
       "ballGlobal": [
-        250.00000000000003,
-        460.0
+        252.00000000000003,
+        462.0
       ],
       "errorLogicalPx": 2.842170943040401e-14
     },
@@ -524,25 +524,25 @@
       "source": "bci",
       "label": "overlay=False,point=640/460",
       "cursorGlobal": [
-        640,
-        460
+        642,
+        462
       ],
       "ballGlobal": [
-        640.0,
-        460.0
+        642.0000000000001,
+        462.0
       ],
-      "errorLogicalPx": 0.0
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "bci",
       "label": "overlay=False,point=1010/460",
       "cursorGlobal": [
-        1010,
-        460
+        1012,
+        462
       ],
       "ballGlobal": [
-        1010.0,
-        460.0
+        1012.0,
+        462.0
       ],
       "errorLogicalPx": 0.0
     },
@@ -550,12 +550,12 @@
       "source": "bci",
       "label": "overlay=False,point=250/680",
       "cursorGlobal": [
-        250,
-        680
+        252,
+        682
       ],
       "ballGlobal": [
-        250.00000000000003,
-        680.0
+        252.00000000000003,
+        682.0
       ],
       "errorLogicalPx": 2.842170943040401e-14
     },
@@ -563,25 +563,25 @@
       "source": "bci",
       "label": "overlay=False,point=640/680",
       "cursorGlobal": [
-        640,
-        680
+        642,
+        682
       ],
       "ballGlobal": [
-        640.0,
-        680.0
+        642.0000000000001,
+        682.0
       ],
-      "errorLogicalPx": 0.0
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "bci",
       "label": "overlay=False,point=1010/680",
       "cursorGlobal": [
-        1010,
-        680
+        1012,
+        682
       ],
       "ballGlobal": [
-        1010.0,
-        680.0
+        1012.0,
+        682.0
       ],
       "errorLogicalPx": 0.0
     },
@@ -589,51 +589,51 @@
       "source": "bci",
       "label": "overlay=True,point=250/240",
       "cursorGlobal": [
-        250,
-        240
+        252,
+        242
       ],
       "ballGlobal": [
-        250.00000000000003,
-        240.00000000000003
+        252.00000000000003,
+        242.0
       ],
-      "errorLogicalPx": 4.0194366942304644e-14
+      "errorLogicalPx": 2.842170943040401e-14
     },
     {
       "source": "bci",
       "label": "overlay=True,point=640/240",
       "cursorGlobal": [
-        640,
-        240
+        642,
+        242
       ],
       "ballGlobal": [
-        640.0,
-        240.00000000000003
+        642.0000000000001,
+        242.0
       ],
-      "errorLogicalPx": 2.842170943040401e-14
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "bci",
       "label": "overlay=True,point=1010/240",
       "cursorGlobal": [
-        1010,
-        240
+        1012,
+        242
       ],
       "ballGlobal": [
-        1010.0,
-        240.00000000000003
+        1012.0,
+        242.0
       ],
-      "errorLogicalPx": 2.842170943040401e-14
+      "errorLogicalPx": 0.0
     },
     {
       "source": "bci",
       "label": "overlay=True,point=250/460",
       "cursorGlobal": [
-        250,
-        460
+        252,
+        462
       ],
       "ballGlobal": [
-        250.00000000000003,
-        460.0
+        252.00000000000003,
+        462.0
       ],
       "errorLogicalPx": 2.842170943040401e-14
     },
@@ -641,25 +641,25 @@
       "source": "bci",
       "label": "overlay=True,point=640/460",
       "cursorGlobal": [
-        640,
-        460
+        642,
+        462
       ],
       "ballGlobal": [
-        640.0,
-        460.0
+        642.0000000000001,
+        462.0
       ],
-      "errorLogicalPx": 0.0
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "bci",
       "label": "overlay=True,point=1010/460",
       "cursorGlobal": [
-        1010,
-        460
+        1012,
+        462
       ],
       "ballGlobal": [
-        1010.0,
-        460.0
+        1012.0,
+        462.0
       ],
       "errorLogicalPx": 0.0
     },
@@ -667,12 +667,12 @@
       "source": "bci",
       "label": "overlay=True,point=250/680",
       "cursorGlobal": [
-        250,
-        680
+        252,
+        682
       ],
       "ballGlobal": [
-        250.00000000000003,
-        680.0
+        252.00000000000003,
+        682.0
       ],
       "errorLogicalPx": 2.842170943040401e-14
     },
@@ -680,25 +680,25 @@
       "source": "bci",
       "label": "overlay=True,point=640/680",
       "cursorGlobal": [
-        640,
-        680
+        642,
+        682
       ],
       "ballGlobal": [
-        640.0,
-        680.0
+        642.0000000000001,
+        682.0
       ],
-      "errorLogicalPx": 0.0
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "bci",
       "label": "overlay=True,point=1010/680",
       "cursorGlobal": [
-        1010,
-        680
+        1012,
+        682
       ],
       "ballGlobal": [
-        1010.0,
-        680.0
+        1012.0,
+        682.0
       ],
       "errorLogicalPx": 0.0
     },
@@ -706,27 +706,27 @@
       "source": "bci",
       "label": "ancestor_transform",
       "cursorGlobal": [
-        640,
-        460
+        642,
+        462
       ],
       "ballGlobal": [
-        640.0,
-        459.99999999999994
+        642.0,
+        461.9999999999999
       ],
-      "errorLogicalPx": 5.684341886080802e-14
+      "errorLogicalPx": 1.1368683772161603e-13
     },
     {
       "source": "bci",
       "label": "window_move",
       "cursorGlobal": [
-        640,
-        460
+        642,
+        462
       ],
       "ballGlobal": [
-        640.0,
-        459.9999999999999
+        642.0,
+        461.99999999999994
       ],
-      "errorLogicalPx": 1.1368683772161603e-13
+      "errorLogicalPx": 5.684341886080802e-14
     },
     {
       "source": "bci",

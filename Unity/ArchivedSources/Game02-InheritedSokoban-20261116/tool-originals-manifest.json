@@ -1,0 +1,30 @@
+[
+  {
+    "path": "Tools/build_ui_font.py",
+    "sha256": "8ad87dbd6a208d163628d8257eecb83c3510b2d8e8d3dc944950e93c8a85eaaf"
+  },
+  {
+    "path": "Tools/run_source_checks.py",
+    "sha256": "914e7d5dfa6fc770e2ebd646246a2c426f323b6232c8a4d364b93230ac1be8e2"
+  },
+  {
+    "path": "Tools/run_delivery.py",
+    "sha256": "d10f777a6ae85d4335625cf5134b2e746c242fb37896d4be2ccf63bf42a5d6fe"
+  },
+  {
+    "path": "Tools/check_csharp_sources.py",
+    "sha256": "72432fd440b4cfd1ed2ecf2e28a59b61ed0d33f54af02206513156c8f4eda929"
+  },
+  {
+    "path": "Tools/validate_project.py",
+    "sha256": "8ba7747fe457216533d266d7d3278de6432350ac850b26fc24af7c48b12e8d76"
+  },
+  {
+    "path": "Tools/tests/test_level_design.py",
+    "sha256": "636838926775d78bd0e9e6233f4777ba2efb213eae22c53bf8b62cfb013a9406"
+  },
+  {
+    "path": "README.md",
+    "sha256": "dfacf631251cf618ad6e67bf6170157f3ee556cf364484b0ec386decc9717597"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-16",
+  "checks": {
+    "all_moves_original_absent": true,
+    "all_86_archived_hashes_match": true,
+    "all_173_local_game_hashes_match": true,
+    "all_130_host_preserved_hashes_match": true,
+    "host_game_discovery_unchanged": true,
+    "documentation_links_resolve": true
+  },
+  "brokenLinks": [],
+  "smoke": {
+    "CLEAN_EXIT_ZERO": 6,
+    "EXIT_ZERO_WITH_GRAPHICS_WARNINGS": 1
+  },
+  "restorePreview": "21 moves verified; apply not executed"
+}

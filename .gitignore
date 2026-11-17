@@ -9,5 +9,9 @@ _paper2_text.txt
 游戏源码包/
 游戏源码包.zip
 
+# 本地整理后的研究资料与历史导入包（保留在磁盘，不纳入源码）
+reference/research/
+archive/imports/
+
 # Python 运行产物
 __pycache__/

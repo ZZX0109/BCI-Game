@@ -1,5 +1,5 @@
 {
-  "platform": "xcb",
+  "platform": "offscreen",
   "scaleFactor": "1",
   "environment": "Linux Qt window, native Qt key events, simulated host; sound requests only, no audible validation",
   "checks": [

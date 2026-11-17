@@ -1,0 +1,8 @@
+fileFormatVersion: 2
+guid: 44dac9611b1846d22d168e561903e96a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: Retains a runtime Standard shader variant; do not remove as unused.
+  assetBundleName:
+  assetBundleVariant:

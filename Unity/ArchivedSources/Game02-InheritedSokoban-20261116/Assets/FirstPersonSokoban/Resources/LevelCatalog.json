@@ -1,0 +1,68 @@
+{
+  "levels": [
+    {
+      "id": "tutorial-first-push",
+      "resource": "Level01",
+      "title": "初次接触",
+      "subtitle": "单箱教学 · 一推归位",
+      "initialYaw": 180,
+      "revision": 1
+    },
+    {
+      "id": "tutorial-around",
+      "resource": "Level02",
+      "title": "绕过折角",
+      "subtitle": "L 型内墙 · 换向绕行",
+      "initialYaw": 180,
+      "revision": 2
+    },
+    {
+      "id": "two-boxes",
+      "resource": "Level03",
+      "title": "双厅转运",
+      "subtitle": "双箱展厅 · 连廊绕行",
+      "initialYaw": 180,
+      "revision": 2
+    },
+    {
+      "id": "corner-turn",
+      "resource": "Level04",
+      "title": "回廊路线",
+      "subtitle": "长墙回廊 · 下行再回转",
+      "initialYaw": 180,
+      "revision": 2
+    },
+    {
+      "id": "paired-columns",
+      "resource": "Level05",
+      "title": "先开通路",
+      "subtitle": "先移门口箱 · 再处理内厅",
+      "initialYaw": 180,
+      "revision": 2
+    },
+    {
+      "id": "adjacent-boxes",
+      "resource": "Level06",
+      "title": "临时停靠",
+      "subtitle": "双箱互阻 · 让位后回推",
+      "initialYaw": 0,
+      "revision": 2
+    },
+    {
+      "id": "narrow-pocket",
+      "resource": "Level07",
+      "title": "狭口对齐",
+      "subtitle": "单格狭口 · 提防墙边死锁",
+      "initialYaw": 180,
+      "revision": 2
+    },
+    {
+      "id": "long-detour",
+      "resource": "Level08",
+      "title": "连厅次序",
+      "subtitle": "三厅连通 · 先深处后入口",
+      "initialYaw": 180,
+      "revision": 2
+    }
+  ]
+}

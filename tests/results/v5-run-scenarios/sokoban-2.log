@@ -1,4 +1,5 @@
-Fontconfig error: No writable cache directories
+QFontDatabase: Cannot find font directory D:/SoftwareManagement/dev/Python312/Lib/site-packages/PySide6/lib/fonts.
+Note that Qt no longer ships fonts. Deploy some (from https://dejavu-fonts.github.io/ for example) or switch to fontconfig.
     [PASS] repeated_started_does_not_reset_session — 实际=1 期望=1
     [PASS] BFS_current_board_S01
     [PASS] completed_S01 — 实际='S01' 期望='S01'

@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 6a2bbdda08cda7340a8bbfbbdd7bb036
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+  isReadable: 0
+  textureFormat: 1
+  maxTextureSize: 32
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  textureType: 0
+  textureShape: 1
+  alphaSource: 1
+  alphaIsTransparency: 0
+  textureCompression: 0
+  userData: Retains the Standard metallic-gloss shader variants used by runtime lab materials.
+  assetBundleName:
+  assetBundleVariant:

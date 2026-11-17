@@ -1,5 +1,5 @@
 {
-  "qt": "6.10.2",
+  "qt": "6.12.0",
   "platform": "offscreen",
   "scaleFactor": "1",
   "scope": "Qt QTest native mouse/keyboard and simulated Neuralife signals; Windows host/physical BCI not tested",

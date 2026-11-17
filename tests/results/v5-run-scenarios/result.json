@@ -1,6 +1,6 @@
 {
-  "utc": "2026-11-11T01:33:29.913465+00:00",
-  "sourceHead": "620bdebecba68208378d60aef88d531bb57f186b",
+  "utc": "2026-11-11T08:17:40.501805+00:00",
+  "sourceHead": "c7d749e2768709b789d51d1fdce1b16b038eace0",
   "activeGames": [
     "hanoi",
     "sokoban",
@@ -12,186 +12,26 @@
   ],
   "checks": [
     {
-      "game": "hanoi",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "hanoi/tests/verify_1106.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/hanoi-1.log"
-    },
-    {
-      "game": "sokoban",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "tools/verify_sokoban_levels.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/sokoban-1.log"
-    },
-    {
-      "game": "sokoban",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "sokoban/tests/verify_1106.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/sokoban-2.log"
-    },
-    {
       "game": "pointer",
       "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
+        "D:\\SoftwareManagement\\dev\\Python312\\python.exe",
         "pointer/tests/verify_1106.py"
       ],
       "exitCode": 0,
       "passed": true,
-      "log": "tests/results/v5-run-scenarios/pointer-1.log"
+      "log": "tests\\results\\v5-run-scenarios\\pointer-1.log"
     },
     {
       "game": "pointer",
       "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
+        "D:\\SoftwareManagement\\dev\\Python312\\python.exe",
         "pointer/tests/verify_host_cursor.py"
       ],
       "exitCode": 0,
       "passed": true,
-      "log": "tests/results/v5-run-scenarios/pointer-2.log"
-    },
-    {
-      "game": "claw",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "claw/tests/verify_1106.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/claw-1.log"
-    },
-    {
-      "game": "claw",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "claw/tests/verify_v5_near_miss.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/claw-2.log"
-    },
-    {
-      "game": "traffic",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "traffic/tests/verify_v5.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/traffic-1.log"
-    },
-    {
-      "game": "luban",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "luban/tools/luban_solver.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/luban-1.log"
-    },
-    {
-      "game": "luban",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "luban/tests/verify_1106.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/luban-2.log"
-    },
-    {
-      "game": "rhythm",
-      "command": [
-        "node",
-        "rhythm/tests/test_engine.js"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/rhythm-1.log"
-    },
-    {
-      "game": "rhythm",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "rhythm/tests/verify_v5_visual.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/rhythm-2.log"
-    },
-    {
-      "game": "rhythm",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "rhythm/tests/verify_input_feedback.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/rhythm-3.log"
-    },
-    {
-      "game": "path-replay",
-      "command": [
-        "node",
-        "tests/test_random_path.js"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/path-replay.log"
-    },
-    {
-      "game": "package",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "tests/package_v5.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/package.log"
-    },
-    {
-      "game": "sync-preview",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "tests/test_sync_v5.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/sync-preview.log"
-    },
-    {
-      "game": "qml-lint",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "tools/lint_qml.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/qml-lint.log"
-    },
-    {
-      "game": "adaptive-viewports",
-      "command": [
-        "/workspace/.venvs/bci-game/bin/python3",
-        "tests/verify_adaptive_viewports.py"
-      ],
-      "exitCode": 0,
-      "passed": true,
-      "log": "tests/results/v5-run-scenarios/adaptive-viewports.log"
+      "log": "tests\\results\\v5-run-scenarios\\pointer-2.log"
     }
   ],
-  "passed": 18,
-  "total": 18
+  "passed": 2,
+  "total": 2
 }

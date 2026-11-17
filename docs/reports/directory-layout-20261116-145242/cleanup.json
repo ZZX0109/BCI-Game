@@ -1,0 +1,211 @@
+{
+  "date": "2026-11-16",
+  "workspaceRoot": "C:\\Users\\Ait\\Desktop\\Neuralife",
+  "authorization": "User requested cache/duplicate deletion, minimal necessary documentation and closure of invisible Unity processes",
+  "method": "Recycle Bin for ignored files and caches; tracked documentation removed through source patch and recoverable from gitHead",
+  "activeUnityAtPlanning": [],
+  "deletions": [
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\CURRENT_STATE.md",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 242,
+      "sha256": "b600848515e8428c20b93b68ca36e75289bd1099c596099ab47952ef1788bfea",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\ACCEPTANCE_REPORT.md",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 260,
+      "sha256": "5342eb589b57f63550c04c4f536b746b21a238f9ca03862ff40d115b62bde5a7",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\ISSUES.md",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 193,
+      "sha256": "6bd7c530d685f2ce952d97762dc850a790663840d0261ec68bbbb3e36b7591d1",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\ISSUES_CURRENT.md",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 695,
+      "sha256": "bd96fb3fcd3e766c881d33aec2e7932179da300e125178735e5d473745176825",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\CHANGED_FILES.md",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 2774,
+      "sha256": "fe6ac1b31be7b93c97a64084e0e49e0be7bfdff7a06b44ae96b630eaac2c22da",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\smoke_results.txt",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 150,
+      "sha256": "ff02d36d839725921bd03d089169001226b6328cac9ec3fd018528917b2c4b61",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\smoke_results_v4.txt",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 156,
+      "sha256": "75a4d6a51df40b095ed7f9c3cf376fd7fc87e60ce2e2493cff368644edeace75",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\V2_COMPLETION_AUDIT.md",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 196,
+      "sha256": "be38c0b85bc2bc98acf69cfdfbd663a66074b6b602241aa3b867015e45971c98",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\V4_STATUS.md",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 176,
+      "sha256": "5c387004f5cb7560638eabcde39aad976ca21ba66ffa5467380ff7b59c102072",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\luban_3d_block_report.md",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 279,
+      "sha256": "8a20daa3e1a469f5c0b18f4c2f1d24d6e0436d889468b6b9ea9e2db1186b2307",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\traffic_CHANGELOG.md",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 2809,
+      "sha256": "8a2c6a0af965a7b14d68310808f56d7bb5a7178456320d97d26be702bf6cfe4b",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\autoplay_harness.md",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 6840,
+      "sha256": "4d5b20ecc1ea694c608d1d418883a4654680b02a79f333dcf6673371564c3d9a",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\docs\\specs\\BCI_Game_20261110_V5_CodingAgent指令.md",
+      "kind": "redundant-tracked-document",
+      "files": 1,
+      "bytes": 3512,
+      "sha256": "450e909b50066738249fa6dfd1e28af9edd0393fe2ee74effd00d1c5a7337775",
+      "gitHead": "835a16ed9c44ab09566daeefe8bf8baf4c4d4c1c",
+      "state": "deleted-via-source-patch"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\luban\\tools\\__pycache__",
+      "kind": "generated-cache",
+      "files": 1,
+      "bytes": 15653,
+      "state": "recycled"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\pointer\\tests\\__pycache__",
+      "kind": "generated-cache",
+      "files": 1,
+      "bytes": 42402,
+      "state": "recycled"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\pointer\\tools\\__pycache__",
+      "kind": "generated-cache",
+      "files": 1,
+      "bytes": 4976,
+      "state": "recycled"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\tools\\__pycache__",
+      "kind": "generated-cache",
+      "files": 18,
+      "bytes": 214604,
+      "state": "recycled"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\tools\\scenarios\\__pycache__",
+      "kind": "generated-cache",
+      "files": 9,
+      "bytes": 157424,
+      "state": "recycled"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\Unity\\Game02-ClawMachine\\Tools\\__pycache__",
+      "kind": "generated-cache",
+      "files": 5,
+      "bytes": 87859,
+      "state": "recycled"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\Unity\\Game02-ClawMachine\\Tools\\tests\\__pycache__",
+      "kind": "generated-cache",
+      "files": 7,
+      "bytes": 71778,
+      "state": "recycled"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\Unity\\Game01-Sokoban\\Library",
+      "kind": "generated-cache",
+      "files": 2725,
+      "bytes": 34216750,
+      "state": "recycled"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\Unity\\Game02-ClawMachine\\Library",
+      "kind": "generated-cache",
+      "files": 2935,
+      "bytes": 45092902,
+      "state": "recycled"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\Unity\\Game03-StreetCrossing\\Library",
+      "kind": "generated-cache",
+      "files": 2935,
+      "bytes": 45413929,
+      "state": "recycled"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\archive\\imports\\20261116\\游戏源码包.zip",
+      "kind": "verified-duplicate-zip",
+      "files": 1,
+      "bytes": 276793,
+      "sha256": "1bb24cffc637b58da40c1a303969897a82b4ab72283e20090466dc553c0b87f5",
+      "state": "recycled"
+    },
+    {
+      "path": "C:\\Users\\Ait\\Desktop\\Neuralife\\tests\\luban_check.log",
+      "kind": "empty-log",
+      "files": 1,
+      "bytes": 0,
+      "state": "recycled"
+    }
+  ]
+}
