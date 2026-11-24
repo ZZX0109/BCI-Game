@@ -9,7 +9,7 @@
 **用户侧待验**：Unity Editor 聚焦自动补齐 4 个 FBX .meta（fire_hydrant/modular_fire_escape/street_lamp_01/exterior_aircon_unit）；菜单 "Street Crossing → Prepare imported CC0 street props"；目视核对空调外机（住宅立面上层、格栅朝上）与防火梯（Apartment 立面左侧、不上入口/阳台、角部变体不重复）。
 **分工如实记录**：lead（ZCode GLM）完成全部接线编辑、FBX 直读测量、门禁与提交推送；本轮无子智能体派生（`gpt-6-luna` 路由仍不存在，维持既往记录，不冒充）；ChatGPT 规划聊天同步仍被 web_fetch TypeError: fetch failed 阻断，如实记录。
 
-Game01-Integration 全量 EditMode sweep 261 项 260 通过 0 失败 1 忽略（EXIT=0）、Game04-VirtualHand 143 项全通过（EXIT=0）——两份未编辑 FullBodyPoseController.cs 拷贝（不引用本轮新成员）编译与行为零变化，回移植降级为可选卫生项；`docs/SPEC_CURRENT.md` 新增第 6 条记录第一人称全身模块当前需求与证据入口。V5-070 已记录。
+2026-11-25 03:26 | 回移植风险闭合＋规格索引更新：Game01-Integration 全量 EditMode sweep 261 项 260 通过 0 失败 1 忽略（EXIT=0）、Game04-VirtualHand 143 项全通过（EXIT=0）——两份未编辑 FullBodyPoseController.cs 拷贝（不引用本轮新成员）编译与行为零变化，回移植降级为可选卫生项；`docs/SPEC_CURRENT.md` 新增第 6 条记录第一人称全身模块当前需求与证据入口。V5-070 已记录。
 
 2026-11-25 03:24 | M4 孤儿手部材质删除（提交 `65f4ff8`，`1a469dc..65f4ff8` 已推送；4 文件 −186 行）：GUID grep 证明 `Hand_L_Skin.mat`（48010b38…）与 `Hand_R_Skin.mat`（d70a3ab3…）零外部引用（GUID 仅存于自身 .meta、名称 Hand_[LR]_Skin 零命中），`git rm` 后 PrefabIntegrityTests 门禁 4/4 Passed（PrefabIntegrity-afterM4-result.xml，EXIT=0）。V5-069 已记录。
 
