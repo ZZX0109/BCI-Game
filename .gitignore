@@ -15,3 +15,7 @@ archive/imports/
 
 # Python 运行产物
 __pycache__/
+
+# Unity build output and agent run artifacts (large binaries, regenerated locally)
+BuildOutput/
+outputs/

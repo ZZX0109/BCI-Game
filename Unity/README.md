@@ -1,5 +1,7 @@
 # Unity 游戏
 
+前三款游戏的头显操作、构建方式和验证范围见 [PICO 接入与验收](PICO_INTEGRATION.md)。
+
 四个目录各自是完整 Unity 2022.3.62f3c1 工程，以子模块固定提交；源码统一保存在 [UnityGame-for-BCI](https://github.com/ZZX0109/UnityGame-for-BCI)，不同游戏使用不同分支。
 
 | 目录 | GitHub 分支 | 验证说明 |
