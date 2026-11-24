@@ -1,3 +1,5 @@
+2026-11-25 03:26 | 回移植风险闭合＋规格索引更新：Game01-Integration 全量 EditMode sweep 261 项 260 通过 0 失败 1 忽略（EXIT=0）、Game04-VirtualHand 143 项全通过（EXIT=0）——两份未编辑 FullBodyPoseController.cs 拷贝（不引用本轮新成员）编译与行为零变化，回移植降级为可选卫生项；`docs/SPEC_CURRENT.md` 新增第 6 条记录第一人称全身模块当前需求与证据入口。V5-070 已记录。
+
 2026-11-25 03:24 | M4 孤儿手部材质删除（提交 `65f4ff8`，`1a469dc..65f4ff8` 已推送；4 文件 −186 行）：GUID grep 证明 `Hand_L_Skin.mat`（48010b38…）与 `Hand_R_Skin.mat`（d70a3ab3…）零外部引用（GUID 仅存于自身 .meta、名称 Hand_[LR]_Skin 零命中），`git rm` 后 PrefabIntegrityTests 门禁 4/4 Passed（PrefabIntegrity-afterM4-result.xml，EXIT=0）。V5-069 已记录。
 
 2026-11-25 03:16 | Game03 全身回合：身体偏航 720°/s 跟随上限＋姿态合约落地＋手部材质哑光修复（提交 `1a469dc`，`d1404dc..1a469dc` 已推送；10 文件 +607/−10；EditMode 全量 sweep 405 项 0 失败）：
