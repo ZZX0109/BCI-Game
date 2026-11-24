@@ -14,3 +14,11 @@
 	path = Unity/Game04-VirtualHand
 	url = https://github.com/ZZX0109/UnityGame-for-BCI.git
 	branch = codex/virtual-hand
+[submodule "Unity/Game01-Integration"]
+	path = Unity/Game01-Integration
+	url = https://github.com/ZZX0109/UnityGame-for-BCI.git
+	branch = integration/fullbody-game01
+[submodule "Unity/Game03-Integration"]
+	path = Unity/Game03-Integration
+	url = https://github.com/ZZX0109/UnityGame-for-BCI.git
+	branch = integration/fullbody-game03
