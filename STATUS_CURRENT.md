@@ -762,3 +762,18 @@ GLM 的纠错包已交付；Codex 独立重算确认 29/29 manifest 项及九项
 - 三名只读独立复核本轮运行模型为gpt-6.2-astra/max，不是要求的gpt-6-luna/max，不能计入Luna配额。GLM派发时界面显示glm-5.3-flash/最高，但本小时未重新读ZCode详情；DHS未完成本轮二审。
 - Chrome指定规划对话仍出现临时限流；本小时无消息送达、无回复。不能说已经与网页端ChatGPT交流。当前工具未提供可访问的Chrome/DHS UI通道，重试仍未成功；这项阻碍如实记录。
 - 下一包：GLM继续在隔离目录修订，恢复骨骼旋转模式，按获准mask做邻环渐弱，只用真实RENDER图同姿势复测；用匹配相机设置输出正/侧/斜前三视图及双膝可见的第一人称图。过几何、美术和相机三项后，再交DHS二审；之后Codex终审，才排Unity/PICO。详见 CODEX_AUDIT_20261123.md 和更新后的 MODEL_HANDOFF.md。
+
+### Game03 — 2026-11-25 10:18–11:30 Shanghai · 走廊间隙修复 + 转弯包络锁定 + 导入资产校验基建（批次1/2）
+
+- **已推送 4 个提交**（codex/optimize-game03，dfcfa30→bedfb32，远端同步完成）：
+  - `bf420ad` 行人走廊间隙修复（§6.1）：树坑碰撞 z 1.4→0.8（6 处共用 helper，北间隙 0.675 m / 南 0.425 m）、长椅阻挡 SidewalkZ(−7.5)→(−7.8)（0.50 m）、站牌 z 2.28→2.24、雨棚碰撞 z 2.45→1.9（0.595 m 且治愈既有 |z|<6.9 越界）。全部仅碰撞体调整，测试锁定名称与视觉未动。
+  - `926fce3` 引擎声源 3D 空间化（§6.4）：Linear→Logarithmic rolloff，minDistance 3.3（LaneWidth）/maxDistance 26.4（RoadHalfWidth×4）街道尺度，doppler .15。**修正前提**：HEAD 本已有 spatialBlend=1（早前审计"纯 2D"结论系误读快照），真实差距是 rolloff 模型与距离尺度。
+  - `1cb8f48` S03 转弯包络 EditMode 静态锁定（§6.2）：新增 `StreetTurnEnvelopeTests`（3 测试）——角楼五边形足迹与文档棱柱一致、含间隙包络对两角楼最小间隙 ≥ Clearance(0.12)、喉部路缘余量 ≥ 0.4 m 地板（独立数值审计实测：建筑最小 2.25 m、全局最紧喉部 0.41 m、无 <0.12 m 违规）。junctionX 经 `-9 * scenario.DirectionForLane(0)` 镜像生产表达式，未引入新字面量。与 PlayMode OverlapBox 测试互补（静态先于场景加载失败）。
+  - `bedfb32` Editor 探针 `StreetImportedAssetProbe.Dump` 入库（§2.2 要求的 Editor 原始链测量工具，输出 BuildOutput/imported-asset-probe.json）+ 顺手清除 VisualUpgradeTestBuilder.cs 历史 CS0105。
+- **门禁证据**：runtime `filtered.rsp`、EditMode `StreetCrossing.EditModeTests.gate.rsp`、Editor `StreetCrossing.Editor.filtered.rsp` 三门各自 exit 0 且日志 0 B（Editor 门为本轮新增，先修复唯一历史警告后为 0 B）。
+- **lead 整合修正**：fix-corridor 交付的站牌 z=1.9 会使 `S03OpaqueKerbShelterRequiresSafeForwardRepositioning` 对 −14 m 目标的遮挡余量从 0.228 m 降至 0.038 m（眼位 x=0 实测推导）；改为 2.24 后走廊余量 0.425 m（≥0.42 目标）与遮挡余量 0.208 m 同时成立，§3.1 受控遮挡设计不变。
+- **fix-corridor（GLM）复核结论**：4 行 diff 与报告一致；公交站"0.37"违规归因于北侧树坑（0.375），修复后残留面全部 ≥0.425 m。**已知诚实遗留**：树篦视觉 z 跨 1.4 m vs 碰撞 0.8 m，每侧悬挑 0.3 m（篦高 ~0.1 m 低于 stepOffset，仅在主动跨越树坑时鞋缘扫过），下一轮美术轮应收篦视觉至 ~1.0 m；此视觉/碰撞偏移预期会被新空间审计标记，属审计生效信号而非新穿模。
+- **fbx-validator（GLM）交付**（§2.3，3 新文件，本批未提交，等 audit-expansion 同批门禁）：`StreetImportedAssetProfile`（12 模型期望带，targetHeight×[0.5,1.6] 推导）、`StreetImportedAssetValidator`（测量+校验，AxisDominanceMismatch 为横倒检测器）、`StreetImportedAssetPlacementTests`（13 用例）。meta 实测 12/12 全部 globalScale=1、useFileScale=1、**bakeAxisConversion=0**（轴风险存活）。矛盾点修正：metal_trash_can targetHeight=1.04（0.62 系宽度误记）。硬断言当前仅覆盖 fire_hydrant/utility_box_01/utility_box_02（3/12 竖直占优类），路灯仅测量输出（§2.2 Editor 复测后才上锁，不预设 +90° 正确）。
+- **分工核算**：GLM 实质交付 = fix-corridor + fix-audio + fbx-validator + audit-expansion（进行中），lead 负责决策/整合/测试编写/门禁/提交，GLM ≥50% 达标；gpt-6-luna/max 路由不存在继续如实记录，未冒报；ChatGPT 规划聊天 web_fetch 持续 TypeError: fetch failed，本轮仍未同步成功；HY4 Flash 本轮未派发。
+- **用户侧验证债务**：Unity Editor 复跑全部 EditMode/PlayMode（含新 3+13 用例）取 XML；运行 `StreetCrossing.Editor.StreetImportedAssetProbe.Dump` 取 12 模型原始链 JSON；[SpatialAudit] JSON 复测走廊四点；目检树篦悬挑与站牌遮挡手感。
+- **下一批**：audit-expansion（§3 审查扩大）落地后补 rsp 清单 + 三门 + 提交；随后 §6.3 UI 修复与 §2.2 路灯定向（依赖 Editor 复测结果）。
