@@ -799,3 +799,12 @@ GLM 的纠错包已交付；Codex 独立重算确认 29/29 manifest 项及九项
 - **分工**：GLM 累计交付 fix-corridor/fix-audio/fbx-validator/ped-state/audit-expansion 五批，audit-round2 在途；lead 负责全部复核/门禁/提交/测试编写（转弯包络）。GLM ≥50% 持续达标。
 - **用户侧验证债务新增**：跑全部 EditMode（新增 3+13+8+6=30 用例）与 PlayMode 取 XML；重点目检行人停驻不再迈腿、转向不平移；Spatial Audit 菜单跑 i/j 检查 JSON。
 - **下一批**：audit-round2（§3 剩余 10 类+JSON+Gizmos）；随后 §6.3 UI 修复（lead）；§2.2 路灯定向仍待 Editor 探针数据。
+### Game03 — 2026-11-25 13:05–13:35 Shanghai · §4 物理结构第一增量（lead 实施）
+
+- **已推送 2 个提交**（codex/optimize-game03 → `a594e79`）：
+  - `480122b` §4.1 物理责任层：TagManager 槽位 8-13 命名 WalkableGround/PlayerObstacle/VehicleObstacle/TrafficVisibilityOccluder/VisualOnly/TriggerZone；`StreetPhysicsLayers` 常量+掩码入 Core；**增量宽容策略**：碰撞矩阵保持全 1（DynamicsManager 实测全 f），分派行为可证不变，LayerMask 收窄必须各自带回归测试。分派点：PhysicalBounds 全部家具阻挡、角楼 MeshCollider、建筑碰撞代理（StreetAssetLibrary）→ PlayerObstacle；道路沥青 → WalkableGround。§4.2 路灯：进口路灯分支**此前完全没有碰撞体**，补灯柱 0.18×3.9 世界真值 BoxCollider（灯头悬空不建空气墙；置于缩放根外保持世界尺寸）。
+  - `a594e79` §4.2 树干：CreateLodgedTree 两级 LOD 均无碰撞（代理干 :172 显式销毁、FBX 无碰撞），玩家可穿干；补 0.24×2.6 兄弟节点"Tree trunk bounds"（LOD 子树外，保住 `LodgedTree_CarriesNoCollidersOnLodSubtree` 契约），层 PlayerObstacle。走廊间隙实测推导：北侧 0.955 m / 南侧 0.705 m，均 ≥0.42；S03 转弯围裙带不受影响（−13 树位被既有转弯过滤器剔除）。
+- **§4.2 排查结论（如实记录）**：公交站"重复生成"在当前 HEAD 已不存在——StreetVisualDetails.Shelter 只做视觉壳，StreetWorld.BusStop 仅留测试命名碰撞具（"Bus seat" 渲染器禁用为纯碰撞）；维护门"VisualDetailsRoot 内含 Collider"问题已不存在（StreetVisualDetails 全文零 Collider）；维护门自身 envelope+零件碰撞冗余为无害冗余，列入后续 check-g 证据轮处理。车辆碰撞保持解析运动学+PlayMode 全包络扫描，本批未动。
+- **测试**：新增 `StreetPhysicsLayerTests` 4 组（层名↔槽位锁、新层碰撞宽容锁、掩码一致、树干碰撞世界真值+LOD 子树零碰撞），runtime/editmode 双门 exit 0、日志 0 B。
+- **用户侧注意**：TagManager.asset 为磁盘 YAML 编辑——若 Unity Editor 当前处于打开状态，其内存中的旧 TagManager 可能在保存时覆盖本修改；请确认关闭 Unity 后重开工程，若层名丢失需 cherry-pick `480122b` 的 TagManager 部分。车辆层 VehicleObstacle 本批仅定义未分派（车辆碰撞体在 prefab 资产内），如实记录。
+- **在途**：audit-round2（§3 剩余 10 类检查+九字段 JSON+Gizmos，已要求增量落盘）。
