@@ -1,3 +1,15 @@
+2026-11-25 11:10 | 冒烟测试接线日志预期序列修复（V5078c NoUnexpectedReceived失败清零）＋FullBody双测试随线入册：Game03 PlayMode门禁V5078d全绿（Game03 `5ebaef6`＋`b8787ac` 已推送并ls-remote回验）：
+
+**实现**：新增测试辅助 `FullBodyWiringLogs.ExpectWiringSequence()`（37行）——按实测发射顺序以Regex形式登记7条 `LogAssert.Expect`：HandRigDriver HandProportions×2（正则以[LR]字符类＋FIFO次序覆盖左右）＋原生profile×2＋ElenaWristAligner腕部补偿×2＋StreetCrossingFullBodyBinding对齐结论×1，数字段以 \d+ 容忍漂移而顺序与次数严格；`StreetSceneSmokeTests` 在唯一场景加载（SceneManager.LoadSceneAsync之前）调用一次；PlayModeTests asmdef补 StreetCrossing.Integration 与 Neuralife.VirtualHand.Runtime 引用支撑FullBody测试编译。不改 IgnoreFailingMessages、不弱化 NoUnexpectedReceived 纪律，产品代码与资产零改动。
+
+**诊断与修复**：V5078c EXIT=2 冒烟测试败于一条预期外 info 日志（[HandRigDriver] HandProportions applied to 20 bones on ElenaHand_L），根因经测试框架1.1.33源码（LogMatch.cs L85-88 MessageRegex.IsMatch非锚定搜索＋LogType精确相等）与接线链逐点审计确认——每次场景加载恰好发射一个7条固定顺序的接线info块（首实例化时），而冒烟测试是唯一调用 NoUnexpectedReceived 的门禁内用例，故必须登记预期；块内消息数经V5078c XML逐测试解析实证：FullBodyStaysWired 4块＋RealPlayerMovement 2块＋Smoke 1块。曾提“3+3+1”块数假设与实测不符，以XML实测为准并如实更正。
+
+**门禁与证据**：V5078d PlayMode 门禁 EXIT=0 总时长4.45s，3/3通过：FullBodyStaysWiredAndVisibleAcrossS01ToS03（2.59s）＋RealPlayerMovementDrivesWalkCycleLegBones（1.34s）＋S01BuildsFirstPersonStreetPausesAndResetsWithoutDuplicateCars（0.48s），日志零 error CS；冒烟用例0.48s通过＝7条Expect按FIFO精确消费（多一条或少一条均会失败）。证据：`Unity/Game03-Integration/Logs/PlayModeGate_V5078d_20261125_1057.xml`（TEMP原始结果已固化至同目录）与同名.log。V5078b（EXIT=1 CS1503，已修）与V5078c（EXIT=2，本轮根因）失败运行归档保留作证据链。`V5_ACCEPTANCE.csv` 增至79行（V5-078行8逗号校验通过）。
+
+**分工如实记录**：本轮共四次 GLM 子代理派发（均为 new-provider/glm-5.3-flash，只读审计／草稿性质、零文件修改）：glm-game01-body-audit（Game01身体模块审计）、glm-lamp-asset-trace（灯柱资源溯源）、glm-smoketest-fix-audit（V5078d前置审计，结论“可直接跑门禁”）、glm-v5078-draft（CSV/STATUS草稿）；主智能体负责根因实测、修复实施、门禁、提交推送与本条目落账。`gpt-6-luna` 路由本机不存在（list_subagent_models 核实）继续如实记录；ChatGPT 规划聊天 web_fetch 仍 TypeError: fetch failed 不可达，如实记录。
+
+**待用户侧**：验收 D 项 PICO 真机验证窗口仍未答复，逾期将如实记录 HARDWARE_NOT_TESTED；管理权限 Defender 排除命令仍未执行；散落漂移（`120`、`glm-material-fix/`、Game01/Game02/Game04子仓改动、donor仓未跟踪副本）属其他会话遗留未动。
+
 2026-11-25 09:56 | 上臂对齐修复③（自研姿态评审缺陷④ HIGH：肱骨轴未随解算肩肘方向）落地：Game01＋Game03 三道门禁全绿（Game01 `d1676a4`、Game03 `0af2173`、monorepo `6513908` 已推送并 ls-remote 回验）：
 
 **实现**：两仓 `FullBodyPoseController.cs` 新增 `AlignUpperArm`——以骨骼轴 `elbowBinding.position − upperArm.position` 经 `Quaternion.FromToRotation` 对齐解算肩→肘世界方向，绝对式（不累积）、双 `1e-12` 退化护栏、空绑定早退、k≥1 精确置位否则 Slerp；instant 路径在肘/腕位置写入前以 k=1 调用，混合路径与位置写入共用 τ=0.15s 指数因子。双端控制器 SHA256 逐字节同（`0DA07064…`）；新增 `FullBodyUpperArmAlignmentTests` 七项（instant 对齐／旋转坐标系／bodySpace 偏航跟随／混合 Slerp／退化不动／重复应用不累积／空绑定不破坏位置解算）双端字节同（`45F34202…`）。
