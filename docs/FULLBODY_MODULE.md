@@ -60,17 +60,26 @@
 
 - 自侧腕点偏差 **2.8166 m**(偏移 `(-0.04, -1.35, +2.47)`),交叉侧 **2.9768 m**(偏移 `(±0.96, -1.35, +2.47)`),即主要偏差在 +Z 2.47 m 与 −Y 1.35 m 方向。
 - 偏差源于 Elena glb 资产内部 `pulse.R_01/hand.R_02` 关节与 `neutral_adult_avatar` 骨架腕点的静态错位,左右镜像对称(`RESULT: OK`)。
-- 该偏差经 `Logs/WristOffsetAnalysis.txt`(2026-11-25 04:18 +08:00,8.5 KB 专项报告)判定为 **DEFECT**:手部 SMR 网格随 landmark 一同位移(约 2.8 m),根因是 `neutral_adult_avatar.fbx` 骨骼自身局部缩放中约 101.65× 的 lossyScale(由构建日志 2.8166 m 反推,FBX 层级未逐级解析,为推断值)与 GLB 根缩放 0.0145 叠加,属资产级缺陷而非可接受常量。修复方向为绑定时按父级逐轴 lossyScale 做腕部偏移补偿(目标 <2 cm,运行时断言 A1–A4);修复落地前由 `FirstPersonWristTests`、`SeatedWristCalibrationTests` 看护现状数值不漂移。
+- 该偏差经 `Logs/WristOffsetAnalysis.txt`(2026-11-25 04:18 +08:00,8.5 KB 专项报告)判定为 **DEFECT**:手部 SMR 网格随 landmark 一同位移(约 2.8 m),属资产级缺陷而非可接受常量。根因是 Elena GLB 根节点 0.0145249× 均匀缩放 × Armature 100× 的内部节点链——手实例在 `localPosition=(0,0,0)`、单位旋转下,其腕部地标 `hand.L_02`/`hand.R_02` 相对身体腕骨 `hand_l`/`hand_r` 存在 ≈2.8166 m 的固有偏移(同侧),再被身体侧腕骨链 ~101.65× 的逐轴 lossyScale 放大(该数值为算术推断,非解析 FBX)。
+
+**修复方案(V5-075 修复①,两层,已落地)**:
+
+- **绑定时补偿(attach-time)**:`FirstPersonFullBodyBuilder.AttachHand` 在 `localPosition` 置零后,量取"腕部地标 − 身体腕骨"的世界差 `d`,用 `wristBone.InverseTransformPoint(wristBone.position − d)` 直接把补偿烘进烘焙位;`InverseTransformPoint` 一步吸收父链旋转与逐轴 lossyScale,幂等(补偿后差值 ≈0 时写入 ≈0)。
+- **运行时自愈**:新增 `ElenaWristAligner` 组件(`Neuralife.VirtualHand.Body`),由 `SokobanFullBodyBinding.CreateBody` / `StreetCrossingFullBodyBinding.EnsureWiring` 调 `HealBody` 为出厂预制体(旧构建器产出,不含本组件)补挂并对齐;`InverseTransformVector` 吸收父链旋转与逐轴 lossyScale(身体侧 ~101.65× 为算术推断,非解析 FBX),幂等、仅平移,不改 `localScale`、不重蒙皮、不重绑骨。
+
+验收断言 A1–A3(地标残差、姿态混合后腕位、无 ≈100 lossyScale 残留),另加 A5 刚体不变量(仅移动两手根 `localPosition`,其余 Transform 位级不变)与 A6 幂等(重复 `AlignNow` 位级一致),目标残差 <2 cm;运行时断言由 `ElenaWristAlignmentTests` 覆盖。已否弃 `ClipAudit.md` §3(:79)提议的 AssetPostprocessor 归一化路线;"只改 Elena 预制体 0.10439009 缩放不可行"的结论保留(该缩放正是把手部定标到 0.19 m 的归一化因子,位移由身体侧 lossyScale 放大剩余固有偏移造成,见 `WristOffsetAnalysis.txt` FIX DIRECTION)。
 
 ## 6. 测试覆盖
 
 | 工程 | EditMode 合计 | 通过 | 失败 | 跳过 | 证据 |
 | --- | --- | --- | --- | --- | --- |
-| Game01-Integration | 266 | 265 | 0 | 1 | `Unity/Game01-Integration/Logs/EditModeGate_20261125_0444.xml`(2026-11-25 04:44 +08:00) |
-| Game03-Integration | 405 | 404 | 0 | 1 | `Unity/Game03-Integration/Logs/EditModeSweep-fullbody-result.xml`(2026-11-24 19:14:16Z) |
+| Game01-Integration | 272 | 271 | 0 | 1 | `Unity/Game01-Integration/Logs/EditModeGate_V5075_wrist_20261125_0825.xml`(2026-11-25 08:25 +08:00,EXIT=0,含 ElenaWristAlignmentTests 6/6) |
+| Game03-Integration | 405 | 404 | 0 | 1 | `Unity/Game03-Integration/Logs/EditModeGate_V5075_wrist_20261125_0830.xml`(2026-11-25 08:30 +08:00,EXIT=0) |
+
+Game01 PlayMode(TryPush 四套件)TOTAL=38=通过 38/失败 0/跳过 0,证据 `Unity/Game01-Integration/Logs/PlayModeGate_V5075_wrist_20261125_0826.xml`(EXIT=0)。门禁须以与 0617 基线一致的参数运行(**不带 `-nographics`**):`-nographics` 下 NullGfxDevice 使 `AvatarBlueOutlineRenderTests` 像素读回确定性失败(读回均匀 RGBA 0.804 灰),属环境性假阴性而非回归;0808/0820/0823 三次带 `-nographics` 或引号缺陷的失败运行归档保留作证据。
 
 覆盖要点:
 
-- **模块级**:`VirtualHand/Tests/Editor/BodyPoseControllerTests.cs`(姿态状态机)、`WalkCycleDriverTests.cs`(步态相位与速度混合)、`SeatedArmSolverTests.cs`(手臂解算纯函数)、`BodyAppearanceTests.cs` / `AvatarVisualStyleTests.cs`(外观切换)、`AvatarBodyCalibrationTests.cs`(标定绑定)。
+- **模块级**:`VirtualHand/Tests/Editor/BodyPoseControllerTests.cs`(姿态状态机)、`WalkCycleDriverTests.cs`(步态相位与速度混合)、`SeatedArmSolverTests.cs`(手臂解算纯函数)、`BodyAppearanceTests.cs` / `AvatarVisualStyleTests.cs`(外观切换)、`AvatarBodyCalibrationTests.cs`(标定绑定)、`VirtualHand/Tests/ElenaWristAlignmentTests.cs`(V5-075 修复①六断言:A1 残差、A2a 吸附、A2b 混合收敛、A3 无 lossyScale 残留、A5 刚体不变量、A6 幂等)。
 - **宿主接入级**:Game01 `Assets/Tests/Game01Integration/FullBodyModuleTests.cs` 与 `PrefabIntegrityTests.cs`(断言预制体引用 `WalkCycleDriver` 等组件)、`GameplayIntactTests.cs`(推箱规则不受绑定影响);Game03 `Assets/Tests/Game03Integration/FullBodyBindingTests.cs`(含 `PathDistanceMeters`/`WalkCycleDriver` 的 EditMode 集成断言)、`PrefabIntegrityTests.cs`、`GameplaySentinelTests.cs`。
 - **PlayMode**:`AvatarBodyCalibrationBindingPlayModeTests.cs`、`IntegratedBodyPreviewTests.cs` 等在三个集成工程均有副本;Game03 `WalkQATests.cs` 以 1/60 s 步进驱动 `RefreshBinding(deltaTime)` 验证偏航跟随限速。
