@@ -1,3 +1,5 @@
+2026-11-25 09:42 | Game03 GitHub 内容同步：补全 28 个 Unity importer .meta 并推送（Game03 `630e39e..dfcfa30`，codex/optimize-game03——导入 FBX/贴图 22 个、StreetSpatialAudit/StreetSpatialAnchors 2 个、EditMode 测试 4 个；GUID 28/28 唯一、基文件逐一验证已跟踪后入库），monorepo gitlink `Unity/Game03-StreetCrossing` 630e39e→dfcfa30 同分支快进，随本条目按路径范围提交推送。**分叉如实记录**：Game03 仓内 `integration/fullbody-game03`（V5-076 步幅剪裁修复线 `913138f`）与 `codex/optimize-game03`（街区优化线 `dfcfa30`）在 `c7da413` 分叉，两线均已推送 origin；合并需独立双 rsp 门禁，本轮未做。**分工**：meta 核验与提交由主智能体直接实施；`gpt-6-luna` 路由仍不存在（维持既往记录）；ChatGPT 规划聊天仍 web_fetch `TypeError: fetch failed` 不可达，如实记录。
+
 2026-11-25 09:06 | 步幅剪裁修复②（ClipAudit 缺陷② MED 裆部穿模＋③ LOW 膝部穿模）落地：Game01＋Game03 六文件三层同步，三道门禁全绿（Game01 `9ad3930`、Game03 `913138f`）：
 
 **实现**：`WalkCycleDriver.cs` 默认值 `thighAmplitudeDegrees` 25→15、`kneeAmplitudeDegrees` 45→30（两仓字节同，SHA256 `98FB482F…`）；生成预制体 `FirstPersonFullBody.prefab` 序列化值 :821-822 同步 15/30（运行时以序列化值覆盖默认值，故预制体必须同改）；两仓 `WalkCycleDriverTests.cs` 常数 25/45→15/30 保持闭式解断言自洽。`strideLengthMeters` 自动步幅随振幅自动收缩（S＝4·L·sin A），`blendTauSeconds` 保持 0.05（帧率无关断言绑定该契约，未动）。
