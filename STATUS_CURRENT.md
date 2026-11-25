@@ -1,3 +1,15 @@
+2026-11-25 09:56 | 上臂对齐修复③（自研姿态评审缺陷④ HIGH：肱骨轴未随解算肩肘方向）落地：Game01＋Game03 三道门禁全绿（Game01 `d1676a4`、Game03 `0af2173`、monorepo `6513908` 已推送并 ls-remote 回验）：
+
+**实现**：两仓 `FullBodyPoseController.cs` 新增 `AlignUpperArm`——以骨骼轴 `elbowBinding.position − upperArm.position` 经 `Quaternion.FromToRotation` 对齐解算肩→肘世界方向，绝对式（不累积）、双 `1e-12` 退化护栏、空绑定早退、k≥1 精确置位否则 Slerp；instant 路径在肘/腕位置写入前以 k=1 调用，混合路径与位置写入共用 τ=0.15s 指数因子。双端控制器 SHA256 逐字节同（`0DA07064…`）；新增 `FullBodyUpperArmAlignmentTests` 七项（instant 对齐／旋转坐标系／bodySpace 偏航跟随／混合 Slerp／退化不动／重复应用不累积／空绑定不破坏位置解算）双端字节同（`45F34202…`）。
+
+**诊断与修复**：测试文件 API 面逐项核对后零修补——`PoseBothArmsForward`、`leftElbow`/`rightElbow` 序列化字段、`GetBodySpaceShoulder`、τ=0.15 默认值均与控制器实测一致；k 公式 `1−exp(−dt/0.15)` 与既有 `BodyPoseControllerTests` 写法互相印证。Game03 生成预制体无上臂骨骼，`leftUpperArm`/`rightUpperArm` 保持未分配，由护栏早退兜底（零行为变化），如实记录、不动预制体。
+
+**门禁与证据**：Game01 EditMode `Logs\EditModeGate_V5077_fix3_20261125_0948.xml` EXIT＝0，279=278/0/1（基线 272＋7）；Game01 PlayMode `Logs\PlayModeGate_V5077_fix3_20261125_0949.xml` EXIT＝0，38=38/0；Game03 EditMode `Logs\EditModeGate_V5077_fix3_20261125_0952.xml` EXIT＝0，412=411/0/1（基线 405＋7）；三道门禁零新增失败，`V5_ACCEPTANCE.csv` 增至 78 行（V5-077 行 8 逗号校验通过）。
+
+**分工如实记录**：本项为定点修复＋测试编写＋三道门禁，主智能体直接实施（含 GLM 子代理上下文耗尽后的现场审计收口）；`gpt-6-luna` 路由本机不存在（`list_subagent_models` 核实）继续如实记录；ChatGPT 规划聊天 `web_fetch` 仍 `TypeError: fetch failed` 不可达，如实记录。
+
+**待用户侧**：验收 D 项 PICO 真机验证窗口仍未答复，逾期将如实记录 HARDWARE_NOT_TESTED。
+
 2026-11-25 09:42 | Game03 GitHub 内容同步：补全 28 个 Unity importer .meta 并推送（Game03 `630e39e..dfcfa30`，codex/optimize-game03——导入 FBX/贴图 22 个、StreetSpatialAudit/StreetSpatialAnchors 2 个、EditMode 测试 4 个；GUID 28/28 唯一、基文件逐一验证已跟踪后入库），monorepo gitlink `Unity/Game03-StreetCrossing` 630e39e→dfcfa30 同分支快进，随本条目按路径范围提交推送。**分叉如实记录**：Game03 仓内 `integration/fullbody-game03`（V5-076 步幅剪裁修复线 `913138f`）与 `codex/optimize-game03`（街区优化线 `dfcfa30`）在 `c7da413` 分叉，两线均已推送 origin；合并需独立双 rsp 门禁，本轮未做。**分工**：meta 核验与提交由主智能体直接实施；`gpt-6-luna` 路由仍不存在（维持既往记录）；ChatGPT 规划聊天仍 web_fetch `TypeError: fetch failed` 不可达，如实记录。
 
 2026-11-25 09:06 | 步幅剪裁修复②（ClipAudit 缺陷② MED 裆部穿模＋③ LOW 膝部穿模）落地：Game01＋Game03 六文件三层同步，三道门禁全绿（Game01 `9ad3930`、Game03 `913138f`）：
