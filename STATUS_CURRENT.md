@@ -1,3 +1,14 @@
+2026-11-25 09:06 | 步幅剪裁修复②（ClipAudit 缺陷② MED 裆部穿模＋③ LOW 膝部穿模）落地：Game01＋Game03 六文件三层同步，三道门禁全绿（Game01 `9ad3930`、Game03 `913138f`）：
+
+**实现**：`WalkCycleDriver.cs` 默认值 `thighAmplitudeDegrees` 25→15、`kneeAmplitudeDegrees` 45→30（两仓字节同，SHA256 `98FB482F…`）；生成预制体 `FirstPersonFullBody.prefab` 序列化值 :821-822 同步 15/30（运行时以序列化值覆盖默认值，故预制体必须同改）；两仓 `WalkCycleDriverTests.cs` 常数 25/45→15/30 保持闭式解断言自洽。`strideLengthMeters` 自动步幅随振幅自动收缩（S＝4·L·sin A），`blendTauSeconds` 保持 0.05（帧率无关断言绑定该契约，未动）。
+
+**诊断与修复**：Game03 首跑 0852 EXIT＝2 暴露 1 处失败——`WalkQATests.MidSwingLiftsFootAboveStanceHeight` 闭式解仍按旧振幅（0.18787＝膝 45°）；按新振幅重推闭式解 ankle_y＝0.80−0.40·cos0−0.30·cos30°＝0.14019 同步修正，抬脚可见阈值 0.05→0.03 米（新振幅下摆动腿高于支撑腿 0.04019 米，仍满足"可见抬起"语义），失败运行归档保留作证据。
+
+**门禁与证据**：Game01 EditMode `Logs\EditModeGate_V5076_fix2_20261125_0845.xml` EXIT＝0，TOTAL=272=PASSED 271/FAILED 0/SKIPPED 1（唯一跳过＝TruthReference 有意跳过）；Game01 PlayMode `Logs\PlayModeGate_V5076_fix2_20261125_0849.xml` EXIT＝0，38=38/0/0；Game03 EditMode `Logs\EditModeGate_V5076_fix2_20261125_0902.xml` EXIT＝0，405=404/0/1 与基线持平；两项目零 InitTestScene 残留；`V5_ACCEPTANCE.csv` 增至 77 行（V5-076 行 8 逗号校验通过）。
+
+**分工如实记录**：本项为定点数值调参＋测试闭式解同步，主智能体直接实施（编辑、SHA256 一致性校验、三道门禁、提交）；`gpt-6-luna@max` 路由本机不存在（`list_subagent_models` 核实）继续如实记录；ChatGPT 研究聊天 `web_fetch` 仍 `TypeError: fetch failed` 不可达，阻碍持续记录。
+
+**待用户侧**：PICO 真机验证窗口仍未答复（验收 D 项）；管理权限 Defender 排除 `Add-MpPreference -ExclusionPath 'C:\Users\Ait\Desktop\Neuralife'` 仍未执行；散落文件 `120`（12 字节，内容"250"）与 `glm-material-fix/` 属其他会话漂移未动。
 2026-11-25 08:32 | 腕部对齐修复①（ClipAudit 缺陷① DEFECT/HIGH）落地：Game01＋Game03 三道门禁全绿（Game01 `bd1f047..6d9e1a4`、Game03 `22537bd..16c9e2d` 已推送）：
 **诊断与修复**：0808 过滤运行暴露左手 6 断言全败，根因经 .meta guid 扫描＋glTF JSON chunk 直解双重确认——`ElenaHand_L.prefab` 与 `ElenaHand_R.prefab` 均为同一 `ElenaHand_R.glb`（guid `d408a091…`）的 813 行 PrefabInstance 包装，GLB 96 节点仅含 `handSmooth.001`/`hand.R_02`/`hand.R.001_011`，无任何 `hand.L_*`，左手实例内 landmark 名为 R 名。修复三处查找点统一为「同侧精确→对侧精确→宽松」三级候选序（`ElenaWristAligner.FindLandmark`／`FirstPersonFullBodyBuilder.FindElenaWrist`／测试 helper），零资产改动；新增 `ElenaWristAligner`（`AlignNow` 以父链 `InverseTransformVector` 一步吸收旋转＋逐轴 lossyScale≈101.65×，幂等，目标 <2 cm 残差；`HealBody` 遍历双手根补挂），`SokobanFullBodyBinding`／`StreetCrossingFullBodyBinding` 的 CreateBody Hook 入接线，构建器 attach 烘焙保持（Game01/Game03 两份脚本 SHA256 逐一字节同）。
 **门禁与证据**：Game01 EditMode `Logs\EditModeGate_V5075_wrist_20261125_0825.xml` EXIT=0，TOTAL=272=PASSED 271/FAILED 0/SKIPPED 1，ElenaWristAlignmentTests 6/6；Game01 PlayMode `Logs\PlayModeGate_V5075_wrist_20261125_0826.xml` EXIT=0，38=38/0/0；Game03 EditMode `Logs\EditModeGate_V5075_wrist_20261125_0830.xml` EXIT=0，405=404/0/1 与基线持平；两工程均无 InitTestScene* 残渣。如实记录三次假阴性运行（归档保留作证据）：0808 为 `-tests` 过滤器引号缺陷致意外全量跑、0820/0823 为 `-nographics`（NullGfxDevice 下 `AvatarBlueOutlineRenderTests` 像素读回确定性失败：读回均匀 RGBA(0.804…) 灰而非洋红基线，环境性而非回归）；改用与 0617 基线一致的无 `-nographics` 门禁后全绿——后续门禁一律不得带 `-nographics`。
